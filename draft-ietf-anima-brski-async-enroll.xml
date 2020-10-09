@@ -8,7 +8,7 @@
 
 ]>
 
-<rfc category="std" docName="draft-ietf-anima-brski-async-enroll-00" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-anima-brski-async-enroll-01" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
   <?rfc toc="yes" ?>
   <?rfc compact="yes" ?>
@@ -1038,7 +1038,8 @@
 				request objects from one or multiple pledges at once and perform 
 				a bulk onboarding based on the collected data. The pledge-agent 
 				may be configured with the domain registrar information or may 
-				use the discovery mechanism.</t>
+				use the discovery mechanism defined in 
+				<xref target="I-D.ietf-anima-bootstrapping-keyinfra" />.</t>
 
             <t> Join Proxy: same functionality as described in BRSKI. </t>
 
@@ -1271,27 +1272,24 @@ a pledge-agent">
       <section anchor="discovery_eo" title="Discovery of supported enrollment options at domain registrar">
         <t> Well-know URIs for different endpoints on the domain registrar are 
 		    already defined as part of the base BRSKI specification. In 
-			addition, this document utilizes well-known URIs to allow for 
-			alternative enrollment options at the domain registrar. 
-			The discovery of supported endpoints will therefore provide the 
-			information to the pledge, how to contact the domain registrar.</t>
+			addition, alternative enrollment endpoint at the domain registrar
+			may be supported. The discovery of supported endpoints can therefore 
+			provide information to the pledge, how to contact the domain 
+			registrar.</t>
 			  
         <t> Querying the registrar, the pledge will get a list of potential 
-		    endpoints supported by the domain registrar. To allow for a 
-		    BRSKI specific discovery of endpoints/resources, this document 
-			specifies a new URI for the discovery as "/.well-known/brski".</t>
-
-        <t> Performing a GET on "/.well-known/brski" to the default port
-            returns a set of links to endpoints available from the server. 
-			In addition to the link also the expected format of the data object 
-			is provided as content type (ct).</t>
+		    endpoints supported by the domain registrar. Performing a 
+			GET on "/.well-known" to the default port returns a set of links 
+			to endpoints available from the server. In addition to the link 
+			also the expected format of the data object is provided as content 
+			type (ct).</t>
 			  
         <t> The following provides an illustrative example for a domain 
 		    registrar supporting different options for EST as well as 
 		    CMP to be used in BRSKI-AE. The listing contains the supported 
 			endpoints for the onboarding: </t>
 		  
-		<t> REQ: GET /.well-known/brski </t>
+		<t> REQ: GET /.well-known</t>
 		  
         <figure>
 <artwork name="" type="" align="left" alt=""><![CDATA[
@@ -1300,7 +1298,6 @@ RES: Content
   </brski/voucher_status>,ct=json  
   </brski/requestauditlog>,ct=json  
   </brski/enrollstatus>,ct=json  
-  </est/cacerts>;ct=pkcs7-mime  
   </est/cacerts>;ct=pkcs7-mime
   </est/simpleenroll>;ct=pkcs7-mime
   </est/simplereenroll>;ct=pkcs7-mime
@@ -1320,14 +1317,17 @@ RES: Content
 		<t> [RFC Editor: please delete] /* </t>
 		<t> Open Issues:
 		 <list style="symbols">
- 	       <t> Change path from /est to /brski to be protocol agnostic</t>
+ 	       <t> Change path from /est to /brski to be protocol agnostic -> addressed in BRSKI?</t>
  	       <t> Define new well-know URI as above or reuse core approach as 
 		       described in RFC 6690 with /.well-known/core and the already 
-			   defined functionality?</t>
+			   defined functionality?, nein, da BRSKI-AE BRSKI erweitert, hier 
+			   erstmal nur /-well-known, wenn der Client herausfinden moechte, 
+			   was der Domain registrar unterstuetzt. </t>
 	       <t> In addition to the current content types, we may specify that 
 			   the response provide information about different content types
                as multiple values. This would allow to further adopt the 
-			   encoding of the objects exchanges (ASN.1, JSON, CBOR, ...).</t>
+			   encoding of the objects exchanges (ASN.1, JSON, CBOR, ...).
+			   -> would be app to the utilized protocol. </t>
          </list>
 	    */
         </t>
@@ -1392,7 +1392,7 @@ RES: Content
 		       returned in the PKIStatus by the Registrar. The pledge in this 
 			   case would retry using the PollReqContent with a request 
 			   identifier certReqId provided in the initial CertRequest message 
-			   as specified in section 6.1.4 with delayed enrollemnt. </t>
+			   as specified in section 6.1.4 with delayed enrollment. </t>
 	     </list>
 	    </t>
        </section>
@@ -1504,6 +1504,16 @@ RES: Content
     </references>
 	
     <section anchor="app_history" title="History of changes [RFC Editor: please delete]">
+      <t> From IETF draft 00 -> IETF 01:
+          <list style="symbols">
+		    <t> Clarification in discovery options for enrollment endpoints at 
+			    the domain registrar based on well-known endpoints in  
+				<xref target ="discovery_eo" /> do not result in additional 
+				/.well-known URIs. Update of the illustrative example. 
+				Note that the change to /brski for the voucher related endpoints 
+				has been taken over in the BRSKI main document.</t>
+		  </list>
+	  </t>  
       <t> From individual version 03 -> IETF draft 00:
           <list style="symbols">
 		    <t> Inclusion of discovery options of enrollment endpoints at 
