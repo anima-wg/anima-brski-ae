@@ -3,7 +3,7 @@
 <!ENTITY RFC2119 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY RFC7030 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7030.xml">
 <!ENTITY RFC7575 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7575.xml">
-<!ENTITY I-D.gutmann-scep PUBLIC '' 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.gutmann-scep.xml'>
+<!ENTITY RFC8894 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8894.xml">
 <!ENTITY I-D.ietf-lamps-lightweight-cmp-profile PUBLIC '' 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-lamps-lightweight-cmp-profile.xml'>
 
 ]>
@@ -385,7 +385,7 @@
 		  central support of different enrollment protocols to facilitate the 
 		  capabilities of IEDs from different vendors. The IEC standard 
 		  IEC62351-9 <xref target="IEC-62351-9" /> specifies the mandatory 
-		  support of two enrollment protocols, SCEP <xref target="I-D.gutmann-scep" /> 
+		  support of two enrollment protocols, SCEP <xref target="RFC8894" /> 
 		  and EST <xref target="RFC7030" /> for the infrastructure side, while 
 		  the IED must only support one of the two. 		  
 		</t>
@@ -524,7 +524,7 @@
 				  authentication in the transport layer EST offers the 
 				  support of a wrapping the CSR with an existing certificate 
 				  by using fullcmc.</t> 
-			  <t> SCEP <xref target="I-D.gutmann-scep" />: Provides the 
+			  <t> SCEP <xref target="RFC8894" />: Provides the 
 			      option to utilize either an existing secret (password) or 
 				  an existing certificate to protect the CSR based on 
 				  SCEP Secure Message Objects using CMS wrapping
@@ -1010,13 +1010,19 @@
 		    <list style="symbols">
             <t> Pledge: The pledge is expected to communicate with the pledge- 
 			    agent for providing the necessary data objects for onboarding. 
-				The exact protocol used between the pledge and the pledge-agent 
-				is out of scope for this document but may consider: 
+				The transport protocol used between the pledge and the 
+				pledge-agent in the context of this document is assumed to be 
+				HTTP. Other transport protocols may be used, such as CoAP, but 
+				their usage is out of scope for this document. 
 				If the pledge is triggered/PUSHED by the pledge-agent, it 
-				becomes a callee. There are some differences to BRSKI:
+				becomes a callee. This leads to some differences to BRSKI:
 				<list style="symbols">
-                <t> Discovery of the domain registrar will be omitted as the 
-				    pledge is expected to be triggered by the pledge-agent.</t>
+                <t> Discovery of the domain registrar by the pledge will be 
+				    omitted as the pledge is expected to be triggered by the 
+					pledge-agent.</t>
+				<t> As the pledge-agent must be able to discover the pledge to 
+				    trigger onboarding, the pledge must provide the 
+					communication endpoints. </t>
 				<t> The pledge-agent is expected to provide an option to trigger 
 				    the onboarding by pushing data objects to the pledge. </t>
 				<t> Order of exchanges in the call flow is different as the 
@@ -1033,7 +1039,7 @@
 				registrar is not directly reachable by the pledge, either due 
 				to a different technology stack or due to missing connectivity 
 				(e.g., if the domain registrar resides in the cloud and the 
-				pledge has no connectivity, yet). The pledge-agent in this cases 
+				pledge has no connectivity, yet). The pledge-agent in this case 
 				can easily collect voucher request objects and certification 
 				request objects from one or multiple pledges at once and perform 
 				a bulk onboarding based on the collected data. The pledge-agent 
@@ -1135,16 +1141,19 @@
 			 request.</t>
 		</section>
 
-  	    <section anchor="discovery_uc2" 
+  	    <section anchor="discovery_uc2_reg" 
 	           title="Registrar discovery">
 	    <t> The discovery phase may be applied as specified in 
 		    <xref target="I-D.ietf-anima-bootstrapping-keyinfra" /> with the 
 			deviation that it is done between the pledge-agent and the domain 
-			registrar. Alternatively, the domain registrar may be configured 
-			in the pledge-agent.</t>
-		<t>	The discovery of the pledge-agent by the pledge belongs to the 
-		    communication between the two instances and is out of scope for 
-			this specification.</t>	
+			registrar. Alternatively, the pledge-agent may be configured 
+			with the address of the domain registrar.</t>
+        </section>
+		
+  	    <section anchor="discovery_uc2_ppa"
+	           title="Pledge/Pledge-agent discovery">
+        <t>	The discovery of the pledge and the pledge-agent may be done by 
+		    mDNS.</t>	
         </section>
 
  	    <section anchor="exchanges_uc2" 
@@ -1177,7 +1186,7 @@ a pledge-agent">
   |----Cert Request-->|              |               |             |
   |                   |<---- TLS --->|               |             |
   |                   |              |               |             |
-[Start known BRSKI interaction ]     |               |             |
+[Start BRSKI interaction using authenticated self-contained objects]     
   |                   |              |               |             |
   |                   |--- VouReq -->|               |             |
   |                   |       [accept device?]       |             |
@@ -1204,18 +1213,18 @@ a pledge-agent">
   |                   |              |<--CertResp----|             |
   |                   |<-- CertResp -|               |             |
   |                   |              |               |             |
-[Stop known BRSKI interaction ]      |               |             |
+[Stop BRSKI interaction]             |               |             |
   |                   |              |               |             |
 [push voucher and certificate to pledge, optionally push CA certs] |
   |                   |              |               |             |
   |<---post Voucher---|              |               |             |
   |- Voucher Status-->|              |               |             |
-  |         |              |               |             |
+  |                   |              |               |             |
   |<---post CACerts---|              |               |             |
   |- CACerts Status-->|              |               |             |
   |                   |              |               |             |
   |                   |              |               |             |
-  |<--post CertResp---|              |               |             |
+  |<-trigger CertConf-|              |               |             |
   |---- CertConf ---->|              |               |             |
   |                   |              |               |             |
   |                 [voucher status telemetry ]      |             |
@@ -1477,16 +1486,16 @@ RES: Content
 	      </author>
 	      <date month="April" year="2014"/>
   	    </front>
-	    <seriesInfo name="ISO/IEC" value="15118 "/>
+	    <seriesInfo name="ISO/IEC" value="15118-2 "/>
 	  </reference>
 	  
 	  <reference anchor="OCPP">
 	    <front>
-	      <title>Open Charge Point Protocol 2.0 (Draft) </title>
+	      <title>Open Charge Point Protocol 2.0.1 (Draft) </title>
 	      <author>
 	        <organization>Open Charge Alliance</organization>
 	      </author>
-	      <date month="April" year="2018"/>
+	      <date month="December" year="2019"/>
   	    </front>
 	  </reference>
 
@@ -1498,7 +1507,7 @@ RES: Content
       <?rfc include="reference.RFC.5652" ?>
       <?rfc include="reference.RFC.5785" ?>
 	  <?rfc include="reference.I-D.ietf-lamps-lightweight-cmp-profile" ?>
-      <?rfc include="reference.I-D.gutmann-scep" ?>
+      <?rfc include="reference.RFC.8894" ?>
       <?rfc include="reference.I-D.selander-ace-coap-est-oscore" ?> 
       
     </references>
@@ -1506,12 +1515,20 @@ RES: Content
     <section anchor="app_history" title="History of changes [RFC Editor: please delete]">
       <t> From IETF draft 00 -> IETF 01:
           <list style="symbols">
-		    <t> Clarification in discovery options for enrollment endpoints at 
+		    <t> Update of introduction of use case 2 in <xref target ="uc2" /> 
+				to state that the transport between the pledge and the pledge 
+				agent will be HTTP in the context of this document but may 
+				also be done using other protocols.</t>
+			<t> Introduction of sub section related to the discovery of pledge 
+			    and pledge-agent in use case 2 in 
+				<xref target="discovery_uc2_ppa" /> </t>
+			<t> Clarification in discovery options for enrollment endpoints at 
 			    the domain registrar based on well-known endpoints in  
 				<xref target ="discovery_eo" /> do not result in additional 
 				/.well-known URIs. Update of the illustrative example. 
 				Note that the change to /brski for the voucher related endpoints 
 				has been taken over in the BRSKI main document.</t>
+			<t> Updated references.</t>	
 		  </list>
 	  </t>  
       <t> From individual version 03 -> IETF draft 00:
