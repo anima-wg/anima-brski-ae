@@ -316,6 +316,13 @@
 		  by pledges featuring a different technology stack or by pledges without 
 		  an existing connection to the domain registrar during onboarding.
 		</t>
+		<t>
+          Most importantly, there are use case in which the pledge does not
+		  act in a client role and rather behaves as a server. This means that 
+		  the pledge is not expected to start a communication with the domain 
+		  registrar for onboarding, but is expected to be triggered to provide 
+		  the necessary information.  
+		</t>
         </section>
  
       <section anchor="app-examples" title="Application Examples">
@@ -1514,7 +1521,10 @@ RES: Content
 	
     <section anchor="app_history" title="History of changes [RFC Editor: please delete]">
       <t> From IETF draft 00 -> IETF 01:
-          <list style="symbols">
+          <list style="symbols"> 
+		    <t> Update of scope in <xref target ="sup-env" /> to include in 
+				which the pledge acts as a server. This is one main motivation 
+				for use case 2. </t>
 		    <t> Update of introduction of use case 2 in <xref target ="uc2" /> 
 				to state that the transport between the pledge and the pledge 
 				agent will be HTTP in the context of this document but may 
