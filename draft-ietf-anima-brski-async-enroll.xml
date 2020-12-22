@@ -1724,7 +1724,7 @@ a pledge-agent">
 	  &RFC8174;
 	  
       <?rfc include="reference.RFC.8366" ?>
-
+   
       <?rfc include="reference.I-D.ietf-anima-bootstrapping-keyinfra" ?>
       <?rfc include="reference.I-D.ietf-tls-external-psk-importer" ?>
     </references>
