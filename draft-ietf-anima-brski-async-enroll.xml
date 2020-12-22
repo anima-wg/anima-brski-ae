@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY RFC2119 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC5869 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5869.xml">
 <!ENTITY RFC7030 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7030.xml">
 <!ENTITY RFC7575 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7575.xml">
+<!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 <!ENTITY RFC8894 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8894.xml">
 <!ENTITY I-D.ietf-lamps-lightweight-cmp-profile PUBLIC '' 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-lamps-lightweight-cmp-profile.xml'>
 
@@ -31,7 +33,7 @@
             <country>Germany</country>
         </postal>
         <email>steffen.fries@siemens.com</email>
-		<uri>http://www.siemens.com/</uri>
+		<uri>https://www.siemens.com/</uri>
       </address>
     </author>
 
@@ -46,7 +48,7 @@
             <country>Germany</country>
         </postal>
         <email>hendrik.brockhaus@siemens.com</email>
-		<uri>http://www.siemens.com/</uri>
+		<uri>https://www.siemens.com/</uri>
       </address>
     </author>
 	
@@ -64,6 +66,20 @@
       </address>
     </author>
 
+    <author fullname="Thomas Werner" initials="T." surname="Werner">
+	<organization abbrev="Siemens">Siemens AG</organization>
+      <address>
+        <postal>
+            <street>Otto-Hahn-Ring 6</street>
+            <city>Munich</city>
+            <region>Bavaria</region>
+            <code>81739</code>
+            <country>Germany</country>
+        </postal>
+        <email>thomas-werner@siemens.com</email>
+		<uri>https://www.siemens.com/</uri>
+      </address>
+    </author>
 
     <date year="2020" />
 
@@ -74,12 +90,15 @@
     <abstract>
       <t> This document describes enhancements of bootstrapping a remote secure
           key infrastructure (BRSKI) to also operate in domains featuring no or
-          only timely limited connectivity between involved components.  
-          It addresses connectivity to backend services supporting enrollment
-          like a Public Key Infrastructure (PKI) and also to the connectivity
-          between pledge and registrar.  For this it enhances the use of 
-		  authenticated self-contained objects in BRSKI also for request and 
-		  distribution of deployment domain specific device certificates. 
+          only timely limited connectivity between involved components. 
+		  Moreover, newly introduced are methods to perform the BRSKI approach 
+		  in environments, in which the role of the pledge changes to a server 
+		  instead of the client. This changes the interaction model as the pledge 
+		  is pushed to interact with the registrar instead of pulling 
+		  information from the registrar. To support both, BRSKI-AE relies on 
+		  the exchange of it authenticated self-contained objects (signature-
+		  wrapped objects) also for requesting and distributing of domain 
+		  specific device certificates. 
           The defined approach is agnostic regarding the utilized enrollment 
           protocol allowing the application of existing and potentially new 
           certificate management protocols.</t>
@@ -91,13 +110,13 @@
       <t>
         BRSKI as defined in <xref target="I-D.ietf-anima-bootstrapping-keyinfra" /> 
 		specifies a solution for secure zero-touch (automated) bootstrapping 
-		of devices (pledges) in a target deployment domain. This includes the 
-		discovery of network elements in the deployment domain, time 
+		of devices (pledges) in a deployment domain. This includes the 
+		discovery of network elements in the target domain, time 
 		synchronization, and the exchange of security information necessary 
 		to establish trust between a pledge and the domain and to adopt a 
 		pledge as new network and application element. 
-		Security information about the deployment domain, specifically the 
-		deployment domain certificate (domain root certificate), is exchanged 
+		Security information about the target domain, specifically the 
+		target domain certificate, is exchanged 
 		utilizing voucher objects as defined in <xref target="RFC8366" />. 
 		These vouchers are authenticated self-contained (signed) objects, which 
 		may be provided online (synchronous) or offline (asynchronous) via the 
@@ -106,13 +125,13 @@
 		The MASA signed voucher contains the target domain certificate 
 		and can be verified by the pledge due to the possession 
 		of a manufacturer root certificate. It facilitates the enrollment 
-		of the pledge in the deployment domain and is used to establish trust
+		of the pledge in the target domain and is used to establish trust
 		from the pledge to the domain. 
       </t>
 
       <t> 		
 		For the enrollment of devices BRSKI relies on EST 
-		<xref target="RFC7030" /> to request and distribute deployment domain 
+		<xref target="RFC7030" /> to request and distribute target domain 
 		specific device certificates. EST in turn relies on a binding of the 
 		certification request to an underlying TLS connection between the EST 
 		client and the EST server. According to BRSKI the domain registrar acts
@@ -128,10 +147,9 @@
 		inventory management system performing the authorization decision based 
 		on tuple of the certification request and the pledge authentication 
 		using the IDevID certificate, to issue a domain specific certificate to 
-		the pledge.	The reason bases on the EST server (the domain registrar) 
-		terminating the security association with the pledge and thus the 
-		local binding between the certification request and the authentication 
-		of the pledge.  
+		the pledge.	The EST server (the domain registrar) terminates the security 
+		association with the pledge and thus the binding between the 
+		certification request and the authentication of the pledge via TLS.  
 	    This type of enrollment utilizing an online connection to the PKI 
 		is considered as synchronous enrollment. 	
       </t>
@@ -142,11 +160,12 @@
 		backend and may be provided timely limited or completely through 
 		offline interactions. 
 		This may be due to higher security requirements for operating the 
-		certification authority. The authorization of a certification request 
-		based on an asset management in this case will not / can not be 
-		performed on-site at enrollment time. Enrollment, which cannot be 
-		performed in a (timely) consistent fashion is considered as 
-		asynchronous enrollment in this document. It requires the support of 
+		certification authority or for optimization of operation for smaller 
+		deployments to avoid the always on-site operation. The authorization of 
+		a certification request based on an asset management in this case will 
+		not / can not be performed on-site at enrollment time. Enrollment, 
+		which cannot be performed in a (timely) consistent fashion is considered 
+		as asynchronous enrollment in this document. It requires the support of 
 		a store and forward functionality of certification request together 
 		with the requester authentication information. This enables processing 
 		of the request at a later point in time. 
@@ -168,7 +187,7 @@
 		information:
 		
 		 <list style="symbols">
-            <t> Providing a trusted component (e.g., an LRA) in the deployment 
+            <t> Providing a trusted component (e.g., an LRA) in the target 
    		        domain, which stores the certification request combined with 
 				the requester authentication information (based on the IDevID) 
 				and potentially the information about a successful proof of 
@@ -184,7 +203,7 @@
 				local pledge authentication result and thus performs the 
 				authorization and issues the requested certificate. 
 				In BRSKI the trusted component may be the EST server residing 
-				co-located with the registrar in the deployment domain. </t>
+				co-located with the registrar in the target domain. </t>
 
             <t> Utilization of authenticated self-contained objects for the 
 			    enrollment, binding the certification request and the 
@@ -204,21 +223,24 @@
 		handling authenticated self-contained objects for enrollment. As it is 
 		intended to enhance BRSKI it is named BRSKI-AE, where AE stands for 
 		asynchronous enrollment. As BRSKI, BRSKI-AE results in the pledge 
-		storing a X.509 root certificate sufficient for verifying the domain 
-		registrar / proxy identity (LDevID CA Certificate) as well as an domain 
+		storing an X.509 root certificate and sufficient for verifying the domain 
+		registrar / proxy identity (LDevID CA Certificate) as well as a domain 
 		specific X.509 device certificate (LDevID EE certificate).			
       </t>
 
       <t>                   
 		Based on the proposed approach, a second set of scenarios can be 
-		addressed, in which the pledge has no direct communication path to the 
-		domain registrar, e.g., due to no network connectivity or a different 
-		technology stack as the domain registrar, but is considered to be 
-		managed by the domain registrar regarding the pledge domain credentials.
+		addressed, in which the pledge has either no direct communication path 
+		to the domain registrar, e.g., due to missing network connectivity or a 
+		different technology stack. In such scenarios the pledge is likely to act 
+		as a server rather than a client. It will be pushed (triggered) by the 
+		registrar or an intermediate component to generate request objects to 
+		be onboarded in the registrar's domain. 
 		For this, an additional component is introduced acting as an agent for 
 		the pledge towards the domain registrar, e.g., a commissioning tool. 
-		In contrast to BRSKI here the credentials may be pushed to the pledge 
-		instead of the pull approach taken by BRSKI.		
+		In contrast to BRSKI here the objects to trigger a request generation 
+		and the responses are pushed to the pledge instead of being pulled as 
+		done in BRSKI.		
       </t>
 
       <t>		
@@ -227,12 +249,13 @@
 		to be applied or to allow other types of encoding for the certificate 
 		management information exchange. This is addressed by
 		<list style="symbols">
-		    <t> enhancing the well-known URI approach with additional path' 
+		    <t> enhancing the well-known URI approach with an additional path 
 			    for the utilized enrollment protocol.</t>
 			<t> defining a certificate waiting indication and handling, if the 
 			    certifying component is (temporarily) not available.</t>
 			<t> allowing to utilize credentials different from the pledge's 
-			    IDevID  to establish a connection to the domain registrar.</t>	
+			    IDevID to establish a TLS connection to the domain registrar, 
+				which is necessary in case of using a pledge-agent.</t>	
 		  </list>
       </t>
       <t>
@@ -245,14 +268,12 @@
 	</section>
     
     <section title="Terminology">
-        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-        "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-        "OPTIONAL" in this document are to be interpreted as described in
-        <xref target="RFC2119"></xref>.</t>
-
-        <t>This document relies on the terminology defined in 
-		<xref target="I-D.ietf-anima-bootstrapping-keyinfra" />. The following 
-		terms are defined additionally:</t>
+        <t> The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", 
+		    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this 
+			document are to be interpreted as described in BCP 14 
+			<xref target="RFC2119"></xref> <xref target="RFC8174"></xref> when, 
+			and only when, they appear in all capitals, as shown here. 
+			The following terms are defined additionally:</t>
 
         <t>
           <list style="hanging">
@@ -269,8 +290,8 @@
 			   functionality available in the target deployment domain. </t>
             <t hangText="off-site:">Describes a component or service or 
                functionality available in an operator domain different from 
-			   the target deployment domain. This may be a central side,
-			   to which only a temporarily connection is available, or which 
+			   the target deployment domain. This may be a central site,
+			   to which only a temporary connection is available, or which 
 			   is in a different administrative domain. </t>
 			<t hangText="asynchronous communication:">Describes a timely 
 			   interrupted communication between an end entity and a PKI 
@@ -280,10 +301,10 @@
 			   component. </t>  			   
 			<t hangText="authenticated self-contained object:">Describes an 
 			   object, which is cryptographically bound to the IDevID EE 
-			   credential of a pledge. The binding is assumed to be provided 
+			   certificate of a pledge. The binding is assumed to be provided 
 			   through a digital signature using the corresponding private key 
 			   of the IDevID to wrap the actual object. Note that depending
-			   on the availability of a LDevID EE credential, the binding may 
+			   on the availability of an LDevID EE credential, the binding may 
 			   also be achieved using corresponding private key of the LDevID. 
 			   This can be utilized in for instance in the context of an initial 
 			   certification request or a certificate update.</t>    
@@ -297,31 +318,32 @@
           This solution is intended to be used in domains with limited support 
 		  of on-site PKI services and comprises use cases in which:
 		<list style="symbols">
-            <t> there is no registration authority available in the deployment 
-                domain. The connectivity to the backend RA may only be 
-				temporarily available. A local store and forward device is 
-				used for the communication with the backend services. </t>				
+            <t> there is no registration authority available in the target 
+                domain. The connectivity to an off-site RA in an operator's 
+				network may only be available temporarily. A local store and 
+				forward device is used for the communication with the off-site 
+				services. </t>				
             <t> authoritative actions of a LRA are limited and may not comprise 
 			    authorization of certification requests of pledges. Final 
-				authorization is done at the RA residing in the backend operator 
+				authorization is done at the RA residing in the operator 
                 domain. </t>
-            <t> the target deployment domain already uses a certificate 
-			    management approach that shall be reused to be consistent 
-				throughout the life cycle. </t>
+            <t> the target deployment domain already has an established 
+			    certificate management approach that shall be reused to (e.g., 
+				in brownfield installations). </t>
 		</list>	 
       
           In addition, the solution is intended to be applicable in domains 
 		  in which pledges have no direct connection to the domain registrar, 
 		  but are expected to be managed by the registrar. This can be motivated 
 		  by pledges featuring a different technology stack or by pledges without 
-		  an existing connection to the domain registrar during onboarding.
-		</t>
-		<t>
-          Most importantly, there are use case in which the pledge does not
-		  act in a client role and rather behaves as a server. This means that 
-		  the pledge is not expected to start a communication with the domain 
-		  registrar for onboarding, but is expected to be triggered to provide 
-		  the necessary information.  
+		  an existing connection to the domain registrar during onboarding. 
+		  These pledges are likely to act in a server role. Therefore, the 
+		  pledge needs to provide endpoints on which it can be triggered for 
+		  requesting the generation of voucher-request objects and certification 
+		  objects as well as to provide the response objects to the pledge. 
+		  here the pledge is not expected to start a communication with the 
+		  domain registrar for onboarding, but is expected to be pushed for the 
+		  interaction.  
 		</t>
         </section>
  
@@ -337,14 +359,14 @@
         <section title="Rolling stock">
 		<t>
 		  Rolling stock or railroad cars contain a variety of sensors, 
-		  actuators, and controller, which communicate within the railroad car 
-		  but also exchange information between railroad cars building a train 
+		  actuators, and controllers, which communicate within the railroad car 
+		  but also exchange information between railroad cars building a train, 
 		  or with a backend. These devices are typically unaware of backend 
 		  connectivity. Managing certificates may be done during maintenance 
 		  cycles of the railroad car, but can already be prepared during 
 		  operation. The preparation may comprise the generation of certification 
-		  requests by the components, which are collected and forwarded for 
-		  processing once the railroad car is connected to the operator backend.
+		  requests by the components which are collected and forwarded for 
+		  processing, once the railroad car is connected to the operator backend.
 		  The authorization of the certification request is then done based on 
 		  the operator's asset/inventory information in the backend. 
 		</t>
@@ -352,7 +374,7 @@
 		   
         <section title="Building automation">
 		<t>
-		  In building automation a use case can be described by a detached 
+		  In building automation, a use case can be described by a detached 
 		  building or the basement of a building equipped with sensor, 
 		  actuators, and controllers connected, but with only limited or no 
 		  connection to the centralized building management system. This 
@@ -372,22 +394,22 @@
 		  connectivity to the backend PKI may be facilitated by the service 
 		  technician's laptop.  
 		  Contrary, the information can also be collected from the 
-		  pledges directly and provided to a domain registrar deployed in the 
-		  main network. In this cases connectivity to the domain registrar may 
-		  be facilitated by the service technician's laptop. 
+		  pledges directly and provided to a domain registrar deployed in a 
+		  different network. In this cases connectivity to the domain registrar 
+		  may be facilitated by the service technician's laptop. 
 		</t>
 
 		</section>		
 		  
 		<section title="Substation automation">
 		<t>
-		  In substation automation a control center typically hosts PKI 
-		  services to issue certificates for Intelligent Electronic Devices 
-		  (IED)s in a substation. Communication between the substation and 
-		  control center is done through a proxy/gateway/DMZ, which 
-		  terminates protocol flows. Note that NERC CIP-005-5 
-		  <xref target="NERC-CIP-005-5" /> requires inspection of protocols at 
-		  the boundary of a security perimeter (the substation in this case).
+		  In electrical substation automation a control center typically hosts 
+		  PKI services to issue certificates for Intelligent Electronic Devices 
+		  (IED)s operated in a substation. Communication between the substation 
+		  and control center is done through a proxy/gateway/DMZ, which 
+		  terminates protocol flows. Note that <xref target="NERC-CIP-005-5" /> 
+		  requires inspection of protocols at the boundary of a security 
+		  perimeter (the substation in this case).
 		  In addition, security management in substation automation assumes 
 		  central support of different enrollment protocols to facilitate the 
 		  capabilities of IEDs from different vendors. The IEC standard 
@@ -406,8 +428,8 @@
 		  as well as between the charging point and the charging point operator  
 		  (e.g. OCPP <xref target="OCPP" />). Depending on the authentication 
 		  model, unilateral or mutual authentication is required. In both cases 
-		  the charging point authenticates uses an X.509 certificate to 
-		  authenticate in the context of a TLS connection between the EV and 
+		  the charging point uses an X.509 certificate to authenticate itself 
+		  in the context of a TLS connection between the EV and 
 		  the charging point. The management of this certificate depends 
 		  (beyond others) on the selected backend connectivity protocol. 
 		  Specifically, in case of OCPP it is intended as single communication 
@@ -417,9 +439,7 @@
 		  intended to be handled in-band of OCPP. This requires to be able to 
 		  encapsulate the certificate management exchanges in a transport 
 		  independent way. Authenticated self-containment will ease this by 
-		  allowing the transport without a separate communication protocol. 
-		  For the purpose of certificate management CMP <xref target="RFC4210" />
-		  is intended to be used. 
+		  allowing the transport without a separate enrollment protocol. 
 		</t>
         </section>	
 
@@ -434,7 +454,7 @@
 		</t>
         </section>	
 		
-		<section title="Less operational security in the deployment domain">
+		<section title="Less operational security in the target domain">
 		<t>
 	      The registration point performing the authorization of a certificate 
 		  request is a critical PKI component and therefore implicates higher 
@@ -443,7 +463,7 @@
 		  security in the registration procedures. Especially the CA/Browser 
 		  forum currently increases the security requirements in the certificate 
 		  issuance procedures for publicly trusted certificates. 
-		  There may be the situation that the deployment domain does not offer 
+		  There may be the situation that the target domain does not offer 
 		  enough security to operate a registration point and therefore wants 
 		  to transfer this service to a backend.
 		</t>
@@ -458,7 +478,7 @@
 			certification request. If the domain registrar is the authorization 
 			point, BRSKI can be used directly. Note that BRSKI-AE could also 
 			be used in this case. </t>
-		<t> Based on the intended deployment environment described in 
+		<t> Based on the intended target environment described in 
 		    <xref target="sup-env" /> and the motivated application examples 
 		    described in <xref target="app-examples" /> the following 
 		    base requirements are derived to support authenticated self-contained 
@@ -507,10 +527,10 @@
 		
         <t> Proof of Identity options: The certification request should be 
 		    bound to an existing credential (here IDevID) to enable a proof 
-			of identity and based on it an the authorization of the 
-			certification request. 
-			The binding may be realized through a security options in an 
-			underlying transport protocol if the authorization of the  the 
+			of identity and based on it an authorization of the certification 
+			request. 
+			The binding may be realized through security options in an 
+			underlying transport protocol if the authorization of the  
 			certification request is done at the next communication hop.
 			Alternatively, this binding can be done by a wrapping signature 
 			employing an existing credential (initial: IDevID, 
@@ -528,9 +548,9 @@
 				  the proof of identity can be provided by the binding to 
 				  the TLS session. This is supported in EST using 
 				  simpleenroll. To avoid the binding to the underlying 
-				  authentication in the transport layer EST offers the 
+				  authentication in the transport layer, EST offers the 
 				  support of a wrapping the CSR with an existing certificate 
-				  by using fullcmc.</t> 
+				  by using Full PKI Request messages.</t> 
 			  <t> SCEP <xref target="RFC8894" />: Provides the 
 			      option to utilize either an existing secret (password) or 
 				  an existing certificate to protect the CSR based on 
@@ -563,8 +583,8 @@
         </t>	
 	  </list>
 		         
-      Note that besides the already existing enrollment protocols there 
-      ongoing work in the ACE WG to define an encapsulation of EST in 
+      Note that besides the already existing enrollment protocols there is
+      ongoing work in the ACE WG to define an encapsulation of EST messages in 
       OSCORE to result in a TLS independent way of protecting EST. This 
       approach <xref target="I-D.selander-ace-coap-est-oscore" /> may be  
 	  considered as further variant. </t>
@@ -578,19 +598,17 @@
 		  <list style="symbols">
 				  <t> Use case 1 (PULL case): the pledge requests certificates 
 				      from a PKI operated off-site via the domain registrar.</t>
-				  <t> Use case 2 (PUSH/PULL case): allows delayed (delegated) 
+				  <t> Use case 2 (PUSH case): allows delayed (delegated) 
 				      onboarding using a pledge-agent instead a direct 
-					  connection to the domain registrar. The communication 
-					  model between pledge-agent and pledge depends on the 
-					  specified interface and may use a PULL or PUSH approach. 
-					  This interaction in terms of a protocol specification is 
-					  out of scope of this document. </t>  
+					  connection to the domain registrar. The communication model
+					  between pledge-agent and pledge is intended to use a 
+					  PUSH approach in which the pledge acts as a server. </t>  
 		  </list>
 		  Note that the terminology PUSH and PULL relates to the pledge 
 		  behavior. In PULL the pledge requests data objects as in BRSKI, while 
-		  in the PUSH case the pledge may be provisioned with the necessary 
-		  data objects. The pledge-agent as it represents the pledge always acts 
-		  in a PULL mode to the domain registrar.
+		  in the PUSH case the pledge is in the server role and will be provided 
+		  with the data objects. The pledge-agent, as it represents the pledge, 
+		  is expected to act in a PULL mode towards the domain registrar.
 		  Both use cases are described in the next subsections. They utilize 
 		  the existing BRSKI architecture elements as much as possible. 
 		  Necessary enhancements to support authenticated self-contained objects 
@@ -602,7 +620,7 @@
 		  of the enrollment protocols stated in <xref target="req-sol" /> 
 		  above. </t>		  
 	  
-      <section anchor="uc1" title="Use Case 1: Support of off-site PKI service">
+      <section anchor="uc1" title="Use Case 1 (PULL): Support of off-site PKI service">
         <t> One assumption of BRSKI-AE is that the authorization of a 
 		    certification request is performed based on an authenticated 
 		    self-contained object, binding the certification request to the 
@@ -663,7 +681,7 @@
 		  This is to underline the authorization decision for the certification 
 		  request in the backend rather than on-site.
 		    
-		  The following list describes the components in the deployment domain: 
+		  The following list describes the components in the target domain: 
 		  <list style="symbols">
             <t> Join Proxy: same functionality as described in BRSKI. </t>
 
@@ -672,7 +690,7 @@
 				imprinting of the pledge in the deployment domain to facilitate 
 				the communication of the pledge with the MASA and the PKI. 
 				Different is the authorization of the certification 
-				request. BRSKI-AE allows to perform this in the operators 
+				request. BRSKI-AE allows to perform this in the operator's 
 				backend (off-site), and not directly at the domain registrar. 
 				<list style="symbols">
 				<t> Voucher exchange: The voucher exchange with the MASA  via 
@@ -688,7 +706,7 @@
 					RA to perform the authorization. The domain registrar in 
 					this acts as an enrollment proxy or local registration 
 					authority. It is also able to handle the case having 
-					temporarily no connection to an off-site PKI by storing the 
+					no connection temporarily to an off-site PKI, by storing the 
 					certification request and forwarding it to the RA upon 
 					regaining connectivity. 
 					As authenticated self-contained objects are used, it 
@@ -707,12 +725,14 @@
 		  The following list describes the vendor related components/service 
 		  outside the deployment domain: 
 		  <list style="symbols">
-            <t> MASA: general functionality as described in BRSKI. 
-			    Assumption that the interaction with the MASA may be synchronous 
-				(voucher request with nonce) or asynchronous (voucher request 
-				without nonce).  </t>
+            <t> MASA: general functionality as described in 
+			    <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />. 
+				Assumption is that the interaction with the MASA may be 
+				synchronous (voucher request with nonce) or asynchronous 
+				(voucher request without nonce).  </t>
 				
-			<t> Ownership tracker: as defined in BRSKI. </t>
+			<t> Ownership tracker: as defined in 
+			    <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />. </t>
 		  </list>
 		  
 		  The following list describes the operator related components/service 
@@ -740,7 +760,7 @@
             <t> Discovery phase (same as BRSKI) </t>
             <t> Voucher exchange with deployment domain registrar 
 			   (same as BRSKI). </t>
-            <t> Enrollment phase (changed to accompany the application of 
+            <t> Enrollment phase (changed to support the application of 
 			    authenticated self-contained objects). </t>
 		  </list>
         </t>
@@ -838,7 +858,8 @@
             <t> CA Cert Request: The pledge SHOULD request the full distribution 
 			    of CA Certificates. This ensures that the pledge has the 
 				complete set of current CA certificates beyond the 
-				pinned-domain-cert. </t>
+				pinned-domain-cert (which may be the domain registrar certificate 
+				contained in the voucher). </t>
             <t> CA Cert Response: Contains at least one CA certificate of 
 			    the issuing CA. </t>
             <t> Attribute Request: Typically, the automated bootstrapping occurs 
@@ -859,7 +880,7 @@
 				certificates of intermediary CAs on the certification path. </t>
             <t> Cert Waiting: waiting indication for the pledge to retry 
 			    after a given time. For this a request identifier is necessary. 
-				This request identifier may bei either part of the enrollment 
+				This request identifier may be either part of the enrollment 
 				protocol or build based on the certification request.</t>
 			<t> Cert Polling: querying the registrar, if the certificate request 
 			    was already processed; can be answered either with another 
@@ -930,7 +951,7 @@
 		
 
 	  
-      <section anchor="uc2" title="Use Case 2: pledge-agent">
+      <section anchor="uc2" title="Use Case 2 (PUSH): pledge-agent">
        <t>	  
 		  To support mutual trust establishment of pledges, not directly 
 		  connected to the domain registrar, a similar approach is applied as 
@@ -947,9 +968,9 @@
 		  functionality of a commissioning tool. This leads to enhancements 
 		  of the logical elements in the BRSKI architecture as shown in 
 		  <xref target="uc2figure" />. 
-		  The pledge-agent provides an interface to the pledge to enable  
-		  creation or consumption of required data objects, which are exchanged 
-		  with the domain registrar. Moreover, the addition of the pledge-agent 
+		  The pledge-agent interfaces with the pledge to enable creation or 
+		  consumption of required data objects, which are exchanged with the 
+		  domain registrar. Moreover, the addition of the pledge-agent 
 		  also influences the sequences for the data exchange between the pledge 
 		  and the domain registrar described in 
 		  <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />.  
@@ -992,22 +1013,19 @@
 </figure>
 
         <t> The architecture overview in <xref target="uc2figure" /> utilizes 
-		    the same logical elements as BRSKI with the addition of the 
-			pledge-agent.
-			The pledge-agent, may originate from the pledge manufacturer and 
-			may have either an own IDevID credential issued by the manufacturer 
-			or an LDevID issued already by the deployment (on-site) domain. </t>
+		    the same logical components as BRSKI with the pledge-agent component 
+			as additional component. </t>
 				
 		<t> For authentication towards the domain registrar, the pledge-agent 
-			may use the IDevID or LDevID credentials, which are verified by the 
-			domain registrar as part of the TLS establishment. 
+			may use the IDevID or LDevID credentials if available, which are 
+			verified by the domain registrar as part of the TLS establishment. 
 			The provisioning of this credential to the pledge-agent is out of 
 			scope for this specification. Alternatively, the domain registrar 
 			may authenticate the user operating the pledge-agent to perform 
-			authorization of pledge onboarding. Examples for such a user level 
-			authentication are the application of HTTP authentication or 
-			the usage of SAML tokens or the application of a user related 
-			certificates in the TLS handshake or other. 
+			authorization of a pledge onboarding action. Examples for such 
+			user level authentication are the application of HTTP authentication 
+			or the usage of authorization tokens or the application of user 
+			related certificates in the TLS handshake or other. 
 	
 			If the pledge-agent utilizes a certificate, the domain registrar 
 			must be able to verify the certificate by possessing the 
@@ -1015,28 +1033,32 @@
 		    
 		<t> The following list describes the components in the deployment domain: 
 		    <list style="symbols">
-            <t> Pledge: The pledge is expected to communicate with the pledge- 
-			    agent for providing the necessary data objects for onboarding. 
+            <t> Pledge: The pledge is expected to respond the necessary data 
+			    objects for bootstrapping to the pledge-agent. 
 				The transport protocol used between the pledge and the 
 				pledge-agent in the context of this document is assumed to be 
 				HTTP. Other transport protocols may be used, such as CoAP, but 
 				their usage is out of scope for this document. 
-				If the pledge is triggered/PUSHED by the pledge-agent, it 
+				As the pledge is triggered/PUSHED by the pledge-agent, it 
 				becomes a callee. This leads to some differences to BRSKI:
 				<list style="symbols">
                 <t> Discovery of the domain registrar by the pledge will be 
 				    omitted as the pledge is expected to be triggered by the 
 					pledge-agent.</t>
-				<t> As the pledge-agent must be able to discover the pledge to 
-				    trigger onboarding, the pledge must provide the 
-					communication endpoints. </t>
+                <t> Discovery of the pledge by the pledge-agent must be possible
+				    to enable interaction.</t>
+				<t> As the pledge-agent must be able to trigger the pledge for 
+     				bootstrapping, the pledge must offer communication endpoints. </t>
 				<t> The pledge-agent is expected to provide an option to trigger 
-				    the onboarding by pushing data objects to the pledge. </t>
-				<t> Order of exchanges in the call flow is different as the 
-				    pledge-agent collects both voucher request objects and 
-					certification request objects at once. </t>
-				<t> The data objects utilized are the same objects already 
-				    applied in use case 1 <xref target="uc1" />. </t>	
+				    the bootstrapping by pushing data objects to the pledge. </t>
+				<t> Order of exchanges in the call flow is different as 
+				    the pledge-agent collects both voucher request objects and 
+					certification request objects at once and provides them to
+					the registrar. This approach may also be used to perform a 
+					bulk bootstrapping of several devices. </t>
+				<t> The data objects utilized for the data exchange between 
+				    the pledge and the registrar are signature-wrapped objects 
+					as in use case 1 <xref target="uc1" />. </t>	
 			    </list>		
 			</t>
 				
@@ -1046,20 +1068,33 @@
 				registrar is not directly reachable by the pledge, either due 
 				to a different technology stack or due to missing connectivity 
 				(e.g., if the domain registrar resides in the cloud and the 
-				pledge has no connectivity, yet). The pledge-agent in this case 
-				can easily collect voucher request objects and certification 
-				request objects from one or multiple pledges at once and perform 
-				a bulk onboarding based on the collected data. The pledge-agent 
-				may be configured with the domain registrar information or may 
-				use the discovery mechanism defined in 
-				<xref target="I-D.ietf-anima-bootstrapping-keyinfra" />.</t>
+				pledge has no connectivity, yet). The pledge-agent collect 
+				the bootstrapping information such as voucher request objects and 
+				certification request objects from one or multiple pledges at 
+				once and performs a bulk bootstrapping based on the collected data. 
+				The pledge-agent triggers the pledge for generating these objects. 
+				The pledge-agent may be configured with the domain registrar 
+				information or may use the discovery mechanism defined in 
+				<xref target="I-D.ietf-anima-bootstrapping-keyinfra" />.
+				The trust assumptions on the connection between the pledge and 
+				the pledge-agent only require to ensure proximity between both
+				to provide a minimum protection of arbitrary request to generate 
+				voucher request objects and/or enrollment request objects. 
+				The trust assumptions on the connection between the pledge-agent 
+				and the registrar only requires that the pledge-agent enables 
+				the exchange of signature wrapped objects between the pledge 
+				and the registrar.</t>
 
-            <t> Join Proxy: same functionality as described in BRSKI. </t>
+            <t> Join Proxy: same functionality as described in 
+			    <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />. Note 
+				that it may be used by the pledge-agent instead of the pledge.</t>
 
             <t> Domain Registrar: In general the domain registrar fulfills the 
-			    same functionality regarding the onboarding of the pledge in 
+			    same functionality regarding the bootstrapping of the pledge in 
 				the deployment domain by facilitating the communication of the 
-				pledge with the MASA and the PKI. In contrast to BRSKI, the 
+				pledge with the MASA service and the domain PKI service. In 
+				contrast to 
+				<xref target="I-D.ietf-anima-bootstrapping-keyinfra" />, the 
 				domain registrar does not interact with a pledge directly but 
 				through the pledge-agent. This prohibits a pledge authentication 
 				using its IDevID during TLS establishment towards the registrar. 
@@ -1069,105 +1104,314 @@
 		  </list>	 
  		  
 		 The manufacturer provided components/services (MASA and Ownership 
-		 tracker) are used as defined in BRSKI. 
+		 tracker) are used as defined in 
+		 <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />. 
 		</t>
 
         <section title="Behavior of a pledge">
-        <t> The behavior of a pledge as described for use case 1 
-		    <xref target="uc1" /> is basically kept regarding the generation of 
-		    voucher request/response objects and certificate request/response 
-			objects. Due to the use of the pledge-agent, the interaction with 
-			the domain registrar is changed as shown in 
-			<xref target="exchangesfig_uc2" />. </t>
-			
-	    <t> The interaction of the pledge with the pledge-agent in terms of 
-		    utilized protocols or discovery options is out of scope of this 
-			document. This document concentrates on the exchanged data objects 
-			between the pledge and the domain registrar via the pledge-agent.</t>  
-			
-		<t> The pledge-agent should be able to authenticate the pledge-agent 
-		    either based on security mechanisms as part of the communication 
-			channel between the pledge and the pledge-agent or based on the 
-			data (request) objects. </t>
-			
-		<t>	The pledge-agent should provide the proximity-registrar-cert
-			to the pledge to enable embedding in the voucher request object. The 
-			registrar certificate may be configured at the pledge-agent or may 
-			be fetched by the pledge-agent based on the TLS connection 
-			establishment with the domain registrar. </t>
-			
-		<t> The pledge interacts with the pledge-agent, to generate a voucher 
-		    request object (VouReq) and a certification request object (CR), 
-			which are provided to the domain registrar through the 
-			pledge-agent. </t>
-		
-		<t> The pledge shall generate the voucher request object as described in 
-		    <xref target="I-D.ietf-anima-bootstrapping-keyinfra" /> and provide 
-			this information to the pledge-agent. </t>
-		
-		<t>	After the voucher request exchange the pledge will be triggered by 
-		    to generate a certification request object. For this, the 
-			pledge-agent may have been pre-configured with the certification 
-			request attributes, that it may provide to the pledge. 
-			The certification request is generated as authenticated 
-			self-signed object, which assures proof of possession of the private 
-			key corresponding to the contained public key in the certification 
-			request as well as a proof of identity, based on the IDevID 
-			of the pledge. This is done as described for use case 1 
-			<xref target="uc1" />. </t>
+        <t> In contrast to use case 1 <xref target="uc1" /> the pledge acts as
+		    a server component if data is pushed in the bootstrapping phase. 
+			It is triggered by the pledge-agent for the generation of voucher 
+			request and enrollment request objects as well as for the processing 
+			of the response objects and the generation of status information. 
+			Due to the use of the pledge-agent, the interaction with the domain 
+			registrar is changed as shown in 
+			<xref target="exchangesfig_uc2" />.	
+			To enable interaction with the pledge-agent, the pledge provides 
+			interfaces using the BRSKI REST interface based on the 
+			"/.well-known/brski" URI tree. 
+			The following endpoints are defined for the pledge: 
+
+ 			<list style="symbols">
+                <t> /.well-known/brski/triggervoucherrequest: trigger pledge to 
+				    create voucher request.</t>
+                <t> /.well-known/brski/triggerenrolltrequest: trigger pledge to 
+				    create enrollment request.</t>
+				<t> /.well-known/brski/supplyvoucherresponse: supply voucher 
+				    response to pledge. </t>
+				<t> /.well-known/brski/supplyenrollresponse: supply enroll 
+				    response to pledge. </t>
+				<t> /.well-known/brski/supplyCACerts: supply CACerts to 
+				    pledge (optional). </t>
+			</list>		
+		</t>
+			 
 		</section>
 		
 		<section title="Behavior of a pledge-agent">
         <t> The pledge-agent is a new component in the BRSKI context. It 
 		    provides connectivity between the pledge and the domain registrar 
-			and utilizes the endpoints already specified in 
-		    <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />.
+			and utilizes the endpoints on the domain registrar side already 
+			specified in <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />.
 			The pledge-agent is expected to interact with the pledge independent 
-			of the domain registrar. As stated before, data exchange is only 
-			defined based on the data objects, which are the voucher 
-			request/response objects and the certification request/response 
-			objects. The transport mechanism is out of scope here. 
-			This changes the general interaction as shown in 
+			of the domain registrar. As stated before, the data exchange concerns 
+			the data objects exchanged between the pledge and the domain registrar, 
+			which are the voucher request/response objects, the enrollment 
+			request/response objects, as well as status information. As the 
+			pledge acts as server, it has to provide endpoints to allow for 
+			request/response interaction. For the transport HTTPS is chosen in 
+			non-constraint environments, but may also be performed using 
+			other transport mechanisms. This changes the general interaction 
+			between the pledge and the domain registrar as shown in 
 			<xref target="exchangesfig_uc2" />. </t>
 			
 		 <t> The pledge-agent may have an own IDevID or a deployment domain 
 		     issued LDevID to be utilized in the TLS communication 
 			 establishment towards the domain registrar. Note that the 
-			 pledge-agent may also be used without client side authentication 
-			 if no suitable credential is available on transport layer. 
-			 As BRSKI-AE utilizes authenticated self-contained data objects, 
-			 which bind the pledge authentication (proof of identity) directly 
-			 to the objects (voucher request and certification request), the 
-			 TLS client authentication may be neglected. 
-			 This is a deviation from the BRSKI approach in which the pledge's 
-			 IDevID credential is used to perform TLS client authentication. 
+			 pledge-agent may also be used without TLS client-side authentication 
+			 if no suitable credential is available. This is a deviation from 
+			 BRSKI, in which the pledge's IDevID credential is used to perform 
+			 TLS client authentication. As BRSKI-AE targets the use of 
+			 authenticated self-contained data objects between the pledge and 
+			 the domain registrar, the binding of the pledge identity to the 
+			 requests can be achieved through the data object signature.
+			 Nevertheless, the authentication of the pledge-agent is recommended
+			 if the onboarding is only to be performed by an authorized 
+			 pledge-agent. This authentication may be realized by a device 
+			 (IDevID or LDevID), and if not available through user related 
+			 credentials in the context of the HTTP based authentication, 
+			 SAML tokens or other. Note that having no specific credentials on the pledge-agent allows to employ applications with low trust 
+			 requirements. </t>
 			 			 
-			 According to <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />
+		 <t> According to <xref target="I-D.ietf-anima-bootstrapping-keyinfra" />
 			 section 5.3, the domain registrar performs the pledge authorization 
 			 for onboarding within his domain based on the provided voucher 
 			 request.</t>
+
+			<section anchor="discovery_uc2_reg" 
+				   title="Registrar discovery">
+			<t> The discovery phase may be applied as specified in 
+				<xref target="I-D.ietf-anima-bootstrapping-keyinfra" /> with the 
+				deviation that it is done between the pledge-agent and the domain 
+				registrar. Alternatively, the pledge-agent may be configured 
+				with the address of the domain registrar.</t>
+			</section>
+			
+			<section anchor="discovery_uc2_ppa"
+				   title="Pledge/Pledge-agent discovery">
+			<t>	The discovery of the pledge by pledge-agent is done by mDNS.
+				The pledge constructs a local host name based on device local 
+				information (device serial number), which results for instance 
+				in "serialnumber.brski-pledge._tcp.local.". This can then be 
+				discovered by the pledge-agent via mDNS. Note that other 
+				mechanisms for discovery may be used.</t>	
+			</section>
 		</section>
-
-  	    <section anchor="discovery_uc2_reg" 
-	           title="Registrar discovery">
-	    <t> The discovery phase may be applied as specified in 
-		    <xref target="I-D.ietf-anima-bootstrapping-keyinfra" /> with the 
-			deviation that it is done between the pledge-agent and the domain 
-			registrar. Alternatively, the pledge-agent may be configured 
-			with the address of the domain registrar.</t>
-        </section>
 		
-  	    <section anchor="discovery_uc2_ppa"
-	           title="Pledge/Pledge-agent discovery">
-        <t>	The discovery of the pledge and the pledge-agent may be done by 
-		    mDNS.</t>	
-        </section>
+        <section title="Protocol Details (Pledge-Agent - Pledge)">			
+	    <t> The interaction of the pledge with the pledge-agent may be 
+		    accomplished using different transport means (protocols and or 
+			network technologies). For this document the usage of HTTP is 
+			targeted as in BRSKI. Alternatives may be CoAP or Bluetooth Low 
+			Energy (BLE) or Nearfield Communication (NFC). This requires an 
+			independence of the security of the exchanged data objects between 
+			the pledge and the registrar from the security provided by the 
+			transport. Therefore, signature-wrapped objects build the base for 
+			the information exchange between the pledge and the registrar. 
+			Note that trigger messages from the pledge-agent may not be signed 
+			as the pledge has no means to verify them. Therefore, TLS support is 
+			required to ensure a secure transport based on a proximity 
+			information shared between the pledge-agent and the pledge. This is 
+			done to ensure that a technician had physical contact to the 
+			pledge. </t>
+			
+        <section anchor="TLS-establishment" title="TLS establishment ">			
+		<t> The pledge and the pledge-agent establish a TLS secured communication 
+		    channel. As the IDevID on the pledge cannot be used as TLS server 
+			certificate, a pre-shared key (PSK) is applied.</t>
+		<t> TLS <xref target="RFC8446" /> allows to import externally provided 
+		    PSKs. The use of an external PSK is defined based on the guidelines 
+			provided in <xref target="I-D.ietf-tls-external-psk-guidance" /></t>
+			
+		<t> The PSK is derived from information known to the pledge and the 
+		    pledge-agent, which are
 
- 	    <section anchor="exchanges_uc2" 
-	           title="Handling voucher request and certification requests">
-	    <t> The BRSKI-AE exchange of voucher requests and certification requests 
-		    utilizes authenticated self-contained objects independent of 
-			transport protection.</t>
+			<list style="hanging">
+				<t> device serial-number: Device serial number stored in the 
+				    pledge and also part of the X520SerialNumber (defined in 
+					<xref target="RFC5280" />) as part of the IDevID.</t>
+				<t> randomizer: additional value, which is not exposed on the 
+					communication interface of the pledge. This information may
+					be provided through the bill of material or a QR code 
+					attached to the device and must have a length of at least 
+					128 bits. </t>
+			</list>		
+		</t>
+		
+		<t>	The pledge and the pledge-agent construct the PSK to be used in TLS 
+		    based on a HMAC-based Extract-and-Expand Key Derivation Function 
+			(HKDF, <xref target="RFC5869" />.). The PSK is derived following the 
+			external PSK importer 
+			<xref target="I-D.ietf-tls-external-psk-importer" />. The interface 
+			takes an EPSK (External PSK) with an external identity and a base 
+			key (epsk) as input. The external identity is provided as part of the 
+			ImportedIdentity structure containing information:  </t>
+			
+		<t> <list style="hanging">
+				<t> ImportedIdentity.external_identity = "onboarding"</t> 
+				<t> ImportedIdentity.context = "brski_proximity"</t> 
+				<t> ImportedIdentity.target_protocol = 0x0304 </t> 
+				<t> ImportedIdentity.target_kdf = 0x0001</t> 
+			</list>
+		</t>		
+		<t> The target protocol identified is TLS 1.3 (value 0x0304). 
+		    The target KDF identified is HKDF_SHA256 (value 0x0001). </t> 
+
+		<t> The base key is determined as following: </t>
+		<t> <list style="hanging">
+				<t> epsk = serial-number | randomizer </t>
+				<t> epskx = HKDF-Extract(0, epsk) </t>
+				<t> ipskx = HKDF-Expand-Label(epskx, "derived psk",
+                    Hash(ImportedIdentity), 32) </t>
+			</list>
+		</t>
+		<t> The length value of the HKDF-Expand function is set to 32 octets 
+		    corresponds to the output length of the selected KDF. </t>
+				
+		<t> TLS shall be used with the derived IPSK with </t>
+		<t> <list style="hanging">
+				<t> TLS key agreement: "psk_dhe_ke"</t>
+				<t> TLS cipher suite: TLS_AES_128_GCM_SHA256 </t>
+			</list>		
+		</t> 
+        </section>			
+		
+        <section anchor="object-exchange" title="Object exchange">
+		
+		<t>	The pledge-agent provides the registrar certificate to the pledge 
+		    to be put into the "proximity-registrar-cert" leaf in the pledge 
+			voucher-request object. This enables the registrar to verify, that 
+			it is the target registrar for the request.
+			The registrar certificate may be configured at the pledge-agent or 
+			may be fetched by the pledge-agent based on a prior TLS connection 
+			establishment with the domain registrar. The pledge-agent triggers 
+			the pledge, to generate a pledge voucher-request object (PleVouReq)
+			. </t>
+
+		<t>	Triggering is done using HTTPS POST with the operation path value of
+            "/.well-known/brski/triggervoucherrequest". </t>
+			
+        <t> The pledge-agent triggervoucherrequest Content-Type header is:</t>
+		
+        <t> application/json: /* to be defined */(different format used as 
+		    response): 
+		    defines a JSON document to provide the registrar certificate to 
+			the pledge. The pledge shall construct the voucher request object 
+			as defined <xref target="I-D.ietf-anima-bootstrapping-keyinfra" /> 
+			and sign the request using the pledges IDevID credential.
+			The response is encoded as JSON-in-JWS  (or JWS-signed-JSON, tbd). </t>
+		
+		<t>	After the voucher request exchange the pledge will be triggered  
+		    to generate an enrollment request object. As in BRSKI the enrollment 
+			request object is a PKCS#10 request, with an additional wrapping 
+			signature using the IDevID. As the initial enrollment aims to request 
+			a general certificate, no certificate attributes are provided to 
+			the pledge. </t>
+			
+		<t>	/* Discussion: The pledge-agent may have been pre-configured with 
+			the CSR attributes, that it could provide to the pledge to request 
+			a specific certificate (for a communication endpoint on the pledge. 
+			This is expected to be done later, once  the pledge has an LDevID 
+			and can be further configured. */ </t> 
+			
+		<t>	The enrollment request is generated as authenticated 
+			self-signed object, which assures proof of possession of the private 
+			key corresponding to the contained public key in the enrollment 
+			request as well as a proof of identity, based on the IDevID 
+			of the pledge. This is done as described for use case 1 
+			<xref target="uc1" />. </t>
+			
+		<t> The pledge-agent enrollment-request Content-Type header is:</t>
+		
+        <t> application/json: to be defined (different format used as response): 
+		    defines a JSON document. Optional CSR parameter may be provided to 
+			the pledge. The pledge shall construct the certification request as 
+			PKCS#10 object and sign the request using the pledge's IDevID 
+			credential. The response is encoded as PKCS#10-in-JSON/JWS (tbd).
+			If the pledge does not have specific information about the content 
+			of the LDevID to be applied for (like device name, etc.) the domain 
+			registrar will provide this information to the issuing CA. </t>
+		
+		<t>	/* to be discussed */
+			The domain registrar may either enhance the PKCS#10 request or 
+			generate a structure containing the attributes to be included by 
+			the CA and sends both (the original PKCS#10 request and the 
+			enhancements) to the domain CA. As enhancing the PKCS#10 request 
+			destroys the initial proof of possession of the corresponding 
+			private key, the CA would need to accept RA-verified requests.</t>
+			
+		<t> With the collected voucher request object and the enrollment 
+			request object, the pledge-agent starts the interaction with the 
+			domain registrar. If the domain registrar is in a different network, 
+			the pledge-agent closes the TLS session with the pledge (to be 
+			resumed for provisioning of voucher object and certificate. </t>
+			
+		<t> /* further description necessary at least for */ </t>
+		<t> <list style="symbol">
+				<t> Consideration of TLS session resumption for the second run</t>
+				<t> Authentication of pledge-agent to domain registrar </t>
+				<t> Behavior of registrar when pledge LDevID not used in TLS </t>
+				<t> Values to be taken from the IDevID into the PKCS#10 
+				    (like pledge serial number or subjectName, or certificate 
+					template) </t>
+				<t> PKCS#10-in-JSON/JWS (tbd) handling by domain registrar to 
+				    request a generic LDevID from the domain CA service.</t>
+				<t> Order of requests may be different as in BRSKI </t>
+				<t> Definition of objects and encoding, some existing encoding 
+				    may change as for the voucher?  </t>
+			</list>
+		</t>
+		
+		<t> Once the pledge-agent has collected the response objects from the 
+		    domain registrar (voucher and certificate), it will re-start the 
+			interaction the pledge. For this the pledge-agent resumes the 
+			previous TLS connection with the pledge. </t>
+        
+		<t> The pledge-agent will provide the information via two distinct 
+		    endpoints at the pledge:</t>
+			
+		<t>	The voucher response will be provided with a HTTPS POST using the 
+		    operation path value of "/.well-known/brski/supplyvoucherresponse". 
+			</t>
+        <t> The pledge-agent voucher-response Content-Type header is:</t>
+		
+        <t> application/jose: /* to be discussed, as the current 
+		    voucher is a "application/voucher-cms+json" object). */ The pledge 
+			will generate a voucher status object and provides it in the response. 
+			The response is encoded as JSON-in-JWS ("application/jose"), signed 
+			by the IDevID of the pledge (LDevID not available yet). </t>
+
+		<t>	The enrollment response will be provided with a HTTPS POST using the 
+		    operation path value of "/.well-known/brski/supplyenrollresponse". </t>
+			
+        <t> The pledge-agent enroll-response Content-Type header is:</t>
+		
+        <t> application/pkcs7-mime: to be defined (contains LDevID + certificate 
+		    chain).</t>
+		
+		<t> /* to be discussed */: the enrollment response object may also be an 
+		    application/jose object with a signature of the domain registrar. 
+			This may be used either to transport additional data which is bound 
+			to the LDevID or it may be considered for enrollment status to 
+			ensure that in an error case the registrar providing the certificate 
+			can be identified. </t>
+	    
+		<t> The pledge will generate an enrollment status object as confirmation, 
+			showing it can apply the certificate and possesses the corresponding 
+			private key </t>
+			
+		<t> The response ist encoded as JSON-in-JWS. The signature is created 
+		    using the LDevID of the pledge. </t>
+			
+		</section>
+		</section>
+		
+
+ 	    <section anchor="exchanges_uc2" title="Protocol flow">
+	    <t> The following protocol description assumes an already established 
+		    TLS channel as described in <xref target="TLS-establishment" /> and 
+			focuses on the exchange of signature wrapped objects using endpoints 
+			defined for the pledge in <xref target="object-exchange" /></t>
 			
 <figure anchor="exchangesfig_uc2" title="Request handling of the pledge using 
 a pledge-agent">
@@ -1179,21 +1423,22 @@ a pledge-agent">
 +--------+      +-------+    +-----------+   +--------+   +---------+
   |                   |              |               |    Internet | 
   |       opt: configure             |               |             |
-  |       - proximity-registrar-cert |               |             |
-  |       - CSR attributes           |               |             |
+  |       - registrar-certificate    |               |             |
+  |       - optional CSR attributes  |               |             |
+  |                   |              |               |             |
+  |<TLS Establishment>|              |               |             |
   |                   |              |               |             |
 [example: trigger voucher and certification request generation ]   |
   |                   |              |               |             |
-  |<--trigger VouReq--|              |               |             |
-  |(o: proximity-cert)|              |               |             |
+  |<-trigger PleVouReq|              |               |             |
+  |  (registrar-cert) |              |               |             |
   |- Voucher Request->|              |               |             |
   |                   |              |               |             |
-  |<--trigger CR------|              |               |             |
-  |(o: attributes)    |              |               |             |
+  |<--trigger ER------|              |               |             |
+  |                   |              |               |             |
   |----Cert Request-->|              |               |             |
   |                   |<---- TLS --->|               |             |
   |                   |              |               |             |
-[Start BRSKI interaction using authenticated self-contained objects]     
   |                   |              |               |             |
   |                   |--- VouReq -->|               |             |
   |                   |       [accept device?]       |             |
@@ -1214,25 +1459,22 @@ a pledge-agent">
   |                   |              |<-CACertResp --|             |
   |                   |< CACertResp -|               |             |
   |                   |              |               |             |
-[certification request]              |               |             |
+[certification request handling pledge-agent and infrastructure]   |        
   |                   |-- CertReq -->|               |             |
   |                   |              |-- CertReq --->|             |
   |                   |              |<--CertResp----|             |
   |                   |<-- CertResp -|               |             |
   |                   |              |               |             |
-[Stop BRSKI interaction]             |               |             |
   |                   |              |               |             |
 [push voucher and certificate to pledge, optionally push CA certs] |
   |                   |              |               |             |
-  |<---post Voucher---|              |               |             |
+  | < TLS Resumption >|              |               |             |
+  |                   |              |               |             |
+  |<--supply Voucher--|              |               |             |
   |- Voucher Status-->|              |               |             |
   |                   |              |               |             |
-  |<---post CACerts---|              |               |             |
-  |- CACerts Status-->|              |               |             |
-  |                   |              |               |             |
-  |                   |              |               |             |
-  |<-trigger CertConf-|              |               |             |
-  |---- CertConf ---->|              |               |             |
+  |<---supply Cert----|              |               |             |
+  |-- Enroll Status-->|              |               |             |
   |                   |              |               |             |
   |                 [voucher status telemetry ]      |             |
   |                   |VoucherStatus>|               |             |
@@ -1246,73 +1488,52 @@ a pledge-agent">
 </figure>
 
 	    <t> As shown in <xref target="exchangesfig_uc2" /> the pledge-agent  
-			collects the voucher request and certification request objects from 
-			a pledge. As the pledge-agent (e.g., as part of a commissioning 
-			tool) is intended to work between the pledge and the domain 
-			registrar, a collection of requests from multiple pledges is 
-			possible, allowing a bulk onboarding of multiple pledges using the 
-			connection between the pledge-agent and the domain registrar. </t>
+			collects the voucher request and enrollment request objects from 
+			a pledge. As the pledge-agent is intended to work between the 
+			pledge and the domain registrar, a collection of requests from 
+			multiple pledges is possible, allowing a bulk bootstrapping of 
+			multiple pledges using the connection between the pledge-agent 
+			and the domain registrar. </t>
 		
 		<t> The information exchange between the pledge-agent and the domain 
 			registrar resembles the exchanges between the pledge and the domain 
-			registrar from BRSKI with one exception. As authenticated 
-			self-contained objects are used consequently, the authentication of 
-			the pledge-agent to the domain registrar may be neglected. 
-			Note that this allows to employ simple applications as 
-			pledge-agent.
-			The authentication of the pledge-agent is recommended if it is 
-			desired to perform the onboarding with an authorized pledge-agent 
-			or to support advanced auditing in case a user based authentication 
-			is done. 
-			As stated above, the authentication may be realized by device 
-			(IDevID or LDevID) or user related credentials in the context of the
-			TLS	handshake, HTTP based authentication, SAML tokens or other. </t>
+			registrar from BRSKI in the PULL case. </t>
 		
 		<t> [RFC Editor: please delete] /* to be discussed: 
 		    Description on how the registrar makes the decision if he is 
-			connected with  pledge directly or with a pledge-agent. 
-			This may result in a case statement (client side authentication in 
+			connected with  pledge directly (as in BRSKI PULL) or with a 
+			pledge-agent (PUSH). 
+			This may result in a case statement (client-side authentication in 
 			TLS, user authentication above TLS, etc.) for the TLS connection 
 			establishment in the original BRSKI document in section 5.1 */ </t>	
 		   
 		<t>	Once the pledge-agent has finished the exchanges with the 
-			domain registrar to get the voucher and the certificate object, 
+			domain registrar to get the voucher object and the enrollment object, 
 			it can close the TLS connection to the domain registrar and 
-			provide the objects to the pledge(s). The transport of the objects 
-			to the pledge is out of scope. The content of the response objects 
-			is defined through the voucher <xref target="RFC8366" /> and the 
-			certificate <xref target="RFC5280" />. </t>		
+			provide the objects to the pledge(s). The content of the response 
+			objects is defined through the voucher <xref target="RFC8366" /> 
+			and the certificate <xref target="RFC5280" />. </t>		
 		</section>
 	  </section>
 	  
-      <section anchor="discovery_eo" title="Discovery of supported enrollment options at domain registrar">
-        <t> Well-know URIs for different endpoints on the domain registrar are 
+      <section anchor="discovery_eo" title="Domain registrar support of different enrollment options">
+        <t> Well-known URIs for different endpoints on the domain registrar are 
 		    already defined as part of the base BRSKI specification. In 
-			addition, alternative enrollment endpoint at the domain registrar
-			may be supported. The discovery of supported endpoints can therefore 
-			provide information to the pledge, how to contact the domain 
-			registrar.</t>
-			  
-        <t> Querying the registrar, the pledge will get a list of potential 
-		    endpoints supported by the domain registrar. Performing a 
-			GET on "/.well-known" to the default port returns a set of links 
-			to endpoints available from the server. In addition to the link 
-			also the expected format of the data object is provided as content 
-			type (ct).</t>
-			  
+			addition, alternative enrollment endpoints may be supported at the 
+			domain registrar. The pledge / pledge-agent will recognize if its 
+			supported enrollment option is supported by the domain registrar 
+			by sending a request to its preferred enrollment endpoint.</t>
+			  			  
         <t> The following provides an illustrative example for a domain 
 		    registrar supporting different options for EST as well as 
 		    CMP to be used in BRSKI-AE. The listing contains the supported 
-			endpoints for the onboarding: </t>
-		  
-		<t> REQ: GET /.well-known</t>
+			endpoints for the bootstrapping, to which the pledge may connect. This 
+			includes the voucher handling as well as the enrollment endpoints. </t>
 		  
         <figure>
 <artwork name="" type="" align="left" alt=""><![CDATA[
-RES: Content
   </brski/voucherrequest>,ct=voucher-cms+json  
   </brski/voucher_status>,ct=json  
-  </brski/requestauditlog>,ct=json  
   </brski/enrollstatus>,ct=json  
   </est/cacerts>;ct=pkcs7-mime
   </est/simpleenroll>;ct=pkcs7-mime
@@ -1333,25 +1554,27 @@ RES: Content
 		<t> [RFC Editor: please delete] /* </t>
 		<t> Open Issues:
 		 <list style="symbols">
- 	       <t> Change path from /est to /brski to be protocol agnostic -> addressed in BRSKI?</t>
- 	       <t> Define new well-know URI as above or reuse core approach as 
-		       described in RFC 6690 with /.well-known/core and the already 
-			   defined functionality?, nein, da BRSKI-AE BRSKI erweitert, hier 
-			   erstmal nur /-well-known, wenn der Client herausfinden moechte, 
-			   was der Domain registrar unterstuetzt. </t>
+ 	       <t> Clarify, if /.well-known discovery can be performed as 
+		       discussed in the design team (usage of GET /.well-known/brski 
+			   to collect information about enrollment specific endpoint support, 
+			   to be specified in a separate draft). Also, is a discovery option 
+			   necessary at all, as the pledge will most likely implement only 
+			   one enrollment option? It can be helpful in the pledge-agent use 
+			   case, when the pledge-agent has no information about the 
+			   supported enrollment options (less likely). </t>
 	       <t> In addition to the current content types, we may specify that 
 			   the response provide information about different content types
                as multiple values. This would allow to further adopt the 
 			   encoding of the objects exchanges (ASN.1, JSON, CBOR, ...).
-			   -> would be app to the utilized protocol. </t>
+			   -> dependent on the utilized protocol. </t>
          </list>
 	    */
         </t>
       </section>
     </section>
        
-	<section anchor="exist_prot" title="Example mappings to existing enrollment protocols">
-	  <t> This sections maps the requirements to support proof of possession and 
+	<section anchor="exist_prot" title="Example for signature-wrapping using existing enrollment protocols">
+	  <t> This sections map the requirements to support proof of possession and 
 	      proof of identity to selected existing enrollment protocols.
 	      Note that that the work in the ACE WG described in 
 	      <xref target="I-D.selander-ace-coap-est-oscore" /> may be considered 
@@ -1360,17 +1583,17 @@ RES: Content
 	      an authenticated self-contained object. </t>		
 
 	  <section title="EST Handling">
-	    <t> When using EST <xref target="RFC7030" />, the following constrains 
+	    <t> When using EST <xref target="RFC7030" />, the following constraints 
 		    should be considered:</t>
 	    <t>
 	     <list style="symbols">
 	       <t> Proof of possession is provided by using the specified PKCS#10 
 		       structure in the request. </t>
 		   <t> Proof of identity is achieved by signing the certification 
-		       request object, which is only supported when the /fullcmc 
-			   endpoint is used. This contains sufficient information for 
-			   the RA to make an authorization decision on the received 
-			   certification request.
+		       request object, which is only supported when Full PKI Request 
+			   (the /fullcmc endpoint) is used. This contains sufficient 
+			   information for the RA to make an authorization decision on the 
+			   received certification request.
 			   Note: EST references CMC <xref target="RFC5272" /> for the 
 			   definition of the Full PKI Request. For proof of identity, the 
 			   signature of the SignedData of the Full PKI Request would be 
@@ -1382,7 +1605,7 @@ RES: Content
 			   Registrar. The pledge in this case would retry a simpleenroll 
 			   with a PKCS#10 request. Note that if the TLS connection is teared 
 			   down for the waiting time, the PKCS#10 request would need to be 
-			   rebuild if it contains the unique identifier (tls_unique) from 
+			   rebuilt if it contains the unique identifier (tls_unique) from 
 			   the underlying TLS connection for the binding. </t>
 		   <t> [RFC Editor: please delete] /* TBD: clarification of retry for 
 		       fullcmc is necessary as not specified in the context of EST */ </t>
@@ -1417,6 +1640,21 @@ RES: Content
 
     <section title="IANA Considerations">
       <t>This document requires the following IANA actions:</t>
+	  
+	  <t> IANA is requested to enhance the Registry entitled: "BRSKI well-
+		  known URIs" with the following: </t>
+		  
+      <figure>
+<artwork name="" type="" align="left" alt=""><![CDATA[
+  URI                    document   description
+  triggervoucherrequest  [THISRFC]   create voucher request
+  triggerenrolltrequest  [THISRFC]   create enrollment request
+  supplyvoucherresponse  [THISRFC]   supply voucher response
+  supplyenrollresponse   [THISRFC]   supply enrollment response
+  supplyCACerts          [THISRFC]   supply CA certs
+]]></artwork>
+	  </figure>
+	  
       <t> [RFC Editor: please delete] /* 
 	    to be done: IANA consideration to be included for the defined namespaces 
 	    in <xref target="addressing" /> and <xref target="discovery_eo" /> .
@@ -1432,10 +1670,43 @@ RES: Content
     </section>
 
     <section title="Security Considerations">
-      <t> [RFC Editor: please delete] /* 
-	    to be done: clarification necessary
-		*/
-      </t>
+	  <section title="Exhaustion attack on pledge">
+	  <t> Exhaustion attack on pledge based on DoS attack (connection 
+	      establishment, etc.) </t>
+	  </section>
+		
+	  <section title="PSK usage in TLS establishment">
+	  <t> TLS is used to provide a proximity 
+	      information to the pledge. As the devices in scope may not feature an 
+		  input or output interface for local interaction, a PSK is use to 
+		  establish the connection between the pledge and the pledge-agent. 
+		  Certificate based authentication of the pledge cannot be used, as the 
+		  device does not have the appropriate information contained in the 
+		  IDevID. The PSK is build using a KDF, which uses the serial number 
+		  of the device, potential further device related information and a 
+		  randomizer value. This information is stored within the pledge and is 
+		  also part of product information (also an QR code attached to the 
+		  device). If a potential attacker is able to physically access the 
+		  device, he may read this information and is to connect to the pledge. 
+		  Without physical proximity to the device, to capture the QR code 
+		  information, the attacker may guess the device' serial number but 
+		  will not be able to construct the PSK as the randomizer value is 
+		  not known.</t>
+	  </section>
+	  
+	  <section title="Misuse of acquired voucher and enrollment responses">
+	  <t> Pledge-agent that uses acquired voucher and enrollment response for 
+	      domain 1 in domain 2: can be detected in Voucher Request processing 
+		  on domain registrar side. Requires domain registrar to verify the 
+		  proximity-registrar-cert leaf in the voucher request against his own 
+		  as well as the association of the pledge to his domain based on the 
+		  serial number contained in the voucher.</t>
+	  
+	  <t> Misbinding of pledge by a faked domain registrar is countered as 
+	      described in BRSKI security considerations (section 11.4).</t>
+		  
+	  </section>
+
     </section>
 
     <section title="Acknowledgments">
@@ -1450,10 +1721,12 @@ RES: Content
     <references title="Normative References">
       &RFC2119;
       &RFC7030;
+	  &RFC8174;
 	  
       <?rfc include="reference.RFC.8366" ?>
-	  
+   
       <?rfc include="reference.I-D.ietf-anima-bootstrapping-keyinfra" ?>
+      <?rfc include="reference.I-D.ietf-tls-external-psk-importer" ?>
     </references>
 
     <references title="Informative References">
@@ -1513,9 +1786,12 @@ RES: Content
       <?rfc include="reference.RFC.5280" ?>
       <?rfc include="reference.RFC.5652" ?>
       <?rfc include="reference.RFC.5785" ?>
+      <?rfc include="reference.RFC.5869" ?>
 	  <?rfc include="reference.I-D.ietf-lamps-lightweight-cmp-profile" ?>
+      <?rfc include="reference.RFC.8446" ?>
       <?rfc include="reference.RFC.8894" ?>
       <?rfc include="reference.I-D.selander-ace-coap-est-oscore" ?> 
+      <?rfc include="reference.I-D.ietf-tls-external-psk-guidance" ?>
       
     </references>
 	
@@ -1525,13 +1801,11 @@ RES: Content
 		    <t> Update of scope in <xref target ="sup-env" /> to include in 
 				which the pledge acts as a server. This is one main motivation 
 				for use case 2. </t>
-		    <t> Update of introduction of use case 2 in <xref target ="uc2" /> 
-				to state that the transport between the pledge and the pledge 
-				agent will be HTTP in the context of this document but may 
-				also be done using other protocols.</t>
-			<t> Introduction of sub section related to the discovery of pledge 
-			    and pledge-agent in use case 2 in 
-				<xref target="discovery_uc2_ppa" /> </t>
+		    <t> Rework of use case 2 in <xref target ="uc2" /> to consider the 
+				transport between the pledge and the pledge-agent. Addressed is 
+				the TLS channel establishment between the pledge-agent and the 
+				pledge as well as the endpoint definition on the pledge. </t>
+			<t> First description of exchanged object types (needs more work)</t>
 			<t> Clarification in discovery options for enrollment endpoints at 
 			    the domain registrar based on well-known endpoints in  
 				<xref target ="discovery_eo" /> do not result in additional 
@@ -1539,6 +1813,7 @@ RES: Content
 				Note that the change to /brski for the voucher related endpoints 
 				has been taken over in the BRSKI main document.</t>
 			<t> Updated references.</t>	
+			<t> Included Thomas Werner as additional author for the document. </t> 
 		  </list>
 	  </t>  
       <t> From individual version 03 -> IETF draft 00:
