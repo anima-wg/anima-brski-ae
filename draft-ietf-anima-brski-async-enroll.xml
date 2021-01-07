@@ -7,7 +7,7 @@
 <!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 <!ENTITY RFC8894 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8894.xml">
 <!ENTITY I-D.ietf-lamps-lightweight-cmp-profile PUBLIC '' 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-lamps-lightweight-cmp-profile.xml'>
-
+<!ENTITY I-D.ietf-lamps-lightweight-cmp-profile PUBLIC '' 'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-lamps-cmp-updates.xml'>
 ]>
 
 <rfc category="std" docName="draft-ietf-anima-brski-async-enroll-01" ipr="trust200902">
@@ -81,7 +81,7 @@
       </address>
     </author>
 
-    <date year="2020" />
+    <date year="2021" />
 
     <area>Operations and Management</area>
 
@@ -211,9 +211,7 @@
 				reduces the necessary trust in a domain component to storage 
 				and delivery. Unauthorized modifications of the requester 
 				information (request and authentication) can be detected during 
-				the verification of the authenticated self-contained object. 
-				An example for such an object is a signed CMS wrapped object 
-				(as the voucher).</t>
+				the verification of the authenticated self-contained object. </t>
 		</list>
       </t>
 
@@ -302,12 +300,8 @@
 			<t hangText="authenticated self-contained object:">Describes an 
 			   object, which is cryptographically bound to the IDevID EE 
 			   certificate of a pledge. The binding is assumed to be provided 
-			   through a digital signature using the corresponding private key 
-			   of the IDevID to wrap the actual object. Note that depending
-			   on the availability of an LDevID EE credential, the binding may 
-			   also be achieved using corresponding private key of the LDevID. 
-			   This can be utilized in for instance in the context of an initial 
-			   certification request or a certificate update.</t>    
+			   through a digital signature of the actual object using the 
+			   corresponding private key of the IDevID. </t>    
           </list>
 		</t>
     </section>
@@ -486,11 +480,14 @@
 		    information to support asynchronous operation. </t>
    	    <t> At least the following properties are required:
 			<list style="symbols">
-			  <t> Proof of Possession: utilizing the private key corresponding 
-			      to the public key contained in the certification request. </t> 
-			  <t> Proof of Identity: utilizing an existing IDevID credential 
-			      bound to the certification request. Certificate updates may 
-				  utilize the LDevID credential.</t> 
+			  <t> Proof of Possession: proves to possess and control the private 
+			      key corresponding to the public key contained in the 
+				  certification request, typically by addind a signature using 
+				  the private key. </t> 
+			  <t> Proof of Identity: provides data-origin authentication of a 
+			      data object, e.g., a certificate request, utilizing an existing 
+				  IDevID. Certificate updates may utilize the certificate that 
+				  is to be updated.</t> 
 		    </list>
 	
 			Solution examples (not complete) based on existing technology are 
@@ -566,11 +563,9 @@
 				  encoded utilizing CRMF. PKCS#10 is optionally supported.
 				  The proof of identity of the PKIMessage containing the 
 				  certification request can be achieved by using IDevID 
-				  credentials to calculate a signature over the header 
-				  and the body of the PKIMessage utilizing the protectionAlg 
-				  signaled in the PKIMessage header and the PKIProtection 
-				  carrying the actual signature value. CMP therefore does 
-				  not rely on the security of an underlying transport.</t> 
+				  credentials to a PKIProtection carrying the actual signature 
+				  value. CMP therefore does not rely on the security of an 
+				  underlying transport protocol.</t> 
 			  <t> CMC <xref target="RFC5272" /> Provides the option to 
 			      utilize either an existing secret (password) or an 
 				  existing certificate to protect the certification request 
@@ -701,23 +696,25 @@
 					adoption of the pledge in the domain based on the voucher 
 					request. Nevertheless, it may not have sufficient 
 					information for authorizing the certification request. 
-					If the authorization is done in the off-site domain, the 
-					domain registrar forwards the certification request to the 
-					RA to perform the authorization. The domain registrar in 
-					this acts as an enrollment proxy or local registration 
-					authority. It is also able to handle the case having 
-					no connection temporarily to an off-site PKI, by storing the 
-					certification request and forwarding it to the RA upon 
-					regaining connectivity. 
+					If the authorization of the certification request is done 
+					in the off-site domain, the domain registrar forwards the 
+					certification request to the RA to perform the authorization. 
+					Note that this requires, that the certification request object 
+					is enhanced with a proof-of-identity to allow the authorization 
+					based on the bound identity information of the pledge. As 
+					stated above, this can be done by an additional signature 
+					using the IDevID. 
+					The domain registrar here acts as an enrollment proxy or 
+					local registration authority. It is also able to handle the 
+					case having no connection temporarily to an off-site PKI, 
+					by storing the authenticated certification request and 
+					forwarding it to the RA upon reestablished connectivity. 
 					As authenticated self-contained objects are used, it 
 					requires an enhancement of the domain registrar. This is 
 					done by supporting alternative enrollment approaches 
 					(protocol options, protocols, encoding) by enhancing the 
 					addressing scheme to communicate with the domain registrar
-					(see <xref target="addressing" />) and also by providing 
-					a discover scheme to allow the pledge to enumerate the 
-					supported enrollment options (see 
-					<xref target="discovery_eo" />).</t>
+					(see <xref target="addressing" />).</t>
 				</list>
 			</t>
 		  </list>	 
@@ -795,15 +792,8 @@
 	    <section anchor="enroll" 
 			   title="Pledge - Registrar - RA/CA certificate enrollment">
 	    <t> As stated in <xref target="req-sol" /> the enrollment shall be 
-		    performed using an authenticated self-contained object providing:
-			<list style="symbols">
-			  <t> Proof of Possession: utilizing the private key corresponding 
-			      to the public key contained in the certification request. </t> 
-			  <t> Proof of Identity: utilizing the existing IDevID credential 
-			      to generate a signature of the initial certification request.
-			      Certificate updates may utilize the LDevID credential.</t> 
-		    </list>
-		</t>
+		    performed using an authenticated self-contained object providing
+			proof of possession and proof of identity. </t>
  
 <figure anchor="enrollfigure" title="Certificate enrollment">
 <artwork name="" type="" align="left" alt=""><![CDATA[  
@@ -832,7 +822,7 @@
   |              [if connection to operator domain is available] |
   |                                         |--- Cert Request -->|
   |                                         |<-- Cert Response --|
-[Optional Certification waiting indication] |                    |
+[Optional Certificate waiting indication]   |                    |
   /-->                                      |                    |
   |<---------- Cert Waiting ----------------|                    |
   |-- Cert Polling (with orig request ID) ->|                    |
@@ -842,7 +832,7 @@
   /-->                                      |                    |
   |<------------- Cert Response ------------|                    |
   /-->                                      |                    |
-[Certification confirmation]                |                    |
+[Certificate confirmation]                  |                    |
   |-------------- Cert Confirm ------------>|                    |
   |                                         /-->                 |
   |                                         |[optional]          |
@@ -914,7 +904,7 @@
 			(see also <xref target="exist_prot" />). 
             For the support of different enrollment options at the domain 
 		    registrar, the addressing approach of BRSKI using a "/.well-known" 
-			tree from <xref target="RFC5785" /> is enhanced.
+			tree from <xref target="RFC8615" /> is enhanced.
 		</t>
 		<t>	The current addressing scheme in BRSKI for the client certificate 
 		    request function during the enrollment is using the definition from 
@@ -934,10 +924,10 @@
 				    <xref target="RFC7030" /> as in BRSKI or 
 					CMP, CMC, SCEP, or newly defined approaches as alternatives. 
 					Note: the IANA registration of the well-known URI is 
-					expected to be done by the enrollment protocol. For CMP a 
-					lightweight profile is defined, which provides the 
-					definition of the well-known URI in 
-					<xref target="I-D.ietf-lamps-lightweight-cmp-profile">
+					expected to be done by the enrollment protocol. For CMP an 
+					update is defined, which provides the 
+					definition of the well-known URI in CMP Updates 
+					<xref target="I-D.ietf-lamps-cmp-updates">
 					Lightweight CMP Profile</xref>. </t>
             	<t> request: depending on the utilized enrollment protocol, 
             	    the request describes the required operation at the 
@@ -1125,7 +1115,7 @@
  			<list style="symbols">
                 <t> /.well-known/brski/triggervoucherrequest: trigger pledge to 
 				    create voucher request.</t>
-                <t> /.well-known/brski/triggerenrolltrequest: trigger pledge to 
+                <t> /.well-known/brski/triggerenrollrequest: trigger pledge to 
 				    create enrollment request.</t>
 				<t> /.well-known/brski/supplyvoucherresponse: supply voucher 
 				    response to pledge. </t>
@@ -1648,7 +1638,7 @@ a pledge-agent">
 <artwork name="" type="" align="left" alt=""><![CDATA[
   URI                    document   description
   triggervoucherrequest  [THISRFC]   create voucher request
-  triggerenrolltrequest  [THISRFC]   create enrollment request
+  triggerenrollrequest   [THISRFC]   create enrollment request
   supplyvoucherresponse  [THISRFC]   supply voucher response
   supplyenrollresponse   [THISRFC]   supply enrollment response
   supplyCACerts          [THISRFC]   supply CA certs
@@ -1711,8 +1701,9 @@ a pledge-agent">
 
     <section title="Acknowledgments">
       <t> We would like to thank the various reviewers for their input, in
-          particular Brian E. Carpenter, Giorgio Romanenghi, Oskar Camenzind, 
-		  for their input and discussion on use cases and call flows.
+          particular Brian E. Carpenter, Michael Richardson, Giorgio Romanenghi, 
+		  Oskar Camenzind, for their input and discussion on use cases and 
+		  call flows. 
       </t>
     </section>
   </middle>
@@ -1785,10 +1776,11 @@ a pledge-agent">
       <?rfc include="reference.RFC.5272" ?>
       <?rfc include="reference.RFC.5280" ?>
       <?rfc include="reference.RFC.5652" ?>
-      <?rfc include="reference.RFC.5785" ?>
       <?rfc include="reference.RFC.5869" ?>
 	  <?rfc include="reference.I-D.ietf-lamps-lightweight-cmp-profile" ?>
+	  <?rfc include="reference.I-D.ietf-lamps-cmp-updates" ?>
       <?rfc include="reference.RFC.8446" ?>
+      <?rfc include="reference.RFC.8615" ?>
       <?rfc include="reference.RFC.8894" ?>
       <?rfc include="reference.I-D.selander-ace-coap-est-oscore" ?> 
       <?rfc include="reference.I-D.ietf-tls-external-psk-guidance" ?>
