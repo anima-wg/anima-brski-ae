@@ -2411,16 +2411,16 @@ registrar-agent">
 
   <back>
     <references title="Normative References">
-      <?rfc include="reference.RFC.2119" ?>
-	  <?rfc include="reference.RFC.6762" ?>
-      <?rfc include="reference.RFC.6763" ?>
-	  <?rfc include="reference.RFC.7030" ?>
-	  <?rfc include="reference.RFC.7515" ?>
-	  <?rfc include="reference.RFC.8174" ?>
-      <?rfc include="reference.RFC.8366" ?>
-      <?rfc include="reference.RFC.8995" ?>
-	  <?rfc include="reference.I-D.richardson-anima-jose-voucher" ?>
-	  <?rfc include="reference.I-D.ietf-netconf-sztp-csr" ?>
+      <?rfc include="reference.RFC.2119.xml" ?>
+      <?rfc include="reference.RFC.6762.xml" ?>
+      <?rfc include="reference.RFC.6763.xml" ?>
+      <?rfc include="reference.RFC.7030.xml" ?>
+      <?rfc include="reference.RFC.7515.xml" ?>
+      <?rfc include="reference.RFC.8174.xml" ?>
+      <?rfc include="reference.RFC.8366.xml" ?>
+      <?rfc include="reference.RFC.8995.xml" ?>
+      <?rfc include="reference.I-D.richardson-anima-jose-voucher.xml" ?>
+      <?rfc include="reference.I-D.ietf-netconf-sztp-csr.xml" ?>
     </references>
 
     <references title="Informative References">
@@ -2485,16 +2485,16 @@ registrar-agent">
   	    </front>
 	  </reference>
 
-      <?rfc include="reference.RFC.2986" ?>
-      <?rfc include="reference.RFC.4210" ?>
-      <?rfc include="reference.RFC.4211" ?>
-      <?rfc include="reference.RFC.5272" ?>
-      <?rfc include="reference.RFC.5280" ?>
-      <?rfc include="reference.RFC.5652" ?>
-	  <?rfc include="reference.I-D.ietf-lamps-lightweight-cmp-profile" ?>
-	  <?rfc include="reference.I-D.ietf-lamps-cmp-updates" ?>
-      <?rfc include="reference.RFC.8894" ?>
-      <?rfc include="reference.I-D.selander-ace-coap-est-oscore" ?>
+      <?rfc include="reference.RFC.2986.xml" ?>
+      <?rfc include="reference.RFC.4210.xml" ?>
+      <?rfc include="reference.RFC.4211.xml" ?>
+      <?rfc include="reference.RFC.5272.xml" ?>
+      <?rfc include="reference.RFC.5280.xml" ?>
+      <?rfc include="reference.RFC.5652.xml" ?>
+      <?rfc include="reference.I-D.ietf-lamps-lightweight-cmp-profile.xml" ?>
+      <?rfc include="reference.I-D.ietf-lamps-cmp-updates.xml" ?>
+      <?rfc include="reference.RFC.8894.xml" ?>
+      <?rfc include="reference.I-D.selander-ace-coap-est-oscore.xml" ?>
 
     </references>
 
