@@ -2272,6 +2272,22 @@ registrar-agent">
       </section>
     </section>
 
+    <section anchor="yang-module" title="YANG Extensions to Voucher Request">
+      <t>
+        The following modules extends the <xref target="RFC8995" /> Voucher
+        Request to include a signed artifact from the registrar agent.
+      </t>
+      <t>
+        <figure>
+          <artwork name="yang-agent-data" type="" align="left" alt=""><![CDATA[
+
+...
+
+]]></artwork>
+</figure>
+</t>
+    </section>
+
 	<section anchor="exist_prot" title="Example for signature-wrapping using existing enrollment protocols">
 	  <t> This section map the requirements to support proof of possession and
 	      proof of identity to selected existing enrollment protocols.

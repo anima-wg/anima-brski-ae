@@ -1,0 +1,85 @@
+module ietf-async-voucher-request {
+  yang-version 1.1;
+
+  namespace
+    "urn:ietf:params:xml:ns:yang:ietf-async-voucher-request";
+  prefix "constrained";
+
+  import ietf-restconf {
+    prefix rc;
+    description
+      "This import statement is only present to access
+       the yang-data extension defined in RFC 8040.";
+    reference "RFC 8040: RESTCONF Protocol";
+  }
+
+  import ietf-voucher-request {
+    prefix ivr;
+       description
+         "This module defines the format for a voucher request,
+          which is produced by a pledge as part of the RFC8995
+          onboarding process.";
+       reference
+         "RFC 8995: Bootstrapping Remote Secure Key Infrastructure";
+     }
+  }
+
+  organization
+   "IETF ANIMA Working Group";
+
+  contact
+   "WG Web:   <http://tools.ietf.org/wg/anima/>
+    WG List:  <mailto:anima@ietf.org>
+    Author:   Steffen Fries
+              <mailto:steffen.fries@siemens.com>
+    Author:   Hendrik Brockhaus
+              <mailto: hendrik.brockhaus@siemens.com>
+    Author:   Eliot Lear
+              <mailto: lear@cisco.com>";
+
+  description
+   "This module defines an extension of the RFC8995 voucher
+    request to permit a registrar-agent to convey the adjacency
+    relationship from the registrar-agent to the registrar.
+
+    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
+    'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY',
+    and 'OPTIONAL' in the module text are to be interpreted as
+    described in RFC 2119.";
+
+  revision "YYYY-MM-DD" {
+    description
+     "Initial version";
+    reference
+     "RFC XXXX: Voucher Requerst for Asynchronous Enrollment";
+  }
+
+  rc:yang-data voucher-request-async-artifact {
+    // YANG data template for a voucher.
+    uses voucher-request-async-grouping;
+  }
+
+  // Grouping defined for future usage
+  grouping voucher-request-async-grouping {
+    description
+      "Grouping to allow reuse/extensions in future work.";
+
+    uses ivr:voucher-request-grouping {
+
+      augment "voucher-request" {
+        description "Base the constrained voucher-request upon the
+          regular one";
+
+        leaf agent-signed-data {
+          type binary;
+          description
+            "The agent-signed-data field contains a JOSE [RFC7515]
+             object provided by the Registrar-Agent to the Pledge.
+
+             This artifact is signed by the Registrar-Agent
+             and contains a copy of the pledge's serial-number.";
+        }
+      }
+    }
+  }
+}
