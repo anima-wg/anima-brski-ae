@@ -15,13 +15,12 @@ module ietf-async-voucher-request {
 
   import ietf-voucher-request {
     prefix ivr;
-       description
-         "This module defines the format for a voucher request,
+    description
+      "This module defines the format for a voucher request,
           which is produced by a pledge as part of the RFC8995
           onboarding process.";
-       reference
-         "RFC 8995: Bootstrapping Remote Secure Key Infrastructure";
-     }
+    reference
+      "RFC 8995: Bootstrapping Remote Secure Key Infrastructure";
   }
 
   organization
