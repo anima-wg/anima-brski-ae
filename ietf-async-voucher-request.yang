@@ -34,7 +34,9 @@ module ietf-async-voucher-request {
     Author:   Hendrik Brockhaus
               <mailto: hendrik.brockhaus@siemens.com>
     Author:   Eliot Lear
-              <mailto: lear@cisco.com>";
+              <mailto: lear@cisco.com>";    
+    Author:   Thomas Werner
+              <mailto: thomas-werner@siemens.com>";
 
   description
    "This module defines an extension of the RFC8995 voucher
@@ -77,6 +79,56 @@ module ietf-async-voucher-request {
 
              This artifact is signed by the Registrar-Agent
              and contains a copy of the pledge's serial-number.";
+        }
+        
+        leaf agent-provided-proximity-registrar-cert {
+          type binary;
+          description
+            "An X.509 v3 certificate structure, as specified by
+             RFC 5280, Section 4, encoded using the ASN.1
+             distinguished encoding rules (DER), as specified
+             in ITU X.690.
+             The first certificate in the registrar TLS server
+             certificate_list sequence (the end-entity TLS
+             certificate; see RFC 8446) presented by the 
+             registrar to the registrar-agent and provided to
+             the pledge.  
+             This MUST be populated in a pledge's voucher-request 
+             when an agent-proximity assertion is requested.";
+          reference
+            "ITU X.690: Information Technology - ASN.1 encoding
+             rules: Specification of Basic Encoding Rules (BER),
+             Canonical Encoding Rules (CER) and Distinguished
+             Encoding Rules (DER)
+             RFC 5280: Internet X.509 Public Key Infrastructure
+             Certificate and Certificate Revocation List (CRL)
+             Profile
+             RFC 8446: The Transport Layer Security (TLS)
+             Protocol Version 1.3";
+        }
+        
+        leaf agent-sign-cert {
+          type binary;
+          description
+            "An X.509 v3 certificate structure, as specified by
+             RFC 5280, Section 4, encoded using the ASN.1
+             distinguished encoding rules (DER), as specified
+             in ITU X.690.
+             This certificate can be used by the pledge,  
+             the registrar, and the MASA to verify the signature 
+             of agent-signed-data. It is an optional component 
+             for the pledge-voucher request.
+             This MUST be populated in a registrar's
+             voucher-request when an agent-proximity assertion 
+             is requested.";
+          reference
+            "ITU X.690: Information Technology - ASN.1 encoding
+             rules: Specification of Basic Encoding Rules (BER),
+             Canonical Encoding Rules (CER) and Distinguished
+             Encoding Rules (DER)
+             RFC 5280: Internet X.509 Public Key Infrastructure
+             Certificate and Certificate Revocation List (CRL)
+             Profile";
         }
       }
     }
