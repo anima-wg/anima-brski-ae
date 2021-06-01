@@ -1,0 +1,35 @@
+# -*- makefile -*-
+
+YANGDATE=2021-05-29
+VRDATE=yang/ietf-async-voucher-request@${YANGDATE}.yang
+
+ietf-async-voucher-request-tree.txt: ${VRDATE}
+	pyang --path=yang -f tree --tree-print-groupings ${VRDATE} > $@
+
+${VRDATE}: ietf-async-voucher-request.yang
+	mkdir -p yang
+	sed -e"s/YYYY-MM-DD/${YANGDATE}/" ietf-async-voucher-request.yang > ${VRDATE}
+
+#ALL-${DRAFT}.xml: ${DRAFT}.xml ${EXTRA_FILES}
+#	cat ${DRAFT}.xml | ./insert-figures > ALL-${DRAFT}.xml
+#	xml2rfc --v2v3 ALL-${DRAFT}.xml
+#	cp ALL-${DRAFT}.xml ALL-${DRAFT}.v2.xml
+#	mv ALL-${DRAFT}.v2v3.xml ALL-${DRAFT}.xml
+
+#%.txt: ALL-%.xml
+#	./validate-json >.json-errors || cat .json-errors
+#	@echo PROCESSING: $(subst ALL-,,$@)
+#	unset DISPLAY; XML_LIBRARY=$(XML_LIBRARY):./src xml2rfc ${NETWORK} --text -o $(subst ALL-,,$@) $?
+
+clean:
+	-rm -f ${DRAFT}-${VERSION}.xml ${DRAFT}-${VERSION}.txt
+	-rm -f ALL-${DRAFT}-${VERSION}.xml
+	-rm -f ALL-${DRAFT}.xml
+	-rm -f *~
+	-rm -f ietf-voucher-request@*.yang
+
+.PRECIOUS: ${DRAFT}-${VERSION}.xml
+.PRECIOUS: ${VRDATE}
+.PRECIOUS: ALL-${DRAFT}.xml
+.PRECIOUS: DATE-${DRAFT}.xml
+
