@@ -1372,25 +1372,25 @@
 
 <figure anchor="exchangesfig_uc2_1" title="Request collection (registrar-agent - pledge)">
 <artwork name="" type="" align="left" alt=""><![CDATA[
-+--------+                        +-----------+
-| Pledge |                        | Registrar |
-|        |                        | Agent     |
-|        |                        | (RegAgt)  |
-+--------+                        +-----------+
-    |                                   | - create
-    |                                   |   agent-signed-data
-    |<- trigger pledge-voucher-request -|
-    |   - proximity-registrar-cert      |
-    |   - agent-signed-data             |
-    |   - agent-sign-cert (optional)    |
-    |                                   |
-    |---- pledge-voucher-request ------>| - store
-    |                                   |   pledge-voucher-request
-    |<--- trigger enrollment request ---|
-    |     (empty)                       |
-    |                                   |
-    |---- pledge-enrollment-request --->| - store
-    |                                   |   pledge-enrollment-request
++--------+                                  +-----------+
+| Pledge |                                  | Registrar |
+|        |                                  | Agent     |
+|        |                                  | (RegAgt)  |
++--------+                                  +-----------+
+    |                                             | - create
+    |                                             |   agent-signed-data
+    |<------ trigger pledge-voucher-request ------|
+    |   - agent-provided-proximity-registrar-cert |
+    |   - agent-signed-data                       |
+    |   - agent-sign-cert (optional)              |
+    |                                             |
+    |--------- pledge-voucher-request ----------->| - store
+    |                                             |   pledge-voucher-request
+    |<-------- trigger enrollment request --------|
+    |          (empty)                            |
+    |                                             |
+    |--------- pledge-enrollment-request -------->| - store
+    |                                             |   pledge-enrollment-request
 ]]></artwork>
 </figure>
 
@@ -1403,7 +1403,7 @@
 
         <t> application/json: defines a JSON document to provide three parameter:
 			<list style="symbols">
-                <t> proximity-registrar-cert: base64-encoded LDevID(Reg) (D)
+                <t> agent-provided-proximity-registrar-cert: base64-encoded LDevID(Reg) 
 				    TLS EE certificate.</t>
                 <t> agent-sign-cert: base64-encoded LDevID(RegAgt) signing
 				    certificate (optional).</t>
