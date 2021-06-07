@@ -1372,25 +1372,25 @@
 
 <figure anchor="exchangesfig_uc2_1" title="Request collection (registrar-agent - pledge)">
 <artwork name="" type="" align="left" alt=""><![CDATA[
-+--------+                                  +-----------+
-| Pledge |                                  | Registrar |
-|        |                                  | Agent     |
-|        |                                  | (RegAgt)  |
-+--------+                                  +-----------+
-    |                                             | - create
-    |                                             |   agent-signed-data
-    |<------ trigger pledge-voucher-request ------|
-    |   - agent-provided-proximity-registrar-cert |
-    |   - agent-signed-data                       |
-    |   - agent-sign-cert (optional)              |
-    |                                             |
-    |--------- pledge-voucher-request ----------->| - store
-    |                                             |   pledge-voucher-request
-    |<-------- trigger enrollment request --------|
-    |          (empty)                            |
-    |                                             |
-    |--------- pledge-enrollment-request -------->| - store
-    |                                             |   pledge-enrollment-request
++--------+                               +-----------+
+| Pledge |                               | Registrar |
+|        |                               | Agent     |
+|        |                               | (RegAgt)  |
++--------+                               +-----------+
+    |                                          | -create
+    |                                          |  agent-signed-data
+    |<--- trigger pledge-voucher-request ------|
+    |- agent-provided-proximity-registrar-cert |
+    |- agent-signed-data                       |
+    |- agent-sign-cert (optional)              |
+    |                                          |
+    |------ pledge-voucher-request ----------->| -store
+    |                                          |  pledge-voucher-request
+    |<----- trigger enrollment request --------|
+    |       (empty)                            |
+    |                                          |
+    |------ pledge-enrollment-request -------->| -store
+    |                                          |  pledge-enrollment-request
 ]]></artwork>
 </figure>
 
