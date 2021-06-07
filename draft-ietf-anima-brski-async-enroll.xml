@@ -1390,7 +1390,7 @@
     |       (empty)                            |
     |                                          |
     |------ pledge-enrollment-request -------->| -store
-    |                                          |  pledge-enrollment-request
+    |                                          |  pledge-enrollment-req.
 ]]></artwork>
 </figure>
 
