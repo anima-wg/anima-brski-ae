@@ -1372,25 +1372,25 @@
 
 <figure anchor="exchangesfig_uc2_1" title="Request collection (registrar-agent - pledge)">
 <artwork name="" type="" align="left" alt=""><![CDATA[
-+--------+                               +-----------+
-| Pledge |                               | Registrar |
-|        |                               | Agent     |
-|        |                               | (RegAgt)  |
-+--------+                               +-----------+
-    |                                          | -create
-    |                                          |  agent-signed-data
-    |<--- trigger pledge-voucher-request ------|
-    |- agent-provided-proximity-registrar-cert |
-    |- agent-signed-data                       |
-    |- agent-sign-cert (optional)              |
-    |                                          |
-    |------ pledge-voucher-request ----------->| -store
-    |                                          |  pledge-voucher-request
-    |<----- trigger enrollment request --------|
-    |       (empty)                            |
-    |                                          |
-    |------ pledge-enrollment-request -------->| -store
-    |                                          |  pledge-enrollment-req.
++--------+                             +-----------+
+| Pledge |                             | Registrar |
+|        |                             | Agent     |
+|        |                             | (RegAgt)  |
++--------+                             +-----------+
+    |                                        |-create
+    |                                        | agent-signed-data
+    |<--- trigger pledge-voucher-request ----|
+    |-agent-provided-proximity-registrar-cert|
+    |-agent-signed-data                      |
+    |-agent-sign-cert (optional)             |
+    |                                        |
+    |----- pledge-voucher-request ---------->|-store
+    |                                        | pledge-voucher-request
+    |<----- trigger enrollment request ------|
+    |       (empty)                          |
+    |                                        |
+    |------ pledge-enrollment-request ------>|-store
+    |                                        | pledge-enrollment-req.
 ]]></artwork>
 </figure>
 
@@ -1425,14 +1425,14 @@
 				    LDevID(RegAgt) certificate.</t>
 			</list>	</t>
 		<t> The body of the agent-signed-data contains an
-		    ietf-voucher-request-trigger:agent-signed-data element:	</t>
+		    ietf-voucher-request:agent-signed-data element:	</t>
 
 		<t> [RFC Editor: please delete] /* </t>
 		<t> Open Issue regarding YANG Definition. Is either definition of
-		    ietf-voucher-request-trigger:agent-signed-data as new module or
-			ietf-voucher-request:agent-signed-data as new leaf in the existing
-			module necessary or would it be sufficient to just keep the
-			product-serial-number and the date?*/ </t>
+		    ietf-voucher-request:agent-signed-data as new leaf in the existing
+			or ietf-voucher-request-trigger:agent-signed-data as new module or
+			or would it be sufficient to just keep the product-serial-number 
+			and the date?*/ </t>
 
 		<t>	<list style="symbols">
                 <t> created-on: MUST contain the creation date and time
@@ -2190,7 +2190,6 @@ registrar-agent">
 			service as described in section 5.8 of
 			<xref target="RFC8995" />. </t>
 
-
 		<t> The registrar-agent MUST provide the enroll-status object to the
 		    registrar. The status indicates the pledge could process the
 			enroll-response object and holds the corresponding private key. </t>
@@ -2275,13 +2274,141 @@ registrar-agent">
     <section anchor="yang-module" title="YANG Extensions to Voucher Request">
       <t>
         The following modules extends the <xref target="RFC8995" /> Voucher
-        Request to include a signed artifact from the registrar agent.
+        Request to include a signed artifact from the registrar-agent as well 
+		as the registrar-proximity-certificate and the agent-signing certificate.
       </t>
       <t>
         <figure>
           <artwork name="yang-agent-data" type="" align="left" alt=""><![CDATA[
+module ietf-async-voucher-request {
+  yang-version 1.1;
 
-...
+  namespace
+    "urn:ietf:params:xml:ns:yang:ietf-async-voucher-request";
+  prefix "constrained";
+
+  import ietf-restconf {
+    prefix rc;
+    description
+      "This import statement is only present to access
+       the yang-data extension defined in RFC 8040.";
+    reference "RFC 8040: RESTCONF Protocol";
+  }
+
+  import ietf-voucher-request {
+    prefix ivr;
+    description
+      "This module defines the format for a voucher request,
+          which is produced by a pledge as part of the RFC8995
+          onboarding process.";
+    reference
+      "RFC 8995: Bootstrapping Remote Secure Key Infrastructure";
+  }
+
+  organization
+   "IETF ANIMA Working Group";
+
+  contact
+   "WG Web:   <http://tools.ietf.org/wg/anima/>
+    WG List:  <mailto:anima@ietf.org>
+    Author:   Steffen Fries
+              <mailto:steffen.fries@siemens.com>
+    Author:   Hendrik Brockhaus
+              <mailto: hendrik.brockhaus@siemens.com>
+    Author:   Eliot Lear
+              <mailto: lear@cisco.com>";    
+    Author:   Thomas Werner
+              <mailto: thomas-werner@siemens.com>";
+  description
+   "This module defines an extension of the RFC8995 voucher
+    request to permit a registrar-agent to convey the adjacency
+    relationship from the registrar-agent to the registrar.
+
+    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
+    'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY',
+    and 'OPTIONAL' in the module text are to be interpreted as
+    described in RFC 2119.";
+  revision "YYYY-MM-DD" {
+    description
+     "Initial version";
+    reference
+     "RFC XXXX: Voucher Request for Asynchronous Enrollment";
+  }
+  rc:yang-data voucher-request-async-artifact {
+    // YANG data template for a voucher.
+    uses voucher-request-async-grouping;
+  }
+  // Grouping defined for future usage
+  grouping voucher-request-async-grouping {
+    description
+      "Grouping to allow reuse/extensions in future work.";
+    uses ivr:voucher-request-grouping {
+      augment "voucher-request" {
+        description "Base the constrained voucher-request upon the
+          regular one";
+        leaf agent-signed-data {
+          type binary;
+          description
+            "The agent-signed-data field contains a JOSE [RFC7515]
+             object provided by the Registrar-Agent to the Pledge.
+
+             This artifact is signed by the Registrar-Agent
+             and contains a copy of the pledge's serial-number.";
+        }
+        
+        leaf agent-provided-proximity-registrar-cert {
+          type binary;
+          description
+            "An X.509 v3 certificate structure, as specified by
+             RFC 5280, Section 4, encoded using the ASN.1
+             distinguished encoding rules (DER), as specified
+             in ITU X.690.
+             The first certificate in the registrar TLS server
+             certificate_list sequence (the end-entity TLS
+             certificate; see RFC 8446) presented by the 
+             registrar to the registrar-agent and provided to
+             the pledge.  
+             This MUST be populated in a pledge's voucher-request 
+             when an agent-proximity assertion is requested.";
+          reference
+            "ITU X.690: Information Technology - ASN.1 encoding
+             rules: Specification of Basic Encoding Rules (BER),
+             Canonical Encoding Rules (CER) and Distinguished
+             Encoding Rules (DER)
+             RFC 5280: Internet X.509 Public Key Infrastructure
+             Certificate and Certificate Revocation List (CRL)
+             Profile
+             RFC 8446: The Transport Layer Security (TLS)
+             Protocol Version 1.3";
+        }
+        
+        leaf agent-sign-cert {
+          type binary;
+          description
+            "An X.509 v3 certificate structure, as specified by
+             RFC 5280, Section 4, encoded using the ASN.1
+             distinguished encoding rules (DER), as specified
+             in ITU X.690.
+             This certificate can be used by the pledge,  
+             the registrar, and the MASA to verify the signature 
+             of agent-signed-data. It is an optional component 
+             for the pledge-voucher request.
+             This MUST be populated in a registrar's
+             voucher-request when an agent-proximity assertion 
+             is requested.";
+          reference
+            "ITU X.690: Information Technology - ASN.1 encoding
+             rules: Specification of Basic Encoding Rules (BER),
+             Canonical Encoding Rules (CER) and Distinguished
+             Encoding Rules (DER)
+             RFC 5280: Internet X.509 Public Key Infrastructure
+             Certificate and Certificate Revocation List (CRL)
+             Profile";
+        }
+      }
+    }
+  }
+}
 
 ]]></artwork>
 </figure>
@@ -2527,7 +2654,9 @@ registrar-agent">
 		    <t> Communication approach between pledge and registrar-agent
 			    changed by removing TLS-PSK (former section TLS establishment)
 				and associated references to other drafts in favor of relying on
-				higher layer exchange of signed data objects.</t>
+				higher layer exchange of signed data objects. These data objects 
+				are included also in the pledge-voucher-request and lead to an 
+				extension of the YANG module for the voucher-request (issue #12). </t>
 		    <t> Details on trust relationship between registrar-agent and
 			    registrar (issue #4, #5, #9) included in <xref target="uc2" />. </t>
 			<t> Recommendation regarding short-lived certificates for
