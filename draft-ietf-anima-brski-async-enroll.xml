@@ -1498,7 +1498,9 @@
 				<t>agent-sign-cert: May contain the base64-encoded LDevID(RegAgt)
 				   EE certificate if provided as trigger parameter.</t>
 			</list>	</t>
-
+			
+		<t> The enhancements of the YANG module for the ietf-voucher-request 
+		    with these new leafs are defined in <xref target="yang-module" />.</t>
 
 		<t>	The object is signed using the pledges IDevID credential contained
 		    as x5c parameter of the JOSE header. </t>
