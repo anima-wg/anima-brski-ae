@@ -25,6 +25,9 @@ ${VRDATE}: ietf-async-voucher-request.yang
 ${VRDATE}.xml: ${VRDATE}
 	(echo '<artwork name="yang-agent-data" type="" align="left" alt=""><![CDATA['; cat ${VRDATE}; echo; echo ']]></artwork>') >${VRDATE}.xml
 
+draft-ietf-anima-brski-async-enroll.txt: ${VRDATE}.xml
+draft-ietf-anima-brski-async-enroll.html: ${VRDATE}.xml
+
 clean::
 	-rm -f ietf-voucher-request@*.yang
 
