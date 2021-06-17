@@ -5,11 +5,11 @@
 ANIMA WG                                                        S. Fries
 Internet-Draft                                              H. Brockhaus
 Intended status: Standards Track                                 Siemens
-Expires: November 28, 2021                                       E. Lear
+Expires: December 16, 2021                                       E. Lear
                                                            Cisco Systems
                                                                T. Werner
                                                                  Siemens
-                                                            May 27, 2021
+                                                           June 14, 2021
 
 
          Support of asynchronous Enrollment in BRSKI (BRSKI-AE)
@@ -46,16 +46,16 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 28, 2021.
+   This Internet-Draft will expire on December 16, 2021.
 
 
 
 
 
 
-Fries, et al.           Expires November 28, 2021               [Page 1]
+Fries, et al.           Expires December 16, 2021               [Page 1]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 Copyright Notice
@@ -101,29 +101,30 @@ Table of Contents
        5.2.2.  Behavior of a registrar-agent . . . . . . . . . . . .  23
        5.2.3.  Bootstrapping objects and corresponding exchanges . .  25
      5.3.  Domain registrar support of different enrollment options   46
-   6.  Example for signature-wrapping using existing enrollment
-       protocols . . . . . . . . . . . . . . . . . . . . . . . . . .  47
-     6.1.  EST Handling  . . . . . . . . . . . . . . . . . . . . . .  47
-     6.2.  CMP Handling  . . . . . . . . . . . . . . . . . . . . . .  48
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  49
+   6.  YANG Extensions to Voucher Request  . . . . . . . . . . . . .  47
+   7.  Example for signature-wrapping using existing enrollment
+       protocols . . . . . . . . . . . . . . . . . . . . . . . . . .  50
+     7.1.  EST Handling  . . . . . . . . . . . . . . . . . . . . . .  50
+     7.2.  CMP Handling  . . . . . . . . . . . . . . . . . . . . . .  51
 
 
 
-Fries, et al.           Expires November 28, 2021               [Page 2]
+Fries, et al.           Expires December 16, 2021               [Page 2]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
-   8.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  49
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  49
-     9.1.  Exhaustion attack on pledge . . . . . . . . . . . . . . .  49
-     9.2.  Misuse of acquired voucher and enrollment responses . . .  49
-   10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  50
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  50
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  50
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  51
-   Appendix A.  History of changes [RFC Editor: please delete] . . .  53
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  56
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  51
+   9.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  52
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  52
+     10.1.  Exhaustion attack on pledge  . . . . . . . . . . . . . .  52
+     10.2.  Misuse of acquired voucher and enrollment responses  . .  52
+   11. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  53
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  53
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  53
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  54
+   Appendix A.  History of changes [RFC Editor: please delete] . . .  55
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  59
 
 1.  Introduction
 
@@ -160,15 +161,17 @@ Internet-Draft                  BRSKI-AE                        May 2021
    The EST server (the domain registrar) terminates the security
    association with the pledge and thus the binding between the
    certification request and the authentication of the pledge via TLS.
+
+
+
+
+Fries, et al.           Expires December 16, 2021               [Page 3]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
    This type of enrollment utilizing an online connection to the PKI is
    considered as synchronous enrollment.
-
-
-
-Fries, et al.           Expires November 28, 2021               [Page 3]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
 
    For certain use cases on-site support of a RA/CA component and/or an
    asset management is not available and rather provided by an
@@ -216,16 +219,15 @@ Internet-Draft                  BRSKI-AE                        May 2021
       may be the EST server residing co-located with the registrar in
       the target domain.
 
+
+
+Fries, et al.           Expires December 16, 2021               [Page 4]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
    o  Utilization of authenticated self-contained objects for the
       enrollment, binding the certification request and the requester
-
-
-
-Fries, et al.           Expires November 28, 2021               [Page 4]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
       authentication in a cryptographic way.  This approach reduces the
       necessary trust in a domain component to storage and delivery.
       Unauthorized modifications of the requester information (request
@@ -272,16 +274,16 @@ Internet-Draft                  BRSKI-AE                        May 2021
       pledge acting as server an a registrar-agent and the domain
       registrar.
 
+
+
+
+Fries, et al.           Expires December 16, 2021               [Page 5]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
    Note that in contrast to BRSKI, BRSKI-AE assumes support of multiple
    enrollment protocols on the infrastructure side, allowing the pledge
-
-
-
-Fries, et al.           Expires November 28, 2021               [Page 5]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    manufacturer to select the most appropriate.  Thus, BRSKI-AE can be
    applied for both, asynchronous and synchronous enrollment.
 
@@ -331,11 +333,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-
-
-Fries, et al.           Expires November 28, 2021               [Page 6]
+Fries, et al.           Expires December 16, 2021               [Page 6]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 3.  Scope of solution
@@ -389,9 +389,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021               [Page 7]
+Fries, et al.           Expires December 16, 2021               [Page 7]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    certification requests by the components which are collected and
@@ -445,9 +445,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021               [Page 8]
+Fries, et al.           Expires December 16, 2021               [Page 8]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 3.2.4.  Electric vehicle charging infrastructure
@@ -501,9 +501,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021               [Page 9]
+Fries, et al.           Expires December 16, 2021               [Page 9]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 4.  Requirement discussion and mapping to solution elements
@@ -557,9 +557,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 10]
+Fries, et al.           Expires December 16, 2021              [Page 10]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
       Note that the integrity of the certification request is bound to
@@ -613,9 +613,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 11]
+Fries, et al.           Expires December 16, 2021              [Page 11]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
          optionally supported.  The proof of identity of the PKIMessage
@@ -669,9 +669,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 12]
+Fries, et al.           Expires December 16, 2021              [Page 12]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 5.1.  Use Case 1 (pledge-initiator-mode): Support of off-site PKI
@@ -725,9 +725,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 13]
+Fries, et al.           Expires December 16, 2021              [Page 13]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
                                               +------------------------+
@@ -781,9 +781,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 14]
+Fries, et al.           Expires December 16, 2021              [Page 14]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    o  Domain Registrar / Enrollment Proxy: In general the domain
@@ -837,9 +837,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 15]
+Fries, et al.           Expires December 16, 2021              [Page 15]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    o  PKI RA: Performs certificate management functions (validation of
@@ -874,7 +874,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
    to the transport channel (TLS) rather than to the certification
    request object directly.  This authentication in the transport layer
    is not visible / verifiable at the authorization point in the off-
-   site domain.  Section 6 discusses potential enrollment protocols and
+   site domain.  Section 7 discusses potential enrollment protocols and
    options applicable.
 
 5.1.2.  Pledge - Registrar discovery and voucher exchange
@@ -893,9 +893,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 16]
+Fries, et al.           Expires December 16, 2021              [Page 16]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    +--------+         +---------+    +------------+     +------------+
@@ -949,9 +949,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 17]
+Fries, et al.           Expires December 16, 2021              [Page 17]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    o  CA Cert Request: The pledge SHOULD request the full distribution
@@ -999,15 +999,15 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
    The generic messages described above can implemented using various
    protocols implementing authenticated self-contained objects, as
-   described in Section 4.  Examples are available in Section 6.
+   described in Section 4.  Examples are available in Section 7.
 
 
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 18]
+Fries, et al.           Expires December 16, 2021              [Page 18]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 5.1.5.  Addressing Scheme Enhancements
@@ -1016,7 +1016,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
    [RFC8995] to accommodate the additional handling of authenticated
    self-contained objects for the certification request.  As this is
    supported by different enrollment protocols, they can be directly
-   employed (see also Section 6).
+   employed (see also Section 7).
 
    The addressing scheme in BRSKI for client certificate request and CA
    certificate distribution function during the enrollment uses the
@@ -1037,7 +1037,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
    o  request: depending on the utilized enrollment protocol, the
       request describes the required operation at the registrar side.
       Enrollment protocols are expected to define the request endpoints
-      as done by existing protocols (see also Section 6).
+      as done by existing protocols (see also Section 7).
 
 5.2.  Use Case 2 (pledge-responder-mode): Registrar-agent communication
       with Pledges
@@ -1061,9 +1061,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 19]
+Fries, et al.           Expires December 16, 2021              [Page 19]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    addition of the registrar-agent also influences the sequences for the
@@ -1117,9 +1117,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 20]
+Fries, et al.           Expires December 16, 2021              [Page 20]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    If a registrar detects a request originates from a registrar-agent it
@@ -1173,9 +1173,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 21]
+Fries, et al.           Expires December 16, 2021              [Page 21]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
       different technology stack or due to missing connectivity.  The
@@ -1229,9 +1229,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 22]
+Fries, et al.           Expires December 16, 2021              [Page 22]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    In contrast, "proximity" provides a statement, that the pledge was in
@@ -1285,9 +1285,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 23]
+Fries, et al.           Expires December 16, 2021              [Page 23]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    general interaction between the pledge and the domain registrar as
@@ -1341,9 +1341,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 24]
+Fries, et al.           Expires December 16, 2021              [Page 24]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 5.2.2.1.  Registrar discovery by the registrar-agent
@@ -1397,9 +1397,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 25]
+Fries, et al.           Expires December 16, 2021              [Page 25]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    be omitted in constraint environments to safe bandwidth between the
@@ -1453,9 +1453,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 26]
+Fries, et al.           Expires December 16, 2021              [Page 26]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
         |              |                  |------- Voucher-Req ------>|
@@ -1509,9 +1509,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 27]
+Fries, et al.           Expires December 16, 2021              [Page 27]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
 5.2.3.1.  Request objects acquisition (registrar-agent - pledge)
@@ -1541,33 +1541,33 @@ Internet-Draft                  BRSKI-AE                        May 2021
       certificate) as well as IDevID CA certificate of pledge vendor /
       manufacturer and site-specific LDevID CA certificate.
 
-   +--------+                        +-----------+
-   | Pledge |                        | Registrar |
-   |        |                        | Agent     |
-   |        |                        | (RegAgt)  |
-   +--------+                        +-----------+
-       |                                   | - create
-       |                                   |   agent-signed-data
-       |<- trigger pledge-voucher-request -|
-       |   - proximity-registrar-cert      |
-       |   - agent-signed-data             |
-       |   - agent-sign-cert (optional)    |
-       |                                   |
-       |---- pledge-voucher-request ------>| - store
-       |                                   |   pledge-voucher-request
-       |<--- trigger enrollment request ---|
-       |     (empty)                       |
-       |                                   |
-       |---- pledge-enrollment-request --->| - store
-       |                                   |   pledge-enrollment-request
+   +--------+                             +-----------+
+   | Pledge |                             | Registrar |
+   |        |                             | Agent     |
+   |        |                             | (RegAgt)  |
+   +--------+                             +-----------+
+       |                                        |-create
+       |                                        | agent-signed-data
+       |<--- trigger pledge-voucher-request ----|
+       |-agent-provided-proximity-registrar-cert|
+       |-agent-signed-data                      |
+       |-agent-sign-cert (optional)             |
+       |                                        |
+       |----- pledge-voucher-request ---------->|-store
+       |                                        | pledge-voucher-request
+       |<----- trigger enrollment request ------|
+       |       (empty)                          |
+       |                                        |
+       |------ pledge-enrollment-request ------>|-store
+       |                                        | pledge-enrollment-req.
 
           Figure 5: Request collection (registrar-agent - pledge)
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 28]
+Fries, et al.           Expires December 16, 2021              [Page 28]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    Triggering the pledge to create the pledge-voucher-request is done
@@ -1578,8 +1578,8 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
    application/json: defines a JSON document to provide three parameter:
 
-   o  proximity-registrar-cert: base64-encoded LDevID(Reg) (D) TLS EE
-      certificate.
+   o  agent-provided-proximity-registrar-cert: base64-encoded
+      LDevID(Reg) TLS EE certificate.
 
    o  agent-sign-cert: base64-encoded LDevID(RegAgt) signing certificate
       (optional).
@@ -1601,16 +1601,16 @@ Internet-Draft                  BRSKI-AE                        May 2021
    o  kid: contains the base64-encoded SubjectKeyIdentifier of the
       LDevID(RegAgt) certificate.
 
-   The body of the agent-signed-data contains an ietf-voucher-request-
-   trigger:agent-signed-data element:
+   The body of the agent-signed-data contains an ietf-voucher-
+   request:agent-signed-data element:
 
    [RFC Editor: please delete] /*
 
    Open Issue regarding YANG Definition.  Is either definition of ietf-
-   voucher-request-trigger:agent-signed-data as new module or ietf-
-   voucher-request:agent-signed-data as new leaf in the existing module
-   necessary or would it be sufficient to just keep the product-serial-
-   number and the date?*/
+   voucher-request:agent-signed-data as new leaf in the existing or
+   ietf-voucher-request-trigger:agent-signed-data as new module or or
+   would it be sufficient to just keep the product-serial-number and the
+   date?*/
 
    o  created-on: MUST contain the creation date and time in yang:date-
       and-time format.
@@ -1621,9 +1621,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 29]
+Fries, et al.           Expires December 16, 2021              [Page 29]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
       corresponds with the product-serial-number contained in the
@@ -1677,9 +1677,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 30]
+Fries, et al.           Expires December 16, 2021              [Page 30]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    o  agent-provided-proximity-registrar-cert: MUST be included and
@@ -1691,6 +1691,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
    o  agent-sign-cert: May contain the base64-encoded LDevID(RegAgt) EE
       certificate if provided as trigger parameter.
+
+   The enhancements of the YANG module for the ietf-voucher-request with
+   these new leafs are defined in Section 6.
 
    The object is signed using the pledges IDevID credential contained as
    x5c parameter of the JOSE header.
@@ -1726,18 +1729,19 @@ Internet-Draft                  BRSKI-AE                        May 2021
    "application/voucher-jose+json" is defined in
    [I-D.richardson-anima-jose-voucher].
 
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 31]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
    Once the registrar-agent has received the pledge-voucher-request it
    can trigger the pledge to generate an enrollment-request object.  As
    in BRSKI the enrollment request object is a PKCS#10, additionally
    signed by the IDevID.  Note, as the initial enrollment aims to
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 31]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    request a general certificate, no certificate attributes are provided
    to the pledge.
 
@@ -1781,18 +1785,20 @@ Internet-Draft                  BRSKI-AE                        May 2021
    enhancements also in the enrollment-request object to transport
    different CSRs. */
 
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 32]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
    [I-D.ietf-netconf-sztp-csr] considers PKCS#10 but also CMP and CMC as
    certificate request format.  Note that the wrapping signature is only
    necessary for plain PKCS#10 as other request formats like CMP and CMS
    support the signature wrapping as part of their own certificate
    request format.
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 32]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
 
    The registrar-agent enrollment-request Content-Type header for a
    wrapped PKCS#10 is:
@@ -1836,19 +1842,18 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
    [RFC Editor: please delete] /*
 
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 33]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
    Open Issues: further description necessary at least for */
 
    o  Values to be taken from the IDevID into the PKCS#10 (like product-
       serial-number or subjectName, or certificate template)
-
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 33]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
 
    Once the registrar-agent has collected the pledge-voucher-request and
    pledge-enrollment-request objects, it connects to the registrar and
@@ -1896,14 +1901,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 34]
+Fries, et al.           Expires December 16, 2021              [Page 34]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    +-----------+    +-----------+   +--------+   +---------+
@@ -1957,9 +1957,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 35]
+Fries, et al.           Expires December 16, 2021              [Page 35]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    enrollment-request (instead of the objects for voucher-request (CMS-
@@ -2013,9 +2013,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 36]
+Fries, et al.           Expires December 16, 2021              [Page 36]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    described in section 5.4 of [RFC8995] to obtain a voucher for the
@@ -2069,9 +2069,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 37]
+Fries, et al.           Expires December 16, 2021              [Page 37]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    {
@@ -2125,9 +2125,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 38]
+Fries, et al.           Expires December 16, 2021              [Page 38]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
       voucher and also in serial-number component of the registrar-
@@ -2181,9 +2181,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 39]
+Fries, et al.           Expires December 16, 2021              [Page 39]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    [RFC8995].  The registrar forwards the voucher without changes to the
@@ -2237,9 +2237,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 40]
+Fries, et al.           Expires December 16, 2021              [Page 40]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    Open Issues:
@@ -2293,9 +2293,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 41]
+Fries, et al.           Expires December 16, 2021              [Page 41]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    +--------+                        +-----------+
@@ -2349,9 +2349,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 42]
+Fries, et al.           Expires December 16, 2021              [Page 42]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    {
@@ -2405,9 +2405,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 43]
+Fries, et al.           Expires December 16, 2021              [Page 43]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    {
@@ -2461,9 +2461,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 44]
+Fries, et al.           Expires December 16, 2021              [Page 44]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    +-----------+    +-----------+   +--------+   +---------+
@@ -2517,9 +2517,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 45]
+Fries, et al.           Expires December 16, 2021              [Page 45]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
    The registrar-agent MUST provide the enroll-status object to the
@@ -2573,9 +2573,9 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-Fries, et al.           Expires November 28, 2021              [Page 46]
+Fries, et al.           Expires December 16, 2021              [Page 46]
 
-Internet-Draft                  BRSKI-AE                        May 2021
+Internet-Draft                  BRSKI-AE                       June 2021
 
 
      </brski/voucherrequest>,ct=voucher-cms+json
@@ -2607,7 +2607,168 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
    */
 
-6.  Example for signature-wrapping using existing enrollment protocols
+6.  YANG Extensions to Voucher Request
+
+   The following modules extends the [RFC8995] Voucher Request to
+   include a signed artifact from the registrar-agent as well as the
+   registrar-proximity-certificate and the agent-signing certificate.
+
+   module ietf-async-voucher-request {
+     yang-version 1.1;
+
+     namespace
+       "urn:ietf:params:xml:ns:yang:ietf-async-voucher-request";
+     prefix "constrained";
+
+     import ietf-restconf {
+       prefix rc;
+       description
+         "This import statement is only present to access
+          the yang-data extension defined in RFC 8040.";
+       reference "RFC 8040: RESTCONF Protocol";
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 47]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
+     }
+
+     import ietf-voucher-request {
+       prefix ivr;
+       description
+         "This module defines the format for a voucher request,
+             which is produced by a pledge as part of the RFC8995
+             onboarding process.";
+       reference
+         "RFC 8995: Bootstrapping Remote Secure Key Infrastructure";
+     }
+
+     organization
+      "IETF ANIMA Working Group";
+
+     contact
+      "WG Web:   <http://tools.ietf.org/wg/anima/>
+       WG List:  <mailto:anima@ietf.org>
+       Author:   Steffen Fries
+                 <mailto:steffen.fries@siemens.com>
+       Author:   Hendrik Brockhaus
+                 <mailto: hendrik.brockhaus@siemens.com>
+       Author:   Eliot Lear
+                 <mailto: lear@cisco.com>";
+       Author:   Thomas Werner
+                 <mailto: thomas-werner@siemens.com>";
+     description
+      "This module defines an extension of the RFC8995 voucher
+       request to permit a registrar-agent to convey the adjacency
+       relationship from the registrar-agent to the registrar.
+
+       The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
+       'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY',
+       and 'OPTIONAL' in the module text are to be interpreted as
+       described in RFC 2119.";
+     revision "YYYY-MM-DD" {
+       description
+        "Initial version";
+       reference
+        "RFC XXXX: Voucher Request for Asynchronous Enrollment";
+     }
+     rc:yang-data voucher-request-async-artifact {
+       // YANG data template for a voucher.
+       uses voucher-request-async-grouping;
+     }
+     // Grouping defined for future usage
+     grouping voucher-request-async-grouping {
+       description
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 48]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
+         "Grouping to allow reuse/extensions in future work.";
+       uses ivr:voucher-request-grouping {
+         augment "voucher-request" {
+           description "Base the constrained voucher-request upon the
+             regular one";
+           leaf agent-signed-data {
+             type binary;
+             description
+               "The agent-signed-data field contains a JOSE [RFC7515]
+                object provided by the Registrar-Agent to the Pledge.
+
+                This artifact is signed by the Registrar-Agent
+                and contains a copy of the pledge's serial-number.";
+           }
+
+           leaf agent-provided-proximity-registrar-cert {
+             type binary;
+             description
+               "An X.509 v3 certificate structure, as specified by
+                RFC 5280, Section 4, encoded using the ASN.1
+                distinguished encoding rules (DER), as specified
+                in ITU X.690.
+                The first certificate in the registrar TLS server
+                certificate_list sequence (the end-entity TLS
+                certificate; see RFC 8446) presented by the
+                registrar to the registrar-agent and provided to
+                the pledge.
+                This MUST be populated in a pledge's voucher-request
+                when an agent-proximity assertion is requested.";
+             reference
+               "ITU X.690: Information Technology - ASN.1 encoding
+                rules: Specification of Basic Encoding Rules (BER),
+                Canonical Encoding Rules (CER) and Distinguished
+                Encoding Rules (DER)
+                RFC 5280: Internet X.509 Public Key Infrastructure
+                Certificate and Certificate Revocation List (CRL)
+                Profile
+                RFC 8446: The Transport Layer Security (TLS)
+                Protocol Version 1.3";
+           }
+
+           leaf agent-sign-cert {
+             type binary;
+             description
+               "An X.509 v3 certificate structure, as specified by
+                RFC 5280, Section 4, encoded using the ASN.1
+                distinguished encoding rules (DER), as specified
+                in ITU X.690.
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 49]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
+                This certificate can be used by the pledge,
+                the registrar, and the MASA to verify the signature
+                of agent-signed-data. It is an optional component
+                for the pledge-voucher request.
+                This MUST be populated in a registrar's
+                voucher-request when an agent-proximity assertion
+                is requested.";
+             reference
+               "ITU X.690: Information Technology - ASN.1 encoding
+                rules: Specification of Basic Encoding Rules (BER),
+                Canonical Encoding Rules (CER) and Distinguished
+                Encoding Rules (DER)
+                RFC 5280: Internet X.509 Public Key Infrastructure
+                Certificate and Certificate Revocation List (CRL)
+                Profile";
+           }
+         }
+       }
+     }
+   }
+
+
+7.  Example for signature-wrapping using existing enrollment protocols
 
    This section map the requirements to support proof of possession and
    proof of identity to selected existing enrollment protocols.  Note
@@ -2617,22 +2778,13 @@ Internet-Draft                  BRSKI-AE                        May 2021
    independent from the underlying TLS using OSCORE resulting in an
    authenticated self-contained object.
 
-6.1.  EST Handling
+7.1.  EST Handling
 
    When using EST [RFC7030], the following constraints should be
    considered:
 
    o  Proof of possession is provided by using the specified PKCS#10
       structure in the request.
-
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 47]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
 
    o  Proof of identity is achieved by signing the certification request
       object, which is only supported when Full PKI Request (the
@@ -2642,6 +2794,13 @@ Internet-Draft                  BRSKI-AE                        May 2021
       definition of the Full PKI Request.  For proof of identity, the
       signature of the SignedData of the Full PKI Request would be
       calculated using the IDevID credential of the pledge.
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 50]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
 
    o  [RFC Editor: please delete] /* TBD: in this case the binding to
       the underlying TLS connection is not be necessary. */
@@ -2657,7 +2816,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
    o  [RFC Editor: please delete] /* TBD: clarification of retry for
       fullcmc is necessary as not specified in the context of EST */
 
-6.2.  CMP Handling
+7.2.  CMP Handling
 
    Instead of using CMP [RFC4210], this specification refers to the
    lightweight CMP profile [I-D.ietf-lamps-lightweight-cmp-profile], as
@@ -2679,23 +2838,25 @@ Internet-Draft                  BRSKI-AE                        May 2021
       as specified in section 5.2.4 of
       [I-D.ietf-lamps-lightweight-cmp-profile] with delayed enrollment.
 
-
-
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 48]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
-7.  IANA Considerations
+8.  IANA Considerations
 
    This document requires the following IANA actions:
 
    IANA is requested to enhance the Registry entitled: "BRSKI well-
    known URIs" with the following:
+
+
+
+
+
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 51]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
 
     URI                       document  description
     pledge-voucher-request    [THISRFC] create pledge-voucher-request
@@ -2708,7 +2869,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
    included for the defined namespaces in Section 5.1.5 and Section 5.3
    .  */
 
-8.  Privacy Considerations
+9.  Privacy Considerations
 
    The credential used by the registrar-agent to sign the data for the
    pledge in case of the pledge-initiator-mode should not contain
@@ -2717,14 +2878,14 @@ Internet-Draft                  BRSKI-AE                        May 2021
    technician operating the device, to avoid revealing this information
    to the MASA.
 
-9.  Security Considerations
+10.  Security Considerations
 
-9.1.  Exhaustion attack on pledge
+10.1.  Exhaustion attack on pledge
 
    Exhaustion attack on pledge based on DoS attack (connection
    establishment, etc.)
 
-9.2.  Misuse of acquired voucher and enrollment responses
+10.2.  Misuse of acquired voucher and enrollment responses
 
    Registrar-agent that uses acquired voucher and enrollment response
    for domain 1 in domain 2: can be detected in Voucher Request
@@ -2737,15 +2898,6 @@ Internet-Draft                  BRSKI-AE                        May 2021
    Misbinding of pledge by a faked domain registrar is countered as
    described in BRSKI security considerations (section 11.4).
 
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 49]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    Misuse of registrar-agent LDevID may be addressed by utilizing short-
    lived certificates to be used for authenticating the registrar-agent
    against the registrar.  The LDevID certificate for the registrar-
@@ -2753,16 +2905,25 @@ Internet-Draft                  BRSKI-AE                        May 2021
    IDevID.  Alternatively, the LDevID may be acquired by a service
    technician after authentication against the issuing CA.
 
-10.  Acknowledgments
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 52]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
+11.  Acknowledgments
 
    We would like to thank the various reviewers for their input, in
    particular Brian E.  Carpenter, Michael Richardson, Giorgio
    Romanenghi, Oskar Camenzind, for their input and discussion on use
    cases and call flows.
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [I-D.ietf-netconf-sztp-csr]
               Watsen, K., Housley, R., and S. Turner, "Conveying a
@@ -2793,15 +2954,6 @@ Internet-Draft                  BRSKI-AE                        May 2021
               DOI 10.17487/RFC7030, October 2013,
               <https://www.rfc-editor.org/info/rfc7030>.
 
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 50]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
               2015, <https://www.rfc-editor.org/info/rfc7515>.
@@ -2809,6 +2961,14 @@ Internet-Draft                  BRSKI-AE                        May 2021
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 53]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
 
    [RFC8366]  Watsen, K., Richardson, M., Pritikin, M., and T. Eckert,
               "A Voucher Artifact for Bootstrapping Protocols",
@@ -2820,7 +2980,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
               Infrastructure (BRSKI)", RFC 8995, DOI 10.17487/RFC8995,
               May 2021, <https://www.rfc-editor.org/info/rfc8995>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [I-D.ietf-lamps-cmp-updates]
               Brockhaus, H. and D. V. Oheimb, "Certificate Management
@@ -2851,19 +3011,20 @@ Internet-Draft                  BRSKI-AE                        May 2021
               802.1AR Secure Device Identifier", IEEE 802.1AR , June
               2018.
 
-
-
-Fries, et al.           Expires November 28, 2021              [Page 51]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    [ISO-IEC-15118-2]
               International Standardization Organization / International
               Electrotechnical Commission, "ISO/IEC 15118-2 Road
               vehicles - Vehicle-to-Grid Communication Interface - Part
               2: Network and application protocol requirements", ISO/
               IEC 15118-2 , April 2014.
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 54]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
 
    [NERC-CIP-005-5]
               North American Reliability Council, "Cyber Security -
@@ -2906,20 +3067,21 @@ Internet-Draft                  BRSKI-AE                        May 2021
               RFC 8894, DOI 10.17487/RFC8894, September 2020,
               <https://www.rfc-editor.org/info/rfc8894>.
 
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 52]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
 Appendix A.  History of changes [RFC Editor: please delete]
 
    From IETF draft 01 -> IETF 02:
 
    o  Defined call flow and objects for interactions in UC2.  Object
       format based on draft for JOSE signed voucher artifacts and
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 55]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
+
       aligned the remaining objects with this approach in Section 5.2.3
       .
 
@@ -2932,7 +3094,9 @@ Appendix A.  History of changes [RFC Editor: please delete]
    o  Communication approach between pledge and registrar-agent changed
       by removing TLS-PSK (former section TLS establishment) and
       associated references to other drafts in favor of relying on
-      higher layer exchange of signed data objects.
+      higher layer exchange of signed data objects.  These data objects
+      are included also in the pledge-voucher-request and lead to an
+      extension of the YANG module for the voucher-request (issue #12).
 
    o  Details on trust relationship between registrar-agent and
       registrar (issue #4, #5, #9) included in Section 5.2.
@@ -2963,14 +3127,16 @@ Appendix A.  History of changes [RFC Editor: please delete]
       channel establishment between the pledge-agent and the pledge as
       well as the endpoint definition on the pledge.
 
-
-
-Fries, et al.           Expires November 28, 2021              [Page 53]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    o  First description of exchanged object types (needs more work)
+
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 56]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
 
    o  Clarification in discovery options for enrollment endpoints at the
       domain registrar based on well-known endpoints in Section 5.3 do
@@ -2995,7 +3161,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
       pledge-agent use case Section 5.2, e.g. to accommodate
       distribution of CA certificates.
 
-   o  Updated CMP example in Section 6 to use lightweight CMP instead of
+   o  Updated CMP example in Section 7 to use lightweight CMP instead of
       CMP, as the draft already provides the necessary /.well-known
       endpoints.
 
@@ -3018,16 +3184,15 @@ Internet-Draft                  BRSKI-AE                        May 2021
    o  Update of terminology from self-contained to authenticated self-
       contained object to be consistent in the wording and to underline
       the protection of the object with an existing credential.  Note
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 54]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
       that the naming of this object may be discussed.  An alternative
       name may be attestation object.
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 57]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
 
    o  Simplification of the architecture approach for the initial use
       case having an offsite PKI.
@@ -3060,7 +3225,7 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
    o  Enhanced consideration of existing enrollment protocols in the
       context of mapping the requirements to existing solutions in
-      Section 4 and in Section 6.
+      Section 4 and in Section 7.
 
    From individual version 00 -> 01:
 
@@ -3073,22 +3238,22 @@ Internet-Draft                  BRSKI-AE                        May 2021
       further.  This resulted in removal of the alternative path the
       MASA in Figure 1 and the associated description in Section 5.
 
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 55]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    o  Enhancement of description of architecture elements and changes to
       BRSKI in Section 5.
+
+
+
+
+
+Fries, et al.           Expires December 16, 2021              [Page 58]
+
+Internet-Draft                  BRSKI-AE                       June 2021
+
 
    o  Consideration of existing enrollment protocols in the context of
       mapping the requirements to existing solutions in Section 4.
 
-   o  New section starting Section 6 with the mapping to existing
+   o  New section starting Section 7 with the mapping to existing
       enrollment protocols by collecting boundary conditions.
 
 Authors' Addresses
@@ -3123,21 +3288,6 @@ Authors' Addresses
    Email: lear@cisco.com
 
 
-
-
-
-
-
-
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 56]
-
-Internet-Draft                  BRSKI-AE                        May 2021
-
-
    Thomas Werner
    Siemens AG
    Otto-Hahn-Ring 6
@@ -3151,42 +3301,4 @@ Internet-Draft                  BRSKI-AE                        May 2021
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Fries, et al.           Expires November 28, 2021              [Page 57]
+Fries, et al.           Expires December 16, 2021              [Page 59]
