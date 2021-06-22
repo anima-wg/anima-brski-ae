@@ -1082,6 +1082,11 @@
 		 a voucher, the MASA may perform additional checks on voucher-request
 		 objects, to issue a voucher indicating agent-proximity instead of
 		 registrar-proximity. </t>
+		 
+		<t> [RFC Editor: please delete] /* </t>
+		<t> Open Issues: The voucher defined in <xref target="RFC8366" /> defines
+		    the leaf assertion as enum, which cannot be extended. To define an 
+			additional assertion RFC 8366 may be revised. */ </t>  
 
 	 <t> "Agent-proximity" is a weaker assertion then "proximity".
 	     In case of "agent-proximity" it is a statement, that the
@@ -1093,6 +1098,8 @@
 		 corresponding private key for the certificate. Trust handover to the
 		 domain is established via the "pinned-domain-certificate" in the
 		 voucher. </t>
+		 
+
 
 	 <t> In contrast, "proximity" provides a statement, that the pledge was in
 	     direct contact with the registrar and was able to verify
@@ -1420,7 +1427,7 @@
 			not verify the agent-sign-cert itself due to missing issuing CA
             information. </t>
 
-		<t> The agent-signed-data is JOSE object and contains the following
+		<t> The agent-signed-data is a JOSE object and contains the following
 		    information:</t>
 
 		<t> The header of the agent-signed-data contains:
@@ -1430,14 +1437,8 @@
 				    LDevID(RegAgt) certificate.</t>
 			</list>	</t>
 		<t> The body of the agent-signed-data contains an
-		    ietf-voucher-request:agent-signed-data element:	</t>
-
-		<t> [RFC Editor: please delete] /* </t>
-		<t> Open Issue regarding YANG Definition. Is either definition of
-		    ietf-voucher-request:agent-signed-data as new leaf in the existing
-			or ietf-voucher-request-trigger:agent-signed-data as new module or
-			or would it be sufficient to just keep the product-serial-number 
-			and the date?*/ </t>
+		    ietf-voucher-request:agent-signed-data element 
+			(defined in <xref target="yang-module" />):	</t>
 
 		<t>	<list style="symbols">
                 <t> created-on: MUST contain the creation date and time
@@ -1567,6 +1568,11 @@
 			the YANG module for the CSR as defined in
 			<xref target="I-D.ietf-netconf-sztp-csr" />. </t>
 
+		<t> [RFC Editor: please delete] /*
+		    Open Issues: Reuse of the sub-tree ietf-sztp-csr:csr may not be 
+			possible as it is not the complete module. */ </t>			
+
+
 		<t> Depending on the capability of the pledge, it MAY construct the
 		    enrollment request as plain PKCS#10.
 			Note that the focus here is placed on PKCS#10 as PKCS#10 can be
@@ -1595,7 +1601,7 @@
 			signature is only necessary for plain PKCS#10 as other request formats
 			like CMP and CMS support the signature wrapping as part of their own
 			certificate request format. </t>
-
+		
 		<t> The registrar-agent enrollment-request Content-Type header for a
 		    wrapped PKCS#10 is:</t>
 
@@ -2509,11 +2515,6 @@ module ietf-async-voucher-request {
 ]]></artwork>
 	  </figure>
 
-      <t> [RFC Editor: please delete] /*
-	    to be done: IANA consideration to be included for the defined namespaces
-	    in <xref target="addressing" /> and <xref target="discovery_eo" /> .
-		*/
-      </t>
     </section>
 
     <section title="Privacy Considerations">
@@ -2652,7 +2653,16 @@ module ietf-async-voucher-request {
     </references>
 
     <section anchor="app_history" title="History of changes [RFC Editor: please delete]">
-      <t> From IETF draft 01 -> IETF 02:
+      <t> From IETF draft 02 -> IETF draft 03:
+          <list style="symbols">
+		    <t> Housekeeping, deleted open issue regarding YANG voucher-request 
+			    in <xref target="exchanges_uc2_1" /> as voucher-request was 
+				enhanced with additional leaf . </t>
+		    
+		  </list>
+	  </t>
+
+      <t> From IETF draft 01 -> IETF draft 02:
           <list style="symbols">
 		    <t> Defined call flow and objects for interactions in UC2. Object format
 			    based on draft for JOSE signed voucher artifacts and aligned the
@@ -2686,7 +2696,7 @@ module ietf-async-voucher-request {
 		  </list>
 	  </t>
 
-      <t> From IETF draft 00 -> IETF 01:
+      <t> From IETF draft 00 -> IETF draft 01:
           <list style="symbols">
 		    <t> Update of scope in <xref target ="sup-env" /> to include in
 				which the pledge acts as a server. This is one main motivation
