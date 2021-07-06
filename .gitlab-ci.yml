@@ -1,0 +1,39 @@
+image: gcc:10
+
+variables:
+  http_proxy: "$CI_PROXY"
+  https_proxy: "$CI_PROXY"
+  no_proxy: "127.0.0.1,localhost,.siemens.de,.siemens.net,.siemens.com,.siemens.io"
+
+before_script:
+  - make -v
+  - apt-get -qq update
+  - DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o=Dpkg::Use-Pty=0 install git ruby python3-pip
+  - python -V
+  - pip3 install xml2rfc
+  - gem install kramdown-rfc2629
+  - git remote set-url origin https://gitlab-ci-token:${CI_PUSH_TOKEN}@code.siemens.com/$CI_PROJECT_PATH.git
+  - git config --global user.email "$GITLAB_USER_EMAIL"
+  - git config --global user.name "$GITLAB_USER_NAME"
+  - git checkout $CI_COMMIT_BRANCH
+
+stages:
+  - make  
+
+build-ietf-draft-files:
+  stage: make
+  tags:
+    - AWS
+    - DOCKER 
+  only:
+    refs:
+    - master
+    changes:
+    -  draft-ietf-anima-brski-async-enroll.md
+  script:
+      - make
+  after_script: 
+    - git add *.xml *.txt *.html
+    - git commit -a -m "ietf-draft-files (xml, txt, html) created" || echo "No changes to commit"
+    - git push -u origin
+  
