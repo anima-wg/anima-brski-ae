@@ -83,10 +83,10 @@ Table of Contents
        3.2.2.  Building automation . . . . . . . . . . . . . . . . .   8
        3.2.3.  Substation automation . . . . . . . . . . . . . . . .   9
        3.2.4.  Electric vehicle charging infrastructure  . . . . . .   9
-       3.2.5.  Infrastructure isolation policy . . . . . . . . . . .  10
+       3.2.5.  Infrastructure isolation policy . . . . . . . . . . .   9
        3.2.6.  Less operational security in the target domain  . . .  10
    4.  Requirement discussion and mapping to solution elements . . .  10
-   5.  Architectural Overview and Communication Exchanges  . . . . .  13
+   5.  Architectural Overview and Communication Exchanges  . . . . .  12
      5.1.  Use Case 1 (pledge-initiator-mode): Support of off-site PKI
            service . . . . . . . . . . . . . . . . . . . . . . . . .  13
        5.1.1.  Behavior of a pledge  . . . . . . . . . . . . . . . .  16
@@ -128,6 +128,8 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 1.  Introduction
 
+   only a test for the CI/CD
+
    BRSKI as defined in [RFC8995] specifies a solution for secure zero-
    touch (automated) bootstrapping of devices (pledges) in a (customer)
    site domain.  This includes the discovery of network elements in the
@@ -140,35 +142,6 @@ Internet-Draft                  BRSKI-AE                       July 2021
    (synchronous) or offline (asynchronous) via the domain registrar to
    the pledge and originate from a Manufacturer's Authorized Signing
    Authority (MASA).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Fries, et al.            Expires 8 January 2022                 [Page 3]
-
-Internet-Draft                  BRSKI-AE                       July 2021
-
 
    For the enrollment of devices BRSKI relies on EST [RFC7030] to
    request and distribute target domain specific device certificates.
@@ -189,6 +162,14 @@ Internet-Draft                  BRSKI-AE                       July 2021
    certificate, to issue a domain specific certificate to the pledge.
    The EST server (the domain registrar) terminates the security
    association with the pledge and thus the binding between the
+
+
+
+Fries, et al.            Expires 8 January 2022                 [Page 3]
+
+Internet-Draft                  BRSKI-AE                       July 2021
+
+
    certification request and the authentication of the pledge via TLS.
    This type of enrollment utilizing an online connection to the PKI is
    considered as synchronous enrollment.
@@ -218,6 +199,25 @@ Internet-Draft                  BRSKI-AE                       July 2021
    bound to the certification request.  This uses case is independent
    from timely limitations of the first use case.  For both cases, it is
    assumed that the requester authentication information is utilized in
+   the process of authorization of a certification request.  There are
+   different options to perform store and forward of certification
+   requests including the requester authentication information:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -225,10 +225,6 @@ Fries, et al.            Expires 8 January 2022                 [Page 4]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
-
-   the process of authorization of a certification request.  There are
-   different options to perform store and forward of certification
-   requests including the requester authentication information:
 
    *  Providing a trusted component (e.g., an LRA) in the target domain,
       which stores the certification request combined with the requester
@@ -274,6 +270,10 @@ Internet-Draft                  BRSKI-AE                       July 2021
    agent) towards the pledge.  This could be a functionality of a
    commissioning tool or it may be even co-located with the registrar.
    In contrast to BRSKI the registrar-agent performs the object exchange
+   with the pledge and provides/retrieves data objects to/from the
+   domain registrar.  For the interaction with the domain registrar the
+   registrar agent will use existing BRSKI endpoints.
+
 
 
 
@@ -281,10 +281,6 @@ Fries, et al.            Expires 8 January 2022                 [Page 5]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
-
-   with the pledge and provides/retrieves data objects to/from the
-   domain registrar.  For the interaction with the domain registrar the
-   registrar agent will use existing BRSKI endpoints.
 
    The goal is to enhance BRSKI to be applicable to the additional use
    cases.  This is addressed by
@@ -330,6 +326,10 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
    IED:  Intelligent Electronic Device (in essence a pledge).
 
+   on-site:  Describes a component or service or functionality available
+      in the target deployment domain.
+
+   off-site:  Describes a component or service or functionality
 
 
 
@@ -338,10 +338,6 @@ Fries, et al.            Expires 8 January 2022                 [Page 6]
 Internet-Draft                  BRSKI-AE                       July 2021
 
 
-   on-site:  Describes a component or service or functionality available
-      in the target deployment domain.
-
-   off-site:  Describes a component or service or functionality
       available in an operator domain different from the target
       deployment domain.  This may be a central site or a cloud service,
       to which only a temporary connection is available, or which is in
@@ -386,6 +382,10 @@ Internet-Draft                  BRSKI-AE                       July 2021
    without an existing connection to the domain registrar during
    bootstrapping.  These pledges are likely to act in a server role.
    Therefore, the pledge has to offer endpoints on which it can be
+   triggered for the generation of voucher-request objects and
+   certification objects as well as to provide the response objects to
+   the pledge.
+
 
 
 
@@ -393,10 +393,6 @@ Fries, et al.            Expires 8 January 2022                 [Page 7]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
-
-   triggered for the generation of voucher-request objects and
-   certification objects as well as to provide the response objects to
-   the pledge.
 
 3.2.  Application Examples
 
@@ -437,9 +433,13 @@ Internet-Draft                  BRSKI-AE                       July 2021
    certificate issued by the operator to authenticate against other
    components and services.
 
-
-
-
+   The collected information may be provided by a domain registrar
+   already existing in the installation network.  In this case
+   connectivity to the backend PKI may be facilitated by the service
+   technician's laptop.  Contrary, the information can also be collected
+   from the pledges directly and provided to a domain registrar deployed
+   in a different network.  In this cases connectivity to the domain
+   registrar may be facilitated by the service technician's laptop.
 
 
 
@@ -449,14 +449,6 @@ Fries, et al.            Expires 8 January 2022                 [Page 8]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
-
-   The collected information may be provided by a domain registrar
-   already existing in the installation network.  In this case
-   connectivity to the backend PKI may be facilitated by the service
-   technician's laptop.  Contrary, the information can also be collected
-   from the pledges directly and provided to a domain registrar deployed
-   in a different network.  In this cases connectivity to the domain
-   registrar may be facilitated by the service technician's laptop.
 
 3.2.3.  Substation automation
 
@@ -496,6 +488,14 @@ Internet-Draft                  BRSKI-AE                       July 2021
    separate enrollment protocol.  This provides a binding of the
    exchanges to the identity of the communicating endpoints.
 
+3.2.5.  Infrastructure isolation policy
+
+   This refers to any case in which network infrastructure is normally
+   isolated from the Internet as a matter of policy, most likely for
+   security reasons.  In such a case, limited access to external PKI
+   resources will be allowed in carefully controlled short periods of
+   time, for example when a batch of new devices are deployed, but
+   impossible at other times.
 
 
 
@@ -505,15 +505,6 @@ Fries, et al.            Expires 8 January 2022                 [Page 9]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
-
-3.2.5.  Infrastructure isolation policy
-
-   This refers to any case in which network infrastructure is normally
-   isolated from the Internet as a matter of policy, most likely for
-   security reasons.  In such a case, limited access to external PKI
-   resources will be allowed in carefully controlled short periods of
-   time, for example when a batch of new devices are deployed, but
-   impossible at other times.
 
 3.2.6.  Less operational security in the target domain
 
@@ -551,17 +542,6 @@ Internet-Draft                  BRSKI-AE                       July 2021
       corresponding to the public key contained in the certification
       request, typically by adding a signature using the private key.
 
-
-
-
-
-
-
-Fries, et al.            Expires 8 January 2022                [Page 10]
-
-Internet-Draft                  BRSKI-AE                       July 2021
-
-
    *  Proof of Identity: provides data-origin authentication of a data
       object, e.g., a certificate request, utilizing an existing IDevID.
       Certificate updates may utilize the certificate that is to be
@@ -574,6 +554,13 @@ Internet-Draft                  BRSKI-AE                       July 2021
       structures protecting only the integrity of the contained data
       providing a proof-of-private-key-possession for locally generated
       key pairs.  Examples for certification requests are:
+
+
+
+Fries, et al.            Expires 8 January 2022                [Page 10]
+
+Internet-Draft                  BRSKI-AE                       July 2021
+
 
       -  PKCS#10 [RFC2986]: Defines a structure for a certification
          request.  The structure is signed to ensure integrity
@@ -611,13 +598,6 @@ Internet-Draft                  BRSKI-AE                       July 2021
       LDevID).  This requirement is addressed by existing enrollment
       protocols in different ways, for instance:
 
-
-
-Fries, et al.            Expires 8 January 2022                [Page 11]
-
-Internet-Draft                  BRSKI-AE                       July 2021
-
-
       -  EST [RFC7030]: Utilizes PKCS#10 to encode the certification
          request.  The Certificate Signing Request (CSR) may contain a
          binding to the underlying TLS by including the tls-unique value
@@ -630,6 +610,13 @@ Internet-Draft                  BRSKI-AE                       July 2021
          authentication in the transport layer, EST offers the support
          of a wrapping the CSR with an existing certificate by using
          Full PKI Request messages.
+
+
+
+Fries, et al.            Expires 8 January 2022                [Page 11]
+
+Internet-Draft                  BRSKI-AE                       July 2021
+
 
       -  SCEP [RFC8894]: Provides the option to utilize either an
          existing secret (password) or an existing certificate to
@@ -663,17 +650,6 @@ Internet-Draft                  BRSKI-AE                       July 2021
    approach [I-D.selander-ace-coap-est-oscore] may be considered as
    further variant.
 
-
-
-
-
-
-
-Fries, et al.            Expires 8 January 2022                [Page 12]
-
-Internet-Draft                  BRSKI-AE                       July 2021
-
-
 5.  Architectural Overview and Communication Exchanges
 
    To support asynchronous enrollment, the base system architecture
@@ -690,6 +666,13 @@ Internet-Draft                  BRSKI-AE                       July 2021
       pledge to the domain registrar.  The communication model between
       registrar-agent and pledge assumes that the pledge is acting as
       server and responds to requests.
+
+
+
+Fries, et al.            Expires 8 January 2022                [Page 12]
+
+Internet-Draft                  BRSKI-AE                       July 2021
+
 
    Both use cases are described in the next subsections.  They utilize
    the existing BRSKI architecture elements as much as possible.
@@ -716,6 +699,23 @@ Internet-Draft                  BRSKI-AE                       July 2021
    certification request may be piggybacked by another protocol.  This
    leads to changes in the placement or enhancements of the logical
    elements as shown in Figure 1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
