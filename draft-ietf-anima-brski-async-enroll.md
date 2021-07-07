@@ -136,6 +136,7 @@ certificate management protocols.
 --- middle
 
 # Introduction
+only a test for the CI/CD
 
 BRSKI as defined in {{RFC8995}} specifies a solution for
 secure zero-touch (automated) bootstrapping of devices (pledges) in a
