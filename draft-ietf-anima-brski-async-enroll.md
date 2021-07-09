@@ -1605,7 +1605,7 @@ Note, as the initial enrollment aims to request a general certificate,
 no certificate attributes are provided to the pledge.
 
 Triggering the pledge to create the enrollment-request is done using
-HTTPS GET on the defined pledge endpoint
+HTTP POST on the defined pledge endpoint
 "/.well-known/brski/pledge-enrollment-request".
 
 The registrar-agent pledge-enrollment-request Content-Type header
@@ -1614,6 +1614,11 @@ is:
 application/json:
 
 with an empty body.
+
+[RFC Editor: please delete] /\*
+error in v03: HTTP POST allows for an empty body but also to provide additional data, 
+like CSR attributes or information about enroll type: initial or 
+re-enroll. \*/
 
 Upon receiving the enrollment-trigger, the pledge SHALL construct
 the pledge-enrollment-request as authenticated self-contained object.
