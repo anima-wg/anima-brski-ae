@@ -19,6 +19,7 @@ before_script:
 
 stages:
   - make  
+  - deploy
 
 build-ietf-draft-files:
   stage: make
@@ -35,5 +36,15 @@ build-ietf-draft-files:
   after_script: 
     - git add *.xml *.txt *.html
     - git commit -a -m "CI - ietf-draft-files (xml, txt, html) created" || echo "No changes to commit"
-    - git push -u origin
-  
+    - git push -u origin  
+
+pages:
+  stage: deploy
+  script:
+    - mkdir .public
+    - cp draft-ietf-anima-brski-async-enroll.html .public
+    - cp draft-ietf-anima-brski-async-enroll.txt .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public    
