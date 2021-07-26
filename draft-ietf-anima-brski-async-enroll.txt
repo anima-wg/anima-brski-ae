@@ -5,15 +5,15 @@
 ANIMA WG                                                        S. Fries
 Internet-Draft                                              H. Brockhaus
 Intended status: Standards Track                                 Siemens
-Expires: 10 January 2022                                         E. Lear
+Expires: 27 January 2022                                         E. Lear
                                                            Cisco Systems
                                                                T. Werner
                                                                  Siemens
-                                                             9 July 2021
+                                                            26 July 2021
 
 
          Support of asynchronous Enrollment in BRSKI (BRSKI-AE)
-                 draft-ietf-anima-brski-async-enroll-03
+                 draft-ietf-anima-brski-async-enroll-04
 
 Abstract
 
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 January 2022.
+   This Internet-Draft will expire on 27 January 2022.
 
 
 
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 1]
+Fries, et al.            Expires 27 January 2022                [Page 1]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 2]
+Fries, et al.            Expires 27 January 2022                [Page 2]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 3]
+Fries, et al.            Expires 27 January 2022                [Page 3]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 4]
+Fries, et al.            Expires 27 January 2022                [Page 4]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 5]
+Fries, et al.            Expires 27 January 2022                [Page 5]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 6]
+Fries, et al.            Expires 27 January 2022                [Page 6]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 7]
+Fries, et al.            Expires 27 January 2022                [Page 7]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 8]
+Fries, et al.            Expires 27 January 2022                [Page 8]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022                [Page 9]
+Fries, et al.            Expires 27 January 2022                [Page 9]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 10]
+Fries, et al.            Expires 27 January 2022               [Page 10]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 11]
+Fries, et al.            Expires 27 January 2022               [Page 11]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -669,7 +669,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 12]
+Fries, et al.            Expires 27 January 2022               [Page 12]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -725,7 +725,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 13]
+Fries, et al.            Expires 27 January 2022               [Page 13]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 14]
+Fries, et al.            Expires 27 January 2022               [Page 14]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 15]
+Fries, et al.            Expires 27 January 2022               [Page 15]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 16]
+Fries, et al.            Expires 27 January 2022               [Page 16]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 17]
+Fries, et al.            Expires 27 January 2022               [Page 17]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 18]
+Fries, et al.            Expires 27 January 2022               [Page 18]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 19]
+Fries, et al.            Expires 27 January 2022               [Page 19]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 20]
+Fries, et al.            Expires 27 January 2022               [Page 20]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 21]
+Fries, et al.            Expires 27 January 2022               [Page 21]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 22]
+Fries, et al.            Expires 27 January 2022               [Page 22]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 23]
+Fries, et al.            Expires 27 January 2022               [Page 23]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 24]
+Fries, et al.            Expires 27 January 2022               [Page 24]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 25]
+Fries, et al.            Expires 27 January 2022               [Page 25]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 26]
+Fries, et al.            Expires 27 January 2022               [Page 26]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 27]
+Fries, et al.            Expires 27 January 2022               [Page 27]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 28]
+Fries, et al.            Expires 27 January 2022               [Page 28]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1621,7 +1621,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 29]
+Fries, et al.            Expires 27 January 2022               [Page 29]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1661,7 +1661,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
    Upon receiving the voucher-request trigger, the pledge SHOULD
    construct the body of the pledge-voucher-request object as defined in
    [RFC8995].  This object becomes a JSON-in-JWS object as defined in
-   [I-D.richardson-anima-jose-voucher].
+   [I-D.ietf-anima-jws-voucher].
 
    The header of the pledge-voucher-request SHALL contain the following
    parameter as defined in [RFC7515]:
@@ -1677,7 +1677,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 30]
+Fries, et al.            Expires 27 January 2022               [Page 30]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1733,7 +1733,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 31]
+Fries, et al.            Expires 27 January 2022               [Page 31]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1741,14 +1741,14 @@ Internet-Draft                  BRSKI-AE                       July 2021
                 Figure 7: Example of pledge-voucher-request
 
    The pledge-voucher-request Content-Type is defined in
-   [I-D.richardson-anima-jose-voucher] as:
+   [I-D.ietf-anima-jws-voucher] as:
 
-   application/voucher-jose+json
+   application/voucher-jws+json
 
    The pledge SHOULD include an "Accept" header field indicating the
    acceptable media type for the voucher response.  The media type
-   "application/voucher-jose+json" is defined in
-   [I-D.richardson-anima-jose-voucher].
+   "application/voucher-jws+json" is defined in
+   [I-D.ietf-anima-jws-voucher].
 
    Once the registrar-agent has received the pledge-voucher-request it
    can trigger the pledge to generate an enrollment-request object.  As
@@ -1789,7 +1789,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 32]
+Fries, et al.            Expires 27 January 2022               [Page 32]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1845,7 +1845,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 33]
+Fries, et al.            Expires 27 January 2022               [Page 33]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1901,7 +1901,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 34]
+Fries, et al.            Expires 27 January 2022               [Page 34]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1957,7 +1957,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 35]
+Fries, et al.            Expires 27 January 2022               [Page 35]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -1978,16 +1978,16 @@ Internet-Draft                  BRSKI-AE                       July 2021
    requestvoucher".
 
    The pledge-voucher-request Content-Type used in the pledge-responder-
-   mode is defined in [I-D.richardson-anima-jose-voucher] as:
+   mode is defined in [I-D.ietf-anima-jws-voucher] as:
 
-   application/voucher-jose+json (see Figure 7 for the content
+   application/voucher-jws+json (see Figure 7 for the content
    definition).
 
    The registrar-agent SHOULD include the "Accept" header field received
    during the communication with the pledge, indicating the pledge
    acceptable Content-Type for the voucher-response.  The voucher-
-   response Content-Type "application/voucher-jose+json" is defined in
-   [I-D.richardson-anima-jose-voucher].
+   response Content-Type "application/voucher-jws+json" is defined in
+   [I-D.ietf-anima-jws-voucher].
 
    Upon reception of the pledge-voucher-request, the registrar SHALL
    perform the verification of the voucher-request parameter as defined
@@ -2013,7 +2013,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 36]
+Fries, et al.            Expires 27 January 2022               [Page 36]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2031,7 +2031,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
    The registrar SHALL construct the body of the registrar-voucher-
    request object as defined in [RFC8995].  The encoding SHALL be done
-   as JOSE object as defined in [I-D.richardson-anima-jose-voucher].
+   as JOSE object as defined in [I-D.ietf-anima-jws-voucher].
 
    The header of the registrar-voucher-request SHALL contain the
    following parameter as defined in [RFC7515]:
@@ -2069,7 +2069,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 37]
+Fries, et al.            Expires 27 January 2022               [Page 37]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2105,14 +2105,14 @@ Internet-Draft                  BRSKI-AE                       July 2021
    HTTPS POST at the endpoint "/.well-known/brski/requestvoucher".
 
    The registrar-voucher-request Content-Type is defined in
-   [I-D.richardson-anima-jose-voucher] as:
+   [I-D.ietf-anima-jws-voucher] as:
 
-   application/voucher-jose+json
+   application/voucher-jws+json
 
    The registrar SHOULD include an "Accept" header field indicating the
    acceptable media type for the voucher-response.  The media type
-   "application/voucher-jose+json" is defined in
-   [I-D.richardson-anima-jose-voucher].
+   "application/voucher-jws+json" is defined in
+   [I-D.ietf-anima-jws-voucher].
 
    Once the MASA receives the registrar-voucher-request it SHALL perform
    the verification of the contained components as described in section
@@ -2125,7 +2125,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 38]
+Fries, et al.            Expires 27 January 2022               [Page 38]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2157,10 +2157,10 @@ Internet-Draft                  BRSKI-AE                       July 2021
    The voucher response format is as indicated in the submitted Accept
    header fields or based on the MASA's prior understanding of proper
    format for this pledge.  Specifically for the pledge-responder-mode
-   the "application/voucher-jose+json" as defined in
-   [I-D.richardson-anima-jose-voucher] is applied.  The syntactic
-   details of vouchers are described in detail in [RFC8366].  Figure 11
-   shows an example of the contents of a voucher.
+   the "application/voucher-jws+json" as defined in
+   [I-D.ietf-anima-jws-voucher] is applied.  The syntactic details of
+   vouchers are described in detail in [RFC8366].  Figure 11 shows an
+   example of the contents of a voucher.
 
    {
        "alg": "ES256",
@@ -2181,7 +2181,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 39]
+Fries, et al.            Expires 27 January 2022               [Page 39]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2237,7 +2237,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 40]
+Fries, et al.            Expires 27 January 2022               [Page 40]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2293,7 +2293,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 41]
+Fries, et al.            Expires 27 January 2022               [Page 41]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2323,8 +2323,8 @@ Internet-Draft                  BRSKI-AE                       July 2021
    path value of "/.well-known/brski/pledge-voucher".
 
    The registrar-agent voucher-response Content-Type header is
-   "application/voucher-jose+json and contains the voucher as provided
-   by the MASA.  An example if given in Figure 11.
+   "application/voucher-jws+json and contains the voucher as provided by
+   the MASA.  An example if given in Figure 11.
 
    The pledge verifies the voucher as described in section 5.6.1 in
    [RFC8995].
@@ -2349,7 +2349,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 42]
+Fries, et al.            Expires 27 January 2022               [Page 42]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2405,7 +2405,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 43]
+Fries, et al.            Expires 27 January 2022               [Page 43]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2461,7 +2461,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 44]
+Fries, et al.            Expires 27 January 2022               [Page 44]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2517,7 +2517,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 45]
+Fries, et al.            Expires 27 January 2022               [Page 45]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2573,7 +2573,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 46]
+Fries, et al.            Expires 27 January 2022               [Page 46]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2629,7 +2629,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 47]
+Fries, et al.            Expires 27 January 2022               [Page 47]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2685,7 +2685,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 48]
+Fries, et al.            Expires 27 January 2022               [Page 48]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2741,7 +2741,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 49]
+Fries, et al.            Expires 27 January 2022               [Page 49]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2797,7 +2797,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 50]
+Fries, et al.            Expires 27 January 2022               [Page 50]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2853,7 +2853,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 51]
+Fries, et al.            Expires 27 January 2022               [Page 51]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2889,6 +2889,13 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 12.1.  Normative References
 
+   [I-D.ietf-anima-jws-voucher]
+              Richardson, M. and T. Werner, "JWS signed Voucher
+              Artifacts for Bootstrapping Protocols", Work in Progress,
+              Internet-Draft, draft-ietf-anima-jws-voucher-00, 25 July
+              2021, <https://www.ietf.org/archive/id/draft-ietf-anima-
+              jws-voucher-00.txt>.
+
    [I-D.ietf-netconf-sztp-csr]
               Watsen, K., Housley, R., and S. Turner, "Conveying a
               Certificate Signing Request (CSR) in a Secure Zero Touch
@@ -2897,19 +2904,12 @@ Internet-Draft                  BRSKI-AE                       July 2021
               7 July 2021, <https://www.ietf.org/archive/id/draft-ietf-
               netconf-sztp-csr-05.txt>.
 
-   [I-D.richardson-anima-jose-voucher]
-              Richardson, M. and T. Werner, "JOSE signed Voucher
-              Artifacts for Bootstrapping Protocols", Work in Progress,
-              Internet-Draft, draft-richardson-anima-jose-voucher-01, 23
-              June 2021, <https://www.ietf.org/archive/id/draft-
-              richardson-anima-jose-voucher-01.txt>.
 
 
 
 
 
-
-Fries, et al.            Expires 10 January 2022               [Page 52]
+Fries, et al.            Expires 27 January 2022               [Page 52]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -2955,9 +2955,9 @@ Internet-Draft                  BRSKI-AE                       July 2021
    [I-D.ietf-lamps-cmp-updates]
               Brockhaus, H. and D. V. Oheimb, "Certificate Management
               Protocol (CMP) Updates", Work in Progress, Internet-Draft,
-              draft-ietf-lamps-cmp-updates-11, 30 June 2021,
+              draft-ietf-lamps-cmp-updates-12, 9 July 2021,
               <https://www.ietf.org/archive/id/draft-ietf-lamps-cmp-
-              updates-11.txt>.
+              updates-12.txt>.
 
    [I-D.ietf-lamps-lightweight-cmp-profile]
               Brockhaus, H., Fries, S., and D. V. Oheimb, "Lightweight
@@ -2965,15 +2965,15 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 53]
+Fries, et al.            Expires 27 January 2022               [Page 53]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
 
               Progress, Internet-Draft, draft-ietf-lamps-lightweight-
-              cmp-profile-05, 22 February 2021,
+              cmp-profile-06, 9 July 2021,
               <https://www.ietf.org/archive/id/draft-ietf-lamps-
-              lightweight-cmp-profile-05.txt>.
+              lightweight-cmp-profile-06.txt>.
 
    [I-D.selander-ace-coap-est-oscore]
               Selander, G., Raza, S., Furuhed, M., Vucinic, M., and T.
@@ -3021,7 +3021,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 54]
+Fries, et al.            Expires 27 January 2022               [Page 54]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -3077,7 +3077,7 @@ Appendix A.  History of changes [RFC Editor: please delete]
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 55]
+Fries, et al.            Expires 27 January 2022               [Page 55]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -3133,7 +3133,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 56]
+Fries, et al.            Expires 27 January 2022               [Page 56]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -3189,7 +3189,7 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 57]
+Fries, et al.            Expires 27 January 2022               [Page 57]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -3245,7 +3245,7 @@ Authors' Addresses
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 58]
+Fries, et al.            Expires 27 January 2022               [Page 58]
 
 Internet-Draft                  BRSKI-AE                       July 2021
 
@@ -3301,4 +3301,4 @@ Internet-Draft                  BRSKI-AE                       July 2021
 
 
 
-Fries, et al.            Expires 10 January 2022               [Page 59]
+Fries, et al.            Expires 27 January 2022               [Page 59]
