@@ -1592,10 +1592,10 @@ The pledge-voucher-request Content-Type is defined in
 
 application/voucher-jws+json
 
-The pledge SHOULD include an "Accept" header field indicating the
-acceptable media type for the voucher response. The media type
-"application/voucher-jws+json" is defined in
-{{I-D.ietf-anima-jws-voucher}}.
+The pledge SHOULD include this Content-Type header field indicating the
+included media type for the voucher response. Note that this is also an 
+indication regarding the acceptable fromat of the voucher response. 
+This format is included by the registrar as described in {{exchanges_uc2_2}}.
 
 Once the registrar-agent has received the pledge-voucher-request
 it can trigger the pledge to generate an enrollment-request object.
@@ -1813,9 +1813,8 @@ pledge-responder-mode is defined in {{I-D.ietf-anima-jws-voucher}} as:
 application/voucher-jws+json (see {{pvr}} for the
 content definition).
 
-The registrar-agent SHOULD include the "Accept" header field received
-during the communication with the pledge, indicating the pledge
-acceptable Content-Type for the voucher-response. The voucher-response
+The registrar-agent SHOULD include the "Accept" header field indicating the 
+pledge acceptable Content-Type for the voucher-response. The voucher-response
 Content-Type "application/voucher-jws+json" is defined in
 {{I-D.ietf-anima-jws-voucher}}.
 
