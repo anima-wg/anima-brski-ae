@@ -1,7 +1,7 @@
 ---
 stand_alone: true
 ipr: trust200902
-docname: draft-ietf-anima-brski-async-enroll-03
+docname: draft-ietf-anima-brski-async-enroll-04
 cat: std
 pi:
   toc: 'yes'
@@ -65,7 +65,7 @@ normative:
   RFC7515:
   RFC8366:
   RFC8995:
-  I-D.richardson-anima-jose-voucher:
+  I-D.ietf-anima-jws-voucher:
   I-D.ietf-netconf-sztp-csr:
 informative:
   RFC2986:
@@ -118,7 +118,6 @@ informative:
 
 --- abstract
 
-
 This document describes enhancements of bootstrapping a remote secure
 key infrastructure (BRSKI, {{RFC8995}} ) to also operate
 in domains featuring no or only timely limited connectivity between
@@ -137,7 +136,6 @@ certificate management protocols.
 --- middle
 
 # Introduction
-
 BRSKI as defined in {{RFC8995}} specifies a solution for
 secure zero-touch (automated) bootstrapping of devices (pledges) in a
 (customer) site domain. This includes the discovery of network elements
@@ -1520,7 +1518,7 @@ ietf-voucher-request:agent-signed-data element
 Upon receiving the voucher-request trigger, the pledge SHOULD
 construct the body of the pledge-voucher-request object as defined in
 {{RFC8995}}. This object
-becomes a JSON-in-JWS object as defined in {{I-D.richardson-anima-jose-voucher}}.
+becomes a JSON-in-JWS object as defined in {{I-D.ietf-anima-jws-voucher}}.
 
 The header of the pledge-voucher-request SHALL contain the following
 parameter as defined in {{RFC7515}}:
@@ -1590,14 +1588,14 @@ as x5c parameter of the JOSE header.
 {: #pvr title='Example of pledge-voucher-request' artwork-align="left"}
 
 The pledge-voucher-request Content-Type is defined in
-{{I-D.richardson-anima-jose-voucher}} as:
+{{I-D.ietf-anima-jws-voucher}} as:
 
-application/voucher-jose+json
+application/voucher-jws+json
 
-The pledge SHOULD include an "Accept" header field indicating the
-acceptable media type for the voucher response. The media type
-"application/voucher-jose+json" is defined in
-{{I-D.richardson-anima-jose-voucher}}.
+The pledge SHOULD include this Content-Type header field indicating the
+included media type for the voucher response. Note that this is also an 
+indication regarding the acceptable fromat of the voucher response. 
+This format is included by the registrar as described in {{exchanges_uc2_2}}.
 
 Once the registrar-agent has received the pledge-voucher-request
 it can trigger the pledge to generate an enrollment-request object.
@@ -1607,7 +1605,7 @@ Note, as the initial enrollment aims to request a general certificate,
 no certificate attributes are provided to the pledge.
 
 Triggering the pledge to create the enrollment-request is done using
-HTTPS GET on the defined pledge endpoint
+HTTP POST on the defined pledge endpoint
 "/.well-known/brski/pledge-enrollment-request".
 
 The registrar-agent pledge-enrollment-request Content-Type header
@@ -1616,6 +1614,11 @@ is:
 application/json:
 
 with an empty body.
+
+[RFC Editor: please delete] /\*
+error in v03: HTTP POST allows for an empty body but also to provide additional data, 
+like CSR attributes or information about enroll type: initial or 
+re-enroll. \*/
 
 Upon receiving the enrollment-trigger, the pledge SHALL construct
 the pledge-enrollment-request as authenticated self-contained object.
@@ -1805,16 +1808,15 @@ registrar with an HTTPS POST to the endpoint
 "/.well-known/brski/requestvoucher".
 
 The pledge-voucher-request Content-Type used in the
-pledge-responder-mode is defined in {{I-D.richardson-anima-jose-voucher}} as:
+pledge-responder-mode is defined in {{I-D.ietf-anima-jws-voucher}} as:
 
-application/voucher-jose+json (see {{pvr}} for the
+application/voucher-jws+json (see {{pvr}} for the
 content definition).
 
-The registrar-agent SHOULD include the "Accept" header field received
-during the communication with the pledge, indicating the pledge
-acceptable Content-Type for the voucher-response. The voucher-response
-Content-Type "application/voucher-jose+json" is defined in
-{{I-D.richardson-anima-jose-voucher}}.
+The registrar-agent SHOULD include the "Accept" header field indicating the 
+pledge acceptable Content-Type for the voucher-response. The voucher-response
+Content-Type "application/voucher-jws+json" is defined in
+{{I-D.ietf-anima-jws-voucher}}.
 
 Upon reception of the pledge-voucher-request, the registrar SHALL
 perform the verification of the voucher-request parameter as defined
@@ -1854,7 +1856,7 @@ obtain a voucher for the pledge.
 The registrar SHALL construct the body of the registrar-voucher-request
 object as defined in {{RFC8995}}.
 The encoding SHALL be done as JOSE object as defined in
-{{I-D.richardson-anima-jose-voucher}}.
+{{I-D.ietf-anima-jws-voucher}}.
 
 The header of the registrar-voucher-request SHALL contain the following
 parameter as defined in {{RFC7515}}:
@@ -1925,13 +1927,13 @@ MASA with an HTTPS POST at the endpoint
 "/.well-known/brski/requestvoucher".
 
 The registrar-voucher-request Content-Type is defined in
-{{I-D.richardson-anima-jose-voucher}} as:
+{{I-D.ietf-anima-jws-voucher}} as:
 
-application/voucher-jose+json
+application/voucher-jws+json
 
 The registrar SHOULD include an "Accept" header field indicating the
 acceptable media type for the voucher-response. The media type
-"application/voucher-jose+json" is defined in {{I-D.richardson-anima-jose-voucher}}.
+"application/voucher-jws+json" is defined in {{I-D.ietf-anima-jws-voucher}}.
 
 Once the MASA receives the registrar-voucher-request it SHALL
 perform the verification of the contained components as described in
@@ -1969,8 +1971,8 @@ and comprise the response codes 403, 404, 406, and 415.
 The voucher response format is as indicated in the submitted
 Accept header fields or based on the MASA's prior understanding of
 proper format for this pledge. Specifically for the
-pledge-responder-mode the "application/voucher-jose+json" as defined
-in {{I-D.richardson-anima-jose-voucher}} is applied.
+pledge-responder-mode the "application/voucher-jws+json" as defined
+in {{I-D.ietf-anima-jws-voucher}} is applied.
 The syntactic details of vouchers are described in detail in
 {{RFC8366}}. {{MASA-vr}} shows an example of the contents of a voucher.
 
@@ -2116,7 +2118,7 @@ The voucher response is provided with a HTTP POST using the
 operation path value of "/.well-known/brski/pledge-voucher".
 
 The registrar-agent voucher-response Content-Type header is
-"application/voucher-jose+json and contains the voucher as provided
+"application/voucher-jws+json and contains the voucher as provided
 by the MASA. An example if given in {{MASA-vr}}.
 
 The pledge verifies the voucher as described in section 5.6.1 in {{RFC8995}}.
