@@ -1483,7 +1483,7 @@ The header of the agent-signed-data contains:
 
 The body of the agent-signed-data contains an
 ietf-voucher-request:agent-signed-data element
-(defined in {{yang-module}}):
+(defined in {{async-voucher-request-yang}}):
 
 
 
@@ -1559,7 +1559,7 @@ The ietf-voucher-request:voucher is enhanced with additional parameters:
 
 
 The enhancements of the YANG module for the ietf-voucher-request
-with these new leafs are defined in {{yang-module}}.
+with these new leafs are defined in {{async-voucher-request-yang}}.
 
 The object is signed using the pledges IDevID credential contained
 as x5c parameter of the JOSE header.
@@ -2347,15 +2347,53 @@ Open Issues:
 
 
 
-# YANG Extensions to Voucher Request {#yang-module}
+# Async Voucher Request artifact {#async-voucher-request-yang}
+The following enhancement extends the voucher-request as defined in 
+{{RFC8995}} to include additional fields necessary for handling 
+bootstrapping in the pledge-responder-mode. 
 
-The following modules extends the {{RFC8995}} Voucher
-Request to include a signed artifact from the registrar-agent as well
-as the registrar-proximity-certificate and the agent-signing certificate.
-
-
+## Tree Diagram {#async-voucher-request-yang-tree}
+The following tree diagram is mostly a duplicate of the contents of
+{{RFC8995}}, with the addition of the fields agent-signed-data, the 
+registrar-proximity-certificate, and agent-signing certificate. 
+The tree diagram is described in {{RFC8340}}. The enhanced fields are 
+described in Section Each node in the diagram is fully described 
+by the YANG module in Section {{async-voucher-request-yang-module}}.
+Please review the YANG module for a detailed description of the 
+voucher-request format.
 
 ~~~~
+module: ietf-voucher-request
+
+ grouping async-voucher-request-grouping
+  +-- voucher
+     +-- created-on?                               yang:date-and-time
+     +-- expires-on?                               yang:date-and-time
+     +-- assertion?                                enumeration
+     +-- serial-number                             string
+     +-- idevid-issuer?                            binary
+     +-- pinned-domain-cert?                       binary
+     +-- domain-cert-revocation-checks?            boolean
+     +-- nonce?                                    binary
+     +-- last-renewal-date?                        yang:date-and-time
+     +-- prior-signed-voucher-request?             binary
+     +-- proximity-registrar-cert?                 binary
+	 +-- agent-signed-data?                        binary
+     +-- agent-provided-proximity-registrar-cert?  binary
+     +-- agent-sign-cert?                          binary
+		  
+~~~~
+{: artwork-align="left"}
+
+## YANG Module {#async-voucher-request-yang-module}
+The following YANG module extends the {{RFC8995}} Voucher Request to 
+include a signed artifact from the registrar-agent (agent-signed-data) 
+as well as the registrar-proximity-certificate and the 
+agent-signing certificate.
+
+~~~~
+<CODE BEGINS> file "ietf-async-voucher-request@2021-08-18.yang"
+
 module ietf-async-voucher-request {
   yang-version 1.1;
 
@@ -2372,7 +2410,7 @@ module ietf-async-voucher-request {
   }
 
   import ietf-voucher-request {
-    prefix ivr;
+    prefix vcr;
     description
       "This module defines the format for a voucher request,
           which is produced by a pledge as part of the RFC8995
@@ -2392,7 +2430,7 @@ module ietf-async-voucher-request {
     Author:   Hendrik Brockhaus
               <mailto: hendrik.brockhaus@siemens.com>
     Author:   Eliot Lear
-              <mailto: lear@cisco.com>";
+              <mailto: lear@cisco.com>"
     Author:   Thomas Werner
               <mailto: thomas-werner@siemens.com>";
   description
@@ -2404,23 +2442,23 @@ module ietf-async-voucher-request {
     'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY',
     and 'OPTIONAL' in the module text are to be interpreted as
     described in RFC 2119.";
-  revision "YYYY-MM-DD" {
+  revision 2021-08-18 {
     description
      "Initial version";
     reference
      "RFC XXXX: Voucher Request for Asynchronous Enrollment";
   }
   rc:yang-data voucher-request-async-artifact {
-    // YANG data template for a voucher.
+    // YANG data template for a voucher-request.
     uses voucher-request-async-grouping;
   }
   // Grouping defined for future usage
   grouping voucher-request-async-grouping {
     description
       "Grouping to allow reuse/extensions in future work.";
-    uses ivr:voucher-request-grouping {
+    uses vcr:voucher-request-grouping {
       augment "voucher-request" {
-        description "Base the constrained voucher-request upon the
+        description "Base the async-voucher-request upon the
           regular one";
         leaf agent-signed-data {
           type binary;
@@ -2485,9 +2523,13 @@ module ietf-async-voucher-request {
     }
   }
 }
+
+<CODE ENDS>
 ~~~~
 {: artwork-align="left"}
 
+Examples for the pledge-voucher-request are provided in 
+{{exchanges_uc2_2}}.
 
 
 # Example for signature-wrapping using existing enrollment protocols {#exist_prot}
@@ -2633,6 +2675,15 @@ call flows.
 --- back
 
 # History of changes [RFC Editor: please delete] {#app_history}
+
+From IETF draft 03 -> IETF draft 04:
+
+* Addressed feedback for voucher-request enhancements from YANG doctor early 
+  review in {{async-voucher-request-yang}}.
+
+* Included open issues in YANG model in {{uc2}} regarding assertion
+  value agent-proximity and csr encapsulation using SZTP sub module).
+
 
 From IETF draft 02 -> IETF draft 03:
 
