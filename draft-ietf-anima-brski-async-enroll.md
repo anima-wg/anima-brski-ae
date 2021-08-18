@@ -59,11 +59,14 @@ author:
   email: thomas-werner@siemens.com
   uri: https://www.siemens.com/
 normative:
+  RFC6241:  
   RFC6762:
   RFC6763:
   RFC7030:
   RFC7515:
+  RFC8040:
   RFC8366:
+  RFC8407:
   RFC8995:
   I-D.ietf-anima-jws-voucher:
   I-D.ietf-netconf-sztp-csr:
@@ -1112,7 +1115,8 @@ registrar-proximity.
 
 Open Issues: The voucher defined in {{RFC8366}} defines
 the leaf assertion as enum, which cannot be extended. To define an
-additional assertion RFC 8366 may be revised. \*/
+additional assertion RFC 8366 may be revised. There is currently 
+ongoing work for a RFC8366bis. \*/
 
 <!--
 [ YANG-doctor review note this section to be removed before publishing as RFC (or resolution of issue).
@@ -1616,10 +1620,10 @@ application/json:
 
 with an empty body.
 
-[RFC Editor: please delete] /\*
-error in v03: HTTP POST allows for an empty body but also to provide additional data, 
-like CSR attributes or information about enroll type: initial or 
-re-enroll. \*/
+Note that using HTTP POST allows for an empty body, but also to provide 
+additional data, like CSR attributes or information about the enroll 
+type: initial or re-enroll. In the following the enrollment is described 
+as initial enrollment.
 
 Upon receiving the enrollment-trigger, the pledge SHALL construct
 the pledge-enrollment-request as authenticated self-contained object.
@@ -1633,10 +1637,10 @@ the YANG module for the CSR as defined in {{I-D.ietf-netconf-sztp-csr}}.
 Open Issues: Reuse of the sub-tree ietf-sztp-csr:csr may not be
 possible as it is not the complete module. \*/
 
-Depending on the capability of the pledge, it MAY construct the
+Depending on the capability of the pledge, it constructs the
 enrollment request as plain PKCS#10.
-Note that the focus here is placed on PKCS#10 as PKCS#10 can be
-transmitted in different enrollment protocols like EST, CMP, CMS,
+Note that the focus in this use case is placed on PKCS#10 as PKCS#10 
+can be transmitted in different enrollment protocols like EST, CMP, CMS,
 and SCEP. If the pledge is already implementing an enrollment
 protocol, it may leverage that functionality for the creation of
 the enrollment request object. Note also that
@@ -1644,19 +1648,24 @@ the enrollment request object. Note also that
 of certificate request objects from CMP or CMC.
 
 The pledge SHOULD construct the pledge-enrollment-request as PKCS#10
-object and sign it additionally with its IDevID credential. The
-pledge-enrollment-request should be encoded as JOSE object.
+object. If the pledge uses PKCS#10, it MUST sign it additionally 
+with its IDevID credential to achieve proof-of-identity bound to the 
+PKCS#10 as described below. 
 
-[RFC Editor: please delete] /\*
-Open Issues: Depending on target environment, it may be useful to
-assume that the pledge may already "know" its functional scope and
-therefore the number of certificates needed during operation. As a
-result, multiple CSRs may be generated to provide achieve multiple
-certificates as a result of the enrollment. This would need further
-description and potential enhancements also in the enrollment-request
-object to transport different CSRs. \*/
+A successful enrollment will result in a generic LDevID certificate for 
+the pledge in the new domain, which can be used to request further 
+LDevID certificates if necessary for its operation.
 
- {{I-D.ietf-netconf-sztp-csr}} considers PKCS#10 but
+[RFC Editor: please delete] /* Open Issues: Depending on target
+environment, it may be useful to assume that the pledge may already
+"know" its functional scope and therefore the number of certificates
+needed during operation.  As a result, multiple CSRs may be generated
+to provide achieve multiple certificates as a result of the
+enrollment.  This would need further description and potential
+enhancements also in the enrollment-request object to transport
+different CSRs. */
+
+{{I-D.ietf-netconf-sztp-csr}} considers PKCS#10 but
 also CMP and CMC as certificate request format. Note that the wrapping
 signature is only necessary for plain PKCS#10 as other request formats
 like CMP and CMS support the signature wrapping as part of their own
@@ -1707,15 +1716,12 @@ pledge-enrollment-request object, the registrar-agent starts the
 interaction with the domain registrar.
 
 [RFC Editor: please delete] /\*
-
-Open Issues: further description necessary at least for \*/
-
-
+Open Issues: further description necessary at least for 
 
 * Values to be taken from the IDevID into the PKCS#10
   (like product-serial-number or subjectName, or certificate
   template)
-
+\*/
 
 Once the registrar-agent has collected the pledge-voucher-request and
 pledge-enrollment-request objects, it connects to the registrar
@@ -2062,14 +2068,14 @@ Open Issues:
   the PKCS#10 request destroys the initial proof of possession
   of the corresponding private key, the CA would need to
   accept RA-verified requests.
-
+\*/
 
 A successful interaction with the domain CA will result in the pledge
 LDevID EE certificate, which is then forwarded by the registrar to the
 registrar-agent using the content type "application/pkcs7-mime".
 
 The registrar-agent has now finished the exchanges with the
-domain registrar. Now the registrar-agent can supply the voucher-response
+domain registrar and can supply the voucher-response
 (from MASA via Registrar) and the enrollment-response (LDevID EE
 certificate) to the pledge. It can close the TLS connection to the
 domain registrar and provide the objects to the pledge(s). The content
@@ -2644,31 +2650,48 @@ Exhaustion attack on pledge based on DoS attack (connection
 establishment, etc.)
 
 
-## Misuse of acquired voucher and enrollment responses
-
-Registrar-agent that uses acquired voucher and enrollment response for
-domain 1 in domain 2: can be detected in Voucher Request processing
-on domain registrar side. Requires domain registrar to verify the
-proximity-registrar-cert leaf in the pledge-voucher-request against
-his own as well as the association of the pledge to his domain based
-on the product-serial-number contained in the voucher.
+## Misuse of acquired voucher and enrollment responses by Registrar-agent
+A Registrar-agent that uses acquired voucher and enrollment response for
+domain 1 in domain 2 can be detected by the pledge-voucher-request 
+processing on the domain registrar side. This requires the domain 
+registrar to verify the proximity-registrar-cert leaf in the 
+pledge-voucher-request against his own LDevID. In addition, the domain 
+registrar has to verify the association of the pledge to his domain based
+on the product-serial-number contained in the pledge-voucher-request.
 
 Misbinding of pledge by a faked domain registrar is countered as
 described in BRSKI security considerations (section 11.4).
 
-Misuse of registrar-agent LDevID may be addressed by utilizing
-short-lived certificates to be used for authenticating the
-registrar-agent against the registrar. The LDevID certificate for
-the registrar-agent may be provided by a prior BRSKI execution based
-on an existing IDevID. Alternatively, the LDevID may be acquired  by
-a service technician after authentication against the issuing CA.
+## Misuse of registrar-agent credentials
+Concerns have been raised, that there may be opportunities to misuse 
+the registrar-agent with a valid LDevID. This may be addressed by 
+utilizing short-lived certificates (e.g., valid for a day) to 
+authenticate the registrar-agent against the domain registrar. 
+The LDevID certificate for the registrar-agent may be provided by a 
+prior BRSKI execution based on an existing IDevID. Alternatively, 
+the LDevID may be acquired by a service technician after authentication 
+against the issuing CA.
 
+## YANG Module Security Considerations
+The enhanced voucher-request described in section 
+{{async-voucher-request-yang}} bases on {{RFC8995}}, but uses a different 
+encoding, based on {{I-D.ietf-anima-jws-voucher}}.  Therefore, similar 
+considerations as described in Section 11.7 (Security Considerations) 
+of {{RFC8995}} apply. 
+The YANG module specified in this document defines the schema for data 
+that is subsequently encapsulated by a JOSE signed-data content type, 
+as described {{I-D.ietf-anima-jws-voucher}}. As such, all of the 
+YANG-modeled data is protected from modification. The use of YANG to 
+define data structures, via the "yang-data" statement, is relatively 
+new and distinct from the traditional use of YANG to define an 
+API accessed by network management protocols such as NETCONF {{RFC6241}} 
+and RESTCONF {{RFC8040}}. For this reason, these guidelines do not 
+follow the template described by Section 3.7 of {{RFC8407}}].
 
 
 # Acknowledgments
-
-We would like to thank the various reviewers for their input, in
-particular Brian E. Carpenter, Michael Richardson, Giorgio Romanenghi,
+We would like to thank the various reviewers, in particular 
+Brian E. Carpenter, Michael Richardson, Giorgio Romanenghi,
 Oskar Camenzind, for their input and discussion on use cases and
 call flows.
 
@@ -2679,8 +2702,9 @@ call flows.
 
 From IETF draft 03 -> IETF draft 04:
 
-* Addressed feedback for voucher-request enhancements from YANG doctor early 
-  review in {{async-voucher-request-yang}}.
+* Addressed feedback for voucher-request enhancements from YANG doctor 
+  early review in {{async-voucher-request-yang}} as well as in the 
+  security considerations.
 
 * Included open issues in YANG model in {{uc2}} regarding assertion
   value agent-proximity and csr encapsulation using SZTP sub module).
