@@ -5,11 +5,11 @@
 ANIMA WG                                                        S. Fries
 Internet-Draft                                              H. Brockhaus
 Intended status: Standards Track                                 Siemens
-Expires: 5 February 2022                                         E. Lear
+Expires: 19 February 2022                                        E. Lear
                                                            Cisco Systems
                                                                T. Werner
                                                                  Siemens
-                                                           4 August 2021
+                                                          18 August 2021
 
 
          Support of asynchronous Enrollment in BRSKI (BRSKI-AE)
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 February 2022.
+   This Internet-Draft will expire on 19 February 2022.
 
 
 
 
 
 
-Fries, et al.            Expires 5 February 2022                [Page 1]
+Fries, et al.           Expires 19 February 2022                [Page 1]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -83,10 +83,10 @@ Table of Contents
        3.2.2.  Building automation . . . . . . . . . . . . . . . . .   8
        3.2.3.  Substation automation . . . . . . . . . . . . . . . .   9
        3.2.4.  Electric vehicle charging infrastructure  . . . . . .   9
-       3.2.5.  Infrastructure isolation policy . . . . . . . . . . .  10
+       3.2.5.  Infrastructure isolation policy . . . . . . . . . . .   9
        3.2.6.  Less operational security in the target domain  . . .  10
    4.  Requirement discussion and mapping to solution elements . . .  10
-   5.  Architectural Overview and Communication Exchanges  . . . . .  13
+   5.  Architectural Overview and Communication Exchanges  . . . . .  12
      5.1.  Use Case 1 (pledge-initiator-mode): Support of off-site PKI
            service . . . . . . . . . . . . . . . . . . . . . . . . .  13
        5.1.1.  Behavior of a pledge  . . . . . . . . . . . . . . . .  16
@@ -101,30 +101,32 @@ Table of Contents
        5.2.3.  Bootstrapping objects and corresponding exchanges . .  25
      5.3.  Domain registrar support of different enrollment
            options . . . . . . . . . . . . . . . . . . . . . . . . .  46
-   6.  YANG Extensions to Voucher Request  . . . . . . . . . . . . .  47
+   6.  Async Voucher Request artifact  . . . . . . . . . . . . . . .  47
+     6.1.  Tree Diagram  . . . . . . . . . . . . . . . . . . . . . .  47
+     6.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  47
    7.  Example for signature-wrapping using existing enrollment
            protocols . . . . . . . . . . . . . . . . . . . . . . . .  50
-     7.1.  EST Handling  . . . . . . . . . . . . . . . . . . . . . .  50
-     7.2.  CMP Handling  . . . . . . . . . . . . . . . . . . . . . .  50
 
 
 
-Fries, et al.            Expires 5 February 2022                [Page 2]
+Fries, et al.           Expires 19 February 2022                [Page 2]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
 
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  51
-   9.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  51
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  51
-     10.1.  Exhaustion attack on pledge  . . . . . . . . . . . . . .  51
+     7.1.  EST Handling  . . . . . . . . . . . . . . . . . . . . . .  50
+     7.2.  CMP Handling  . . . . . . . . . . . . . . . . . . . . . .  51
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  52
+   9.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  52
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  52
+     10.1.  Exhaustion attack on pledge  . . . . . . . . . . . . . .  52
      10.2.  Misuse of acquired voucher and enrollment responses  . .  52
-   11. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  52
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  52
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  52
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  53
-   Appendix A.  History of changes [RFC Editor: please delete] . . .  55
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  58
+   11. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  53
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  53
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  53
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  54
+   Appendix A.  History of changes [RFC Editor: please delete] . . .  56
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  60
 
 1.  Introduction
 
@@ -140,35 +142,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
    (synchronous) or offline (asynchronous) via the domain registrar to
    the pledge and originate from a Manufacturer's Authorized Signing
    Authority (MASA).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022                [Page 3]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
 
    For the enrollment of devices BRSKI relies on EST [RFC7030] to
    request and distribute target domain specific device certificates.
@@ -189,6 +162,14 @@ Internet-Draft                  BRSKI-AE                     August 2021
    certificate, to issue a domain specific certificate to the pledge.
    The EST server (the domain registrar) terminates the security
    association with the pledge and thus the binding between the
+
+
+
+Fries, et al.           Expires 19 February 2022                [Page 3]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
    certification request and the authentication of the pledge via TLS.
    This type of enrollment utilizing an online connection to the PKI is
    considered as synchronous enrollment.
@@ -218,17 +199,32 @@ Internet-Draft                  BRSKI-AE                     August 2021
    bound to the certification request.  This uses case is independent
    from timely limitations of the first use case.  For both cases, it is
    assumed that the requester authentication information is utilized in
-
-
-
-Fries, et al.            Expires 5 February 2022                [Page 4]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    the process of authorization of a certification request.  There are
    different options to perform store and forward of certification
    requests including the requester authentication information:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022                [Page 4]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    *  Providing a trusted component (e.g., an LRA) in the target domain,
       which stores the certification request combined with the requester
@@ -274,17 +270,17 @@ Internet-Draft                  BRSKI-AE                     August 2021
    agent) towards the pledge.  This could be a functionality of a
    commissioning tool or it may be even co-located with the registrar.
    In contrast to BRSKI the registrar-agent performs the object exchange
-
-
-
-Fries, et al.            Expires 5 February 2022                [Page 5]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    with the pledge and provides/retrieves data objects to/from the
    domain registrar.  For the interaction with the domain registrar the
    registrar agent will use existing BRSKI endpoints.
+
+
+
+
+Fries, et al.           Expires 19 February 2022                [Page 5]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    The goal is to enhance BRSKI to be applicable to the additional use
    cases.  This is addressed by
@@ -330,18 +326,18 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
    IED:  Intelligent Electronic Device (in essence a pledge).
 
-
-
-
-Fries, et al.            Expires 5 February 2022                [Page 6]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    on-site:  Describes a component or service or functionality available
       in the target deployment domain.
 
    off-site:  Describes a component or service or functionality
+
+
+
+Fries, et al.           Expires 19 February 2022                [Page 6]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
       available in an operator domain different from the target
       deployment domain.  This may be a central site or a cloud service,
       to which only a temporary connection is available, or which is in
@@ -386,17 +382,17 @@ Internet-Draft                  BRSKI-AE                     August 2021
    without an existing connection to the domain registrar during
    bootstrapping.  These pledges are likely to act in a server role.
    Therefore, the pledge has to offer endpoints on which it can be
-
-
-
-Fries, et al.            Expires 5 February 2022                [Page 7]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    triggered for the generation of voucher-request objects and
    certification objects as well as to provide the response objects to
    the pledge.
+
+
+
+
+Fries, et al.           Expires 19 February 2022                [Page 7]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
 3.2.  Application Examples
 
@@ -437,19 +433,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
    certificate issued by the operator to authenticate against other
    components and services.
 
-
-
-
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022                [Page 8]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    The collected information may be provided by a domain registrar
    already existing in the installation network.  In this case
    connectivity to the backend PKI may be facilitated by the service
@@ -457,6 +440,15 @@ Internet-Draft                  BRSKI-AE                     August 2021
    from the pledges directly and provided to a domain registrar deployed
    in a different network.  In this cases connectivity to the domain
    registrar may be facilitated by the service technician's laptop.
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022                [Page 8]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
 3.2.3.  Substation automation
 
@@ -496,16 +488,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
    separate enrollment protocol.  This provides a binding of the
    exchanges to the identity of the communicating endpoints.
 
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022                [Page 9]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
 3.2.5.  Infrastructure isolation policy
 
    This refers to any case in which network infrastructure is normally
@@ -514,6 +496,15 @@ Internet-Draft                  BRSKI-AE                     August 2021
    resources will be allowed in carefully controlled short periods of
    time, for example when a batch of new devices are deployed, but
    impossible at other times.
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022                [Page 9]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
 3.2.6.  Less operational security in the target domain
 
@@ -551,17 +542,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
       corresponding to the public key contained in the certification
       request, typically by adding a signature using the private key.
 
-
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 10]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    *  Proof of Identity: provides data-origin authentication of a data
       object, e.g., a certificate request, utilizing an existing IDevID.
       Certificate updates may utilize the certificate that is to be
@@ -574,6 +554,13 @@ Internet-Draft                  BRSKI-AE                     August 2021
       structures protecting only the integrity of the contained data
       providing a proof-of-private-key-possession for locally generated
       key pairs.  Examples for certification requests are:
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 10]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
       -  PKCS#10 [RFC2986]: Defines a structure for a certification
          request.  The structure is signed to ensure integrity
@@ -611,13 +598,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
       LDevID).  This requirement is addressed by existing enrollment
       protocols in different ways, for instance:
 
-
-
-Fries, et al.            Expires 5 February 2022               [Page 11]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
       -  EST [RFC7030]: Utilizes PKCS#10 to encode the certification
          request.  The Certificate Signing Request (CSR) may contain a
          binding to the underlying TLS by including the tls-unique value
@@ -630,6 +610,13 @@ Internet-Draft                  BRSKI-AE                     August 2021
          authentication in the transport layer, EST offers the support
          of a wrapping the CSR with an existing certificate by using
          Full PKI Request messages.
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 11]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
       -  SCEP [RFC8894]: Provides the option to utilize either an
          existing secret (password) or an existing certificate to
@@ -663,17 +650,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
    approach [I-D.selander-ace-coap-est-oscore] may be considered as
    further variant.
 
-
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 12]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
 5.  Architectural Overview and Communication Exchanges
 
    To support asynchronous enrollment, the base system architecture
@@ -690,6 +666,13 @@ Internet-Draft                  BRSKI-AE                     August 2021
       pledge to the domain registrar.  The communication model between
       registrar-agent and pledge assumes that the pledge is acting as
       server and responds to requests.
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 12]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    Both use cases are described in the next subsections.  They utilize
    the existing BRSKI architecture elements as much as possible.
@@ -725,7 +708,24 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 13]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 13]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 14]
+Fries, et al.           Expires 19 February 2022               [Page 14]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 15]
+Fries, et al.           Expires 19 February 2022               [Page 15]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 16]
+Fries, et al.           Expires 19 February 2022               [Page 16]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 17]
+Fries, et al.           Expires 19 February 2022               [Page 17]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 18]
+Fries, et al.           Expires 19 February 2022               [Page 18]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 19]
+Fries, et al.           Expires 19 February 2022               [Page 19]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 20]
+Fries, et al.           Expires 19 February 2022               [Page 20]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 21]
+Fries, et al.           Expires 19 February 2022               [Page 21]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 22]
+Fries, et al.           Expires 19 February 2022               [Page 22]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 23]
+Fries, et al.           Expires 19 February 2022               [Page 23]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 24]
+Fries, et al.           Expires 19 February 2022               [Page 24]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 25]
+Fries, et al.           Expires 19 February 2022               [Page 25]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 26]
+Fries, et al.           Expires 19 February 2022               [Page 26]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 27]
+Fries, et al.           Expires 19 February 2022               [Page 27]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 28]
+Fries, et al.           Expires 19 February 2022               [Page 28]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1621,7 +1621,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 29]
+Fries, et al.           Expires 19 February 2022               [Page 29]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1677,7 +1677,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 30]
+Fries, et al.           Expires 19 February 2022               [Page 30]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1733,7 +1733,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 31]
+Fries, et al.           Expires 19 February 2022               [Page 31]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1789,7 +1789,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 32]
+Fries, et al.           Expires 19 February 2022               [Page 32]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1845,7 +1845,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 33]
+Fries, et al.           Expires 19 February 2022               [Page 33]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1901,7 +1901,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 34]
+Fries, et al.           Expires 19 February 2022               [Page 34]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1957,7 +1957,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 35]
+Fries, et al.           Expires 19 February 2022               [Page 35]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2013,7 +2013,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 36]
+Fries, et al.           Expires 19 February 2022               [Page 36]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2069,7 +2069,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 37]
+Fries, et al.           Expires 19 February 2022               [Page 37]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2125,7 +2125,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 38]
+Fries, et al.           Expires 19 February 2022               [Page 38]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2181,7 +2181,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 39]
+Fries, et al.           Expires 19 February 2022               [Page 39]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2237,7 +2237,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 40]
+Fries, et al.           Expires 19 February 2022               [Page 40]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2293,7 +2293,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 41]
+Fries, et al.           Expires 19 February 2022               [Page 41]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2349,7 +2349,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 42]
+Fries, et al.           Expires 19 February 2022               [Page 42]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2405,7 +2405,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 43]
+Fries, et al.           Expires 19 February 2022               [Page 43]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2461,7 +2461,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 44]
+Fries, et al.           Expires 19 February 2022               [Page 44]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2517,7 +2517,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 45]
+Fries, et al.           Expires 19 February 2022               [Page 45]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2573,22 +2573,67 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 46]
+Fries, et al.           Expires 19 February 2022               [Page 46]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
 
-6.  YANG Extensions to Voucher Request
+6.  Async Voucher Request artifact
 
-   The following modules extends the [RFC8995] Voucher Request to
-   include a signed artifact from the registrar-agent as well as the
-   registrar-proximity-certificate and the agent-signing certificate.
+   The following enhancement extends the voucher-request as defined in
+   [RFC8995] to include additional fields necessary for handling
+   bootstrapping in the pledge-responder-mode.
 
+6.1.  Tree Diagram
+
+   The following tree diagram is mostly a duplicate of the contents of
+   [RFC8995], with the addition of the fields agent-signed-data, the
+   registrar-proximity-certificate, and agent-signing certificate.  The
+   tree diagram is described in [RFC8340].  The enhanced fields are
+   described in Section Each node in the diagram is fully described by
+   the YANG module in Section Section 6.2.  Please review the YANG
+   module for a detailed description of the voucher-request format.
+
+   module: ietf-voucher-request
+
+    grouping async-voucher-request-grouping
+     +-- voucher
+        +-- created-on?                               yang:date-and-time
+        +-- expires-on?                               yang:date-and-time
+        +-- assertion?                                enumeration
+        +-- serial-number                             string
+        +-- idevid-issuer?                            binary
+        +-- pinned-domain-cert?                       binary
+        +-- domain-cert-revocation-checks?            boolean
+        +-- nonce?                                    binary
+        +-- last-renewal-date?                        yang:date-and-time
+        +-- prior-signed-voucher-request?             binary
+        +-- proximity-registrar-cert?                 binary
+            +-- agent-signed-data?                        binary
+        +-- agent-provided-proximity-registrar-cert?  binary
+        +-- agent-sign-cert?                          binary
+
+6.2.  YANG Module
+
+   The following YANG module extends the [RFC8995] Voucher Request to
+   include a signed artifact from the registrar-agent (agent-signed-
+   data) as well as the registrar-proximity-certificate and the agent-
+   signing certificate.
+
+   <CODE BEGINS> file "ietf-async-voucher-request@2021-08-18.yang"
    module ietf-async-voucher-request {
      yang-version 1.1;
 
      namespace
        "urn:ietf:params:xml:ns:yang:ietf-async-voucher-request";
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 47]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
      prefix "constrained";
 
      import ietf-restconf {
@@ -2600,7 +2645,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
      }
 
      import ietf-voucher-request {
-       prefix ivr;
+       prefix vcr;
        description
          "This module defines the format for a voucher request,
              which is produced by a pledge as part of the RFC8995
@@ -2620,43 +2665,43 @@ Internet-Draft                  BRSKI-AE                     August 2021
        Author:   Hendrik Brockhaus
                  <mailto: hendrik.brockhaus@siemens.com>
        Author:   Eliot Lear
-                 <mailto: lear@cisco.com>";
+                 <mailto: lear@cisco.com>"
        Author:   Thomas Werner
                  <mailto: thomas-werner@siemens.com>";
      description
       "This module defines an extension of the RFC8995 voucher
        request to permit a registrar-agent to convey the adjacency
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 47]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
        relationship from the registrar-agent to the registrar.
 
        The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
        'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY',
        and 'OPTIONAL' in the module text are to be interpreted as
        described in RFC 2119.";
-     revision "YYYY-MM-DD" {
+     revision 2021-08-18 {
        description
         "Initial version";
        reference
         "RFC XXXX: Voucher Request for Asynchronous Enrollment";
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 48]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
      }
      rc:yang-data voucher-request-async-artifact {
-       // YANG data template for a voucher.
+       // YANG data template for a voucher-request.
        uses voucher-request-async-grouping;
      }
      // Grouping defined for future usage
      grouping voucher-request-async-grouping {
        description
          "Grouping to allow reuse/extensions in future work.";
-       uses ivr:voucher-request-grouping {
+       uses vcr:voucher-request-grouping {
          augment "voucher-request" {
-           description "Base the constrained voucher-request upon the
+           description "Base the async-voucher-request upon the
              regular one";
            leaf agent-signed-data {
              type binary;
@@ -2682,14 +2727,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
                 the pledge.
                 This MUST be populated in a pledge's voucher-request
                 when an agent-proximity assertion is requested.";
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 48]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
              reference
                "ITU X.690: Information Technology - ASN.1 encoding
                 rules: Specification of Basic Encoding Rules (BER),
@@ -2701,6 +2738,13 @@ Internet-Draft                  BRSKI-AE                     August 2021
                 RFC 8446: The Transport Layer Security (TLS)
                 Protocol Version 1.3";
            }
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 49]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
            leaf agent-sign-cert {
              type binary;
@@ -2729,22 +2773,10 @@ Internet-Draft                  BRSKI-AE                     August 2021
        }
      }
    }
+   <CODE ENDS>
 
-
-
-
-
-
-
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 49]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
+   Examples for the pledge-voucher-request are provided in
+   Section 5.2.3.2.
 
 7.  Example for signature-wrapping using existing enrollment protocols
 
@@ -2760,6 +2792,15 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
    When using EST [RFC7030], the following constraints should be
    considered:
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 50]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    *  Proof of possession is provided by using the specified PKCS#10
       structure in the request.
@@ -2794,14 +2835,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
    it restricts the full featured CMP to the functionality needed here.
    For this, the following constrains should be observed:
 
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 50]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    *  For proof of possession, the defined approach in Lightweight CMP
       Profile section 4.1.1 (based on CRMF) and 4.1.5 (based on PCKS#10)
       should be supported.
@@ -2816,6 +2849,14 @@ Internet-Draft                  BRSKI-AE                     August 2021
       identifier certReqId provided in the initial CertRequest message
       as specified in section 5.2.4 of
       [I-D.ietf-lamps-lightweight-cmp-profile] with delayed enrollment.
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 51]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
 8.  IANA Considerations
 
@@ -2847,17 +2888,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
    Exhaustion attack on pledge based on DoS attack (connection
    establishment, etc.)
 
-
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 51]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
 10.2.  Misuse of acquired voucher and enrollment responses
 
    Registrar-agent that uses acquired voucher and enrollment response
@@ -2870,6 +2900,19 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
    Misbinding of pledge by a faked domain registrar is countered as
    described in BRSKI security considerations (section 11.4).
+
+
+
+
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 52]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    Misuse of registrar-agent LDevID may be addressed by utilizing short-
    lived certificates to be used for authenticating the registrar-agent
@@ -2900,19 +2943,9 @@ Internet-Draft                  BRSKI-AE                     August 2021
               Watsen, K., Housley, R., and S. Turner, "Conveying a
               Certificate Signing Request (CSR) in a Secure Zero Touch
               Provisioning (SZTP) Bootstrapping Request", Work in
-              Progress, Internet-Draft, draft-ietf-netconf-sztp-csr-05,
-              7 July 2021, <https://www.ietf.org/archive/id/draft-ietf-
-              netconf-sztp-csr-05.txt>.
-
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 52]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
+              Progress, Internet-Draft, draft-ietf-netconf-sztp-csr-07,
+              15 August 2021, <https://www.ietf.org/archive/id/draft-
+              ietf-netconf-sztp-csr-07.txt>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -2926,6 +2959,16 @@ Internet-Draft                  BRSKI-AE                     August 2021
    [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
               <https://www.rfc-editor.org/info/rfc6763>.
+
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 53]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    [RFC7030]  Pritikin, M., Ed., Yee, P., Ed., and D. Harkins, Ed.,
               "Enrollment over Secure Transport", RFC 7030,
@@ -2962,14 +3005,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
    [I-D.ietf-lamps-lightweight-cmp-profile]
               Brockhaus, H., Fries, S., and D. V. Oheimb, "Lightweight
               Certificate Management Protocol (CMP) Profile", Work in
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 53]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
               Progress, Internet-Draft, draft-ietf-lamps-lightweight-
               cmp-profile-06, 9 July 2021,
               <https://www.ietf.org/archive/id/draft-ietf-lamps-
@@ -2981,6 +3016,15 @@ Internet-Draft                  BRSKI-AE                     August 2021
               Progress, Internet-Draft, draft-selander-ace-coap-est-
               oscore-05, 5 May 2021, <https://www.ietf.org/archive/id/
               draft-selander-ace-coap-est-oscore-05.txt>.
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 54]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    [IEC-62351-9]
               International Electrotechnical Commission, "IEC 62351 -
@@ -3019,13 +3063,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
               DOI 10.17487/RFC4210, September 2005,
               <https://www.rfc-editor.org/info/rfc4210>.
 
-
-
-Fries, et al.            Expires 5 February 2022               [Page 54]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    [RFC4211]  Schaad, J., "Internet X.509 Public Key Infrastructure
               Certificate Request Message Format (CRMF)", RFC 4211,
               DOI 10.17487/RFC4211, September 2005,
@@ -3034,6 +3071,16 @@ Internet-Draft                  BRSKI-AE                     August 2021
    [RFC5272]  Schaad, J. and M. Myers, "Certificate Management over CMS
               (CMC)", RFC 5272, DOI 10.17487/RFC5272, June 2008,
               <https://www.rfc-editor.org/info/rfc5272>.
+
+
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 55]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
 
    [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
               Housley, R., and W. Polk, "Internet X.509 Public Key
@@ -3045,11 +3092,24 @@ Internet-Draft                  BRSKI-AE                     August 2021
               RFC 5652, DOI 10.17487/RFC5652, September 2009,
               <https://www.rfc-editor.org/info/rfc5652>.
 
+   [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
+              BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
+              <https://www.rfc-editor.org/info/rfc8340>.
+
    [RFC8894]  Gutmann, P., "Simple Certificate Enrolment Protocol",
               RFC 8894, DOI 10.17487/RFC8894, September 2020,
               <https://www.rfc-editor.org/info/rfc8894>.
 
 Appendix A.  History of changes [RFC Editor: please delete]
+
+   From IETF draft 03 -> IETF draft 04:
+
+   *  Addressed feedback for voucher-request enhancements from YANG
+      doctor early review in Section 6.
+
+   *  Included open issues in YANG model in Section 5.2 regarding
+      assertion value agent-proximity and csr encapsulation using SZTP
+      sub module).
 
    From IETF draft 02 -> IETF draft 03:
 
@@ -3071,16 +3131,15 @@ Appendix A.  History of changes [RFC Editor: please delete]
    *  Terminology change: issue #2 pledge-agent -> registrar-agent to
       better underline agent relation.
 
-   *  Terminology change: issue #3 PULL/PUSH -> pledge-initiator-mode
-      and pledge-responder-mode to better address the pledge operation.
 
 
-
-
-Fries, et al.            Expires 5 February 2022               [Page 55]
+Fries, et al.           Expires 19 February 2022               [Page 56]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
+
+   *  Terminology change: issue #3 PULL/PUSH -> pledge-initiator-mode
+      and pledge-responder-mode to better address the pledge operation.
 
    *  Communication approach between pledge and registrar-agent changed
       by removing TLS-PSK (former section TLS establishment) and
@@ -3127,16 +3186,17 @@ Internet-Draft                  BRSKI-AE                     August 2021
       voucher related endpoints has been taken over in the BRSKI main
       document.
 
-   *  Updated references.
-
-   *  Included Thomas Werner as additional author for the document.
 
 
 
-Fries, et al.            Expires 5 February 2022               [Page 56]
+Fries, et al.           Expires 19 February 2022               [Page 57]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
+
+   *  Updated references.
+
+   *  Included Thomas Werner as additional author for the document.
 
    From individual version 03 -> IETF draft 00:
 
@@ -3182,17 +3242,17 @@ Internet-Draft                  BRSKI-AE                     August 2021
    *  Introduction of a new use case utilizing authenticated self-
       contain objects to onboard a pledge using a commissioning tool
       containing a pledge-agent.  This requires additional changes in
-      the BRSKI call flow sequence and led to changes in the
-      introduction, the application example,and also in the related
-      BRSKI-AE call flow.
 
 
 
-
-Fries, et al.            Expires 5 February 2022               [Page 57]
+Fries, et al.           Expires 19 February 2022               [Page 58]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
+
+      the BRSKI call flow sequence and led to changes in the
+      introduction, the application example,and also in the related
+      BRSKI-AE call flow.
 
    *  Update of provided examples of the addressing approach used in
       BRSKI to allow for support of multiple enrollment protocols in
@@ -3237,19 +3297,20 @@ Internet-Draft                  BRSKI-AE                     August 2021
    *  New section starting Section 7 with the mapping to existing
       enrollment protocols by collecting boundary conditions.
 
+
+
+
+
+Fries, et al.           Expires 19 February 2022               [Page 59]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
 Authors' Addresses
 
    Steffen Fries
    Siemens AG
    Otto-Hahn-Ring 6
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 58]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
-
    81739 Munich
    Germany
 
@@ -3296,9 +3357,4 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-
-
-
-
-
-Fries, et al.            Expires 5 February 2022               [Page 59]
+Fries, et al.           Expires 19 February 2022               [Page 60]
