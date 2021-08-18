@@ -76,6 +76,7 @@ informative:
   RFC5652:
   I-D.ietf-lamps-lightweight-cmp-profile:
   I-D.ietf-lamps-cmp-updates:
+  RFC8340;
   RFC8894:
   I-D.selander-ace-coap-est-oscore:
   IEC-62351-9:
