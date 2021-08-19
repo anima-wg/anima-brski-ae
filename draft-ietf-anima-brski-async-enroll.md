@@ -2385,7 +2385,7 @@ module: ietf-voucher-request
      +-- last-renewal-date?                        yang:date-and-time
      +-- prior-signed-voucher-request?             binary
      +-- proximity-registrar-cert?                 binary
-	 +-- agent-signed-data?                        binary
+     +-- agent-signed-data?                        binary
      +-- agent-provided-proximity-registrar-cert?  binary
      +-- agent-sign-cert?                          binary
 		  
@@ -2399,13 +2399,13 @@ as well as the registrar-proximity-certificate and the
 agent-signing certificate.
 
 ~~~~
-<CODE BEGINS> file "ietf-async-voucher-request@2021-08-18.yang"
+<CODE BEGINS> file "ietf-voucher-request-async@2021-08-19.yang"
 
-module ietf-async-voucher-request {
+module ietf-voucher-request-async {
   yang-version 1.1;
 
   namespace
-    "urn:ietf:params:xml:ns:yang:ietf-async-voucher-request";
+    "urn:ietf:params:xml:ns:yang:ietf-voucher-request-async";
   prefix "constrained";
 
   import ietf-restconf {
@@ -2437,7 +2437,7 @@ module ietf-async-voucher-request {
     Author:   Hendrik Brockhaus
               <mailto: hendrik.brockhaus@siemens.com>
     Author:   Eliot Lear
-              <mailto: lear@cisco.com>"
+              <mailto: lear@cisco.com>
     Author:   Thomas Werner
               <mailto: thomas-werner@siemens.com>";
   description
@@ -2449,7 +2449,7 @@ module ietf-async-voucher-request {
     'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY',
     and 'OPTIONAL' in the module text are to be interpreted as
     described in RFC 2119.";
-  revision 2021-08-18 {
+  revision 2021-08-19 {
     description
      "Initial version";
     reference
@@ -2464,7 +2464,8 @@ module ietf-async-voucher-request {
     description
       "Grouping to allow reuse/extensions in future work.";
     uses vcr:voucher-request-grouping {
-      augment "voucher-request" {
+	
+      augment voucher {
         description "Base the async-voucher-request upon the
           regular one";
         leaf agent-signed-data {
