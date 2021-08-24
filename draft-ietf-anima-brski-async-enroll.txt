@@ -5,11 +5,11 @@
 ANIMA WG                                                        S. Fries
 Internet-Draft                                              H. Brockhaus
 Intended status: Standards Track                                 Siemens
-Expires: 20 February 2022                                        E. Lear
+Expires: 25 February 2022                                        E. Lear
                                                            Cisco Systems
                                                                T. Werner
                                                                  Siemens
-                                                          19 August 2021
+                                                          24 August 2021
 
 
          Support of asynchronous Enrollment in BRSKI (BRSKI-AE)
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 February 2022.
+   This Internet-Draft will expire on 25 February 2022.
 
 
 
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 1]
+Fries, et al.           Expires 25 February 2022                [Page 1]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 2]
+Fries, et al.           Expires 25 February 2022                [Page 2]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 3]
+Fries, et al.           Expires 25 February 2022                [Page 3]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 4]
+Fries, et al.           Expires 25 February 2022                [Page 4]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 5]
+Fries, et al.           Expires 25 February 2022                [Page 5]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 6]
+Fries, et al.           Expires 25 February 2022                [Page 6]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 7]
+Fries, et al.           Expires 25 February 2022                [Page 7]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 8]
+Fries, et al.           Expires 25 February 2022                [Page 8]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022                [Page 9]
+Fries, et al.           Expires 25 February 2022                [Page 9]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 10]
+Fries, et al.           Expires 25 February 2022               [Page 10]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 11]
+Fries, et al.           Expires 25 February 2022               [Page 11]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -669,7 +669,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 12]
+Fries, et al.           Expires 25 February 2022               [Page 12]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -725,7 +725,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 13]
+Fries, et al.           Expires 25 February 2022               [Page 13]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 14]
+Fries, et al.           Expires 25 February 2022               [Page 14]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 15]
+Fries, et al.           Expires 25 February 2022               [Page 15]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 16]
+Fries, et al.           Expires 25 February 2022               [Page 16]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 17]
+Fries, et al.           Expires 25 February 2022               [Page 17]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 18]
+Fries, et al.           Expires 25 February 2022               [Page 18]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 19]
+Fries, et al.           Expires 25 February 2022               [Page 19]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 20]
+Fries, et al.           Expires 25 February 2022               [Page 20]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 21]
+Fries, et al.           Expires 25 February 2022               [Page 21]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 22]
+Fries, et al.           Expires 25 February 2022               [Page 22]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 23]
+Fries, et al.           Expires 25 February 2022               [Page 23]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 24]
+Fries, et al.           Expires 25 February 2022               [Page 24]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 25]
+Fries, et al.           Expires 25 February 2022               [Page 25]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 26]
+Fries, et al.           Expires 25 February 2022               [Page 26]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 27]
+Fries, et al.           Expires 25 February 2022               [Page 27]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 28]
+Fries, et al.           Expires 25 February 2022               [Page 28]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1621,7 +1621,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 29]
+Fries, et al.           Expires 25 February 2022               [Page 29]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1631,8 +1631,8 @@ Internet-Draft                  BRSKI-AE                     August 2021
    *  kid: contains the base64-encoded SubjectKeyIdentifier of the
       LDevID(RegAgt) certificate.
 
-   The body of the agent-signed-data contains an ietf-voucher-
-   request:agent-signed-data element (defined in Section 6):
+   The body of the agent-signed-data contains an ietf-voucher-request-
+   async:agent-signed-data element (defined in Section 6):
 
    *  created-on: MUST contain the creation date and time in yang:date-
       and-time format.
@@ -1671,13 +1671,13 @@ Internet-Draft                  BRSKI-AE                     August 2021
    *  x5c: contains the base64-encoded pledge IDevID certificate.
 
    The body of the pledge-voucher-request object MUST contain the
-   following parameter as part of the ietf-voucher-request:voucher as
-   defined in [RFC8995]:
+   following parameter as part of the ietf-voucher-request-async:voucher
+   as defined in [RFC8995]:
 
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 30]
+Fries, et al.           Expires 25 February 2022               [Page 30]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1693,7 +1693,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
    *  assertion: contains the requested voucher assertion.
 
-   The ietf-voucher-request:voucher is enhanced with additional
+   The ietf-voucher-request-async:voucher is enhanced with additional
    parameters:
 
    *  agent-provided-proximity-registrar-cert: MUST be included and
@@ -1717,7 +1717,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
       "x5c": ["MIIB2jCC...dA=="]
    }
    {
-     "ietf-voucher-request:voucher": {
+     "ietf-voucher-request-async:voucher": {
       "created-on": "2021-04-16T00:00:02.000Z",
       "nonce": "eDs++/FuDHGUnRxN3E14CQ==",
       "serial-number": "callee4711",
@@ -1733,7 +1733,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 31]
+Fries, et al.           Expires 25 February 2022               [Page 31]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1779,7 +1779,8 @@ Internet-Draft                  BRSKI-AE                     August 2021
    corresponding to the contained public key.  In addition, based on the
    additional signature using the IDevID, proof of identity is provided.
    Here, a JOSE object is being created in which the body utilizes the
-   YANG module for the CSR as defined in [I-D.ietf-netconf-sztp-csr].
+   YANG module ietf-ztp-types with the grouping for csr-grouping for the
+   CSR as defined in [I-D.ietf-netconf-sztp-csr].
 
    [RFC Editor: please delete] /* Open Issues: Reuse of the sub-tree
    ietf-sztp-csr:csr may not be possible as it is not the complete
@@ -1788,8 +1789,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-
-Fries, et al.           Expires 20 February 2022               [Page 32]
+Fries, et al.           Expires 25 February 2022               [Page 32]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1801,12 +1801,12 @@ Internet-Draft                  BRSKI-AE                     August 2021
    already implementing an enrollment protocol, it may leverage that
    functionality for the creation of the enrollment request object.
    Note also that [I-D.ietf-netconf-sztp-csr] also allows for inclusion
-   of certificate request objects from CMP or CMC.
+   of certification request objects such as CMP or CMC.
 
    The pledge SHOULD construct the pledge-enrollment-request as PKCS#10
-   object.  If the pledge uses PKCS#10, it MUST sign it additionally
-   with its IDevID credential to achieve proof-of-identity bound to the
-   PKCS#10 as described below.
+   object.  In this case it MUST sign it additionally with its IDevID
+   credential to achieve proof-of-identity bound to the PKCS#10 as
+   described below.
 
    A successful enrollment will result in a generic LDevID certificate
    for the pledge in the new domain, which can be used to request
@@ -1822,10 +1822,10 @@ Internet-Draft                  BRSKI-AE                     August 2021
    different CSRs. */
 
    [I-D.ietf-netconf-sztp-csr] considers PKCS#10 but also CMP and CMC as
-   certificate request format.  Note that the wrapping signature is only
-   necessary for plain PKCS#10 as other request formats like CMP and CMS
-   support the signature wrapping as part of their own certificate
-   request format.
+   certification request format.  Note that the wrapping signature is
+   only necessary for plain PKCS#10 as other request formats like CMP
+   and CMS support the signature wrapping as part of their own
+   certificate request format.
 
    The registrar-agent enrollment-request Content-Type header for a
    wrapped PKCS#10 is:
@@ -1840,12 +1840,12 @@ Internet-Draft                  BRSKI-AE                     August 2021
    *  x5c: contains the base64-encoded pledge IDevID certificate.
 
    The body of the pledge enrollment-request object SHOULD contain a P10
-   parameter (for PKCS#10) as defined for ietf-sztp-csr:csr in
+   parameter (for PKCS#10) as defined for ietf-ztp-types:p10-csr in
    [I-D.ietf-netconf-sztp-csr]:
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 33]
+Fries, et al.           Expires 25 February 2022               [Page 33]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1860,7 +1860,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
        "x5c": ["MIIB2jCC...dA=="]
    }
    {
-     "ietf-sztp-csr:csr": {
+     "ietf-ztp-types:csr": {
        "p10": "base64encodedvalue=="
      }
    }
@@ -1901,7 +1901,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 34]
+Fries, et al.           Expires 25 February 2022               [Page 34]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -1957,7 +1957,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 35]
+Fries, et al.           Expires 25 February 2022               [Page 35]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2013,7 +2013,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 36]
+Fries, et al.           Expires 25 February 2022               [Page 36]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2047,8 +2047,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
    *  x5c: contains the base64-encoded registrar LDevID certificate.
 
    The body of the registrar-voucher-request object MUST contain the
-   following parameter as part of the ietf-voucher-request:voucher as
-   defined in [RFC8995]:
+   following parameter as part of the voucher as defined in [RFC8995]:
 
    *  created-on: contains the current date and time in yang:date-and-
       time format for the registrar-voucher-request creation time.
@@ -2069,13 +2068,14 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 37]
+
+Fries, et al.           Expires 25 February 2022               [Page 37]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
 
-   The ietf-voucher-request:voucher can be optionally enhanced with the
-   following additional parameter:
+   The voucher can be optionally enhanced with the following additional
+   parameter as defined in Section 6:
 
    *  agent-sign-cert: Contain the base64-encoded LDevID(RegAgt) EE
       certificate if MASA verification of agent-proximity is required to
@@ -2089,7 +2089,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
       "x5c": ["MIIB2jCC...dA=="]
    }
    {
-     "ietf-voucher-request:voucher": {
+     "ietf-voucher-request-async:voucher": {
       "created-on": "2021-04-16T02:37:39.235Z",
       "nonce": "eDs++/FuDHGUnRxN3E14CQ==",
       "serial-number": "callee4711",
@@ -2125,7 +2125,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 38]
+Fries, et al.           Expires 25 February 2022               [Page 38]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2181,7 +2181,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 39]
+Fries, et al.           Expires 25 February 2022               [Page 39]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2237,7 +2237,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 40]
+Fries, et al.           Expires 25 February 2022               [Page 40]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2293,7 +2293,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 41]
+Fries, et al.           Expires 25 February 2022               [Page 41]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2349,7 +2349,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 42]
+Fries, et al.           Expires 25 February 2022               [Page 42]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2405,7 +2405,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 43]
+Fries, et al.           Expires 25 February 2022               [Page 43]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2461,7 +2461,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 44]
+Fries, et al.           Expires 25 February 2022               [Page 44]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2517,7 +2517,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 45]
+Fries, et al.           Expires 25 February 2022               [Page 45]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2573,7 +2573,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 46]
+Fries, et al.           Expires 25 February 2022               [Page 46]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2594,9 +2594,9 @@ Internet-Draft                  BRSKI-AE                     August 2021
    the YANG module in Section Section 6.2.  Please review the YANG
    module for a detailed description of the voucher-request format.
 
-   module: ietf-voucher-request
+   module: ietf-voucher-request-async
 
-    grouping async-voucher-request-grouping
+    grouping voucher-request-async-grouping
      +-- voucher
         +-- created-on?                               yang:date-and-time
         +-- expires-on?                               yang:date-and-time
@@ -2629,7 +2629,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 47]
+Fries, et al.           Expires 25 February 2022               [Page 47]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2685,7 +2685,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 48]
+Fries, et al.           Expires 25 February 2022               [Page 48]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2741,7 +2741,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 49]
+Fries, et al.           Expires 25 February 2022               [Page 49]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2797,7 +2797,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 50]
+Fries, et al.           Expires 25 February 2022               [Page 50]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2853,7 +2853,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 51]
+Fries, et al.           Expires 25 February 2022               [Page 51]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2909,7 +2909,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 52]
+Fries, et al.           Expires 25 February 2022               [Page 52]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -2965,15 +2965,15 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 53]
+Fries, et al.           Expires 25 February 2022               [Page 53]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
 
               Provisioning (SZTP) Bootstrapping Request", Work in
-              Progress, Internet-Draft, draft-ietf-netconf-sztp-csr-07,
-              15 August 2021, <https://www.ietf.org/archive/id/draft-
-              ietf-netconf-sztp-csr-07.txt>.
+              Progress, Internet-Draft, draft-ietf-netconf-sztp-csr-08,
+              24 August 2021, <https://www.ietf.org/archive/id/draft-
+              ietf-netconf-sztp-csr-08.txt>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -3021,7 +3021,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 54]
+Fries, et al.           Expires 25 February 2022               [Page 54]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -3077,7 +3077,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 55]
+Fries, et al.           Expires 25 February 2022               [Page 55]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -3133,7 +3133,7 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-Fries, et al.           Expires 20 February 2022               [Page 56]
+Fries, et al.           Expires 25 February 2022               [Page 56]
 
 Internet-Draft                  BRSKI-AE                     August 2021
 
@@ -3150,9 +3150,16 @@ Appendix A.  History of changes [RFC Editor: please delete]
       doctor early review in Section 6 as well as in the security
       considerations.
 
-   *  Included open issues in YANG model in Section 5.2 regarding
-      assertion value agent-proximity and csr encapsulation using SZTP
-      sub module).
+   *  Renamed ietf-async-voucher-request to IETF-voucher-request-async
+      to to allow better listing of voucher related extensions; aligned
+      with constraint voucher (#20)
+
+   *  Utilized ietf-voucher-request-async instead of ietf-voucher-
+      request in voucher exchanges to utilize the enhanced voucher-
+      request.
+
+   *  Included changes from draft-ietf-netconf-sztp-csr-06 regarding the
+      YANG definition of csr-types into the enrollment request exchange.
 
    From IETF draft 02 -> IETF draft 03:
 
@@ -3177,6 +3184,16 @@ Appendix A.  History of changes [RFC Editor: please delete]
    *  Terminology change: issue #3 PULL/PUSH -> pledge-initiator-mode
       and pledge-responder-mode to better address the pledge operation.
 
+
+
+
+
+
+Fries, et al.           Expires 25 February 2022               [Page 57]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
    *  Communication approach between pledge and registrar-agent changed
       by removing TLS-PSK (former section TLS establishment) and
       associated references to other drafts in favor of relying on
@@ -3186,13 +3203,6 @@ Appendix A.  History of changes [RFC Editor: please delete]
 
    *  Details on trust relationship between registrar-agent and
       registrar (issue #4, #5, #9) included in Section 5.2.
-
-
-
-Fries, et al.           Expires 20 February 2022               [Page 57]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
 
    *  Recommendation regarding short-lived certificates for registrar-
       agent authentication towards registrar (issue #7) in the security
@@ -3233,6 +3243,13 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
    *  Included Thomas Werner as additional author for the document.
 
+
+
+Fries, et al.           Expires 25 February 2022               [Page 58]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
    From individual version 03 -> IETF draft 00:
 
    *  Inclusion of discovery options of enrollment endpoints at the
@@ -3240,15 +3257,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
       replacement of section 5.1.3 in the individual draft.  This is
       intended to support both use cases in the document.  An
       illustrative example is provided.
-
-
-
-
-
-Fries, et al.           Expires 20 February 2022               [Page 58]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
 
    *  Missing details provided for the description and call flow in
       pledge-agent use case Section 5.2, e.g. to accommodate
@@ -3290,6 +3298,14 @@ Internet-Draft                  BRSKI-AE                     August 2021
       introduction, the application example,and also in the related
       BRSKI-AE call flow.
 
+
+
+
+Fries, et al.           Expires 25 February 2022               [Page 59]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
    *  Update of provided examples of the addressing approach used in
       BRSKI to allow for support of multiple enrollment protocols in
       Section 5.1.5.
@@ -3298,13 +3314,6 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
    *  Update of introduction text to clearly relate to the usage of
       IDevID and LDevID.
-
-
-
-Fries, et al.           Expires 20 February 2022               [Page 59]
-
-Internet-Draft                  BRSKI-AE                     August 2021
-
 
    *  Definition of the addressing approach used in BRSKI to allow for
       support of multiple enrollment protocols in Section 5.1.5.  This
@@ -3345,21 +3354,19 @@ Authors' Addresses
    Steffen Fries
    Siemens AG
    Otto-Hahn-Ring 6
+
+
+
+Fries, et al.           Expires 25 February 2022               [Page 60]
+
+Internet-Draft                  BRSKI-AE                     August 2021
+
+
    81739 Munich
    Germany
 
    Email: steffen.fries@siemens.com
    URI:   https://www.siemens.com/
-
-
-
-
-
-
-
-Fries, et al.           Expires 20 February 2022               [Page 60]
-
-Internet-Draft                  BRSKI-AE                     August 2021
 
 
    Hendrik Brockhaus
@@ -3406,11 +3413,4 @@ Internet-Draft                  BRSKI-AE                     August 2021
 
 
 
-
-
-
-
-
-
-
-Fries, et al.           Expires 20 February 2022               [Page 61]
+Fries, et al.           Expires 25 February 2022               [Page 61]
