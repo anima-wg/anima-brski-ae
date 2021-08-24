@@ -1487,7 +1487,7 @@ The header of the agent-signed-data contains:
 
 
 The body of the agent-signed-data contains an
-ietf-voucher-request:agent-signed-data element
+ietf-voucher-request-async:agent-signed-data element
 (defined in {{async-voucher-request-yang}}):
 
 
@@ -1534,7 +1534,7 @@ parameter as defined in {{RFC7515}}:
 
 
 The body of the pledge-voucher-request object MUST contain the
-following parameter as part of the ietf-voucher-request:voucher as
+following parameter as part of the ietf-voucher-request-async:voucher as
 defined in {{RFC8995}}:
 
 * created-on: contains the current date and time in
@@ -1549,7 +1549,7 @@ defined in {{RFC8995}}:
 * assertion: contains the requested voucher assertion.
 
 
-The ietf-voucher-request:voucher is enhanced with additional parameters:
+The ietf-voucher-request-async:voucher is enhanced with additional parameters:
 
 * agent-provided-proximity-registrar-cert: MUST be included and
   contains the base64-encoded LDevID(Reg) EE certificate
@@ -1576,7 +1576,7 @@ as x5c parameter of the JOSE header.
    "x5c": ["MIIB2jCC...dA=="]
 }
 {
-  "ietf-voucher-request:voucher": {
+  "ietf-voucher-request-async:voucher": {
    "created-on": "2021-04-16T00:00:02.000Z",
    "nonce": "eDs++/FuDHGUnRxN3E14CQ==",
    "serial-number": "callee4711",
@@ -1631,7 +1631,8 @@ The CSR already assures proof of possession of the private key
 corresponding to the contained public key. In addition, based on the
 additional signature using the IDevID, proof of identity is provided.
 Here, a JOSE object is being created in which the body utilizes
-the YANG module for the CSR as defined in {{I-D.ietf-netconf-sztp-csr}}.
+the YANG module ietf-ztp-types with the grouping for csr-grouping for 
+the CSR as defined in {{I-D.ietf-netconf-sztp-csr}}.
 
 [RFC Editor: please delete] /\*
 Open Issues: Reuse of the sub-tree ietf-sztp-csr:csr may not be
@@ -1645,12 +1646,12 @@ and SCEP. If the pledge is already implementing an enrollment
 protocol, it may leverage that functionality for the creation of
 the enrollment request object. Note also that
 {{I-D.ietf-netconf-sztp-csr}} also allows for inclusion
-of certificate request objects from CMP or CMC.
+of certification request objects such as CMP or CMC.
 
 The pledge SHOULD construct the pledge-enrollment-request as PKCS#10
-object. If the pledge uses PKCS#10, it MUST sign it additionally 
-with its IDevID credential to achieve proof-of-identity bound to the 
-PKCS#10 as described below. 
+object. In this case it MUST sign it additionally with its IDevID 
+credential to achieve proof-of-identity bound to the PKCS#10 as 
+described below. 
 
 A successful enrollment will result in a generic LDevID certificate for 
 the pledge in the new domain, which can be used to request further 
@@ -1666,7 +1667,7 @@ enhancements also in the enrollment-request object to transport
 different CSRs. */
 
 {{I-D.ietf-netconf-sztp-csr}} considers PKCS#10 but
-also CMP and CMC as certificate request format. Note that the wrapping
+also CMP and CMC as certification request format. Note that the wrapping
 signature is only necessary for plain PKCS#10 as other request formats
 like CMP and CMS support the signature wrapping as part of their own
 certificate request format.
@@ -1685,7 +1686,7 @@ parameter as defined in {{RFC7515}}:
 
 
 The body of the pledge enrollment-request object SHOULD contain a P10
-parameter (for PKCS#10) as defined for ietf-sztp-csr:csr in
+parameter (for PKCS#10) as defined for ietf-ztp-types:p10-csr in
 {{I-D.ietf-netconf-sztp-csr}}:
 
 * P10: contains the base64-encoded PKCS#10 of the pledge.
@@ -1701,7 +1702,7 @@ corresponds to the certificate signaled in the JOSE header.
     "x5c": ["MIIB2jCC...dA=="]
 }
 {
-  "ietf-sztp-csr:csr": {
+  "ietf-ztp-types:csr": {
     "p10": "base64encodedvalue=="
   }
 }
@@ -1874,7 +1875,7 @@ parameter as defined in {{RFC7515}}:
 
 
 The body of the registrar-voucher-request object MUST contain the
-following parameter as part of the ietf-voucher-request:voucher as
+following parameter as part of the voucher as
 defined in {{RFC8995}}:
 
 * created-on: contains the current date and time in
@@ -1896,8 +1897,8 @@ defined in {{RFC8995}}:
   proximity based on the agent-signed-data.
 
 
-The ietf-voucher-request:voucher can be optionally enhanced with the
-following additional parameter:
+The voucher can be optionally enhanced with the following additional 
+parameter as defined in {{async-voucher-request-yang}}:
 
 * agent-sign-cert: Contain the base64-encoded LDevID(RegAgt)
   EE certificate if MASA verification of agent-proximity is
@@ -1914,7 +1915,7 @@ which corresponds to the certificate signaled in the JOSE header.
    "x5c": ["MIIB2jCC...dA=="]
 }
 {
-  "ietf-voucher-request:voucher": {
+  "ietf-voucher-request-async:voucher": {
    "created-on": "2021-04-16T02:37:39.235Z",
    "nonce": "eDs++/FuDHGUnRxN3E14CQ==",
    "serial-number": "callee4711",
@@ -2370,9 +2371,9 @@ Please review the YANG module for a detailed description of the
 voucher-request format.
 
 ~~~~
-module: ietf-voucher-request
+module: ietf-voucher-request-async
 
- grouping async-voucher-request-grouping
+ grouping voucher-request-async-grouping
   +-- voucher
      +-- created-on?                               yang:date-and-time
      +-- expires-on?                               yang:date-and-time
@@ -2707,9 +2708,15 @@ From IETF draft 03 -> IETF draft 04:
   early review in {{async-voucher-request-yang}} as well as in the 
   security considerations.
 
-* Included open issues in YANG model in {{uc2}} regarding assertion
-  value agent-proximity and csr encapsulation using SZTP sub module).
-
+* Renamed ietf-async-voucher-request to IETF-voucher-request-async to 
+  to allow better listing of voucher related extensions; aligned with 
+  constraint voucher (#20)
+  
+* Utilized ietf-voucher-request-async instead of ietf-voucher-request
+  in voucher exchanges to utilize the enhanced voucher-request.
+  
+* Included changes from draft-ietf-netconf-sztp-csr-06 regarding the 
+  YANG definition of csr-types into the enrollment request exchange.
 
 From IETF draft 02 -> IETF draft 03:
 
