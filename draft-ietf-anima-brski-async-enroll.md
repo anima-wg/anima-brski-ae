@@ -59,11 +59,14 @@ author:
   email: thomas-werner@siemens.com
   uri: https://www.siemens.com/
 normative:
+  RFC6241:  
   RFC6762:
   RFC6763:
   RFC7030:
   RFC7515:
+  RFC8040:
   RFC8366:
+  RFC8407:
   RFC8995:
   I-D.ietf-anima-jws-voucher:
   I-D.ietf-netconf-sztp-csr:
@@ -76,6 +79,7 @@ informative:
   RFC5652:
   I-D.ietf-lamps-lightweight-cmp-profile:
   I-D.ietf-lamps-cmp-updates:
+  RFC8340:
   RFC8894:
   I-D.selander-ace-coap-est-oscore:
   IEC-62351-9:
@@ -1111,7 +1115,8 @@ registrar-proximity.
 
 Open Issues: The voucher defined in {{RFC8366}} defines
 the leaf assertion as enum, which cannot be extended. To define an
-additional assertion RFC 8366 may be revised. \*/
+additional assertion RFC 8366 may be revised. There is currently 
+ongoing work for a RFC8366bis. \*/
 
 <!--
 [ YANG-doctor review note this section to be removed before publishing as RFC (or resolution of issue).
@@ -1482,8 +1487,8 @@ The header of the agent-signed-data contains:
 
 
 The body of the agent-signed-data contains an
-ietf-voucher-request:agent-signed-data element
-(defined in {{yang-module}}):
+ietf-voucher-request-async:agent-signed-data element
+(defined in {{async-voucher-request-yang}}):
 
 
 
@@ -1504,7 +1509,7 @@ ietf-voucher-request:agent-signed-data element
     "kid": "base64encodedvalue=="
 }
 {
-  "ietf-voucher-request-trigger:agent-signed-data": {
+  "ietf-voucher-request-async:agent-signed-data": {
     "created-on": "2021-04-16T00:00:01.000Z",
     "serial-number": "callee4711"
   }
@@ -1529,7 +1534,7 @@ parameter as defined in {{RFC7515}}:
 
 
 The body of the pledge-voucher-request object MUST contain the
-following parameter as part of the ietf-voucher-request:voucher as
+following parameter as part of the ietf-voucher-request-async:voucher as
 defined in {{RFC8995}}:
 
 * created-on: contains the current date and time in
@@ -1544,7 +1549,7 @@ defined in {{RFC8995}}:
 * assertion: contains the requested voucher assertion.
 
 
-The ietf-voucher-request:voucher is enhanced with additional parameters:
+The ietf-voucher-request-async:voucher is enhanced with additional parameters:
 
 * agent-provided-proximity-registrar-cert: MUST be included and
   contains the base64-encoded LDevID(Reg) EE certificate
@@ -1559,7 +1564,7 @@ The ietf-voucher-request:voucher is enhanced with additional parameters:
 
 
 The enhancements of the YANG module for the ietf-voucher-request
-with these new leafs are defined in {{yang-module}}.
+with these new leafs are defined in {{async-voucher-request-yang}}.
 
 The object is signed using the pledges IDevID credential contained
 as x5c parameter of the JOSE header.
@@ -1571,7 +1576,7 @@ as x5c parameter of the JOSE header.
    "x5c": ["MIIB2jCC...dA=="]
 }
 {
-  "ietf-voucher-request:voucher": {
+  "ietf-voucher-request-async:voucher": {
    "created-on": "2021-04-16T00:00:02.000Z",
    "nonce": "eDs++/FuDHGUnRxN3E14CQ==",
    "serial-number": "callee4711",
@@ -1615,10 +1620,10 @@ application/json:
 
 with an empty body.
 
-[RFC Editor: please delete] /\*
-error in v03: HTTP POST allows for an empty body but also to provide additional data, 
-like CSR attributes or information about enroll type: initial or 
-re-enroll. \*/
+Note that using HTTP POST allows for an empty body, but also to provide 
+additional data, like CSR attributes or information about the enroll 
+type: initial or re-enroll. In the following the enrollment is described 
+as initial enrollment.
 
 Upon receiving the enrollment-trigger, the pledge SHALL construct
 the pledge-enrollment-request as authenticated self-contained object.
@@ -1626,37 +1631,43 @@ The CSR already assures proof of possession of the private key
 corresponding to the contained public key. In addition, based on the
 additional signature using the IDevID, proof of identity is provided.
 Here, a JOSE object is being created in which the body utilizes
-the YANG module for the CSR as defined in {{I-D.ietf-netconf-sztp-csr}}.
+the YANG module ietf-ztp-types with the grouping for csr-grouping for 
+the CSR as defined in {{I-D.ietf-netconf-sztp-csr}}.
 
 [RFC Editor: please delete] /\*
 Open Issues: Reuse of the sub-tree ietf-sztp-csr:csr may not be
 possible as it is not the complete module. \*/
 
-Depending on the capability of the pledge, it MAY construct the
+Depending on the capability of the pledge, it constructs the
 enrollment request as plain PKCS#10.
-Note that the focus here is placed on PKCS#10 as PKCS#10 can be
-transmitted in different enrollment protocols like EST, CMP, CMS,
+Note that the focus in this use case is placed on PKCS#10 as PKCS#10 
+can be transmitted in different enrollment protocols like EST, CMP, CMS,
 and SCEP. If the pledge is already implementing an enrollment
 protocol, it may leverage that functionality for the creation of
 the enrollment request object. Note also that
 {{I-D.ietf-netconf-sztp-csr}} also allows for inclusion
-of certificate request objects from CMP or CMC.
+of certification request objects such as CMP or CMC.
 
 The pledge SHOULD construct the pledge-enrollment-request as PKCS#10
-object and sign it additionally with its IDevID credential. The
-pledge-enrollment-request should be encoded as JOSE object.
+object. In this case it MUST sign it additionally with its IDevID 
+credential to achieve proof-of-identity bound to the PKCS#10 as 
+described below. 
 
-[RFC Editor: please delete] /\*
-Open Issues: Depending on target environment, it may be useful to
-assume that the pledge may already "know" its functional scope and
-therefore the number of certificates needed during operation. As a
-result, multiple CSRs may be generated to provide achieve multiple
-certificates as a result of the enrollment. This would need further
-description and potential enhancements also in the enrollment-request
-object to transport different CSRs. \*/
+A successful enrollment will result in a generic LDevID certificate for 
+the pledge in the new domain, which can be used to request further 
+LDevID certificates if necessary for its operation.
 
- {{I-D.ietf-netconf-sztp-csr}} considers PKCS#10 but
-also CMP and CMC as certificate request format. Note that the wrapping
+[RFC Editor: please delete] /* Open Issues: Depending on target
+environment, it may be useful to assume that the pledge may already
+"know" its functional scope and therefore the number of certificates
+needed during operation.  As a result, multiple CSRs may be generated
+to provide achieve multiple certificates as a result of the
+enrollment.  This would need further description and potential
+enhancements also in the enrollment-request object to transport
+different CSRs. */
+
+{{I-D.ietf-netconf-sztp-csr}} considers PKCS#10 but
+also CMP and CMC as certification request format. Note that the wrapping
 signature is only necessary for plain PKCS#10 as other request formats
 like CMP and CMS support the signature wrapping as part of their own
 certificate request format.
@@ -1675,7 +1686,7 @@ parameter as defined in {{RFC7515}}:
 
 
 The body of the pledge enrollment-request object SHOULD contain a P10
-parameter (for PKCS#10) as defined for ietf-sztp-csr:csr in
+parameter (for PKCS#10) as defined for ietf-ztp-types:p10-csr in
 {{I-D.ietf-netconf-sztp-csr}}:
 
 * P10: contains the base64-encoded PKCS#10 of the pledge.
@@ -1691,8 +1702,8 @@ corresponds to the certificate signaled in the JOSE header.
     "x5c": ["MIIB2jCC...dA=="]
 }
 {
-  "ietf-sztp-csr:csr": {
-    "p10": "base64encodedvalue=="
+  "ietf-ztp-types": {
+    "p10-csr": "base64encodedvalue=="
   }
 }
 {
@@ -1706,15 +1717,12 @@ pledge-enrollment-request object, the registrar-agent starts the
 interaction with the domain registrar.
 
 [RFC Editor: please delete] /\*
-
-Open Issues: further description necessary at least for \*/
-
-
+Open Issues: further description necessary at least for 
 
 * Values to be taken from the IDevID into the PKCS#10
   (like product-serial-number or subjectName, or certificate
   template)
-
+\*/
 
 Once the registrar-agent has collected the pledge-voucher-request and
 pledge-enrollment-request objects, it connects to the registrar
@@ -1867,7 +1875,7 @@ parameter as defined in {{RFC7515}}:
 
 
 The body of the registrar-voucher-request object MUST contain the
-following parameter as part of the ietf-voucher-request:voucher as
+following parameter as part of the voucher as
 defined in {{RFC8995}}:
 
 * created-on: contains the current date and time in
@@ -1889,8 +1897,8 @@ defined in {{RFC8995}}:
   proximity based on the agent-signed-data.
 
 
-The ietf-voucher-request:voucher can be optionally enhanced with the
-following additional parameter:
+The voucher can be optionally enhanced with the following additional 
+parameter as defined in {{async-voucher-request-yang}}:
 
 * agent-sign-cert: Contain the base64-encoded LDevID(RegAgt)
   EE certificate if MASA verification of agent-proximity is
@@ -1907,7 +1915,7 @@ which corresponds to the certificate signaled in the JOSE header.
    "x5c": ["MIIB2jCC...dA=="]
 }
 {
-  "ietf-voucher-request:voucher": {
+  "ietf-voucher-request-async:voucher": {
    "created-on": "2021-04-16T02:37:39.235Z",
    "nonce": "eDs++/FuDHGUnRxN3E14CQ==",
    "serial-number": "callee4711",
@@ -2061,14 +2069,14 @@ Open Issues:
   the PKCS#10 request destroys the initial proof of possession
   of the corresponding private key, the CA would need to
   accept RA-verified requests.
-
+\*/
 
 A successful interaction with the domain CA will result in the pledge
 LDevID EE certificate, which is then forwarded by the registrar to the
 registrar-agent using the content type "application/pkcs7-mime".
 
 The registrar-agent has now finished the exchanges with the
-domain registrar. Now the registrar-agent can supply the voucher-response
+domain registrar and can supply the voucher-response
 (from MASA via Registrar) and the enrollment-response (LDevID EE
 certificate) to the pledge. It can close the TLS connection to the
 domain registrar and provide the objects to the pledge(s). The content
@@ -2347,20 +2355,58 @@ Open Issues:
 
 
 
-# YANG Extensions to Voucher Request {#yang-module}
+# Async Voucher Request artifact {#async-voucher-request-yang}
+The following enhancement extends the voucher-request as defined in 
+{{RFC8995}} to include additional fields necessary for handling 
+bootstrapping in the pledge-responder-mode. 
 
-The following modules extends the {{RFC8995}} Voucher
-Request to include a signed artifact from the registrar-agent as well
-as the registrar-proximity-certificate and the agent-signing certificate.
-
-
+## Tree Diagram {#async-voucher-request-yang-tree}
+The following tree diagram is mostly a duplicate of the contents of
+{{RFC8995}}, with the addition of the fields agent-signed-data, the 
+registrar-proximity-certificate, and agent-signing certificate. 
+The tree diagram is described in {{RFC8340}}. The enhanced fields are 
+described in Section Each node in the diagram is fully described 
+by the YANG module in Section {{async-voucher-request-yang-module}}.
+Please review the YANG module for a detailed description of the 
+voucher-request format.
 
 ~~~~
-module ietf-async-voucher-request {
+module: ietf-voucher-request-async
+
+ grouping voucher-request-async-grouping
+  +-- voucher
+     +-- created-on?                               yang:date-and-time
+     +-- expires-on?                               yang:date-and-time
+     +-- assertion?                                enumeration
+     +-- serial-number                             string
+     +-- idevid-issuer?                            binary
+     +-- pinned-domain-cert?                       binary
+     +-- domain-cert-revocation-checks?            boolean
+     +-- nonce?                                    binary
+     +-- last-renewal-date?                        yang:date-and-time
+     +-- prior-signed-voucher-request?             binary
+     +-- proximity-registrar-cert?                 binary
+     +-- agent-signed-data?                        binary
+     +-- agent-provided-proximity-registrar-cert?  binary
+     +-- agent-sign-cert?                          binary
+		  
+~~~~
+{: artwork-align="left"}
+
+## YANG Module {#async-voucher-request-yang-module}
+The following YANG module extends the {{RFC8995}} Voucher Request to 
+include a signed artifact from the registrar-agent (agent-signed-data) 
+as well as the registrar-proximity-certificate and the 
+agent-signing certificate.
+
+~~~~
+<CODE BEGINS> file "ietf-voucher-request-async@2021-08-19.yang"
+
+module ietf-voucher-request-async {
   yang-version 1.1;
 
   namespace
-    "urn:ietf:params:xml:ns:yang:ietf-async-voucher-request";
+    "urn:ietf:params:xml:ns:yang:ietf-voucher-request-async";
   prefix "constrained";
 
   import ietf-restconf {
@@ -2372,7 +2418,7 @@ module ietf-async-voucher-request {
   }
 
   import ietf-voucher-request {
-    prefix ivr;
+    prefix vcr;
     description
       "This module defines the format for a voucher request,
           which is produced by a pledge as part of the RFC8995
@@ -2392,7 +2438,7 @@ module ietf-async-voucher-request {
     Author:   Hendrik Brockhaus
               <mailto: hendrik.brockhaus@siemens.com>
     Author:   Eliot Lear
-              <mailto: lear@cisco.com>";
+              <mailto: lear@cisco.com>
     Author:   Thomas Werner
               <mailto: thomas-werner@siemens.com>";
   description
@@ -2404,23 +2450,24 @@ module ietf-async-voucher-request {
     'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY',
     and 'OPTIONAL' in the module text are to be interpreted as
     described in RFC 2119.";
-  revision "YYYY-MM-DD" {
+  revision 2021-08-19 {
     description
      "Initial version";
     reference
      "RFC XXXX: Voucher Request for Asynchronous Enrollment";
   }
   rc:yang-data voucher-request-async-artifact {
-    // YANG data template for a voucher.
+    // YANG data template for a voucher-request.
     uses voucher-request-async-grouping;
   }
   // Grouping defined for future usage
   grouping voucher-request-async-grouping {
     description
       "Grouping to allow reuse/extensions in future work.";
-    uses ivr:voucher-request-grouping {
-      augment "voucher-request" {
-        description "Base the constrained voucher-request upon the
+    uses vcr:voucher-request-grouping {
+	
+      augment voucher {
+        description "Base the async-voucher-request upon the
           regular one";
         leaf agent-signed-data {
           type binary;
@@ -2485,9 +2532,13 @@ module ietf-async-voucher-request {
     }
   }
 }
+
+<CODE ENDS>
 ~~~~
 {: artwork-align="left"}
 
+Examples for the pledge-voucher-request are provided in 
+{{exchanges_uc2_2}}.
 
 
 # Example for signature-wrapping using existing enrollment protocols {#exist_prot}
@@ -2601,31 +2652,48 @@ Exhaustion attack on pledge based on DoS attack (connection
 establishment, etc.)
 
 
-## Misuse of acquired voucher and enrollment responses
-
-Registrar-agent that uses acquired voucher and enrollment response for
-domain 1 in domain 2: can be detected in Voucher Request processing
-on domain registrar side. Requires domain registrar to verify the
-proximity-registrar-cert leaf in the pledge-voucher-request against
-his own as well as the association of the pledge to his domain based
-on the product-serial-number contained in the voucher.
+## Misuse of acquired voucher and enrollment responses by Registrar-agent
+A Registrar-agent that uses acquired voucher and enrollment response for
+domain 1 in domain 2 can be detected by the pledge-voucher-request 
+processing on the domain registrar side. This requires the domain 
+registrar to verify the proximity-registrar-cert leaf in the 
+pledge-voucher-request against his own LDevID. In addition, the domain 
+registrar has to verify the association of the pledge to his domain based
+on the product-serial-number contained in the pledge-voucher-request.
 
 Misbinding of pledge by a faked domain registrar is countered as
 described in BRSKI security considerations (section 11.4).
 
-Misuse of registrar-agent LDevID may be addressed by utilizing
-short-lived certificates to be used for authenticating the
-registrar-agent against the registrar. The LDevID certificate for
-the registrar-agent may be provided by a prior BRSKI execution based
-on an existing IDevID. Alternatively, the LDevID may be acquired  by
-a service technician after authentication against the issuing CA.
+## Misuse of registrar-agent credentials
+Concerns have been raised, that there may be opportunities to misuse 
+the registrar-agent with a valid LDevID. This may be addressed by 
+utilizing short-lived certificates (e.g., valid for a day) to 
+authenticate the registrar-agent against the domain registrar. 
+The LDevID certificate for the registrar-agent may be provided by a 
+prior BRSKI execution based on an existing IDevID. Alternatively, 
+the LDevID may be acquired by a service technician after authentication 
+against the issuing CA.
 
+## YANG Module Security Considerations
+The enhanced voucher-request described in section 
+{{async-voucher-request-yang}} bases on {{RFC8995}}, but uses a different 
+encoding, based on {{I-D.ietf-anima-jws-voucher}}.  Therefore, similar 
+considerations as described in Section 11.7 (Security Considerations) 
+of {{RFC8995}} apply. 
+The YANG module specified in this document defines the schema for data 
+that is subsequently encapsulated by a JOSE signed-data content type, 
+as described {{I-D.ietf-anima-jws-voucher}}. As such, all of the 
+YANG-modeled data is protected from modification. The use of YANG to 
+define data structures, via the "yang-data" statement, is relatively 
+new and distinct from the traditional use of YANG to define an 
+API accessed by network management protocols such as NETCONF {{RFC6241}} 
+and RESTCONF {{RFC8040}}. For this reason, these guidelines do not 
+follow the template described by Section 3.7 of {{RFC8407}}].
 
 
 # Acknowledgments
-
-We would like to thank the various reviewers for their input, in
-particular Brian E. Carpenter, Michael Richardson, Giorgio Romanenghi,
+We would like to thank the various reviewers, in particular 
+Brian E. Carpenter, Michael Richardson, Giorgio Romanenghi,
 Oskar Camenzind, for their input and discussion on use cases and
 call flows.
 
@@ -2633,6 +2701,22 @@ call flows.
 --- back
 
 # History of changes [RFC Editor: please delete] {#app_history}
+
+From IETF draft 03 -> IETF draft 04:
+
+* Addressed feedback for voucher-request enhancements from YANG doctor 
+  early review in {{async-voucher-request-yang}} as well as in the 
+  security considerations.
+
+* Renamed ietf-async-voucher-request to IETF-voucher-request-async to 
+  to allow better listing of voucher related extensions; aligned with 
+  constraint voucher (#20)
+  
+* Utilized ietf-voucher-request-async instead of ietf-voucher-request
+  in voucher exchanges to utilize the enhanced voucher-request.
+  
+* Included changes from draft-ietf-netconf-sztp-csr-06 regarding the 
+  YANG definition of csr-types into the enrollment request exchange.
 
 From IETF draft 02 -> IETF draft 03:
 
