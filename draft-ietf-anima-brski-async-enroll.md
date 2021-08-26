@@ -1509,7 +1509,7 @@ ietf-voucher-request-async:agent-signed-data element
     "kid": "base64encodedvalue=="
 }
 {
-  "ietf-voucher-request-trigger:agent-signed-data": {
+  "ietf-voucher-request-async:agent-signed-data": {
     "created-on": "2021-04-16T00:00:01.000Z",
     "serial-number": "callee4711"
   }
@@ -1702,8 +1702,8 @@ corresponds to the certificate signaled in the JOSE header.
     "x5c": ["MIIB2jCC...dA=="]
 }
 {
-  "ietf-ztp-types:csr": {
-    "p10": "base64encodedvalue=="
+  "ietf-ztp-types": {
+    "p10-csr": "base64encodedvalue=="
   }
 }
 {
