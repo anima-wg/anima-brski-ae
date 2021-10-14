@@ -1071,8 +1071,8 @@ the LDevID may be acquired by a service technician after authentication
 against the issuing CA.
 
 ## YANG Module Security Considerations
-The enhanced voucher-request described in section 
-{{async-voucher-request-yang}} bases on {{RFC8995}}, but uses a different 
+The enhanced voucher-request described in the YANG section 
+bases on {{RFC8995}}, but uses a different 
 encoding, based on {{I-D.ietf-anima-jws-voucher}}.  Therefore, similar 
 considerations as described in Section 11.7 (Security Considerations) 
 of {{RFC8995}} apply. 
