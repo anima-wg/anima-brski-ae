@@ -1109,17 +1109,16 @@ From IETF draft 03 -> IETF draft 04:
 From IETF draft 02 -> IETF draft 03:
 
 * Housekeeping, deleted open issue regarding YANG voucher-request
-  in {{exchanges_uc2_1}} as voucher-request was
-  enhanced with additional leaf.
+  in UC2 as voucher-request was enhanced with additional leaf.
 
-* Included open issues in YANG model in {{uc2}} regarding assertion
+* Included open issues in YANG model in UC2 regarding assertion
   value agent-proximity and csr encapsulation using SZTP sub module).
 
 From IETF draft 01 -> IETF draft 02:
 
 * Defined call flow and objects for interactions in UC2. Object format
   based on draft for JOSE signed voucher artifacts and aligned the
-  remaining objects with this approach in {{exchanges_uc2}} .
+  remaining objects with this approach in UC2 .
 
 * Terminology change: issue #2 pledge-agent -> registrar-agent to
   better underline agent relation.
@@ -1135,7 +1134,7 @@ From IETF draft 01 -> IETF draft 02:
   extension of the YANG module for the voucher-request (issue #12).
 
 * Details on trust relationship between registrar-agent and
-  registrar (issue #4, #5, #9) included in {{uc2}}.
+  registrar (issue #4, #5, #9) included in UC2.
 
 * Recommendation regarding short-lived certificates for
   registrar-agent authentication towards registrar (issue #7) in
@@ -1146,12 +1145,12 @@ From IETF draft 01 -> IETF draft 02:
 
 * Enhanced objects in exchanges between pledge and registrar-agent
   to allow the registrar to verify agent-proximity to the pledge
-  (issue #1) in {{exchanges_uc2}}.
+  (issue #1) in UC2.
 
 * Details on trust relationship between registrar-agent and
-  pledge (issue #5) included in {{uc2}}.
+  pledge (issue #5) included in UC2.
 
-* Split of use case 2 call flow into sub sections in {{exchanges_uc2}}.
+* Split of use case 2 call flow into sub sections in UC2.
 
 
 From IETF draft 00 -> IETF draft 01:
@@ -1160,7 +1159,7 @@ From IETF draft 00 -> IETF draft 01:
   which the pledge acts as a server. This is one main motivation
   for use case 2.
 
-* Rework of use case 2 in {{uc2}} to consider the
+* Rework of use case 2 to consider the
   transport between the pledge and the pledge-agent. Addressed is
   the TLS channel establishment between the pledge-agent and the
   pledge as well as the endpoint definition on the pledge.
@@ -1188,7 +1187,7 @@ From individual version 03 -> IETF draft 00:
   cases in the document. An illustrative example is provided.
 
 * Missing details provided for the description and call flow in
-  pledge-agent use case {{uc2}}, e.g. to
+  pledge-agent use case UC2, e.g. to
   accommodate distribution of CA certificates.
 
 * Updated CMP example in {{exist_prot}} to use
