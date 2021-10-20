@@ -22,7 +22,6 @@ author:
   abbrev: Siemens
   street: Otto-Hahn-Ring 6
   city: Munich
-  region: Bavaria
   code: '81739'
   country: Germany
   email: steffen.fries@siemens.com
@@ -33,7 +32,6 @@ author:
   abbrev: Siemens
   street: Otto-Hahn-Ring 6
   city: Munich
-  region: Bavaria
   code: '81739'
   country: Germany
   email: hendrik.brockhaus@siemens.com
@@ -53,7 +51,6 @@ author:
   abbrev: Siemens
   street: Otto-Hahn-Ring 6
   city: Munich
-  region: Bavaria
   code: '81739'
   country: Germany
   email: david.von.oheimb@siemens.com
@@ -948,7 +945,7 @@ in CMP Updates {{I-D.ietf-lamps-cmp-updates}}.
 ~~~~
 {: artwork-align="left"}
 
-[RFC Editor: please delete] /\*
+TBD RFC Editor: please delete /\*
 
 Open Issues:
 
@@ -991,7 +988,7 @@ should be considered:
   signature of the SignedData of the Full PKI Request would be
   calculated using the IDevID credential of the pledge.
 
-* [RFC Editor: please delete] /\* TBD: in this case the binding to
+* TBD RFC Editor: please delete /\* TBD: in this case the binding to
   the underlying TLS connection is not be necessary. \*/
 
 * When the RA is not available, as per {{RFC7030}} Section 4.2.3, a
@@ -1002,7 +999,7 @@ should be considered:
   rebuilt if it contains the unique identifier (tls_unique) from
   the underlying TLS connection for the binding.
 
-* [RFC Editor: please delete] /\* TBD: clarification of retry for
+* TBD RFC Editor: please delete /\* TBD: clarification of retry for
   fullcmc is necessary as not specified in the context of EST \*/
 
 
@@ -1096,7 +1093,7 @@ call flows.
 
 --- back
 
-# History of changes [RFC Editor: please delete] {#app_history}
+# History of changes TBD RFC Editor: please delete {#app_history}
 
 From IETF draft 03 -> IETF draft 04:
 
