@@ -5,7 +5,7 @@ VERSION:=$(shell ./getver ${DRAFT}.md )
 
 .phony: default
 
-default: ${DRAFT}.txt
+default: ${DRAFT}-${VERSION}.txt
 
 .PRECIOUS: ${DRAFT}.xml
 
@@ -24,6 +24,9 @@ default: ${DRAFT}.txt
 # not needed:
 %.html: %.xml
 	xml2rfc --html -o $@ $?
+
+${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
+	@cp -a ${DRAFT}.txt ${DRAFT}-${VERSION}.txt
 
 version:
 	@echo Version: ${VERSION}
