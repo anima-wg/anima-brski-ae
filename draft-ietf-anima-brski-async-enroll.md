@@ -8,6 +8,7 @@ area: Operations and Management
 wg: ANIMA WG
 kw: Internet-Draft
 cat: std
+consensus: true
 date: 2021
 pi:
   toc: 'yes'
