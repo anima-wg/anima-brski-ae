@@ -1,8 +1,14 @@
 ---
+title: Support of asynchronous Enrollment in BRSKI (BRSKI-AE)
+abbrev: BRSKI-AE
+docname: draft-ietf-anima-brski-async-enroll-04
 stand_alone: true
 ipr: trust200902
-docname: draft-ietf-anima-brski-async-enroll-04
+area: Operations and Management
+wg: ANIMA WG
+kw: Internet-Draft
 cat: std
+date: 2021
 pi:
   toc: 'yes'
   compact: 'yes'
@@ -10,11 +16,6 @@ pi:
   sortrefs: 'yes'
   iprnotified: 'no'
   strict: 'yes'
-title: Support of asynchronous Enrollment in BRSKI (BRSKI-AE)
-abbrev: BRSKI-AE
-area: Operations and Management
-wg: ANIMA WG
-date: 2021
 author:
 - ins: S. Fries
   name: Steffen Fries
