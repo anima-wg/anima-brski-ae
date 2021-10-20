@@ -1,3 +1,5 @@
+SHELL=bash # This is needed because of a problem in "build" rule; good for supporting extended file name globbing
+
 DRAFT:=draft-ietf-anima-brski-async-enroll
 
 html: xml
@@ -5,3 +7,6 @@ html: xml
 
 xml:
 	@kdrfc ${DRAFT}.md
+
+clean:
+	@rm -f ${DRAFT}.{txt,xml,html}
