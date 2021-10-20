@@ -3,11 +3,27 @@ SHELL=bash # This is needed because of a problem in "build" rule; good for suppo
 DRAFT:=draft-ietf-anima-brski-async-enroll
 VERSION:=$(shell ./getver ${DRAFT}.md )
 
-html: xml
-	@xml2rfc ${DRAFT}.xml --html
+.phony: default
 
-xml:
-	@kdrfc ${DRAFT}.md
+default: ${DRAFT}.txt
+
+.PRECIOUS: ${DRAFT}.xml
+
+# produces also .xml and .html:
+%.txt: %.md
+	kdrfc --v3 -h -t $?
+
+# not needed:
+%.xml: %.md
+	kdrfc --v3 -x $?
+
+# not needed:
+%.txt: %.xml
+	xml2rfc --text -o $@ $?
+
+# not needed:
+%.html: %.xml
+	xml2rfc --html -o $@ $?
 
 version:
 	@echo Version: ${VERSION}
