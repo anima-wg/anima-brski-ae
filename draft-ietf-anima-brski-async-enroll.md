@@ -57,26 +57,20 @@ author:
   uri: https://www.siemens.com/
 normative:
   RFC6241:  
-  RFC6762:
-  RFC6763:
   RFC7030:
-  RFC7515:
   RFC8040:
   RFC8366:
   RFC8407:
   RFC8995:
   I-D.ietf-anima-jws-voucher:
-  I-D.ietf-netconf-sztp-csr:
 informative:
   RFC2986:
   RFC4210:
   RFC4211:
   RFC5272:
-  RFC5280:
   RFC5652:
   I-D.ietf-lamps-lightweight-cmp-profile:
   I-D.ietf-lamps-cmp-updates:
-  RFC8340:
   RFC8894:
   I-D.selander-ace-coap-est-oscore:
   IEC-62351-9:
@@ -95,13 +89,6 @@ informative:
     date: 2013-12
     seriesinfo:
       CIP: 005-5
-  IEEE-802.1AR:
-    title: IEEE 802.1AR Secure Device Identifier
-    author:
-    - org: Institute of Electrical and Electronics Engineers
-    date: 2018-06
-    seriesinfo:
-      IEEE: '802.1AR '
   ISO-IEC-15118-2:
     title: 'ISO/IEC 15118-2 Road vehicles - Vehicle-to-Grid Communication Interface
       - Part 2: Network and application protocol requirements'
