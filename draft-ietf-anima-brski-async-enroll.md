@@ -1027,50 +1027,7 @@ This document does not require IANA actions.
 
 # Security Considerations
 
-## Exhaustion attack on pledge
-
-Exhaustion attack on pledge based on DoS attack (connection
-establishment, etc.)
-
-
-## Misuse of acquired voucher and enrollment responses by Registrar-agent
-A Registrar-agent that uses acquired voucher and enrollment response for
-domain 1 in domain 2 can be detected by the pledge-voucher-request 
-processing on the domain registrar side. This requires the domain 
-registrar to verify the proximity-registrar-cert leaf in the 
-pledge-voucher-request against his own LDevID. In addition, the domain 
-registrar has to verify the association of the pledge to his domain based
-on the product-serial-number contained in the pledge-voucher-request.
-
-Misbinding of pledge by a faked domain registrar is countered as
-described in BRSKI security considerations (section 11.4).
-
-## Misuse of registrar-agent credentials
-Concerns have been raised, that there may be opportunities to misuse 
-the registrar-agent with a valid LDevID. This may be addressed by 
-utilizing short-lived certificates (e.g., valid for a day) to 
-authenticate the registrar-agent against the domain registrar. 
-The LDevID certificate for the registrar-agent may be provided by a 
-prior BRSKI execution based on an existing IDevID. Alternatively, 
-the LDevID may be acquired by a service technician after authentication 
-against the issuing CA.
-
-## YANG Module Security Considerations
-The enhanced voucher-request described in the YANG section 
-bases on {{RFC8995}}, but uses a different 
-encoding, based on {{I-D.ietf-anima-jws-voucher}}.  Therefore, similar 
-considerations as described in Section 11.7 (Security Considerations) 
-of {{RFC8995}} apply. 
-The YANG module specified in this document defines the schema for data 
-that is subsequently encapsulated by a JOSE signed-data content type, 
-as described {{I-D.ietf-anima-jws-voucher}}. As such, all of the 
-YANG-modeled data is protected from modification. The use of YANG to 
-define data structures, via the "yang-data" statement, is relatively 
-new and distinct from the traditional use of YANG to define an 
-API accessed by network management protocols such as NETCONF {{RFC6241}} 
-and RESTCONF {{RFC8040}}. For this reason, these guidelines do not 
-follow the template described by Section 3.7 of {{RFC8407}}].
-
+TBD Are there any?
 
 # Acknowledgments
 We would like to thank the various reviewers, in particular 
