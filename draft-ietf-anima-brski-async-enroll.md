@@ -899,7 +899,7 @@ notation is used proving compatibility to BRSKI:
 Well-known URIs for different endpoints on the domain registrar are
 already defined as part of the base BRSKI specification. In
 addition, alternative enrollment endpoints may be supported at the
-domain registrar. The pledge / registrar-agent will recognize if its
+domain registrar. The pledge will recognize if its
 supported enrollment option is supported by the domain registrar
 by sending a request to its preferred enrollment endpoint.
 
