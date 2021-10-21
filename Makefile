@@ -32,4 +32,4 @@ version:
 	@echo Version: ${VERSION}
 
 clean:
-	@rm -f ${DRAFT}.{txt,xml,html}
+	@git checkout -- ${DRAFT}-??.txt ${DRAFT}.{txt,xml,html}
