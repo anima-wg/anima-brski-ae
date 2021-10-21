@@ -59,6 +59,7 @@ author:
   phone: "+41 44 878 9200"
   email: lear@cisco.com
 normative:
+  RFC2986:
   RFC4210:
   RFC4211:
   I-D.ietf-lamps-cmp-updates:
@@ -66,7 +67,6 @@ normative:
   RFC8366:
   RFC8995:
 informative:
-  RFC2986:
   RFC5272:
   RFC5652:
   I-D.ietf-lamps-lightweight-cmp-profile:
