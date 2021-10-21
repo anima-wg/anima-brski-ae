@@ -909,7 +909,8 @@ CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints for the bootstrapping, to which the pledge may connect. This
 includes the voucher handling as well as the enrollment endpoints.
 The CMP related enrollment endpoints are defined as well-known URI
-in CMP Updates {{I-D.ietf-lamps-cmp-updates}}.
+in CMP Updates {{I-D.ietf-lamps-cmp-updates}}
+and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 
 ~~~~
@@ -994,7 +995,7 @@ should be considered:
 ## CMP Handling
 
 Instead of using CMP {{RFC4210}}, this specification
-refers to the lightweight CMP profile
+refers to the Lightweight CMP profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}}, as it
 restricts the full featured CMP to the functionality needed here.
 For this, the following constrains should be observed:
@@ -1177,7 +1178,7 @@ From individual version 03 -> IETF draft 00:
   accommodate distribution of CA certificates.
 
 * Updated CMP example in {{exist_prot}} to use
-  lightweight CMP instead of CMP, as the draft already provides
+  Lightweight CMP instead of CMP, as the draft already provides
   the necessary /.well-known endpoints.
 
 * Requirements discussion moved to separate section in
