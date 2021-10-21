@@ -62,13 +62,9 @@ normative:
   RFC4210:
   RFC4211:
   I-D.ietf-lamps-cmp-updates:
-  RFC6241:  
   RFC7030:
-  RFC8040:
   RFC8366:
-  RFC8407:
   RFC8995:
-  I-D.ietf-anima-jws-voucher:
 informative:
   RFC2986:
   RFC5272:
