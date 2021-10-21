@@ -18,17 +18,6 @@ pi:
   iprnotified: 'no'
   strict: 'yes'
 author:
-- ins: D. von Oheimb
-  name: David von Oheimb
-  role: editor
-  org: Siemens AG
-  abbrev: Siemens
-  street: Otto-Hahn-Ring 6
-  city: Munich
-  code: '81739'
-  country: Germany
-  email: david.von.oheimb@siemens.com
-  uri: https://www.siemens.com/
 - ins: S. Fries
   name: Steffen Fries
   org: Siemens AG
@@ -1041,8 +1030,6 @@ From IETF draft 03 -> IETF draft 04:
   sections. Main changes concerned the removal of the subsection for UC2 
   as well as the removal of the YANG model related text as it is not 
   applicable in UC1.
-
-* Added David von Oheimb as the first author (editor).
 
 * Updated references to the Lightweight CMP Profile
 
