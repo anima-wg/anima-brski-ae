@@ -38,6 +38,16 @@ author:
   country: Germany
   email: hendrik.brockhaus@siemens.com
   uri: https://www.siemens.com/
+- ins: D. von Oheimb
+  name: David von Oheimb
+  org: Siemens AG
+  abbrev: Siemens
+  street: Otto-Hahn-Ring 6
+  city: Munich
+  code: '81739'
+  country: Germany
+  email: david.von.oheimb@siemens.com
+  uri: https://www.siemens.com/
 - ins: E. Lear
   name: Eliot Lear
   org: Cisco Systems
@@ -1032,6 +1042,8 @@ From IETF draft 03 -> IETF draft 04:
   applicable in UC1.
 
 * Updated references to the Lightweight CMP Profile
+
+* Added David von Oheimb as co-author.
 
 From IETF draft 02 -> IETF draft 03:
 
