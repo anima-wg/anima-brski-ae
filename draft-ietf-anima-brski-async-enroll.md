@@ -1,5 +1,5 @@
 ---
-title: Support of asynchronous Enrollment in BRSKI (BRSKI-AE)
+title: Support of Asynchronous Enrollment in BRSKI (BRSKI-AE)
 abbrev: BRSKI-AE
 docname: draft-ietf-anima-brski-async-enroll-04
 stand_alone: true
