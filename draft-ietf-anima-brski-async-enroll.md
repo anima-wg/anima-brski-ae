@@ -58,6 +58,9 @@ author:
   email: david.von.oheimb@siemens.com
   uri: https://www.siemens.com/
 normative:
+  RFC4210:
+  RFC4211:
+  I-D.ietf-lamps-cmp-updates:
   RFC6241:  
   RFC7030:
   RFC8040:
@@ -67,12 +70,9 @@ normative:
   I-D.ietf-anima-jws-voucher:
 informative:
   RFC2986:
-  RFC4210:
-  RFC4211:
   RFC5272:
   RFC5652:
   I-D.ietf-lamps-lightweight-cmp-profile:
-  I-D.ietf-lamps-cmp-updates:
   RFC8894:
   I-D.selander-ace-coap-est-oscore:
   IEC-62351-9:
