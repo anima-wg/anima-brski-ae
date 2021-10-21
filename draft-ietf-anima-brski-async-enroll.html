@@ -4,20 +4,16 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>Support of asynchronous Enrollment in BRSKI (BRSKI-AE)</title>
+<title>Support of Asynchronous Enrollment in BRSKI (BRSKI-AE)</title>
 <meta content="Steffen Fries" name="author">
 <meta content="Hendrik Brockhaus" name="author">
 <meta content="Eliot Lear" name="author">
-<meta content="David von Oheimb" name="author">
 <meta content="
        This document describes enhancements of bootstrapping a remote secure
 key infrastructure (BRSKI,   ) to also operate
 in domains featuring no or only timely limited connectivity between
 involved components.
-Further enhancements are provided to perform the BRSKI approach
-in environments, in which the role of the pledge changes from a client
-to a server . This changes the interaction model from a
-pledge-initiator-mode to a pledge-responder-mode. To support both
+To support such
 use cases, BRSKI-AE relies on the exchange of authenticated self-contained
 objects (signature-wrapped objects) also for requesting and
 distributing of domain specific device certificates.
@@ -1205,7 +1201,7 @@ li > p:last-of-type {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fries, et al.</td>
-<td class="center">Expires 23 April 2022</td>
+<td class="center">Expires 24 April 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1214,12 @@ li > p:last-of-type {
 <dd class="internet-draft">draft-ietf-anima-brski-async-enroll-04</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2021-10-20" class="published">20 October 2021</time>
+<time datetime="2021-10-21" class="published">21 October 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-04-23">23 April 2022</time></dd>
+<dd class="expires"><time datetime="2022-04-24">24 April 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1238,24 +1234,17 @@ li > p:last-of-type {
       <div class="author-name">E. Lear</div>
 <div class="org">Cisco Systems</div>
 </div>
-<div class="author">
-      <div class="author-name">D.v. Oheimb</div>
-<div class="org">Siemens</div>
-</div>
 </dd>
 </dl>
 </div>
-<h1 id="title">Support of asynchronous Enrollment in BRSKI (BRSKI-AE)</h1>
+<h1 id="title">Support of Asynchronous Enrollment in BRSKI (BRSKI-AE)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document describes enhancements of bootstrapping a remote secure
 key infrastructure (BRSKI, <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> ) to also operate
 in domains featuring no or only timely limited connectivity between
 involved components.
-Further enhancements are provided to perform the BRSKI approach
-in environments, in which the role of the pledge changes from a client
-to a server . This changes the interaction model from a
-pledge-initiator-mode to a pledge-responder-mode. To support both
+To support such
 use cases, BRSKI-AE relies on the exchange of authenticated self-contained
 objects (signature-wrapped objects) also for requesting and
 distributing of domain specific device certificates.
@@ -1282,7 +1271,7 @@ certificate management protocols.<a href="#section-abstract-1" class="pilcrow">�
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 April 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 April 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1395,20 +1384,6 @@ certificate management protocols.<a href="#section-abstract-1" class="pilcrow">�
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="xref">8.1</a>.  <a href="#name-exhaustion-attack-on-pledge" class="xref">Exhaustion attack on pledge</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="xref">8.2</a>.  <a href="#name-misuse-of-acquired-voucher-" class="xref">Misuse of acquired voucher and enrollment responses by Registrar-agent</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
-                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="xref">8.3</a>.  <a href="#name-misuse-of-registrar-agent-c" class="xref">Misuse of registrar-agent credentials</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.4">
-                <p id="section-toc.1-1.8.2.4.1"><a href="#section-8.4" class="xref">8.4</a>.  <a href="#name-yang-module-security-consid" class="xref">YANG Module Security Considerations</a></p>
-</li>
-            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
@@ -2307,7 +2282,7 @@ define the request endpoints as done by existing protocols
 <p id="section-5.2-1">Well-known URIs for different endpoints on the domain registrar are
 already defined as part of the base BRSKI specification. In
 addition, alternative enrollment endpoints may be supported at the
-domain registrar. The pledge / registrar-agent will recognize if its
+domain registrar. The pledge will recognize if its
 supported enrollment option is supported by the domain registrar
 by sending a request to its preferred enrollment endpoint.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">The following provides an illustrative example for a domain
@@ -2316,7 +2291,8 @@ CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints for the bootstrapping, to which the pledge may connect. This
 includes the voucher handling as well as the enrollment endpoints.
 The CMP related enrollment endpoints are defined as well-known URI
-in CMP Updates <span>[<a href="#I-D.ietf-lamps-cmp-updates" class="xref">I-D.ietf-lamps-cmp-updates</a>]</span>.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+in CMP Updates <span>[<a href="#I-D.ietf-lamps-cmp-updates" class="xref">I-D.ietf-lamps-cmp-updates</a>]</span>
+and the Lightweight CMP profile <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-3">
 <pre>
   &lt;/brski/voucherrequest&gt;,ct=voucher-cms+json
@@ -2407,26 +2383,27 @@ fullcmc is necessary as not specified in the context of EST */<a href="#section-
         <h3 id="name-cmp-handling">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-cmp-handling" class="section-name selfRef">CMP Handling</a>
         </h3>
-<p id="section-6.2-1">Instead of using CMP <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span>, this specification
-refers to the lightweight CMP profile
+<p id="section-6.2-1">Instead of using general CMP <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span>, this specification
+refers to the Lightweight CMP Profile
 <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>, as it
 restricts the full featured CMP to the functionality needed here.
 For this, the following constrains should be observed:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.2-2.1">For proof of possession, the defined approach in Lightweight CMP
-Profile section 4.1.1 (based on CRMF) and 4.1.5 (based on PCKS#10)
-should be supported.<a href="#section-6.2-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-6.2-2.1">For proof of possession, the defined approach in Lightweight CMP Profile
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> section 4.1.1 (based on CRMF)
+and 4.1.4 (based on PCKS#10) should be supported.<a href="#section-6.2-2.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-6.2-2.2">Proof of identity can be provided by using the signatures to
 protect the certificate request message as outlined in section
 3.2. of <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-6.2-2.2" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-6.2-2.3">When the RA/CA is not available, a waiting indication should be
-returned in the PKIStatus by the Registrar. The pledge in this
-case would retry using the PollReqContent with a request
-identifier certReqId provided in the initial CertRequest message
-as specified in section 5.2.4 of
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> with delayed enrollment.<a href="#section-6.2-2.3" class="pilcrow">¶</a>
+returned in the PKIStatus by the Registrar as specified in sections 4.4 and
+5.1.2 of <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> for delayed delivery.<a href="#section-6.2-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-6.2-2.4">Requesting CA certificates and certificate request attributes should be
+implemented a specified in Lightweight CMP Profile sections 4.3.1 and 4.1.3
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-6.2-2.4" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -2446,67 +2423,8 @@ as specified in section 5.2.4 of
       <h2 id="name-security-considerations">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<div id="exhaustion-attack-on-pledge">
-<section id="section-8.1">
-        <h3 id="name-exhaustion-attack-on-pledge">
-<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-exhaustion-attack-on-pledge" class="section-name selfRef">Exhaustion attack on pledge</a>
-        </h3>
-<p id="section-8.1-1">Exhaustion attack on pledge based on DoS attack (connection
-establishment, etc.)<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="misuse-of-acquired-voucher-and-enrollment-responses-by-registrar-agent">
-<section id="section-8.2">
-        <h3 id="name-misuse-of-acquired-voucher-">
-<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-misuse-of-acquired-voucher-" class="section-name selfRef">Misuse of acquired voucher and enrollment responses by Registrar-agent</a>
-        </h3>
-<p id="section-8.2-1">A Registrar-agent that uses acquired voucher and enrollment response for
-domain 1 in domain 2 can be detected by the pledge-voucher-request 
-processing on the domain registrar side. This requires the domain 
-registrar to verify the proximity-registrar-cert leaf in the 
-pledge-voucher-request against his own LDevID. In addition, the domain 
-registrar has to verify the association of the pledge to his domain based
-on the product-serial-number contained in the pledge-voucher-request.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.2-2">Misbinding of pledge by a faked domain registrar is countered as
-described in BRSKI security considerations (section 11.4).<a href="#section-8.2-2" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="misuse-of-registrar-agent-credentials">
-<section id="section-8.3">
-        <h3 id="name-misuse-of-registrar-agent-c">
-<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-misuse-of-registrar-agent-c" class="section-name selfRef">Misuse of registrar-agent credentials</a>
-        </h3>
-<p id="section-8.3-1">Concerns have been raised, that there may be opportunities to misuse 
-the registrar-agent with a valid LDevID. This may be addressed by 
-utilizing short-lived certificates (e.g., valid for a day) to 
-authenticate the registrar-agent against the domain registrar. 
-The LDevID certificate for the registrar-agent may be provided by a 
-prior BRSKI execution based on an existing IDevID. Alternatively, 
-the LDevID may be acquired by a service technician after authentication 
-against the issuing CA.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="yang-module-security-considerations">
-<section id="section-8.4">
-        <h3 id="name-yang-module-security-consid">
-<a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-yang-module-security-consid" class="section-name selfRef">YANG Module Security Considerations</a>
-        </h3>
-<p id="section-8.4-1">The enhanced voucher-request described in the YANG section 
-bases on <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>, but uses a different 
-encoding, based on <span>[<a href="#I-D.ietf-anima-jws-voucher" class="xref">I-D.ietf-anima-jws-voucher</a>]</span>.  Therefore, similar 
-considerations as described in Section 11.7 (Security Considerations) 
-of <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> apply. 
-The YANG module specified in this document defines the schema for data 
-that is subsequently encapsulated by a JOSE signed-data content type, 
-as described <span>[<a href="#I-D.ietf-anima-jws-voucher" class="xref">I-D.ietf-anima-jws-voucher</a>]</span>. As such, all of the 
-YANG-modeled data is protected from modification. The use of YANG to 
-define data structures, via the "yang-data" statement, is relatively 
-new and distinct from the traditional use of YANG to define an 
-API accessed by network management protocols such as NETCONF <span>[<a href="#RFC6241" class="xref">RFC6241</a>]</span> 
-and RESTCONF <span>[<a href="#RFC8040" class="xref">RFC8040</a>]</span>. For this reason, these guidelines do not 
-follow the template described by Section 3.7 of <span>[<a href="#RFC8407" class="xref">RFC8407</a>]</span>].<a href="#section-8.4-1" class="pilcrow">¶</a></p>
-</section>
-</div>
+<p id="section-8-1">The security considerations as laid out in Lightweight CMP Profile
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> apply.<a href="#section-8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
@@ -2529,25 +2447,29 @@ call flows.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.ietf-anima-jws-voucher">[I-D.ietf-anima-jws-voucher]</dt>
+<dt id="I-D.ietf-lamps-cmp-updates">[I-D.ietf-lamps-cmp-updates]</dt>
         <dd>
-<span class="refAuthor">Richardson, M.</span> and <span class="refAuthor">T. Werner</span>, <span class="refTitle">"JWS signed Voucher Artifacts for Bootstrapping Protocols"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-anima-jws-voucher-00</span>, <time datetime="2021-07-25" class="refDate">25 July 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-anima-jws-voucher-00.txt">https://www.ietf.org/archive/id/draft-ietf-anima-jws-voucher-00.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Brockhaus, H.</span> and <span class="refAuthor">D. V. Oheimb</span>, <span class="refTitle">"Certificate Management Protocol (CMP) Updates"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-cmp-updates-12</span>, <time datetime="2021-07-09" class="refDate">9 July 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-lamps-cmp-updates-12.txt">https://www.ietf.org/archive/id/draft-ietf-lamps-cmp-updates-12.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC6241">[RFC6241]</dt>
+<dt id="RFC2986">[RFC2986]</dt>
         <dd>
-<span class="refAuthor">Enns, R., Ed.</span>, <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refAuthor">Schoenwaelder, J., Ed.</span>, and <span class="refAuthor">A. Bierman, Ed.</span>, <span class="refTitle">"Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6241</span>, <span class="seriesInfo">DOI 10.17487/RFC6241</span>, <time datetime="2011-06" class="refDate">June 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6241">https://www.rfc-editor.org/info/rfc6241</a>&gt;</span>. </dd>
+<span class="refAuthor">Nystrom, M.</span> and <span class="refAuthor">B. Kaliski</span>, <span class="refTitle">"PKCS #10: Certification Request Syntax Specification Version 1.7"</span>, <span class="seriesInfo">RFC 2986</span>, <span class="seriesInfo">DOI 10.17487/RFC2986</span>, <time datetime="2000-11" class="refDate">November 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2986">https://www.rfc-editor.org/info/rfc2986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4210">[RFC4210]</dt>
+        <dd>
+<span class="refAuthor">Adams, C.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Kause, T.</span>, and <span class="refAuthor">T. Mononen</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate Management Protocol (CMP)"</span>, <span class="seriesInfo">RFC 4210</span>, <span class="seriesInfo">DOI 10.17487/RFC4210</span>, <time datetime="2005-09" class="refDate">September 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4210">https://www.rfc-editor.org/info/rfc4210</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4211">[RFC4211]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate Request Message Format (CRMF)"</span>, <span class="seriesInfo">RFC 4211</span>, <span class="seriesInfo">DOI 10.17487/RFC4211</span>, <time datetime="2005-09" class="refDate">September 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4211">https://www.rfc-editor.org/info/rfc4211</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7030">[RFC7030]</dt>
         <dd>
 <span class="refAuthor">Pritikin, M., Ed.</span>, <span class="refAuthor">Yee, P., Ed.</span>, and <span class="refAuthor">D. Harkins, Ed.</span>, <span class="refTitle">"Enrollment over Secure Transport"</span>, <span class="seriesInfo">RFC 7030</span>, <span class="seriesInfo">DOI 10.17487/RFC7030</span>, <time datetime="2013-10" class="refDate">October 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7030">https://www.rfc-editor.org/info/rfc7030</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8040">[RFC8040]</dt>
-        <dd>
-<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Bjorklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"RESTCONF Protocol"</span>, <span class="seriesInfo">RFC 8040</span>, <span class="seriesInfo">DOI 10.17487/RFC8040</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8040">https://www.rfc-editor.org/info/rfc8040</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
@@ -2556,10 +2478,6 @@ call flows.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <dt id="RFC8366">[RFC8366]</dt>
         <dd>
 <span class="refAuthor">Watsen, K.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Pritikin, M.</span>, and <span class="refAuthor">T. Eckert</span>, <span class="refTitle">"A Voucher Artifact for Bootstrapping Protocols"</span>, <span class="seriesInfo">RFC 8366</span>, <span class="seriesInfo">DOI 10.17487/RFC8366</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8366">https://www.rfc-editor.org/info/rfc8366</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8407">[RFC8407]</dt>
-        <dd>
-<span class="refAuthor">Bierman, A.</span>, <span class="refTitle">"Guidelines for Authors and Reviewers of Documents Containing YANG Data Models"</span>, <span class="seriesInfo">BCP 216</span>, <span class="seriesInfo">RFC 8407</span>, <span class="seriesInfo">DOI 10.17487/RFC8407</span>, <time datetime="2018-10" class="refDate">October 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8407">https://www.rfc-editor.org/info/rfc8407</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8995">[RFC8995]</dt>
       <dd>
@@ -2572,10 +2490,6 @@ call flows.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.ietf-lamps-cmp-updates">[I-D.ietf-lamps-cmp-updates]</dt>
-        <dd>
-<span class="refAuthor">Brockhaus, H.</span> and <span class="refAuthor">D. V. Oheimb</span>, <span class="refTitle">"Certificate Management Protocol (CMP) Updates"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-cmp-updates-12</span>, <time datetime="2021-07-09" class="refDate">9 July 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-lamps-cmp-updates-12.txt">https://www.ietf.org/archive/id/draft-ietf-lamps-cmp-updates-12.txt</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="I-D.ietf-lamps-lightweight-cmp-profile">[I-D.ietf-lamps-lightweight-cmp-profile]</dt>
         <dd>
 <span class="refAuthor">Brockhaus, H.</span>, <span class="refAuthor">Fries, S.</span>, and <span class="refAuthor">D. V. Oheimb</span>, <span class="refTitle">"Lightweight Certificate Management Protocol (CMP) Profile"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-lightweight-cmp-profile-06</span>, <time datetime="2021-07-09" class="refDate">9 July 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-06.txt">https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-06.txt</a>&gt;</span>. </dd>
@@ -2599,18 +2513,6 @@ call flows.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <dt id="OCPP">[OCPP]</dt>
         <dd>
 <span class="refAuthor">Open Charge Alliance</span>, <span class="refTitle">"Open Charge Point Protocol 2.0.1 (Draft)"</span>, <time datetime="2019-12" class="refDate">December 2019</time>. </dd>
-<dd class="break"></dd>
-<dt id="RFC2986">[RFC2986]</dt>
-        <dd>
-<span class="refAuthor">Nystrom, M.</span> and <span class="refAuthor">B. Kaliski</span>, <span class="refTitle">"PKCS #10: Certification Request Syntax Specification Version 1.7"</span>, <span class="seriesInfo">RFC 2986</span>, <span class="seriesInfo">DOI 10.17487/RFC2986</span>, <time datetime="2000-11" class="refDate">November 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2986">https://www.rfc-editor.org/info/rfc2986</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC4210">[RFC4210]</dt>
-        <dd>
-<span class="refAuthor">Adams, C.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Kause, T.</span>, and <span class="refAuthor">T. Mononen</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate Management Protocol (CMP)"</span>, <span class="seriesInfo">RFC 4210</span>, <span class="seriesInfo">DOI 10.17487/RFC4210</span>, <time datetime="2005-09" class="refDate">September 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4210">https://www.rfc-editor.org/info/rfc4210</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC4211">[RFC4211]</dt>
-        <dd>
-<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate Request Message Format (CRMF)"</span>, <span class="seriesInfo">RFC 4211</span>, <span class="seriesInfo">DOI 10.17487/RFC4211</span>, <time datetime="2005-09" class="refDate">September 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4211">https://www.rfc-editor.org/info/rfc4211</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5272">[RFC5272]</dt>
         <dd>
@@ -2639,6 +2541,8 @@ separate document. This required changes and adaptations in several
 sections. Main changes concerned the removal of the subsection for UC2 
 as well as the removal of the YANG model related text as it is not 
 applicable in UC1.<a href="#appendix-A-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-2.2">Updated references to the Lightweight CMP Profile<a href="#appendix-A-2.2" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-A-3">From IETF draft 02 -&gt; IETF draft 03:<a href="#appendix-A-3" class="pilcrow">¶</a></p>
@@ -2727,7 +2631,7 @@ pledge-agent use case UC2, e.g. to
 accommodate distribution of CA certificates.<a href="#appendix-A-10.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-A-10.3">Updated CMP example in <a href="#exist_prot" class="xref">Section 6</a> to use
-lightweight CMP instead of CMP, as the draft already provides
+Lightweight CMP instead of CMP, as the draft already provides
 the necessary /.well-known endpoints.<a href="#appendix-A-10.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-A-10.4">Requirements discussion moved to separate section in
@@ -2867,23 +2771,6 @@ boundary conditions.<a href="#appendix-A-16.5" class="pilcrow">¶</a>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:lear@cisco.com" class="email">lear@cisco.com</a>
-</div>
-</address>
-<address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">David von Oheimb</span></div>
-<div dir="auto" class="left"><span class="org">Siemens AG</span></div>
-<div dir="auto" class="left"><span class="street-address">Otto-Hahn-Ring 6</span></div>
-<div dir="auto" class="left">
-<span class="postal-code">81739</span> <span class="locality">Munich</span>
-</div>
-<div dir="auto" class="left"><span class="country-name">Germany</span></div>
-<div class="email">
-<span>Email:</span>
-<a href="mailto:david.von.oheimb@siemens.com" class="email">david.von.oheimb@siemens.com</a>
-</div>
-<div class="url">
-<span>URI:</span>
-<a href="https://www.siemens.com/" class="url">https://www.siemens.com/</a>
 </div>
 </address>
 </section>
