@@ -113,10 +113,7 @@ This document describes enhancements of bootstrapping a remote secure
 key infrastructure (BRSKI, {{RFC8995}} ) to also operate
 in domains featuring no or only timely limited connectivity between
 involved components.
-Further enhancements are provided to perform the BRSKI approach
-in environments, in which the role of the pledge changes from a client
-to a server . This changes the interaction model from a
-pledge-initiator-mode to a pledge-responder-mode. To support both
+To support such
 use cases, BRSKI-AE relies on the exchange of authenticated self-contained
 objects (signature-wrapped objects) also for requesting and
 distributing of domain specific device certificates.
