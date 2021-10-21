@@ -990,30 +990,27 @@ should be considered:
 
 ## CMP Handling
 
-Instead of using CMP {{RFC4210}}, this specification
-refers to the Lightweight CMP profile
+Instead of using general CMP {{RFC4210}}, this specification
+refers to the Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}}, as it
 restricts the full featured CMP to the functionality needed here.
 For this, the following constrains should be observed:
 
-
-
-* For proof of possession, the defined approach in Lightweight CMP
-  Profile section 4.1.1 (based on CRMF) and 4.1.5 (based on PCKS#10)
-  should be supported.
+* For proof of possession, the defined approach in Lightweight CMP Profile
+  {{I-D.ietf-lamps-lightweight-cmp-profile}} section 4.1.1 (based on CRMF)
+  and 4.1.4 (based on PCKS#10) should be supported.
 
 * Proof of identity can be provided by using the signatures to
   protect the certificate request message as outlined in section
   3.2. of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 * When the RA/CA is not available, a waiting indication should be
-  returned in the PKIStatus by the Registrar. The pledge in this
-  case would retry using the PollReqContent with a request
-  identifier certReqId provided in the initial CertRequest message
-  as specified in section 5.2.4 of
-  {{I-D.ietf-lamps-lightweight-cmp-profile}} with delayed enrollment.
+  returned in the PKIStatus by the Registrar as specified in sections 4.4 and
+  5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}} for delayed delivery.
 
-
+* Requesting CA certificates and certificate request attributes should be
+  implemented a specified in Lightweight CMP Profile sections 4.3.1 and 4.1.3
+  {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 
 # IANA Considerations
@@ -1023,7 +1020,8 @@ This document does not require IANA actions.
 
 # Security Considerations
 
-TBD Are there any?
+The security considerations as laid out in Lightweight CMP Profile
+{{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
 
 # Acknowledgments
 We would like to thank the various reviewers, in particular 
@@ -1045,7 +1043,9 @@ From IETF draft 03 -> IETF draft 04:
   applicable in UC1.
 
 * Added David von Oheimb as the first author (editor).
-  
+
+* Updated references to the Lightweight CMP Profile
+
 From IETF draft 02 -> IETF draft 03:
 
 * Housekeeping, deleted open issue regarding YANG voucher-request
