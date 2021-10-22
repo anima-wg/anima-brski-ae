@@ -1004,7 +1004,7 @@ For this, the following constrains should be observed:
   5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}} for delayed delivery.
 
 * Requesting CA certificates and certificate request attributes should be
-  implemented a specified in Lightweight CMP Profile sections 4.3.1 and 4.1.3
+  implemented a specified in Lightweight CMP Profile sections 4.3.1 and 4.3.3
   {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 
