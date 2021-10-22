@@ -1,4 +1,5 @@
 ---
+
 title: Support of Asynchronous Enrollment in BRSKI (BRSKI-AE)
 abbrev: BRSKI-AE
 docname: draft-ietf-anima-brski-async-enroll-04
@@ -102,6 +103,7 @@ informative:
     - org: Open Charge Alliance
     date: 2019-12
 
+
 --- abstract
 
 This document describes enhancements of bootstrapping a remote secure
@@ -116,9 +118,11 @@ The defined approach is agnostic regarding the utilized enrollment
 protocol allowing the application of existing and potentially new
 certificate management protocols.
 
+
 --- middle
 
 # Introduction
+
 BRSKI as defined in {{RFC8995}} specifies a solution for
 secure zero-touch (automated) bootstrapping of devices (pledges) in a
 (customer) site domain. This includes the discovery of network elements
@@ -297,7 +301,6 @@ authenticated self-contained object:
   the EE certificate.
 
 
-
 # Scope of solution
 
 ## Supported environment {#sup-env}
@@ -321,7 +324,6 @@ of on-site PKI services and comprises use cases in which:
   in brownfield installations).
 
 
-
 ## Application Examples {#app-examples}
 
 The following examples are intended to motivate the support of
@@ -329,6 +331,7 @@ different enrollment approaches in general and asynchronous enrollment
 specifically, by introducing industrial applications cases,
 which could leverage BRSKI as such but also require support of
 asynchronous operation as intended with BRSKI-AE.
+
 
 ### Rolling stock
 
@@ -436,8 +439,6 @@ There may be the situation that the target domain does not offer
 enough security to operate a registration point and therefore wants
 to transfer this service to a backend that offers a higher level of
 operational security.
-
-
 
 
 # Requirement discussion and mapping to solution elements {#req-sol}
@@ -580,6 +581,7 @@ already defined architecture elements and interactions.
 For the authenticated self-contained objects used for the certification
 request, BRSKI-AE relies on the defined message wrapping mechanisms
 of the enrollment protocols stated in {{req-sol}} above.
+
 
 ## Support of off-site PKI service {#uc1}
 
@@ -884,11 +886,6 @@ notation is used proving compatibility to BRSKI:
   (see also {{exist_prot}}).
 
 
-
-
-
-
-
 ## Domain registrar support of different enrollment options {#discovery_eo}
 
 Well-known URIs for different endpoints on the domain registrar are
@@ -940,7 +937,6 @@ Open Issues:
 \*/
 
 
-
 # Example for signature-wrapping using existing enrollment protocols {#exist_prot}
 
 This section map the requirements to support proof of possession and
@@ -950,6 +946,7 @@ Note that that the work in the ACE WG described in
 here as well, as it also addresses the encapsulation of EST in a way to
 make it independent from the underlying TLS using OSCORE resulting in
 an authenticated self-contained object.
+
 
 ## EST Handling
 
@@ -986,7 +983,6 @@ should be considered:
   fullcmc is necessary as not specified in the context of EST \*/
 
 
-
 ## CMP Handling
 
 Instead of using general CMP {{RFC4210}}, this specification
@@ -1021,6 +1017,7 @@ This document does not require IANA actions.
 
 The security considerations as laid out in Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
+
 
 # Acknowledgments
 
