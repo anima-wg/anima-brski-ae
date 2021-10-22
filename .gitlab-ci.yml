@@ -32,11 +32,8 @@ build-ietf-draft-files:
     changes:
     -  draft-ietf-anima-brski-async-enroll.md
   script:
-      - make
+      - make commit
   after_script: 
-    - git add *.xml *.txt *.html
-    - git commit -a -m "CI - ietf-draft-files (xml, txt, html) created" || echo "No changes to commit"
-    - git push -u origin  
 
 pages:
   stage: deploy

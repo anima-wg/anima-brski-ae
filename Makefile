@@ -3,15 +3,18 @@ SHELL=bash # This is needed because of a problem in "build" rule; good for suppo
 DRAFT:=draft-ietf-anima-brski-async-enroll
 VERSION:=$(shell ./getver ${DRAFT}.md )
 
-.phony: default
+.phony: default generate commit
 
 default: ${DRAFT}-${VERSION}.txt
 
 .PRECIOUS: ${DRAFT}.xml
 
+generate:
+	kdrfc --v3 -h -t ${DRAFT}.md
+
 # produces also .xml and .html:
 %.txt: %.md
-	kdrfc --v3 -h -t $?
+	$(MAKE) generate
 
 # not needed:
 %.xml: %.md
@@ -30,6 +33,12 @@ ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 
 version:
 	@echo Version: ${VERSION}
+
+commit: generate
+	@git commit ${DRAFT}-??.txt ${DRAFT}.{txt,xml,html} \
+	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
+	   || echo "No changes to commit"
+	@git push -u origin
 
 clean:
 	@git checkout -- ${DRAFT}-??.txt ${DRAFT}.{txt,xml,html}
