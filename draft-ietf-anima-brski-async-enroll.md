@@ -1038,7 +1038,7 @@ From IETF draft 03 -> IETF draft 04:
   as well as the removal of the YANG model related text as it is not 
   applicable in UC1.
 
-* Updated references to the Lightweight CMP Profile
+* Updated references to the Lightweight CMP Profile.
 
 * Added David von Oheimb as co-author.
 
