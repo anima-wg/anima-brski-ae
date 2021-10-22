@@ -4,10 +4,11 @@
 
 ANIMA WG                                                        S. Fries
 Internet-Draft                                              H. Brockhaus
-Intended status: Standards Track                                 Siemens
-Expires: 24 April 2022                                           E. Lear
+Intended status: Standards Track                           D. von Oheimb
+Expires: 25 April 2022                                           Siemens
+                                                                 E. Lear
                                                            Cisco Systems
-                                                         21 October 2021
+                                                         22 October 2021
 
 
          Support of Asynchronous Enrollment in BRSKI (BRSKI-AE)
@@ -40,24 +41,26 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 April 2022.
+   This Internet-Draft will expire on 25 April 2022.
 
 Copyright Notice
 
    Copyright (c) 2021 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents (https://trustee.ietf.org/
-   license-info) in effect on the date of publication of this document.
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 1]
+
+
+Fries, et al.             Expires 25 April 2022                 [Page 1]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
 
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
    extracted from this document must include Simplified BSD License text
@@ -98,7 +101,7 @@ Table of Contents
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  21
      10.2.  Informative References . . . . . . . . . . . . . . . . .  22
    Appendix A.  History of changes TBD RFC Editor: please delete . .  23
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  27
 
 
 
@@ -106,10 +109,7 @@ Table of Contents
 
 
 
-
-
-
-Fries, et al.             Expires 24 April 2022                 [Page 2]
+Fries, et al.             Expires 25 April 2022                 [Page 2]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 3]
+Fries, et al.             Expires 25 April 2022                 [Page 3]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 4]
+Fries, et al.             Expires 25 April 2022                 [Page 4]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 5]
+Fries, et al.             Expires 25 April 2022                 [Page 5]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 6]
+Fries, et al.             Expires 25 April 2022                 [Page 6]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 7]
+Fries, et al.             Expires 25 April 2022                 [Page 7]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 8]
+Fries, et al.             Expires 25 April 2022                 [Page 8]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                 [Page 9]
+Fries, et al.             Expires 25 April 2022                 [Page 9]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 10]
+Fries, et al.             Expires 25 April 2022                [Page 10]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 11]
+Fries, et al.             Expires 25 April 2022                [Page 11]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -669,7 +669,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 12]
+Fries, et al.             Expires 25 April 2022                [Page 12]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -725,7 +725,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 13]
+Fries, et al.             Expires 25 April 2022                [Page 13]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 14]
+Fries, et al.             Expires 25 April 2022                [Page 14]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 15]
+Fries, et al.             Expires 25 April 2022                [Page 15]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 16]
+Fries, et al.             Expires 25 April 2022                [Page 16]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 17]
+Fries, et al.             Expires 25 April 2022                [Page 17]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 18]
+Fries, et al.             Expires 25 April 2022                [Page 18]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 19]
+Fries, et al.             Expires 25 April 2022                [Page 19]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 20]
+Fries, et al.             Expires 25 April 2022                [Page 20]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -1129,9 +1129,9 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 9.  Acknowledgments
 
-   We would like to thank the various reviewers, in particular Brian E.
-   Carpenter, Michael Richardson, Giorgio Romanenghi, Oskar Camenzind,
-   for their input and discussion on use cases and call flows.
+   We would like to thank Brian E.  Carpenter, Michael Richardson, and
+   Giorgio Romanenghi for their input and discussion on use cases and
+   call flows.
 
 10.  References
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 21]
+Fries, et al.             Expires 25 April 2022                [Page 21]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 22]
+Fries, et al.             Expires 25 April 2022                [Page 22]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
@@ -1259,7 +1259,9 @@ Appendix A.  History of changes TBD RFC Editor: please delete
       subsection for UC2 as well as the removal of the YANG model
       related text as it is not applicable in UC1.
 
-   *  Updated references to the Lightweight CMP Profile
+   *  Updated references to the Lightweight CMP Profile.
+
+   *  Added David von Oheimb as co-author.
 
    From IETF draft 02 -> IETF draft 03:
 
@@ -1279,16 +1281,17 @@ Appendix A.  History of changes TBD RFC Editor: please delete
    *  Terminology change: issue #2 pledge-agent -> registrar-agent to
       better underline agent relation.
 
-   *  Terminology change: issue #3 PULL/PUSH -> pledge-initiator-mode
-      and pledge-responder-mode to better address the pledge operation.
 
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 23]
+Fries, et al.             Expires 25 April 2022                [Page 23]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
+
+   *  Terminology change: issue #3 PULL/PUSH -> pledge-initiator-mode
+      and pledge-responder-mode to better address the pledge operation.
 
    *  Communication approach between pledge and registrar-agent changed
       by removing TLS-PSK (former section TLS establishment) and
@@ -1335,16 +1338,17 @@ Internet-Draft                  BRSKI-AE                    October 2021
       voucher related endpoints has been taken over in the BRSKI main
       document.
 
-   *  Updated references.
-
-   *  Included Thomas Werner as additional author for the document.
 
 
 
-Fries, et al.             Expires 24 April 2022                [Page 24]
+Fries, et al.             Expires 25 April 2022                [Page 24]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
+
+   *  Updated references.
+
+   *  Included Thomas Werner as additional author for the document.
 
    From individual version 03 -> IETF draft 00:
 
@@ -1390,17 +1394,17 @@ Internet-Draft                  BRSKI-AE                    October 2021
    *  Introduction of a new use case utilizing authenticated self-
       contain objects to onboard a pledge using a commissioning tool
       containing a pledge-agent.  This requires additional changes in
-      the BRSKI call flow sequence and led to changes in the
-      introduction, the application example,and also in the related
-      BRSKI-AE call flow.
 
 
 
-
-Fries, et al.             Expires 24 April 2022                [Page 25]
+Fries, et al.             Expires 25 April 2022                [Page 25]
 
 Internet-Draft                  BRSKI-AE                    October 2021
 
+
+      the BRSKI call flow sequence and led to changes in the
+      introduction, the application example,and also in the related
+      BRSKI-AE call flow.
 
    *  Update of provided examples of the addressing approach used in
       BRSKI to allow for support of multiple enrollment protocols in
@@ -1445,19 +1449,20 @@ Internet-Draft                  BRSKI-AE                    October 2021
    *  New section starting Section 6 with the mapping to existing
       enrollment protocols by collecting boundary conditions.
 
+
+
+
+
+Fries, et al.             Expires 25 April 2022                [Page 26]
+
+Internet-Draft                  BRSKI-AE                    October 2021
+
+
 Authors' Addresses
 
    Steffen Fries
    Siemens AG
    Otto-Hahn-Ring 6
-
-
-
-Fries, et al.             Expires 24 April 2022                [Page 26]
-
-Internet-Draft                  BRSKI-AE                    October 2021
-
-
    81739 Munich
    Germany
 
@@ -1472,6 +1477,16 @@ Internet-Draft                  BRSKI-AE                    October 2021
    Germany
 
    Email: hendrik.brockhaus@siemens.com
+   URI:   https://www.siemens.com/
+
+
+   David von Oheimb
+   Siemens AG
+   Otto-Hahn-Ring 6
+   81739 Munich
+   Germany
+
+   Email: david.von.oheimb@siemens.com
    URI:   https://www.siemens.com/
 
 
@@ -1494,19 +1509,4 @@ Internet-Draft                  BRSKI-AE                    October 2021
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Fries, et al.             Expires 24 April 2022                [Page 27]
+Fries, et al.             Expires 25 April 2022                [Page 27]
