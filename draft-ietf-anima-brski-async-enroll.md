@@ -1023,10 +1023,10 @@ The security considerations as laid out in Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
 
 # Acknowledgments
-We would like to thank the various reviewers, in particular 
-Brian E. Carpenter, Michael Richardson, Giorgio Romanenghi,
-Oskar Camenzind, for their input and discussion on use cases and
-call flows.
+
+We would like to thank
+Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
+for their input and discussion on use cases and call flows.
 
 
 --- back
