@@ -10,11 +10,11 @@ default: ${DRAFT}-${VERSION}.txt
 .PRECIOUS: ${DRAFT}.xml
 
 generate:
-	kdrfc --v3 -h -t ${DRAFT}.md
+	kdrfc --v3 -t -h ${PDF} ${DRAFT}.md
 
 # produces also .xml and .html:
 %.txt: %.md
-	$(MAKE) generate
+	$(MAKE) generate PDF=-P
 
 # not needed:
 %.xml: %.md
@@ -28,17 +28,21 @@ generate:
 %.html: %.xml
 	xml2rfc --html -o $@ $?
 
+# not needed:
+%.pdf: %.xml
+	xml2rfc --pdf -o $@ $?
+
 ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 	@cp -a ${DRAFT}.txt ${DRAFT}-${VERSION}.txt
 
 version:
 	@echo Version: ${VERSION}
 
-commit: generate
-	@git commit ${DRAFT}-??.txt ${DRAFT}.{txt,xml,html} \
+commit: generate # not including PDF because CI cannot find/install weasyprint
+	@git commit ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html} \
 	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
 	   || echo "No changes to commit"
 	@git push -u origin
 
 clean:
-	@git checkout -- ${DRAFT}-??.txt ${DRAFT}.{txt,xml,html}
+	@git checkout -- ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html,pdf}

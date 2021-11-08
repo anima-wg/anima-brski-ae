@@ -9,6 +9,7 @@ before_script:
   - make -v
   - apt-get -qq update
   - DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o=Dpkg::Use-Pty=0 install git ruby python3-pip
+  # not installing weasyprint for PDF generation because apt-get yields E: Unable to locate package weasyprint
   - python -V
   - pip3 install xml2rfc
   - gem install kramdown-rfc2629
@@ -39,8 +40,9 @@ pages:
   stage: deploy
   script:
     - mkdir .public
-    - cp draft-ietf-anima-brski-async-enroll.html .public
     - cp draft-ietf-anima-brski-async-enroll.txt .public
+    - cp draft-ietf-anima-brski-async-enroll.html .public
+    - cp draft-ietf-anima-brski-async-enroll.pdf .public
     - mv .public public
   artifacts:
     paths:
