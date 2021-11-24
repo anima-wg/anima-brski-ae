@@ -188,7 +188,7 @@ There are different options to perform store and forward of
 certification requests including the requester authentication
 information:
 
-* Providing a trusted component (e.g., an LRA) in the target
+* Providing a trusted component (e.g., a local RA) in the target
   domain, which stores the certification request combined with
   the requester authentication information (based on the IDevID)
   and potentially the information about a successful proof of
@@ -256,11 +256,6 @@ RA:
   functions such as authorization checks.
 
 
-LRA:
-: Local registration authority, an optional RA
-  system component with proximity to end entities.
-
-
 IED:
 : Intelligent Electronic Device (in essence a
   pledge).
@@ -313,7 +308,7 @@ of on-site PKI services and comprises use cases in which:
   forward device is used for the communication with the off-site
   services.
 
-* authoritative actions of a LRA are limited and may not comprise
+* authoritative actions of a local RA are limited and may not comprise
   authorization of certification requests of pledges. Final
   authorization is done at the RA residing in the operator
   domain.
