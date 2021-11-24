@@ -141,14 +141,13 @@ request and distribute target domain
 specific device certificates. EST in turn relies on a binding of the
 certification request to an underlying TLS connection between the EST
 client and the EST server. According to BRSKI the domain registrar acts
-as EST server and is also acting as registration authority (RA) or
-local registration authority (LRA).
+as EST server and is also acting as a registration authority (RA).
 The binding to TLS is used to protect the exchange of a certification
 request (for a LDevID EE certificate) and to provide data origin
 authentication (client identity information), to support the authorization
 decision for processing the certification request. The TLS connection
 is mutually authenticated and the client-side authentication utilizes
-the pledge's manufacturer issued device certificate (IDevID certificate).
+the pledge's manufacturer issued initial device certificate (IDevID certificate).
 This approach requires an on-site availability of a local asset or
 inventory management system performing the authorization decision based
 on tuple of the certification request and the pledge authentication
@@ -221,7 +220,7 @@ self-contained objects for bootstrapping. As it is intended to enhance
 BRSKI it is named BRSKI-AE, where AE stands for asynchronous enrollment.
 As BRSKI, BRSKI-AE results in the pledge storing an X.509 domain
 certificate and sufficient information for verifying the domain
-registrar / proxy identity (LDevID CA Certificate) as well as
+registrar identity (LDevID CA Certificate) as well as
 domain specific X.509 device certificates (LDevID EE certificate).
 
 The goal is to enhance BRSKI to be applicable to the additional use
@@ -327,7 +326,7 @@ of on-site PKI services and comprises use cases in which:
 ## Application Examples {#app-examples}
 
 The following examples are intended to motivate the support of
-different enrollment approaches in general and asynchronous enrollment
+different enrollment protocol approaches in general and asynchronous enrollment
 specifically, by introducing industrial applications cases,
 which could leverage BRSKI as such but also require support of
 asynchronous operation as intended with BRSKI-AE.
