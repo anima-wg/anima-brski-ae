@@ -97,6 +97,14 @@ informative:
     date: 2014-04
     seriesinfo:
       ISO/IEC: '15118-2 '
+  UNISIG-Subset-137:
+    author:
+    - org: UNISIG
+    title: 'Subset-137; ERTMS/ETCS On-line Key Management FFFIS; V1.0.0'
+    date: December 2015
+    format:
+      PDF: https://www.era.europa.eu/sites/default/files/filesystem/ertms/ccs_tsi_annex_a_-_mandatory_specifications/set_of_specifications_3_etcs_b3_r2_gsm-r_b1/index083_-_subset-137_v100.pdf
+    ann: http://www.kmc-subset137.eu/index.php/download/
   OCPP:
     title: Open Charge Point Protocol 2.0.1 (Draft)
     author:
@@ -107,7 +115,7 @@ informative:
 --- abstract
 
 This document describes enhancements of bootstrapping a remote secure
-key infrastructure (BRSKI, {{RFC8995}} ) to also operate
+key infrastructure (BRSKI, {{RFC8995}}) to also operate
 in domains featuring no or only timely limited connectivity between
 involved components.
 To support such
@@ -124,8 +132,8 @@ certificate management protocols.
 # Introduction
 
 BRSKI as defined in {{RFC8995}} specifies a solution for
-secure zero-touch (automated) bootstrapping of devices (pledges) in a
-(customer) site domain. This includes the discovery of network elements
+secure zero-touch (automated) bootstrapping of devices (pledges) in an
+operational site domain. This includes the discovery of network elements
 in the target domain, time synchronization, and the exchange of security
 information necessary to establish trust between a pledge and the
 domain. Security information about the target domain, specifically the
@@ -136,9 +144,9 @@ may be provided online (synchronous) or offline (asynchronous) via the
 domain registrar to the pledge and originate from a Manufacturer's
 Authorized Signing Authority (MASA).
 
-For the enrollment of devices BRSKI relies on EST {{RFC7030}} to
-request and distribute target domain
-specific device certificates. EST in turn relies on a binding of the
+For the enrollment of devices, BRSKI typically relies on EST {{RFC7030}}
+to request and distribute certificates that are specific to the target domain.
+EST in turn relies on a binding of the
 certification request to an underlying TLS connection between the EST
 client and the EST server. According to BRSKI the domain registrar acts
 as EST server and is also acting as a registration authority (RA).
@@ -215,7 +223,7 @@ information:
   the verification of the authenticated self-contained object.
 
 
-Focus of this document the support of handling authenticated
+Focus of this document is the support of handling authenticated
 self-contained objects for bootstrapping. As it is intended to enhance
 BRSKI it is named BRSKI-AE, where AE stands for asynchronous enrollment.
 As BRSKI, BRSKI-AE results in the pledge storing an X.509 domain
@@ -324,7 +332,7 @@ The following examples are intended to motivate the support of
 different enrollment protocol approaches in general and asynchronous enrollment
 specifically, by introducing industrial applications cases,
 which could leverage BRSKI as such but also require support of
-asynchronous operation as intended with BRSKI-AE.
+asynchronous operation or protocols other than EST as intended with BRSKI-AE.
 
 
 ### Rolling stock
@@ -341,6 +349,9 @@ processing, once the railroad car is connected to the operator backend.
 The authorization of the certification request is then done based on
 the operator's asset/inventory information in the backend.
 
+UNISIG has included a CMP profile for enrollment of TLS certificates of
+on-board and track-side components in the Subset-137 specifying the ETRAM/ETCS
+on-line key management for train control systems {{UNISIG-Subset-137}}.
 
 ### Building automation
 
@@ -443,7 +454,7 @@ self-contained object is not the authorization point for this
 certification request. If the domain registrar is the authorization
 point and the pledge has a direct connection to the registrar,
 BRSKI can be used directly. Note that BRSKI-AE could also be used
-in this case.
+in this case, for instance when the pledge prefers a protocol other than EST.
 
 Based on the intended target environment described in {{sup-env}} and
 the motivated application examples
@@ -817,8 +828,7 @@ depicted in {{enrollfigure}}.
 * Attribute Response: Contains the attributes to be included
   in the certification request message.
 
-* Cert Request: Depending on the utilized enrollment protocol,
-  this certification request contains the authenticated
+* Cert Request: This certification request contains the authenticated
   self-contained object ensuring both, proof-of-possession of the
   corresponding private key and proof-of-identity of the
   requester.
@@ -886,8 +896,9 @@ Well-known URIs for different endpoints on the domain registrar are
 already defined as part of the base BRSKI specification. In
 addition, alternative enrollment endpoints may be supported at the
 domain registrar. The pledge will recognize if its
-supported enrollment option is supported by the domain registrar
-by sending a request to its preferred enrollment endpoint.
+preferred enrollment option is supported by the domain registrar
+by sending a request to its preferred enrollment endpoint
+and evaluating the HTTP response status code.
 
 The following provides an illustrative example for a domain
 registrar supporting different options for EST as well as
@@ -904,17 +915,14 @@ and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
   </brski/voucher_status>,ct=json
   </brski/enrollstatus>,ct=json
   </est/cacerts>;ct=pkcs7-mime
-  </est/simpleenroll>;ct=pkcs7-mime
-  </est/simplereenroll>;ct=pkcs7-mime
   </est/fullcmc>;ct=pkcs7-mime
-  </est/serverkeygen>;ct= pkcs7-mime
   </est/csrattrs>;ct=pkcs7-mime
   </cmp/initialization>;ct=pkixcmp
   </cmp/certification>;ct=pkixcmp
   </cmp/keyupdate>;ct=pkixcmp
   </cmp/p10>;ct=pkixcmp
-  </cmp/getCAcert>;ct=pkixcmp
-  </cmp/getCSRparam>;ct=pkixcmp
+  </cmp/getcacerts>;ct=pkixcmp
+  </cmp/getcertreqtemplate>;ct=pkixcmp
 
 ~~~~
 {: artwork-align="left"}
@@ -963,13 +971,13 @@ should be considered:
   calculated using the IDevID credential of the pledge.
 
 * TBD RFC Editor: please delete /\* TBD: in this case the binding to
-  the underlying TLS connection is not be necessary. \*/
+  the underlying TLS connection is not necessary. \*/
 
 * When the RA is not available, as per {{RFC7030}} Section 4.2.3, a
   202 return code should be returned by the
   Registrar. The pledge in this case would retry a simpleenroll
   with a PKCS#10 request. Note that if the TLS connection is teared
-  down for the waiting time, the PKCS#10 request would need to be
+  down for the waiting time, the PKCS#10 request needs to be
   rebuilt if it contains the unique identifier (tls_unique) from
   the underlying TLS connection for the binding.
 
@@ -1042,7 +1050,7 @@ From IETF draft 02 -> IETF draft 03:
   in UC2 as voucher-request was enhanced with additional leaf.
 
 * Included open issues in YANG model in UC2 regarding assertion
-  value agent-proximity and csr encapsulation using SZTP sub module).
+  value agent-proximity and CSR encapsulation using SZTP sub module).
 
 From IETF draft 01 -> IETF draft 02:
 
