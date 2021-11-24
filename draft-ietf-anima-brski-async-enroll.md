@@ -294,7 +294,7 @@ synchronous communication:
 authenticated self-contained object:
 : Describes an
   object, which is cryptographically bound to the EE certificate
-  (IDevID certificate or LDEVID certificate) of a pledge. The
+  (IDevID certificate or LDevID certificate) of a pledge. The
   binding is assumed to be provided through a digital signature
   of the actual object using the corresponding private key of
   the EE certificate.
@@ -394,13 +394,13 @@ the IED must only support one of the two.
 ### Electric vehicle charging infrastructure
 
 For the electric vehicle charging infrastructure protocols have been
-defined for the interaction between the electric vehicle (EV) and the
+defined for the interaction between the electric vehicle and the
 charging point (e.g., ISO 15118-2 {{ISO-IEC-15118-2}})
 as well as between the charging point and the charging point operator
 (e.g. OCPP {{OCPP}}). Depending on the authentication
 model, unilateral or mutual authentication is required. In both cases
 the charging point uses an X.509 certificate to authenticate itself
-in the context of a TLS connection between the EV and
+in the context of a TLS connection between the electric vehicle and
 the charging point. The management of this certificate depends
 (beyond others) on the selected backend connectivity protocol.
 Specifically, in case of OCPP it is intended as single communication
