@@ -583,14 +583,14 @@ and interacts with the MASA as usual.
 ## Support of off-site PKI service {#uc1}
 
 The key element of BRSKI-AE is that the authorization of a
-certification request is performed based on an authenticated
+certification request MUST be performed based on an authenticated
 self-contained object, binding the certification request to the
 authentication using the IDevID. This enables interaction with
 off-site or off-line PKI (RA/CA) components.
-In addition, the authorization of the certification request may be done not only
+In addition, the authorization of the certification request MAY be done not only
 by the domain registrar but by PKI components residing in the backend
 of the domain operator (off-site) as described in {{sup-env}}.
-Also, the certification request may be piggybacked on another protocol.
+Also, the certification request MAY be piggybacked on another protocol.
 This leads to generalizations in the
 placement and enhancements of the logical elements as shown in {{uc1figure}}.
 
@@ -634,7 +634,7 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 The architecture overview in {{uc1figure}} has
 the same logical elements as BRSKI, but with more flexible placement.
 The PKI component that performs the authorization decision for certification
-request messages may be off-site or in the central domain of the operator,
+request messages MAY be off-site or in the central domain of the operator,
 to which the deployment or on-site domain of the pledge
 may have no or only temporary (intermittent) connectivity.
 This is to underline the option that the authorization decision for the
@@ -661,14 +661,14 @@ of the pledge.
     adoption of the pledge in the domain based on the voucher
     request. Nevertheless, it may not have sufficient
     information for authorizing the certification request.
-  If the authorization is done off-site, the domain registrar forwards
+  If the authorization is done off-site, the domain registrar MUST forward
   the certification request to the RA to perform the authorization there.
-  Note that this requires that the certification request object includes
+  In this case  the certification request object MUST include
   a proof of origin such that the authorization to be based on the
-  included pledge identity information. As
-    stated above, this can be done by an additional signature
-    using the IDevID.
-    The domain registrar here acts as an enrollment proxy or
+  included pledge identity information.
+  As stated above, this SHOULD be done by an additional signature
+  using the IDevID.
+    The domain registrar here MAY act as an enrollment proxy or
     local registration authority. It is also able to handle the
   situation that it has only intermittent connection to an off-site PKI
     by storing the authenticated certification request and
@@ -721,8 +721,8 @@ differences to the original approach as follows.
 
 The behavior of a pledge as described in {{RFC8995}} is kept with one exception.
 After finishing the imprinting phase (4)
-the enrollment phase (5) is performed with a method supporting
-authenticated self-contained objects. Using EST with simple-enroll
+the enrollment phase (5) MUST be performed with a method supporting
+authenticated self-contained objects. Note that EST with simple-enroll
 cannot be applied here, as it binds the pledge authentication with
 the existing IDevID to the transport channel (TLS) rather than to
 the certification request object directly. This authentication in
@@ -743,7 +743,7 @@ The voucher exchange is performed as specified in {{RFC8995}}.
 
 ### Pledge - Registrar - RA/CA certificate enrollment {#enroll}
 
-As stated in {{req-sol}}, the enrollment shall be
+As stated in {{req-sol}}, the enrollment MUST be
 performed using an authenticated self-contained object providing
 not only proof of possession but also proof of identity (source authentication).
 
@@ -802,7 +802,7 @@ depicted in {{enrollfigure}}.
   pinned-domain-cert (which may be the domain registrar certificate
   contained in the voucher).
 
-* CA Cert Response: Contains at least the CA certificate of
+* CA Cert Response: SHOULD contain at least the CA certificate of
   the issuing CA.
 
 * Attribute Request: Typically, the automated bootstrapping occurs
@@ -812,37 +812,35 @@ depicted in {{enrollfigure}}.
   into the certification request. To get these attributes in
   advance, the attribute request SHOULD be used.
 
-* Attribute Response: Contains the attributes to be included
+* Attribute Response: SHOULD contain the attributes to be included
   in the subsequent certification request.
 
-* Cert Request: This certification request contains the authenticated
+* Cert Request: This certification request MUST contain the authenticated
   self-contained object ensuring both proof of possession of the
-  corresponding private key and proof of identity of the
-  requester.
+  corresponding private key and proof of identity of the requester.
 
-* Cert Response: The certification response message contains the
-  requested certificate and potentially further information, like
+* Cert Response: The certification response message MUST contain on success the
+  requested certificate and MAY include potentially further information, like
   certificates of intermediary CAs on the certification path.
 
-* Cert Waiting: Optional waiting indication for the pledge, which should retry
+* Cert Waiting: Optional waiting indication for the pledge, which SHOULD retry
   after a given time. For this a request identifier is necessary.
   This request identifier may be either part of the enrollment
   protocol or can derived from the certification request.
 
-* Cert Polling: This is used to query the registrar whether the certification
-  request meanwhile has been processed; can be answered either by another
-  Cert Waiting, or a Cert Response.
+* Cert Polling: This is SHOULD be used by the pledge to query the registrar
+  whether the certification request meanwhile has been processed;
+  can be answered either by another Cert Waiting, or a Cert Response.
 
 * Cert Confirm: positive or negative confirmation message by the pledge
-  after receiving and verifying the certificate.
+  the SHOULD be sent after receiving and verifying a new certificate.
 
 * PKI/Registrar Confirm: An acknowledgment by the PKI or domain registrar
-  on reception of the Cert Confirm.
+  that MUST be sent on reception of the Cert Confirm.
 
-The generic messages described above can be implemented using various
+The generic messages described above MAY be implemented using various
 enrollment protocols supporting authenticated self-contained request objects,
-as described in {{req-sol}}. Examples are available
-in {{exist_prot}}.
+as described in {{req-sol}}. Examples are available in {{exist_prot}}.
 
 
 ### Addressing Scheme Enhancements {#addressing}
@@ -859,19 +857,20 @@ the definition from EST {{RFC7030}}, here on the
 example on simple enrollment: "/.well-known/est/simpleenroll"
 This approach is generalized to the following notation:
 "/.well-known/&lt;enrollment-protocol&gt;/&lt;request&gt;"
-in which &lt;enrollment-protocol&gt; may be an already existing protocol or
+in which &lt;enrollment-protocol&gt; can be an already existing protocol or
 a newly defined approach. Note that enrollment is considered here
 as a sequence of at least a certification request and a certification
 response. In case of existing enrollment protocols the following
 notation is used proving compatibility to BRSKI:
 
-* &lt;enrollment-protocol&gt;: references either EST {{RFC7030}} as in BRSKI or
-  CMP, CMC, SCEP, or newly defined approaches as alternatives.
+* &lt;enrollment-protocol&gt;: MUST reference the protocol being used,
+  which MAY be EST {{RFC7030}} as in BRSKI
+  or CMP, CMC, SCEP, or a newly defined approach.
   Note: additional endpoints (well-known URIs) at the registrar
   may need to be defined by the utilized enrollment protocol.
 
 * &lt;request&gt;: depending on the utilized enrollment protocol,
-  the &lt;request&gt; path component describes the required operation at the
+  the &lt;request&gt; path component MUST describe the required operation at the
   registrar side. Enrollment protocols are expected to
   define their request endpoints, as done by existing protocols
   (see also {{exist_prot}}).
@@ -881,7 +880,7 @@ notation is used proving compatibility to BRSKI:
 
 Well-known URIs for various endpoints on the domain registrar are
 already defined as part of the base BRSKI specification. In
-addition, alternative enrollment endpoints may be supported at the
+addition, alternative enrollment endpoints MAY be supported at the
 domain registrar. The pledge will recognize whether its
 preferred enrollment option is supported by the domain registrar
 by sending a request to its preferred enrollment endpoint
