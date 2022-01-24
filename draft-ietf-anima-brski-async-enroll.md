@@ -154,12 +154,12 @@ initial device certificate (aka IDevID certificate) issued by its manufacturer.
 In order to provide proof of origin of the certificate request,
 i.e., proof of identity of the requester, EST specifically relies on
 binding the certification request to the underlying TLS connection.
-The EST server uses the authenticated pledge identity
-for checking the authorization of the pledge for the given request
+The EST server uses the authenticated pledge identity provided by the IDevID
+for checking the authorization of the pledge for the given certification request
 before issuing to the pledge a domain-specific certificate (LDevID certificate).
-This approach requires online or on-site availability of an inventory
-(or asset management system) for performing the authorization decision based on
-the certification request and its authentication via the IDevID certificate.
+This approach typically requires online or on-site availability of
+an asset management system (e.g., a device inventory)
+for performing the final authorization decision for the certification request.
 The EST server (the domain registrar) terminates the security
 association with the pledge and thus the binding between the
 certification request and the authentication of the pledge via TLS.
@@ -167,12 +167,12 @@ This type of enrollment utilizing an online connection to the PKI
 can be called *synchronous enrollment*.
 
 For certain use cases, the required RA/CA components and/or asset management
-may not be available on-site but rather be provided by backend systems,
+system may not be available on-site but rather be provided by backend systems,
 to which site may have no online connection or just intermittent connectivity.
 This may be due to security requirements for operating the backend systems
 or due to site deployments where on-site or always-online operation
 may be not feasible or too costly. The authorization of
-certification request based on an asset management in this case will
+certification request based on an asset management system in this case will
 not or can not be performed on-site at enrollment time.
 In this document, enrollment that is not performed in a (time-wise) consistent
 way is called *asynchronous enrollment* (AE).
@@ -418,8 +418,8 @@ forbidden or prevented at other times.
 
 ### Less operational security in the target domain
 
-The registration authority performing the authorization of a certificate
-request is a critical PKI component and therefore implicates higher
+The registration authority performing (at least part of) the authorization of a
+certification request is a critical PKI component and therefore requires higher
 operational security than components utilizing the issued
 certificates for their security features. CAs may also demand higher
 security in the registration procedures. Especially the CA/Browser
@@ -669,12 +669,12 @@ The following list describes the operator-related components/service
 operated in the off-site backend of the domain.
 
 * PKI RA: Performs certificate management functions (validation
-  of requests, interaction with inventory/asset
-  management for final authorization of certification requests, etc.)
+  of requests, where final authorization of certification requests
+  may be done by interaction with an asset management system, etc.)
   for issuing, updating, and revoking certificates for a domain
   as a centralized infrastructure for the domain operator.
-  The inventory (asset) management may be a separate component
-  or integrated with the RA directly.
+  The asset management system may be integrated with the RA directly
+  or may be a separate component that is possibly located off-site.
 
 * PKI CA: Performs certificate generation by signing the certificate structure
   provided in already authenticated and authorized certification requests.
