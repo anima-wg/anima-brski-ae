@@ -930,39 +930,40 @@ Open Issues:
 
 This section maps the requirements to support proof of possession and
 proof of identity to selected existing enrollment protocols.
+
 Note that the work in the ACE WG described in
 {{I-D.selander-ace-coap-est-oscore}} may be considered
 here as well, as it also addresses the encapsulation of EST in a way to
 make it independent of the underlying TLS connection using OSCORE,
-which results in using authenticated self-contained objects.
+which also entails that authenticated self-contained objects are used.
 
 
 ## EST Handling
 
 When using EST {{RFC7030}}, the following aspects and constraints
-should be considered:
+need to be considered and the given extra requirements SHALL be observed:
 
 * Proof of possession is provided by using the specified PKCS#10
   structure in the request.
 
-* Proof of identity is achieved by signing the certification
-  request object, which is only supported when Full PKI Request
-  (the /fullcmc endpoint) is used. This would contain sufficient
+* Proof of identity SHALL be achieved by signing the certification request
+  object using the Full PKI Request option (including the /fullcmc endpoint).
+  This provides sufficient
   information for the RA to make an authorization decision on the
   received certification request.
   Note: EST references CMC {{RFC5272}} for the
   definition of the Full PKI Request. For proof of identity, the
-  signature of the SignedData of the Full PKI Request would be
+  signature of the SignedData of the Full PKI Request is
   performed using the IDevID credential of the pledge.
 
 * TBD RFC Editor: please delete /\* TBD: in this case the binding to
   the underlying TLS connection is not necessary. \*/
 
 * When the RA is temporarily not available, as per {{RFC7030}} section 4.2.3,
-  an HTTP status code 202 should be returned by the
-  Registrar. The pledge in this case would retry a /simpleenroll
+  an HTTP status code 202 SHOULD be returned by the
+  Registrar. The pledge in this case will retry a /simpleenroll
   with a PKCS#10 request. Note that if the TLS connection is taken
-  down for the waiting time, the PKCS#10 request needs to be
+  down during the waiting period, the PKCS#10 request needs to be
   rebuilt if it contains the unique identifier (tls_unique) from
   the underlying TLS connection for the binding.
 
@@ -976,22 +977,23 @@ Instead of using general CMP {{RFC4210}}, this specification
 refers to the Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}}, as it
 restricts full-featured CMP to the functionality needed here.
-When using this variant of CMP, the following requirements should be observed:
+
+When using this variant of CMP, the following requirements SHALL be observed:
 
 * For proof of possession, the approach defined in the Lightweight CMP Profile
   {{I-D.ietf-lamps-lightweight-cmp-profile}} section 4.1.1 (based on CRMF)
-  and 4.1.4 (based on PCKS#10) should be applied.
+  or 4.1.4 (based on PCKS#10) SHALL be applied.
 
-* Proof of identity should be provided by using signature-based
+* Proof of identity SHALL be provided by using signature-based
   protection of the certificate request message as outlined in section
   3.2. of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
-* When the RA/CA is not available, a waiting indication should be
+* When the RA/CA is not available, a waiting indication SHALL be
   returned in the PKIStatus by the Registrar as specified in sections 4.4 and
   5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}} for delayed delivery.
 
-* Requesting CA certificates and certificate request attributes should be
-  implemented a specified in Lightweight CMP Profile sections 4.3.1 and 4.3.3
+* Requesting CA certificates and certificate request attributes SHALL be
+  implemented a specified in sections 4.3.1 and 4.3.3 of
   {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 
