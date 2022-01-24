@@ -1,6 +1,7 @@
 ---
 
-title: Support of Asynchronous Enrollment in BRSKI (BRSKI-AE)
+title: 'BRSKI-AE: Alternative Enrollment Protocols for BRSKI
+Supporting Asynchronous Enrollment'
 abbrev: BRSKI-AE
 docname: draft-ietf-anima-brski-async-enroll-04
 stand_alone: true
@@ -70,6 +71,7 @@ normative:
 informative:
   RFC5272:
   RFC5652:
+  RFC5929:
   I-D.ietf-lamps-lightweight-cmp-profile:
   RFC8894:
   I-D.selander-ace-coap-est-oscore:
@@ -136,77 +138,95 @@ secure automated zero-touch bootstrapping of devices (aka pledges)
 in an operational domain. This includes the discovery of network elements
 in the target domain, time synchronization, and the exchange of security
 information necessary to establish trust between a pledge and the domain.
-Security information about the target domain, specifically the
-target domain certificate, is exchanged utilizing voucher objects
-defined in {{RFC8366}}.
-These vouchers are authenticated self-contained (signed) objects,
-which may be provided online (synchronously) or offline (asynchronously)
-via the domain registrar to the pledge and originate from
-a Manufacturer Authorized Signing Authority (MASA).
 
-For enrolling devices with LDevID certificates, which are
-end-entity (EE) certificates that are specific to the target domain,
-BRSKI typically relies on EST {{RFC7030}}.
-In this setting the pledge is the client, interacting via TLS with the domain
+Security information about the target domain, specifically the
+target domain certificate to be trusted by new devices,
+is exchanged utilizing voucher objects defined in {{RFC8366}}.
+These vouchers are self-contained signed objects
+originating from a Manufacturer Authorized Signing Authority (MASA).
+They may be provided online (synchronously) or offline (asynchronously)
+via the domain registrar to the pledge.
+A plede can authenticate the voucher because it is shipped with a trust anchor
+of its manufacturer such that it can validate signatures by the MASA.
+
+Trust by the domain in a new pledge is established by enrolling a first
+end-entity (EE) certificate of the pledge that is specific to the target domain.
+For enrolling devices with these so-called LDevID certificates,
+BRSKI typically relies on Enrollment over Secure Transport (EST) {{RFC7030}}.
+While using EST has the advantage that the mutually authenticated TLS connection
+established between the pledge and the registrar can be reused
+for protecting also the message exchange for enrolling the LDevID certificate,
+it has the limitation that this cannot not provide end-to-end security for the
+certificate enrollment because the TLS session terminates at the registrar.
+Moreover, properly binding the proof of origin of a certification request to
+the proof of posession for the new private key via the so-called tls-unique is
+conceptually non-trivial and requires specific support by the TLS implementation.
+For these and other reasons (such as, more freedom w.r.t. proof-of-possession
+methods), it may be preferable to use an alternative enrollment protocol,
+such as CMP or CMC, that is more flexible and independent of the transfer level
+because it represents certification requests as authenticated self-contained
+objects.
+
+When using EST, the pledge the client interacting via TLS with the domain
 registrar, which acts both as EST server and as registration authority (RA).
 The TLS connection is mutually authenticated, where the pledge uses an
 initial device certificate (aka IDevID certificate) issued by its manufacturer.
 In order to provide proof of origin of the certificate request,
-i.e., proof of identity of the requester, EST specifically relies on
-binding the certification request to the underlying TLS connection.
+i.e., proof of identity of the requester, EST specifically relies on binding
+the certification request to the underlying TLS channel via the 'tls-unique'
+{{RFC5929}}.
+The EST server (the domain registrar) terminates the security
+association with the pledge and thus the binding between the
+certification request and the authentication of the pledge via TLS.
 The EST server uses the authenticated pledge identity provided by the IDevID
 for checking the authorization of the pledge for the given certification request
 before issuing to the pledge a domain-specific certificate (LDevID certificate).
 This approach typically requires online or on-site availability of
 an asset management system (e.g., a device inventory)
 for performing the final authorization decision for the certification request.
-The EST server (the domain registrar) terminates the security
-association with the pledge and thus the binding between the
-certification request and the authentication of the pledge via TLS.
 This type of enrollment utilizing an online connection to the PKI
 can be called *synchronous enrollment*.
 
-For certain use cases, the required RA/CA components and/or asset management
-system may not be available on-site but rather be provided by backend systems,
-to which site may have no online connection or just intermittent connectivity.
+The required RA/CA components and/or asset management system may not be
+part of the registrar. They even may not be available on-site but rather be
+provided by remote backend systems. The registrar or its site may have no online
+connection with them or the connectivity may be intermittent.
 This may be due to security requirements for operating the backend systems
 or due to site deployments where on-site or always-online operation
-may be not feasible or too costly. The authorization of
-certification request based on an asset management system in this case will
-not or can not be performed on-site at enrollment time.
+may be not feasible or too costly.
+In such cases the authorization of certification request based on an asset
+management system will not or can not be performed on-site at enrollment time.
 In this document, enrollment that is not performed in a (time-wise) consistent
-way is called *asynchronous enrollment* (AE).
-
+way is called *asynchronous enrollment*.
 Asynchronous enrollment requires a store-and-forward transfer of certification
 requests along with the information needed for authenticating the requester.
 This enables off-line processing the request at a later point in time.
+
 A similar situation may occur through network segmentation, which is
 utilized in industrial systems to separate domains with different
 security needs. Here, a similar requirement arises if the communication
 channel carrying the requester authentication is terminated before
 the registrar/RA can authorize the certification request.
-When a second communication channel is opened to forward the certification
+When a second communication channel is used to forward the certification
 request to the RA and issuing CA, the requester authentication information
 needs to be retained and ideally bound directly to the certification request.
 This use case is independent of the time-wise limitations of the first use case.
 
-There are several options for performing store-and-forward transfer
-of certification requests including the requester authentication
-information:
+There are basically two options for forwarding certification requests
+along with requester authentication information:
 
-* Providing a trusted component (e.g., a local RA) in the target
-  domain, which stores the certification request combined with
+* Having a trusted component (e.g., a local RA) in the target
+  domain that stores the certification request combined with
   the requester authentication information (based on the IDevID)
-  and potentially the information about a successful proof of
-  possession (of the corresponding private key) in a way
+  and potentially the information about successful verification of
+  the proof of possession (of the corresponding private key) in a way
   preventing changes to the combined information.
-  Note that the assumption is that the information elements may
-  not be bound cryptographically.
-  Once connectivity to the backend is available, the trusted
+  Note that the information elements may not have been bound cryptographically.
+  When connectivity to backend PKI components is available, the trusted
   component forwards the certification request together with
   the requester information (authentication and proof of
-  possession) to the off-site PKI for further processing.
-  It is assumed that the off-site PKI in this case relies on the
+  possession) for further processing.
+  This case offers only hop-by-hop security: the backend PKI must rely on the
   local pledge authentication result when performing the
   authorization and issuing the requested certificate.
   In BRSKI the trusted component may be the EST server,
@@ -214,26 +234,31 @@ information:
 
 * Utilizing authenticated self-contained objects for the
   enrollment, directly binding the certification request and the
-  requester authentication in a cryptographic way. This approach
-  reduces the necessary trust in a domain component for storage
-  and delivery. Unauthorized modification of the requester
+  requester authentication in a cryptographic way. This approach supports
+  end-to-end security, reducing the need to trust in an intermediate domain
+  component. Unauthorized modification of the requester
   information (request and authentication) can be detected during
   the verification of the authenticated self-contained object.
 
-
-Focus of this document is the support of handling authenticated self-contained
+Focus of this document is the support of alternative enrollment protocols
+that allow handling authenticated self-contained
 objects for device certificate bootstrapping. This enhancement of BRSKI
-is named BRSKI-AE, where AE stands for asynchronous enrollment.
+is named BRSKI-AE, where AE stands for both alternative enrollment protocols
+and asynchronous enrollment.
 Like BRSKI, BRSKI-AE results in the pledge storing an X.509 domain
 certificate and sufficient information for verifying the domain
 registrar identity (LDevID CA certificate) as well as
 domain-specific X.509 device certificates (LDevID EE certificates).
 
-The goal is to enhance BRSKI for being applicable to additional use
-cases. This is addressed by
+The goals are to enhance BRSKI to
+* support alternative enrollment protocols,
+* support end-to-end security for enrollment, and
+* make it applicable to use cases involving asynchrionous enrollment.
 
-* extending the well-known URI approach with an additional path
-  for the utilized enrollment protocol.
+This is achieved by
+
+* extending the well-known URI approach with an additional path element
+  indicating the enrollment protocol being used, and
 
 * defining a certificate waiting indication and handling, for the case that the
   certifying component is (temporarily) not available.
@@ -259,9 +284,6 @@ RA:
 : Registration authority, an optional system
   component to which a CA delegates certificate management
   functions such as authorization checks.
-
-IED:
-: Intelligent Electronic Device (in essence a pledge).
 
 on-site:
 : Describes a component or service or
@@ -295,8 +317,15 @@ authenticated self-contained object:
 
 ## Supported environment {#sup-env}
 
-This solution is intended to be used in domains with limited support
+This solution is intended to be used in domains that may have limited support
 of on-site PKI services and comprises use cases like the following.
+
+* There are requirements or implementation restrictions
+  that do not allow the use of EST for enrolling LDevID certificates.
+
+* Pledges and/or the target deployment domain already have an established
+  certificate management approach different from EST that shall be reused
+  (e.g., in brownfield installations).
 
 * There is no registration authority available in the target domain.
   Connectivity to an off-site RA is intermittent or entirely offline.
@@ -306,10 +335,6 @@ of on-site PKI services and comprises use cases like the following.
 * Authoritative actions of a local RA are limited and may not be sufficient
   for authorizing certification requests by pledges.
   Final authorization is done by an RA residing in the operator domain.
-
-* The target deployment domain already has an established
-  certificate management approach that shall be reused to (e.g.,
-  in brownfield installations).
 
 
 ## Application Examples {#app-examples}
@@ -430,7 +455,7 @@ level of security to operate a registration authority and therefore wants to
 transfer this service to a backend service that offers a higher security level.
 
 
-# Requirement discussion and mapping to solution elements {#req-sol}
+# Requirements discussion and mapping to solution elements {#req-sol}
 
 For the requirements discussion we assume that the domain
 registrar receiving a certification request as an authenticated
@@ -486,7 +511,7 @@ based on existing technology described in IETF documents:
   origin authentication to the certification request may be
   delegated to the protocol used for certificate management.
 
-* Solution options of proof of identity: The certification request should be
+* Solution options for proof of identity: The certification request should be
   bound to an existing authenticated credential (here, IDevID) to enable a proof
   of identity and, based on it, an authorization of the certification request.
   The binding may be achieved through security options in an
@@ -539,19 +564,20 @@ This approach {{I-D.selander-ace-coap-est-oscore}}
 may be considered as a further variant.
 
 
-# Architectural Overview and Communication Exchanges {#architecture}
+# Architectural Overview and Message Exchange {#architecture}
 
-To support asynchronous enrollment, BRSKI-AE enhances the system architecture
-defined in BRSKI {{RFC8995}} such that authenticated self-contained objects
-can be used for certificate enrollments.
-This is achieved by allowing the use of alternative enrollment protocols with
-their message wrapping mechanisms, such as those described in {{req-sol}} above.
+In order to support alternative enrollment protocols, asynchronous enrollment,
+and more general system architectures,
+BRSKI-AE lifts some restrictions of BRSKI {{RFC8995}}.
+This way, authenticated self-contained objects such as those described in
+{{req-sol}} above can be used for certificate enrollment.
 
 The enhancements needed are kept to a minimum in order to ensure reuse of
 already defined architecture elements and interactions.
 In general, the communication follows the BRSKI model and utilizes the existing
-BRSKI architecture elements. In particular,
-the pledge initiates communication with the domain registrar as usual.
+BRSKI architecture elements.
+In particular, the pledge initiates communication with the domain registrar
+and interacts with the MASA as usual.
 
 
 ## Support of off-site PKI service {#uc1}
@@ -606,14 +632,13 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 {: #uc1figure title='Architecture overview using off-site PKI components' artwork-align="left"}
 
 The architecture overview in {{uc1figure}} has
-the same logical elements as BRSKI, but some or them are placed differently.
-The main difference is the placement of the PKI RA/CA component, which
-performs the authorization decision for certification request messages.
-It is placed in the off-site or central domain of the operator,
+the same logical elements as BRSKI, but with more flexible placement.
+The PKI component that performs the authorization decision for certification
+request messages may be off-site or in the central domain of the operator,
 to which the deployment or on-site domain of the pledge
 may have no or only temporary (intermittent) connectivity.
-This is to underline the authorization decision for the certification
-request in the backend rather than on-site.
+This is to underline the option that the authorization decision for the
+certification request may also be performed in the backend.
 
 The following list describes the components in the deployment target domain
 of the pledge.
@@ -678,7 +703,6 @@ operated in the off-site backend of the domain.
 
 * PKI CA: Performs certificate generation by signing the certificate structure
   provided in already authenticated and authorized certification requests.
-
 
 Based on BRSKI and the architectural changes, the original protocol
 flow is divided into three phases showing commonalities and
@@ -824,10 +848,10 @@ in {{exist_prot}}.
 ### Addressing Scheme Enhancements {#addressing}
 
 BRSKI-AE provides generalizations to the addressing scheme defined in
-BRSKI {{RFC8995}} to accommodate the handling of authenticated self-contained
-objects for certification requests. As this is supported by
-various enrollment protocols, they can be directly employed
-(see also {{exist_prot}}).
+BRSKI {{RFC8995}} to accommodate alternative enrollment protocols that
+use authenticated self-contained objects for certification requests.
+As this is supported by various existing enrollment protocols,
+they can be directly employed (see also {{exist_prot}}).
 
 The addressing scheme in BRSKI for client certificate request and
 CA certificate distribution function during the enrollment uses
@@ -999,6 +1023,8 @@ From IETF draft 04 -> IETF draft 05:
 * David von Oheimb became the editor.
 
 * Streamlined wording and improved grammar throughout the text.
+
+* Shifted the focus more towards the use of alternative enrollment protocols.
 
 
 From IETF draft 03 -> IETF draft 04:
