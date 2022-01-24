@@ -238,12 +238,11 @@ cases. This is addressed by
 * defining a certificate waiting indication and handling, for the case that the
   certifying component is (temporarily) not available.
 
-BRSKI-AE can be applied for both synchronous and asynchronous enrollment.
+BRSKI-AE can be applied to both synchronous and asynchronous enrollment.
 
-Note that in contrast to BRSKI, BRSKI-AE allows support of multiple
-enrollment protocols on the infrastructure side, enabling the pledge developer
-to select one that is most appropriate for the pledge.
-
+In contrast to BRSKI, BRSKI-AE supports offering multiple enrollment protocols
+on the infrastructure side, which enables pledges and their developers
+to pick one of these.
 
 # Terminology
 
