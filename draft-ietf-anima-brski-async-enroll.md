@@ -115,14 +115,16 @@ informative:
 
 --- abstract
 
-This document makes bootstrapping a remote secure key infrastructure
-(BRSKI, {{RFC8995}}) flexible on the certificate enrollment protocol being used.
+This document describes enhancements of
+Bootstrapping Remote Secure Key Infrastructure (BRSKI, {{RFC8995}}) to support
+end-to-end security and asynchronous operation of certficiate enrollment.
+By making BRSKI flexible on the certificate enrollment protocol being used,
 BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer.
 Using self-contained (signature-wrapped) objects
 for requesting and returning domain-specific device certificates,
 the origin and authenticity of messages can be verified
-also in domains that have no (or just limited) online connectivity.
+also in environments that have no (or just limited) online connectivity.
 
 --- middle
 
