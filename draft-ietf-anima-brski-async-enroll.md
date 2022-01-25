@@ -119,14 +119,17 @@ informative:
 
 This document describes enhancements of
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, {{RFC8995}}) to support
-end-to-end security and asynchronous operation of certficiate enrollment.
+end-to-end security and asynchronous operation of certficate enrollment.
+/* stf: if we change the semantic of AE, we have to change this, too.  */
 By making BRSKI flexible on the certificate enrollment protocol being used,
 BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer.
 Using self-contained (signature-wrapped) objects
 for requesting and returning domain-specific device certificates,
 the origin and authenticity of messages can be verified
-also in environments that have no (or just limited) online connectivity.
+also in environments that have no (or just limited) online connectivity between the registrar and the pledge.
+/* stf: without the pledge and registrar, the sentence sounded misleading, as the signature verification may not depent on online connectivity as such. */
+
 
 --- middle
 
@@ -148,6 +151,7 @@ They may be provided online (synchronously) or offline (asynchronously)
 via the domain registrar to the pledge.
 A plede can authenticate the voucher because it is shipped with a trust anchor
 of its manufacturer such that it can validate signatures by the MASA.
+/* stf: validation vs. verification. Here it should be verification */
 
 Trust by the domain in a new pledge is established by enrolling a first
 end-entity (EE) certificate of the pledge that is specific to the target domain.
@@ -157,7 +161,8 @@ While using EST has the advantage that the mutually authenticated TLS connection
 established between the pledge and the registrar can be reused
 for protecting also the message exchange for enrolling the LDevID certificate,
 it has the limitation that this cannot not provide end-to-end security for the
-certificate enrollment because the TLS session terminates at the registrar.
+certificate enrollment, because the TLS session terminates at the registrar.
+/* stf: AS BRSKI states the Registrar = RA would there still be a problem? May be as alternative: " ... if the enrollment is done via multiple consequtive hops." */
 Moreover, properly binding the proof of origin of a certification request to
 the proof of posession for the new private key via the so-called tls-unique is
 conceptually non-trivial and requires specific support by the TLS implementation.
@@ -167,8 +172,8 @@ such as CMP or CMC, that is more flexible and independent of the transfer level
 because it represents certification requests as authenticated self-contained
 objects.
 
-When using EST, the pledge the client interacting via TLS with the domain
-registrar, which acts both as EST server and as registration authority (RA).
+When using EST, the pledge interacts via TLS with the domain
+registrar, which acts as EST server and as registration authority (RA).
 The TLS connection is mutually authenticated, where the pledge uses an
 initial device certificate (aka IDevID certificate) issued by its manufacturer.
 In order to provide proof of origin of the certificate request,
@@ -184,6 +189,7 @@ before issuing to the pledge a domain-specific certificate (LDevID certificate).
 This approach typically requires online or on-site availability of
 an asset management system (e.g., a device inventory)
 for performing the final authorization decision for the certification request.
+/* stf: to be considered in the context of the patent */
 This type of enrollment utilizing an online connection to the PKI
 can be called *synchronous enrollment*.
 
@@ -242,18 +248,19 @@ along with requester authentication information:
 
 Focus of this document is the support of alternative enrollment protocols
 that allow handling authenticated self-contained
-objects for device certificate bootstrapping. This enhancement of BRSKI
+objects for device credential bootstrapping.
+/* stf: took creential here to also allow for server generated keys */ This enhancement of BRSKI
 is named BRSKI-AE, where AE stands for both alternative enrollment protocols
 and asynchronous enrollment.
 Like BRSKI, BRSKI-AE results in the pledge storing an X.509 domain
-certificate and sufficient information for verifying the domain
+certificate with the corresponding private key and sufficient information for verifying the domain
 registrar identity (LDevID CA certificate) as well as
 domain-specific X.509 device certificates (LDevID EE certificates).
 
 The goals are to enhance BRSKI to
 * support alternative enrollment protocols,
 * support end-to-end security for enrollment, and
-* make it applicable to use cases involving asynchrionous enrollment.
+* make it applicable to use cases involving asynchronous enrollment.
 
 This is achieved by
 
