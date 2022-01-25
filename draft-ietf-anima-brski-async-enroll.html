@@ -12,14 +12,16 @@
 <meta content="
        This document describes enhancements of
 Bootstrapping Remote Secure Key Infrastructure (BRSKI,  ) to support
-end-to-end security and asynchronous operation of certficiate enrollment.
+end-to-end security and asynchronous operation of certficate enrollment.
+/* stf: if we change the semantic of AE, we have to change this, too.   /
 By making BRSKI flexible on the certificate enrollment protocol being used,
 BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer.
 Using self-contained (signature-wrapped) objects
 for requesting and returning domain-specific device certificates,
 the origin and authenticity of messages can be verified
-also in environments that have no (or just limited) online connectivity. 
+also in environments that have no (or just limited) online connectivity between the registrar and the pledge.
+/  stf: without the pledge and registrar, the sentence sounded misleading, as the signature verification may not depent on online connectivity as such. */ 
     " name="description">
 <meta content="xml2rfc 3.12.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1201,7 +1203,7 @@ li > p:last-of-type {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fries, et al.</td>
-<td class="center">Expires 28 July 2022</td>
+<td class="center">Expires 29 July 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1214,12 +1216,12 @@ li > p:last-of-type {
 <dd class="internet-draft">draft-ietf-anima-brski-async-enroll-04</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-01-24" class="published">24 January 2022</time>
+<time datetime="2022-01-25" class="published">25 January 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-07-28">28 July 2022</time></dd>
+<dd class="expires"><time datetime="2022-07-29">29 July 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1247,14 +1249,16 @@ li > p:last-of-type {
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document describes enhancements of
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>) to support
-end-to-end security and asynchronous operation of certficiate enrollment.
+end-to-end security and asynchronous operation of certficate enrollment.
+/* stf: if we change the semantic of AE, we have to change this, too.  <em>/
 By making BRSKI flexible on the certificate enrollment protocol being used,
 BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer.
 Using self-contained (signature-wrapped) objects
 for requesting and returning domain-specific device certificates,
 the origin and authenticity of messages can be verified
-also in environments that have no (or just limited) online connectivity.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+also in environments that have no (or just limited) online connectivity between the registrar and the pledge.
+/</em> stf: without the pledge and registrar, the sentence sounded misleading, as the signature verification may not depent on online connectivity as such. */<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1275,7 +1279,7 @@ also in environments that have no (or just limited) online connectivity.<a href=
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 July 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 29 July 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1431,7 +1435,8 @@ originating from a Manufacturer Authorized Signing Authority (MASA).
 They may be provided online (synchronously) or offline (asynchronously)
 via the domain registrar to the pledge.
 A plede can authenticate the voucher because it is shipped with a trust anchor
-of its manufacturer such that it can validate signatures by the MASA.<a href="#section-1-2" class="pilcrow">¶</a></p>
+of its manufacturer such that it can validate signatures by the MASA.
+/* stf: validation vs. verification. Here it should be verification */<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">Trust by the domain in a new pledge is established by enrolling a first
 end-entity (EE) certificate of the pledge that is specific to the target domain.
 For enrolling devices with these so-called LDevID certificates,
@@ -1440,7 +1445,8 @@ While using EST has the advantage that the mutually authenticated TLS connection
 established between the pledge and the registrar can be reused
 for protecting also the message exchange for enrolling the LDevID certificate,
 it has the limitation that this cannot not provide end-to-end security for the
-certificate enrollment because the TLS session terminates at the registrar.
+certificate enrollment, because the TLS session terminates at the registrar.
+/* stf: AS BRSKI states the Registrar = RA would there still be a problem? May be as alternative: " ... if the enrollment is done via multiple consequtive hops." */
 Moreover, properly binding the proof of origin of a certification request to
 the proof of posession for the new private key via the so-called tls-unique is
 conceptually non-trivial and requires specific support by the TLS implementation.
@@ -1449,8 +1455,8 @@ methods), it may be preferable to use an alternative enrollment protocol,
 such as CMP or CMC, that is more flexible and independent of the transfer level
 because it represents certification requests as authenticated self-contained
 objects.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">When using EST, the pledge the client interacting via TLS with the domain
-registrar, which acts both as EST server and as registration authority (RA).
+<p id="section-1-4">When using EST, the pledge interacts via TLS with the domain
+registrar, which acts as EST server and as registration authority (RA).
 The TLS connection is mutually authenticated, where the pledge uses an
 initial device certificate (aka IDevID certificate) issued by its manufacturer.
 In order to provide proof of origin of the certificate request,
@@ -1466,8 +1472,9 @@ before issuing to the pledge a domain-specific certificate (LDevID certificate).
 This approach typically requires online or on-site availability of
 an asset management system (e.g., a device inventory)
 for performing the final authorization decision for the certification request.
+/* stf: to be considered in the context of the patent <em>/
 This type of enrollment utilizing an online connection to the PKI
-can be called <em>synchronous enrollment</em>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+can be called *synchronous enrollment</em>.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">The required RA/CA components and/or asset management system may not be
 part of the registrar. They even may not be available on-site but rather be
 provided by remote backend systems. The registrar or its site may have no online
@@ -1522,17 +1529,18 @@ the verification of the authenticated self-contained object.<a href="#section-1-
       </ul>
 <p id="section-1-9">Focus of this document is the support of alternative enrollment protocols
 that allow handling authenticated self-contained
-objects for device certificate bootstrapping. This enhancement of BRSKI
+objects for device credential bootstrapping.
+/* stf: took creential here to also allow for server generated keys */ This enhancement of BRSKI
 is named BRSKI-AE, where AE stands for both alternative enrollment protocols
 and asynchronous enrollment.
 Like BRSKI, BRSKI-AE results in the pledge storing an X.509 domain
-certificate and sufficient information for verifying the domain
+certificate with the corresponding private key and sufficient information for verifying the domain
 registrar identity (LDevID CA certificate) as well as
 domain-specific X.509 device certificates (LDevID EE certificates).<a href="#section-1-9" class="pilcrow">¶</a></p>
 <p id="section-1-10">The goals are to enhance BRSKI to
 * support alternative enrollment protocols,
 * support end-to-end security for enrollment, and
-* make it applicable to use cases involving asynchrionous enrollment.<a href="#section-1-10" class="pilcrow">¶</a></p>
+* make it applicable to use cases involving asynchronous enrollment.<a href="#section-1-10" class="pilcrow">¶</a></p>
 <p id="section-1-11">This is achieved by<a href="#section-1-11" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-12.1">extending the well-known URI approach with an additional path element
