@@ -22,16 +22,17 @@ Abstract
    and asynchronous operation of certficate enrollment. /* stf: if we
    change the semantic of AE, we have to change this, too.  _/ By making
    BRSKI flexible on the certificate enrollment protocol being used,
-   BRSKI-AE allows employing protocols such as CMP, where the origin of
-   certificate requests and responses can be authenticated independently
-   of message transfer.  Using self-contained (signature-wrapped)
-   objects for requesting and returning domain-specific device
-   certificates, the origin and authenticity of messages can be verified
-   also in environments that have no (or just limited) online
-   connectivity between the registrar and the pledge. /_ stf: without
-   the pledge and registrar, the sentence sounded misleading, as the
-   signature verification may not depent on online connectivity as such.
-   */
+   this document /_ Bro: Ich habe BRSKI-AE immer mit this document/
+   specification ersetzt. _/ allows employing protocols such as CMP,
+   where the origin of certificate requests and responses can be
+   authenticated independently of message transfer.  Using self-
+   contained (signature-wrapped) objects for requesting and returning
+   domain-specific device certificates, the origin and authenticity of
+   messages can be verified also in environments that have no (or just
+   limited) online connectivity between the registrar and the pledge. /_
+   stf: without the pledge and registrar, the sentence sounded
+   misleading, as the signature verification may not depent on online
+   connectivity as such. */
 
 Status of This Memo
 
@@ -49,7 +50,6 @@ Status of This Memo
    material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on 30 July 2022.
-
 
 
 
@@ -78,34 +78,34 @@ Table of Contents
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   6
    3.  Scope of solution . . . . . . . . . . . . . . . . . . . . . .   7
      3.1.  Supported environment . . . . . . . . . . . . . . . . . .   7
-     3.2.  Application Examples  . . . . . . . . . . . . . . . . . .   7
-       3.2.1.  Rolling stock . . . . . . . . . . . . . . . . . . . .   7
+     3.2.  Application Examples  . . . . . . . . . . . . . . . . . .   8
+       3.2.1.  Rolling stock . . . . . . . . . . . . . . . . . . . .   8
        3.2.2.  Building automation . . . . . . . . . . . . . . . . .   8
-       3.2.3.  Substation automation . . . . . . . . . . . . . . . .   8
+       3.2.3.  Substation automation . . . . . . . . . . . . . . . .   9
        3.2.4.  Electric vehicle charging infrastructure  . . . . . .   9
-       3.2.5.  Infrastructure isolation policy . . . . . . . . . . .   9
-       3.2.6.  Less operational security in the target domain  . . .   9
+       3.2.5.  Infrastructure isolation policy . . . . . . . . . . .  10
+       3.2.6.  Less operational security in the target domain  . . .  10
    4.  Requirements discussion and mapping to solution elements  . .  10
-   5.  Architectural Overview and Message Exchange . . . . . . . . .  12
-     5.1.  Support of off-site PKI service . . . . . . . . . . . . .  12
-       5.1.1.  Behavior of a pledge  . . . . . . . . . . . . . . . .  15
-       5.1.2.  Pledge - Registrar discovery and voucher exchange . .  15
-       5.1.3.  Registrar - MASA voucher exchange . . . . . . . . . .  15
-       5.1.4.  Pledge - Registrar - RA/CA certificate enrollment . .  16
-       5.1.5.  Addressing Scheme Enhancements  . . . . . . . . . . .  18
+   5.  Architectural Overview and Message Exchange . . . . . . . . .  13
+     5.1.  Support of off-site PKI service . . . . . . . . . . . . .  13
+       5.1.1.  Behavior of a pledge  . . . . . . . . . . . . . . . .  16
+       5.1.2.  Pledge - Registrar discovery and voucher exchange . .  16
+       5.1.3.  Registrar - MASA voucher exchange . . . . . . . . . .  16
+       5.1.4.  Pledge - Registrar - RA/CA certificate enrollment . .  17
+       5.1.5.  Addressing Scheme Enhancements  . . . . . . . . . . .  19
      5.2.  Domain registrar support of specific enrollment
-           options . . . . . . . . . . . . . . . . . . . . . . . . .  18
+           options . . . . . . . . . . . . . . . . . . . . . . . . .  19
    6.  Examples for signature-wrapping using existing enrollment
-           protocols . . . . . . . . . . . . . . . . . . . . . . . .  19
-     6.1.  EST Handling  . . . . . . . . . . . . . . . . . . . . . .  20
-     6.2.  CMP Handling  . . . . . . . . . . . . . . . . . . . . . .  20
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  21
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  21
-   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  21
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  21
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  22
-   Appendix A.  History of changes TBD RFC Editor: please delete . .  24
+           protocols . . . . . . . . . . . . . . . . . . . . . . . .  20
+     6.1.  EST Handling  . . . . . . . . . . . . . . . . . . . . . .  21
+     6.2.  CMP Handling  . . . . . . . . . . . . . . . . . . . . . .  21
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  22
+   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  22
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  22
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  23
+   Appendix A.  History of changes TBD RFC Editor: please delete . .  25
 
 
 
@@ -114,54 +114,54 @@ von Oheimb, et al.        Expires 30 July 2022                  [Page 2]
 Internet-Draft                  BRSKI-AE                    January 2022
 
 
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  28
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
 
 1.  Introduction
 
    BRSKI, as defined in [RFC8995], specifies a solution for secure
-   automated zero-touch bootstrapping of devices (aka pledges) in an
-   operational domain.  This includes the discovery of network elements
-   in the target domain, time synchronization, and the exchange of
-   security information necessary to establish trust between a pledge
-   and the domain.
+   automated zero-touch bootstrapping of pledges /* Bro: ich wuerde
+   durchgaengig BRSKI Terminoligie verwenden*/ in an operational domain.
+   This includes the discovery of the registrar in the target domain,
+   time synchronization, and the exchange of security information
+   necessary to establish trust between a pledge and the domain, and
+   vice versa.
 
    Security information about the target domain, specifically the target
-   domain certificate to be trusted by new devices, is exchanged
+   domain certificate to be trusted by new pledges, is exchanged
    utilizing voucher objects defined in [RFC8366].  These vouchers are
    self-contained signed objects originating from a Manufacturer
    Authorized Signing Authority (MASA).  They may be provided online
    (synchronously) or offline (asynchronously) via the domain registrar
-   to the pledge.  A plede can authenticate the voucher because it is
+   to the pledge.  A pledge can authenticate the voucher because it is
    shipped with a trust anchor of its manufacturer such that it can
    validate signatures by the MASA. /* stf: validation vs. verification.
-   Here it should be verification */
+   Here it should be verification Bro: Ich denke eher es geht um
+   validation, da es nicht nur die Signaturpruefung, sonder die
+   komplette Chain Validation umfasse.  Wir hatten die Begriffe mal in
+   PKI glossar definiert: https://wiki.ct.siemens.de/x/BaC8EQ */
 
-   Trust by the domain in a new pledge is established by enrolling a
-   first end-entity (EE) certificate of the pledge that is specific to
-   the target domain.  For enrolling devices with these so-called LDevID
-   certificates, BRSKI typically relies on Enrollment over Secure
-   Transport (EST) [RFC7030].  While using EST has the advantage that
-   the mutually authenticated TLS connection established between the
-   pledge and the registrar can be reused for protecting also the
-   message exchange for enrolling the LDevID certificate, it has the
-   limitation that this cannot not provide end-to-end security for the
-   certificate enrollment, because the TLS session terminates at the
-   registrar. /* stf: AS BRSKI states the Registrar = RA would there
+   Trust by the domain in a new pledge is established by enrolling an
+   LDevID certificate of the pledge that is specific to the target
+   domain.  For enrolling devices with such LDevID certificates, BRSKI
+   typically utilizes Enrollment over Secure Transport (EST) [RFC7030].
+   /* Bro: Ich wuerde hier die Beschreibung der EST Spezifika kuerzen
+   oder weglassen.  Wir wollen in diesem Dokument ja nicht die
+   Protokolle gegeneinander vergleichen. _/ While using EST has the
+   advantage that the mutually authenticated TLS connection established
+   between the pledge and the registrar can be reused for protecting
+   also the message exchange for enrolling the LDevID certificate, it
+   has the limitation that this cannot not provide end-to-end security
+   for the certificate enrollment, because the TLS session terminates at
+   the registrar. /_ stf: AS BRSKI states the Registrar = RA would there
    still be a problem?  May be as alternative: " ... if the enrollment
-   is done via multiple consequtive hops." */ Moreover, properly binding
+   is done via multiple consequtive hops." _/ Moreover, properly binding
    the proof of origin of a certification request to the proof of
    posession for the new private key via the so-called tls-unique is
    conceptually non-trivial and requires specific support by the TLS
-   implementation.  For these and other reasons (such as, more freedom
-   w.r.t. proof-of-possession methods), it may be preferable to use an
-   alternative enrollment protocol, such as CMP or CMC, that is more
-   flexible and independent of the transfer level because it represents
-   certification requests as authenticated self-contained objects.
-
-   When using EST, the pledge interacts via TLS with the domain
-   registrar, which acts as EST server and as registration authority
-   (RA).  The TLS connection is mutually authenticated, where the pledge
-   uses an initial device certificate (aka IDevID certificate) issued by
+   implementation. /_ Bro: siehe Issue #16 _/ For these and other
+   reasons (such as, more freedom w.r.t. proof-of-possession methods),
+   it may be preferable to use an alternative enrollment protocol, such
+   as CMP or CMC, that is more flexible and independent of the transfer
 
 
 
@@ -170,22 +170,35 @@ von Oheimb, et al.        Expires 30 July 2022                  [Page 3]
 Internet-Draft                  BRSKI-AE                    January 2022
 
 
-   its manufacturer.  In order to provide proof of origin of the
-   certificate request, i.e., proof of identity of the requester, EST
-   specifically relies on binding the certification request to the
-   underlying TLS channel via the 'tls-unique' [RFC5929].  The EST
-   server (the domain registrar) terminates the security association
-   with the pledge and thus the binding between the certification
-   request and the authentication of the pledge via TLS.  The EST server
-   uses the authenticated pledge identity provided by the IDevID for
-   checking the authorization of the pledge for the given certification
-   request before issuing to the pledge a domain-specific certificate
-   (LDevID certificate).  This approach typically requires online or on-
-   site availability of an asset management system (e.g., a device
-   inventory) for performing the final authorization decision for the
-   certification request. /* stf: to be considered in the context of the
-   patent _/ This type of enrollment utilizing an online connection to
-   the PKI can be called *synchronous enrollment_.
+   level because it represents certification requests as authenticated
+   self-contained objects. /_ Bro: Ich wuerde grundsaetzlich weniger
+   technisch argumentieren, sondern allgemein sagen, dass es domain
+   specific requirments geben kann, die ein andere Enrollment Protokoll
+   fordern.  Diese sind in Abschnitt 3.1 glaube ich schon highlevel
+   gelistet. */
+
+   When using EST, the pledge interacts via TLS with the domain
+   registrar, which acts as EST server and as registration authority
+   (RA).  The TLS connection is mutually authenticated, where the pledge
+   uses an IDevID certificate issued by its manufacturer.  In order to
+   provide proof of origin of the certificate request, i.e., proof of
+   identity of the requester, EST specifically relies on binding the
+   certification request to the underlying TLS channel via the 'tls-
+   unique' [RFC5929]. /* Bro: siehe Issue #16.  Ich glaube, dass wir
+   diese Detailtiefe hier in der Einleitung nicht mehr brauchen, nachdem
+   die ANIMA WG den Draft schon angenommen hat. _/ The registrar
+   terminates the security association with the pledge and thus the
+   binding between the certification request and the authentication of
+   the pledge via TLS.  The EST server uses the authenticated pledge
+   identity provided by the IDevID for checking the authorization of the
+   pledge for the given certification request before issuing to the
+   pledge a domain-specific certificate (LDevID certificate).  This
+   approach typically requires online or on-site availability of an
+   asset management system (e.g., a device inventory) for performing the
+   final authorization decision for the certification request. /_ stf:
+   to be considered in the context of the patent _/ This type of
+   enrollment utilizing an online connection to the PKI can be called
+   *synchronous enrollment_.
 
    The required RA/CA components and/or asset management system may not
    be part of the registrar.  They even may not be available on-site but
@@ -203,6 +216,16 @@ Internet-Draft                  BRSKI-AE                    January 2022
    authenticating the requester.  This enables off-line processing the
    request at a later point in time.
 
+
+
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                  [Page 4]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
+
    A similar situation may occur through network segmentation, which is
    utilized in industrial systems to separate domains with different
    security needs.  Here, a similar requirement arises if the
@@ -217,30 +240,24 @@ Internet-Draft                  BRSKI-AE                    January 2022
    There are basically two options for forwarding certification requests
    along with requester authentication information:
 
-
-
-
-
-von Oheimb, et al.        Expires 30 July 2022                  [Page 4]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
-
    *  Having a trusted component (e.g., a local RA) in the target domain
       that stores the certification request combined with the requester
       authentication information (based on the IDevID) and potentially
       the information about successful verification of the proof of
-      possession (of the corresponding private key) in a way preventing
-      changes to the combined information.  Note that the information
-      elements may not have been bound cryptographically.  When
-      connectivity to backend PKI components is available, the trusted
-      component forwards the certification request together with the
-      requester information (authentication and proof of possession) for
-      further processing.  This case offers only hop-by-hop security:
-      the backend PKI must rely on the local pledge authentication
-      result when performing the authorization and issuing the requested
-      certificate.  In BRSKI the trusted component may be the EST
-      server, co-located with the registrar in the target domain.
+      possession /* Bro: siehe Issue #16. _/(of the corresponding
+      private key) in a way preventing changes to the combined
+      information.  Note that the information elements may not have been
+      bound cryptographically. /_ Bro: Den Satz habe ich nicht
+      verstanden. _/ When connectivity to backend PKI components is
+      available, the trusted component forwards the certification
+      request together with the requester information (authentication
+      and proof of possession) for further processing. /_ Bro: siehe
+      Issue #16. _/ This case offers only hop-by-hop security: the
+      backend PKI must rely on the local pledge authentication result
+      when performing the authorization and issuing the requested
+      certificate.  In BRSKI the trusted component may /_Bro: Muss das
+      hier nicht ein 'must' sein? */ be the EST server, co-located with
+      the registrar in the target domain.
 
    *  Utilizing authenticated self-contained objects for the enrollment,
       directly binding the certification request and the requester
@@ -253,17 +270,27 @@ Internet-Draft                  BRSKI-AE                    January 2022
    Focus of this document is the support of alternative enrollment
    protocols that allow handling authenticated self-contained objects
    for device credential bootstrapping. /* stf: took creential here to
-   also allow for server generated keys */ This enhancement of BRSKI is
+   also allow for server generated keys _/ This enhancement of BRSKI is
    named BRSKI-AE, where AE stands for both alternative enrollment
-   protocols and asynchronous enrollment.  Like BRSKI, BRSKI-AE results
-   in the pledge storing an X.509 domain certificate with the
-   corresponding private key and sufficient information for verifying
-   the domain registrar identity (LDevID CA certificate) as well as
-   domain-specific X.509 device certificates (LDevID EE certificates).
+   protocols and asynchronous enrollment. /_ Bro: Den Satz koennten wir
+   auch streichen. */ Like BRSKI, this specification results in the
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                  [Page 5]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
+
+   pledge storing an X.509 domain certificate with the corresponding
+   private key and sufficient information for verifying the domain
+   registrar identity (LDevID CA certificate) as well as domain-specific
+   X.509 device certificates (LDevID EE certificates).
 
    The goals are to enhance BRSKI to * support alternative enrollment
    protocols, * support end-to-end security for enrollment, and * make
-   it applicable to use cases involving asynchronous enrollment.
+   it applicable to use cases involving asynchronous enrollment. /*Bro:
+   Hier fehlt die MD Syntax. */
 
    This is achieved by
 
@@ -273,21 +300,12 @@ Internet-Draft                  BRSKI-AE                    January 2022
    *  defining a certificate waiting indication and handling, for the
       case that the certifying component is (temporarily) not available.
 
+   This specification can be applied to both synchronous and
+   asynchronous enrollment.
 
-
-
-
-von Oheimb, et al.        Expires 30 July 2022                  [Page 5]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
-
-   BRSKI-AE can be applied to both synchronous and asynchronous
-   enrollment.
-
-   In contrast to BRSKI, BRSKI-AE supports offering multiple enrollment
-   protocols on the infrastructure side, which enables pledges and their
-   developers to pick one of these.
+   In contrast to BRSKI, this specification supports offering multiple
+   enrollment protocols on the infrastructure side, which enables
+   pledges and their developers to pick prefered one.
 
 2.  Terminology
 
@@ -302,9 +320,28 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
    CA:  Certification authority, issues certificates.
 
+   /* Bro: Ich wuerde eine Definition von EE noch ergaenzen*/
+
+   EE:  End entity, her called pledge.  It is the entity that is
+      onboarded to the target deployment domain.  It holds a public-
+      private key pair for which it requests a public-key certificate.
+      An identifier for the EE is given as the subject of its
+      certificate.
+
    RA:  Registration authority, an optional system component to which a
+
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                  [Page 6]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
+
       CA delegates certificate management functions such as
-      authorization checks.
+      corresponding authorization checks and authentication of end
+      entities requesting a certificate. /* Bro: Ich habe die beiden
+      Gruende vertauscht. */
 
    on-site:  Describes a component or service or functionality available
       in the target deployment domain.
@@ -316,11 +353,11 @@ Internet-Draft                  BRSKI-AE                    January 2022
       a different administrative domain.
 
    asynchronous communication:  Describes a time-wise interrupted
-      communication between a pledge (end entity) and a registrar or PKI
+      communication between a pledge (EE) and a registrar or PKI
       component.
 
    synchronous communication:  Describes a time-wise uninterrupted
-      communication between a pledge (end entity) and a registrar or PKI
+      communication between a pledge (EE) and a registrar or PKI
       component.
 
    authenticated self-contained object:  Describes in this context an
@@ -329,14 +366,6 @@ Internet-Draft                  BRSKI-AE                    January 2022
       binding is assumed to be provided through a digital signature of
       the actual object using the private key corresponding to the EE
       certificate.
-
-
-
-
-von Oheimb, et al.        Expires 30 July 2022                  [Page 6]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
 
 3.  Scope of solution
 
@@ -357,6 +386,13 @@ Internet-Draft                  BRSKI-AE                    January 2022
       Connectivity to an off-site RA is intermittent or entirely
       offline.  A store-and-forward mechanism is used for communicating
       with the off-site services.
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                  [Page 7]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
 
    *  Authoritative actions of a local RA are limited and may not be
       sufficient for authorizing certification requests by pledges.
@@ -387,13 +423,6 @@ Internet-Draft                  BRSKI-AE                    January 2022
    certification request is then done based on the operator's asset/
    inventory information in the backend.
 
-
-
-von Oheimb, et al.        Expires 30 July 2022                  [Page 7]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
-
    UNISIG has included a CMP profile for enrollment of TLS certificates
    of on-board and track-side components in the Subset-137 specifying
    the ETRAM/ETCS on-line key management for train control systems
@@ -413,6 +442,13 @@ Internet-Draft                  BRSKI-AE                    January 2022
    the operational phase of the sensors/actuators, like a component
    certificate issued by the operator to authenticate against other
    components and services.
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                  [Page 8]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
 
    The collected data may be provided by a domain registrar already
    existing in the local network.  In this case connectivity to the
@@ -438,18 +474,6 @@ Internet-Draft                  BRSKI-AE                    January 2022
    enrollment protocols: SCEP [RFC8894] and EST [RFC7030] for the
    infrastructure side, while the IED must only support one of the two.
 
-
-
-
-
-
-
-
-von Oheimb, et al.        Expires 30 July 2022                  [Page 8]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
-
 3.2.4.  Electric vehicle charging infrastructure
 
    For electric vehicle charging infrastructure, protocols have been
@@ -471,6 +495,16 @@ Internet-Draft                  BRSKI-AE                    January 2022
    containment will support this by allowing the transport without a
    separate enrollment protocol, binding the messages to the identity of
    the communicating endpoints.
+
+
+
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                  [Page 9]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
 
 3.2.5.  Infrastructure isolation policy
 
@@ -495,17 +529,6 @@ Internet-Draft                  BRSKI-AE                    January 2022
    registration authority and therefore wants to transfer this service
    to a backend service that offers a higher security level.
 
-
-
-
-
-
-
-von Oheimb, et al.        Expires 30 July 2022                  [Page 9]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
-
 4.  Requirements discussion and mapping to solution elements
 
    For the requirements discussion we assume that the domain registrar
@@ -528,6 +551,16 @@ Internet-Draft                  BRSKI-AE                    January 2022
       corresponding to the public key contained in a certification
       request.  This is typically achieved by a self-signature using the
       private key.
+
+
+
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                 [Page 10]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
 
    *  Proof of identity: provides data origin authentication of a data
       object such as a certificate request.  This typically is achieved
@@ -554,14 +587,6 @@ Internet-Draft                  BRSKI-AE                    January 2022
          also supports further proof-of-possession methods for types of
          keys that do not support any signature algorithm.
 
-
-
-
-von Oheimb, et al.        Expires 30 July 2022                 [Page 10]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
-
       The integrity protection of certification request fields includes
       the public key because it is part of the data signed by the
       corresponding private key.  Yet note that for the above examples
@@ -572,6 +597,26 @@ Internet-Draft                  BRSKI-AE                    January 2022
       the certification request.  The binding of data origin
       authentication to the certification request may be delegated to
       the protocol used for certificate management.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                 [Page 11]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
 
    *  Solution options for proof of identity: The certification request
       should be bound to an existing authenticated credential (here,
@@ -610,18 +655,24 @@ Internet-Draft                  BRSKI-AE                    January 2022
       -  CMP [RFC4210] supports using a shared secret (passphrase) or an
          existing certificate, which may be an IDevID credential, to
          authenticate certification requests via the PKIProtection
-
-
-
-von Oheimb, et al.        Expires 30 July 2022                 [Page 11]
-
-Internet-Draft                  BRSKI-AE                    January 2022
-
-
          structure in a PKIMessage.  The certification request is
          typically encoded utilizing CRMF, while PKCS#10 is supported as
          an alternative.  Thus CMP does not rely on the security of the
          underlying transfer.
+
+
+
+
+
+
+
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                 [Page 12]
+
+Internet-Draft                  BRSKI-AE                    January 2022
+
 
       -  CMC [RFC5272] also supports utilizing a shared secret
          (passphrase) or an existing certificate to protect
@@ -669,7 +720,12 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 12]
+
+
+
+
+
+von Oheimb, et al.        Expires 30 July 2022                 [Page 13]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -725,7 +781,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 13]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 14]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -781,7 +837,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 14]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 15]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -837,7 +893,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 15]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 16]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -893,7 +949,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 16]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 17]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -949,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 17]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 18]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1005,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 18]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 19]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1061,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 19]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 20]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1117,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 20]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 21]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1173,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 21]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 22]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1229,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 22]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 23]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1285,7 +1341,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 23]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 24]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1341,7 +1397,7 @@ Appendix A.  History of changes TBD RFC Editor: please delete
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 24]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 25]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1397,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 25]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 26]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1453,7 +1509,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 26]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 27]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1509,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 27]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 28]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1565,4 +1621,4 @@ Authors' Addresses
 
 
 
-von Oheimb, et al.        Expires 30 July 2022                 [Page 28]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 29]
