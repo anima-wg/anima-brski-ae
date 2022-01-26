@@ -122,7 +122,7 @@ Bootstrapping Remote Secure Key Infrastructure (BRSKI, {{RFC8995}}) to support
 end-to-end security and asynchronous operation of certficate enrollment.
 /* stf: if we change the semantic of AE, we have to change this, too.  */
 By making BRSKI flexible on the certificate enrollment protocol being used,
-BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
+this document /* Bro: Ich habe BRSKI-AE immer mit this document/specification ersetzt. */ allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer.
 Using self-contained (signature-wrapped) objects
 for requesting and returning domain-specific device certificates,
@@ -137,26 +137,26 @@ also in environments that have no (or just limited) online connectivity between 
 # Introduction
 
 BRSKI, as defined in {{RFC8995}}, specifies a solution for
-secure automated zero-touch bootstrapping of devices (aka pledges)
-in an operational domain. This includes the discovery of network elements
+secure automated zero-touch bootstrapping of pledges /* Bro: ich würde durchgängig BRSKI Terminoligie verwenden*/
+in an operational domain. This includes the discovery of the registrar
 in the target domain, time synchronization, and the exchange of security
-information necessary to establish trust between a pledge and the domain.
+information necessary to establish trust between a pledge and the domain, and vice versa.
 
 Security information about the target domain, specifically the
-target domain certificate to be trusted by new devices,
+target domain certificate to be trusted by new pledges,
 is exchanged utilizing voucher objects defined in {{RFC8366}}.
 These vouchers are self-contained signed objects
 originating from a Manufacturer Authorized Signing Authority (MASA).
 They may be provided online (synchronously) or offline (asynchronously)
 via the domain registrar to the pledge.
-A plede can authenticate the voucher because it is shipped with a trust anchor
+A pledge can authenticate the voucher because it is shipped with a trust anchor
 of its manufacturer such that it can validate signatures by the MASA.
-/* stf: validation vs. verification. Here it should be verification */
+/* stf: validation vs. verification. Here it should be verification   Bro: Ich denke eher es geht um validation, da es nicht nur die Signaturprüfung, sonder die komplette Chain Validation umfasse. Wir hatten die Begriffe mal in PKI glossar definiert: https://wiki.ct.siemens.de/x/BaC8EQ */
 
-Trust by the domain in a new pledge is established by enrolling a first
-end-entity (EE) certificate of the pledge that is specific to the target domain.
-For enrolling devices with these so-called LDevID certificates,
-BRSKI typically relies on Enrollment over Secure Transport (EST) {{RFC7030}}.
+Trust by the domain in a new pledge is established by enrolling an LDevID certificate of the pledge that is specific to the target domain.
+For enrolling devices with such LDevID certificates,
+BRSKI typically utilizes Enrollment over Secure Transport (EST) {{RFC7030}}.
+/* Bro: Ich würde hier die Beschreibung der EST Spezifika kürzen oder weglassen. Wir wollen in diesem Dokument ja nicht die Protokolle gegeneinander vergleichen. */ 
 While using EST has the advantage that the mutually authenticated TLS connection
 established between the pledge and the registrar can be reused
 for protecting also the message exchange for enrolling the LDevID certificate,
@@ -165,22 +165,22 @@ certificate enrollment, because the TLS session terminates at the registrar.
 /* stf: AS BRSKI states the Registrar = RA would there still be a problem? May be as alternative: " ... if the enrollment is done via multiple consequtive hops." */
 Moreover, properly binding the proof of origin of a certification request to
 the proof of posession for the new private key via the so-called tls-unique is
-conceptually non-trivial and requires specific support by the TLS implementation.
+conceptually non-trivial and requires specific support by the TLS implementation. /* Bro: siehe Issue #16 */
 For these and other reasons (such as, more freedom w.r.t. proof-of-possession
 methods), it may be preferable to use an alternative enrollment protocol,
 such as CMP or CMC, that is more flexible and independent of the transfer level
 because it represents certification requests as authenticated self-contained
-objects.
+objects. /* Bro: Ich würde grundsätzlich weniger technisch argumentieren, sondern allgemein sagen, dass es domain specific requirments geben kann, die ein andere Enrollment Protokoll fordern. Diese sind in Abschnitt 3.1 glaube ich schon highlevel gelistet. */
 
 When using EST, the pledge interacts via TLS with the domain
 registrar, which acts as EST server and as registration authority (RA).
 The TLS connection is mutually authenticated, where the pledge uses an
-initial device certificate (aka IDevID certificate) issued by its manufacturer.
+IDevID certificate issued by its manufacturer.
 In order to provide proof of origin of the certificate request,
 i.e., proof of identity of the requester, EST specifically relies on binding
 the certification request to the underlying TLS channel via the 'tls-unique'
-{{RFC5929}}.
-The EST server (the domain registrar) terminates the security
+{{RFC5929}}. /* Bro: siehe Issue #16. Ich glaube, dass wir diese Detailtiefe hier in der Einleitung nicht mehr brauchen, nachdem die ANIMA WG den Draft schon angenommen hat. */
+The registrar terminates the security
 association with the pledge and thus the binding between the
 certification request and the authentication of the pledge via TLS.
 The EST server uses the authenticated pledge identity provided by the IDevID
@@ -225,17 +225,17 @@ along with requester authentication information:
   domain that stores the certification request combined with
   the requester authentication information (based on the IDevID)
   and potentially the information about successful verification of
-  the proof of possession (of the corresponding private key) in a way
+  the proof of possession /* Bro: siehe Issue #16. */(of the corresponding private key) in a way
   preventing changes to the combined information.
-  Note that the information elements may not have been bound cryptographically.
+  Note that the information elements may not have been bound cryptographically. /* Bro: Den Satz habe ich nicht verstanden. */
   When connectivity to backend PKI components is available, the trusted
   component forwards the certification request together with
   the requester information (authentication and proof of
-  possession) for further processing.
+  possession) for further processing. /* Bro: siehe Issue #16. */
   This case offers only hop-by-hop security: the backend PKI must rely on the
   local pledge authentication result when performing the
   authorization and issuing the requested certificate.
-  In BRSKI the trusted component may be the EST server,
+  In BRSKI the trusted component may /*Bro: Muss das hier nicht ein 'must' sein? */ be the EST server,
   co-located with the registrar in the target domain.
 
 * Utilizing authenticated self-contained objects for the
@@ -251,8 +251,8 @@ that allow handling authenticated self-contained
 objects for device credential bootstrapping.
 /* stf: took creential here to also allow for server generated keys */ This enhancement of BRSKI
 is named BRSKI-AE, where AE stands for both alternative enrollment protocols
-and asynchronous enrollment.
-Like BRSKI, BRSKI-AE results in the pledge storing an X.509 domain
+and asynchronous enrollment. /* Bro: Den Satz könnten wir auch streichen. */
+Like BRSKI, this specification results in the pledge storing an X.509 domain
 certificate with the corresponding private key and sufficient information for verifying the domain
 registrar identity (LDevID CA certificate) as well as
 domain-specific X.509 device certificates (LDevID EE certificates).
@@ -261,6 +261,7 @@ The goals are to enhance BRSKI to
 * support alternative enrollment protocols,
 * support end-to-end security for enrollment, and
 * make it applicable to use cases involving asynchronous enrollment.
+/*Bro: Hier fehlt die MD Syntax. */
 
 This is achieved by
 
@@ -270,11 +271,11 @@ This is achieved by
 * defining a certificate waiting indication and handling, for the case that the
   certifying component is (temporarily) not available.
 
-BRSKI-AE can be applied to both synchronous and asynchronous enrollment.
+This specification can be applied to both synchronous and asynchronous enrollment.
 
-In contrast to BRSKI, BRSKI-AE supports offering multiple enrollment protocols
+In contrast to BRSKI, this specification supports offering multiple enrollment protocols
 on the infrastructure side, which enables pledges and their developers
-to pick one of these.
+to pick prefered one.
 
 # Terminology
 
@@ -286,11 +287,14 @@ The following terms are defined additionally:
 CA:
 : Certification authority, issues certificates.
 
+/* Bro: Ich würde eine Definition von EE noch ergänzen*/
+EE: 
+: End entity, her called pledge.  It is the entity that is onboarded to the target deployment domain. It holds a public-private key pair for which it requests a public-key certificate.  An identifier for the EE is given as the subject of its certificate.
 
 RA:
 : Registration authority, an optional system
   component to which a CA delegates certificate management
-  functions such as authorization checks.
+  functions such as corresponding authorization checks and authentication of end entities requesting a certificate. /* Bro: Ich habe die beiden Gründe vertauscht. */
 
 on-site:
 : Describes a component or service or
@@ -305,11 +309,11 @@ off-site:
 
 asynchronous communication:
 : Describes a time-wise interrupted communication
-  between a pledge (end entity) and a registrar or PKI component.
+  between a pledge (EE) and a registrar or PKI component.
 
 synchronous communication:
 : Describes a time-wise uninterrupted communication
-  between a pledge (end entity) and a registrar or PKI component.
+  between a pledge (EE) and a registrar or PKI component.
 
 authenticated self-contained object:
 : Describes in this context an object
