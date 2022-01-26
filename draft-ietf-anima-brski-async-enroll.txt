@@ -2,13 +2,13 @@
 
 
 
-ANIMA WG                                                        S. Fries
-Internet-Draft                                              H. Brockhaus
-Intended status: Standards Track                      D. von Oheimb, Ed.
-Expires: 29 July 2022                                            Siemens
+ANIMA WG                                              D. von Oheimb, Ed.
+Internet-Draft                                                  S. Fries
+Intended status: Standards Track                            H. Brockhaus
+Expires: 30 July 2022                                            Siemens
                                                                  E. Lear
                                                            Cisco Systems
-                                                         25 January 2022
+                                                         26 January 2022
 
 
     BRSKI-AE: Alternative Enrollment Protocols for BRSKI Supporting
@@ -48,12 +48,12 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 July 2022.
+   This Internet-Draft will expire on 30 July 2022.
 
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 1]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 1]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 2]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 2]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 3]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 3]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 4]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 4]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 5]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 5]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 6]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 6]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 7]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 7]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 8]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 8]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                  [Page 9]
+von Oheimb, et al.        Expires 30 July 2022                  [Page 9]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 10]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 10]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 11]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 11]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -669,7 +669,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 12]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 12]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -725,7 +725,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 13]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 13]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 14]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 14]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 15]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 15]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 16]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 16]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 17]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 17]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 18]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 18]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 19]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 19]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 20]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 20]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 21]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 21]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 22]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 22]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 23]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 23]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1341,7 +1341,7 @@ Appendix A.  History of changes TBD RFC Editor: please delete
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 24]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 24]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 25]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 25]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 26]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 26]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
@@ -1509,12 +1509,22 @@ Internet-Draft                  BRSKI-AE                    January 2022
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 27]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 27]
 
 Internet-Draft                  BRSKI-AE                    January 2022
 
 
 Authors' Addresses
+
+   David von Oheimb (editor)
+   Siemens AG
+   Otto-Hahn-Ring 6
+   81739 Munich
+   Germany
+
+   Email: david.von.oheimb@siemens.com
+   URI:   https://www.siemens.com/
+
 
    Steffen Fries
    Siemens AG
@@ -1533,16 +1543,6 @@ Authors' Addresses
    Germany
 
    Email: hendrik.brockhaus@siemens.com
-   URI:   https://www.siemens.com/
-
-
-   David von Oheimb (editor)
-   Siemens AG
-   Otto-Hahn-Ring 6
-   81739 Munich
-   Germany
-
-   Email: david.von.oheimb@siemens.com
    URI:   https://www.siemens.com/
 
 
@@ -1565,4 +1565,4 @@ Authors' Addresses
 
 
 
-Fries, et al.             Expires 29 July 2022                 [Page 28]
+von Oheimb, et al.        Expires 30 July 2022                 [Page 28]
