@@ -412,6 +412,10 @@ Internet-Draft                  BRSKI-AE                    January 2022
    operational setups.  They motivate the support of alternative
    enrollment protocols, based on the operational environments in the
    examples.
+   Examples are provided for * Rolling stock * Building automation *
+   Electrical substation automation * Electric vehile charging
+   infrastructures * Infrastructure isolation policy * Domains with less
+   operational security
 
    /*stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend
    die eigentlichen Application Examples in einen informative Annex zu
@@ -437,10 +441,6 @@ Internet-Draft                  BRSKI-AE                    January 2022
    of on-board and track-side components in the Subset-137 specifying
    the ETRAM/ETCS on-line key management for train control systems
    [UNISIG-Subset-137].
-
-
-
-
 
 
 
