@@ -352,6 +352,13 @@ of on-site PKI services and comprises use cases like the following.
 ## Application Examples {#app-examples}
 
 Bootstrapping is often handled differently, depending on the application domains. The informative annex [Ref] provides illustrative examples from different automation domains and operational setups. They motivate the support of alternative enrollment protocols, based on the operational environments in the examples.  
+Examples are provided for 
+* Rolling stock
+* Building automation
+* Electrical substation automation
+* Electric vehile charging infrastructures
+* Infrastructure isolation policy 
+* Domains with less operational security 
 
 /*stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend die eigentlichen Application Examples in einen informative Annex zu bewegen. Ich habe den Text oben mal als Einleitung entsprechend angepasst. */  
 
