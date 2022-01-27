@@ -235,7 +235,7 @@ along with requester authentication information:
   This case offers only hop-by-hop security: the backend PKI must rely on the
   local pledge authentication result when performing the
   authorization and issuing the requested certificate.
-  In BRSKI the trusted component may /*Bro: Muss das hier nicht ein 'must' sein? */ be the EST server,
+  In BRSKI the trusted component may /*Bro: Muss das hier nicht ein 'must' sein? */ /* stf: agree, proposal replace "may" with "is" */ be the EST server,
   co-located with the registrar in the target domain.
 
 * Utilizing authenticated self-contained objects for the
@@ -249,7 +249,8 @@ along with requester authentication information:
 Focus of this document is the support of alternative enrollment protocols
 that allow handling authenticated self-contained
 objects for device credential bootstrapping.
-/* stf: took creential here to also allow for server generated keys */ This enhancement of BRSKI
+/* stf: took credential instead of certificate here to also allow for server generated keys */ 
+This enhancement of BRSKI
 is named BRSKI-AE, where AE stands for both alternative enrollment protocols
 and asynchronous enrollment. /* Bro: Den Satz könnten wir auch streichen. */
 Like BRSKI, this specification results in the pledge storing an X.509 domain
@@ -350,12 +351,9 @@ of on-site PKI services and comprises use cases like the following.
 
 ## Application Examples {#app-examples}
 
-The following examples are intended to motivate the support of
-different enrollment protocol approaches in general and asynchronous enrollment
-specifically. They introduce industrial application scenarios
-where leveraging BRSKI as-is would be problematic because they need support of
-asynchronous operation or protocols other than EST, as supported by BRSKI-AE.
+Bootstrapping is often handled differently, depending on the application domains. The informative annex [Ref] provides illustrative examples from different automation domains and operational setups. They motivate the support of alternative enrollment protocols, based on the operational environments in the examples.  
 
+/*stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend die eigentlichen Application Examples in einen informative Annex zu bewegen. Ich habe den Text oben mal als Einleitung entsprechend angepasst. */  
 
 ### Rolling stock
 
@@ -378,7 +376,7 @@ on-line key management for train control systems {{UNISIG-Subset-137}}.
 
 ### Building automation
 
-In the building automation scenarios, a detached
+In building automation scenarios, a detached
 building or the basement of a building may be equipped with sensors, actuators,
 and controllers that are connected with each other in a local network but
 with only limited or no connectivity to a central building management system.
@@ -397,13 +395,13 @@ connectivity to the backend PKI may be facilitated by the service
 technician's laptop.
 Alternatively, the data can also be collected from the
 pledges directly and provided to a domain registrar deployed in a
-different network. In this case, connectivity to the domain registrar
+different network as preparation for the operational phase. In this case, connectivity to the domain registrar
 may also be facilitated by the service technician's laptop.
 
 
 ### Substation automation
 
-In electrical substation automation scenarios ,a control center typically hosts
+In electrical substation automation scenarios, a control center typically hosts
 PKI services to issue certificates for Intelligent Electronic Devices
 (IEDs) operated in a substation. Communication between the substation
 and control center is performed through a proxy/gateway/DMZ, which
@@ -428,7 +426,7 @@ as well as between the charging point and the charging point operator
 (e.g. OCPP {{OCPP}}). Depending on the authentication
 model, unilateral or mutual authentication is required. In both cases
 the charging point uses an X.509 certificate to authenticate itself
-for TLS connections between the electric vehicle and
+in TLS connections between the electric vehicle and
 the charging point. The management of this certificate depends,
 among others, on the selected backend connectivity protocol.
 In the case of OCPP, this protocol is meant to be the only communication
@@ -447,7 +445,7 @@ binding the messages to the identity of the communicating endpoints.
 This refers to any case in which network infrastructure is normally
 isolated from the Internet as a matter of policy, most likely for
 security reasons. In such a case, limited access to external PKI
-resources will be allowed in carefully controlled short periods of
+services will be allowed in carefully controlled short periods of
 time, for example when a batch of new devices is deployed, and
 forbidden or prevented at other times.
 
