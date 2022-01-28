@@ -475,8 +475,9 @@ transfer this service to a backend service that offers a higher security level.
 
 For the requirements discussion we assume that the domain
 registrar receiving a certification request as an authenticated
-object is not the (final) authorization point for this
-certification request. If the domain registrar is the only authorization
+object is not always the (final) authorization point for this
+certification request. /* stf: Vorschlag den Rest des Absatzes zu loeschen */
+If the domain registrar is the only authorization
 point and the pledge has a direct connection to it, BRSKI can be used directly.
 Note that BRSKI-AE may still be needed
 in this case, for instance when the pledge prefers a protocol other than EST.
@@ -657,7 +658,7 @@ This is to underline the option that the authorization decision for the
 certification request may also be performed in the backend.
 
 The following list describes the components in the deployment target domain
-of the pledge.
+of the pledge as well as the base services.
 
 * Join Proxy: same functionality as described in BRSKI {{RFC8995}}.
 
@@ -744,7 +745,7 @@ the existing IDevID to the transport channel (TLS) rather than to
 the certification request object directly. This authentication in
 the transport layer is not visible / verifiable at the authorization
 point in the off-site domain. {{exist_prot}} discusses
-suitable enrollment protocols and options applicable.
+selected suitable enrollment protocols and options applicable.
 
 
 ### Pledge - Registrar discovery and voucher exchange {#discovery}
@@ -1018,6 +1019,9 @@ This document does not require IANA actions.
 
 
 # Security Considerations
+
+The security considerations as laid out in BRSKI {{RFC8995}} apply for 
+the discovery and voucher exchange as well as for the status exchange information.
 
 The security considerations as laid out in the Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}} apply as far as CMP is used.
