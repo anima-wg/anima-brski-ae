@@ -1203,7 +1203,7 @@ li > p:last-of-type {
 </tr></thead>
 <tfoot><tr>
 <td class="left">von Oheimb, et al.</td>
-<td class="center">Expires 31 July 2022</td>
+<td class="center">Expires 1 August 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1216,12 +1216,12 @@ li > p:last-of-type {
 <dd class="internet-draft">draft-ietf-anima-brski-async-enroll-04</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-01-27" class="published">27 January 2022</time>
+<time datetime="2022-01-28" class="published">28 January 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-07-31">31 July 2022</time></dd>
+<dd class="expires"><time datetime="2022-08-01">1 August 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1279,7 +1279,7 @@ also in environments that have no (or just limited) online connectivity between 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 July 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 August 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1824,8 +1824,9 @@ transfer this service to a backend service that offers a higher security level.<
       </h2>
 <p id="section-4-1">For the requirements discussion we assume that the domain
 registrar receiving a certification request as an authenticated
-object is not the (final) authorization point for this
-certification request. If the domain registrar is the only authorization
+object is not always the (final) authorization point for this
+certification request. /* stf: Vorschlag den Rest des Absatzes zu loeschen */
+If the domain registrar is the only authorization
 point and the pledge has a direct connection to it, BRSKI can be used directly.
 Note that BRSKI-AE may still be needed
 in this case, for instance when the pledge prefers a protocol other than EST.<a href="#section-4-1" class="pilcrow">¶</a></p>
@@ -2018,7 +2019,7 @@ may have no or only temporary (intermittent) connectivity.
 This is to underline the option that the authorization decision for the
 certification request may also be performed in the backend.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 <p id="section-5.1-4">The following list describes the components in the deployment target domain
-of the pledge.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+of the pledge as well as the base services.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-5.1">Join Proxy: same functionality as described in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.<a href="#section-5.1-5.1" class="pilcrow">¶</a>
 </li>
@@ -2111,7 +2112,7 @@ the existing IDevID to the transport channel (TLS) rather than to
 the certification request object directly. This authentication in
 the transport layer is not visible / verifiable at the authorization
 point in the off-site domain. <a href="#exist_prot" class="xref">Section 6</a> discusses
-suitable enrollment protocols and options applicable.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
+selected suitable enrollment protocols and options applicable.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="discovery">
@@ -2426,8 +2427,10 @@ implemented a specified in sections 4.3.1 and 4.3.3 of
       <h2 id="name-security-considerations">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-8-1">The security considerations as laid out in the Lightweight CMP Profile
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> apply as far as CMP is used.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">The security considerations as laid out in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> apply for 
+the discovery and voucher exchange as well as for the status exchange information.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">The security considerations as laid out in the Lightweight CMP Profile
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> apply as far as CMP is used.<a href="#section-8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
