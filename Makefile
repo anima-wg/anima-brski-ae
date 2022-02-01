@@ -1,13 +1,13 @@
-SHELL=bash # This is needed because of a problem in "build" rule; good for supporting extended file name globbing
+SHELL=bash # This is for supporting extended file name globbing
 
 DRAFT:=draft-ietf-anima-brski-async-enroll
 VERSION:=$(shell ./getver ${DRAFT}.md )
 
-.phony: default generate commit
+.phony: default generate version diff log commit
 
 default: ${DRAFT}-${VERSION}.txt
 
-.PRECIOUS: ${DRAFT}.xml
+.PRECIOUS: ${DRAFT}.{xml,txt,html,pdf}
 
 generate:
 	kdrfc --v3 -t -h ${PDF} ${DRAFT}.md
@@ -37,6 +37,12 @@ ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 
 version:
 	@echo Version: ${VERSION}
+
+diff:
+	git diff ${DRAFT}.md
+
+log:
+	git log -p ${DRAFT}.md
 
 commit: generate # not including PDF because CI cannot find/install weasyprint
 	@git commit ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html} \
