@@ -120,15 +120,15 @@ informative:
 This document describes enhancements of
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, {{RFC8995}}) to support
 end-to-end security and asynchronous operation of certficate enrollment.
-/* stf: if we change the semantic of AE, we have to change this, too.  */
+<!-- stf: if we change the semantic of AE, we have to change this, too.  -->
 By making BRSKI flexible on the certificate enrollment protocol being used,
-this document /* Bro: Ich habe BRSKI-AE immer mit this document/specification ersetzt. */ allows employing protocols such as CMP, where the origin of certificate
+this document <!-- Bro: Ich habe BRSKI-AE immer mit this document/specification ersetzt. --> allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer.
 Using self-contained (signature-wrapped) objects
 for requesting and returning domain-specific device certificates,
 the origin and authenticity of messages can be verified
 also in environments that have no (or just limited) online connectivity between the registrar and the pledge.
-/* stf: without the pledge and registrar, the sentence sounded misleading, as the signature verification may not depent on online connectivity as such. */
+<!-- stf: without the pledge and registrar, the sentence sounded misleading, as the signature verification may not depent on online connectivity as such. -->
 
 
 --- middle
@@ -137,7 +137,7 @@ also in environments that have no (or just limited) online connectivity between 
 # Introduction
 
 BRSKI, as defined in {{RFC8995}}, specifies a solution for
-secure automated zero-touch bootstrapping of pledges /* Bro: ich würde durchgängig BRSKI Terminoligie verwenden*/
+secure automated zero-touch bootstrapping of pledges <!-- Bro: ich würde durchgängig BRSKI Terminoligie verwenden-->
 in an operational domain. This includes the discovery of the registrar
 in the target domain, time synchronization, and the exchange of security
 information necessary to establish trust between a pledge and the domain, and vice versa.
@@ -151,26 +151,26 @@ They may be provided online (synchronously) or offline (asynchronously)
 via the domain registrar to the pledge.
 A pledge can authenticate the voucher because it is shipped with a trust anchor
 of its manufacturer such that it can validate signatures by the MASA.
-/* stf: validation vs. verification. Here it should be verification   Bro: Ich denke eher es geht um validation, da es nicht nur die Signaturprüfung, sonder die komplette Chain Validation umfasse. Wir hatten die Begriffe mal in PKI glossar definiert: https://wiki.ct.siemens.de/x/BaC8EQ */
+<!-- stf: validation vs. verification. Here it should be verification   Bro: Ich denke eher es geht um validation, da es nicht nur die Signaturprüfung, sonder die komplette Chain Validation umfasse. Wir hatten die Begriffe mal in PKI glossar definiert: https://wiki.ct.siemens.de/x/BaC8EQ -->
 
 Trust by the domain in a new pledge is established by enrolling an LDevID certificate of the pledge that is specific to the target domain.
 For enrolling devices with such LDevID certificates,
 BRSKI typically utilizes Enrollment over Secure Transport (EST) {{RFC7030}}.
-/* Bro: Ich würde hier die Beschreibung der EST Spezifika kürzen oder weglassen. Wir wollen in diesem Dokument ja nicht die Protokolle gegeneinander vergleichen. */ 
+<!-- Bro: Ich würde hier die Beschreibung der EST Spezifika kürzen oder weglassen. Wir wollen in diesem Dokument ja nicht die Protokolle gegeneinander vergleichen. --> 
 While using EST has the advantage that the mutually authenticated TLS connection
 established between the pledge and the registrar can be reused
 for protecting also the message exchange for enrolling the LDevID certificate,
 it has the limitation that this cannot not provide end-to-end security for the
 certificate enrollment, because the TLS session terminates at the registrar.
-/* stf: AS BRSKI states the Registrar = RA would there still be a problem? May be as alternative: " ... if the enrollment is done via multiple consequtive hops." */
+<!-- stf: AS BRSKI states the Registrar = RA would there still be a problem? May be as alternative: " ... if the enrollment is done via multiple consequtive hops." -->
 Moreover, properly binding the proof of origin of a certification request to
 the proof of posession for the new private key via the so-called tls-unique is
-conceptually non-trivial and requires specific support by the TLS implementation. /* Bro: siehe Issue #16 */
+conceptually non-trivial and requires specific support by the TLS implementation. <!-- Bro: siehe Issue #16 -->
 For these and other reasons (such as, more freedom w.r.t. proof-of-possession
 methods), it may be preferable to use an alternative enrollment protocol,
 such as CMP or CMC, that is more flexible and independent of the transfer level
 because it represents certification requests as authenticated self-contained
-objects. /* Bro: Ich würde grundsätzlich weniger technisch argumentieren, sondern allgemein sagen, dass es domain specific requirments geben kann, die ein andere Enrollment Protokoll fordern. Diese sind in Abschnitt 3.1 glaube ich schon highlevel gelistet. */
+objects. <!-- Bro: Ich würde grundsätzlich weniger technisch argumentieren, sondern allgemein sagen, dass es domain specific requirments geben kann, die ein andere Enrollment Protokoll fordern. Diese sind in Abschnitt 3.1 glaube ich schon highlevel gelistet. -->
 
 When using EST, the pledge interacts via TLS with the domain
 registrar, which acts as EST server and as registration authority (RA).
@@ -179,7 +179,7 @@ IDevID certificate issued by its manufacturer.
 In order to provide proof of origin of the certificate request,
 i.e., proof of identity of the requester, EST specifically relies on binding
 the certification request to the underlying TLS channel via the 'tls-unique'
-{{RFC5929}}. /* Bro: siehe Issue #16. Ich glaube, dass wir diese Detailtiefe hier in der Einleitung nicht mehr brauchen, nachdem die ANIMA WG den Draft schon angenommen hat. */
+{{RFC5929}}. <!-- Bro: siehe Issue #16. Ich glaube, dass wir diese Detailtiefe hier in der Einleitung nicht mehr brauchen, nachdem die ANIMA WG den Draft schon angenommen hat. -->
 The registrar terminates the security
 association with the pledge and thus the binding between the
 certification request and the authentication of the pledge via TLS.
@@ -189,7 +189,7 @@ before issuing to the pledge a domain-specific certificate (LDevID certificate).
 This approach typically requires online or on-site availability of
 an asset management system (e.g., a device inventory)
 for performing the final authorization decision for the certification request.
-/* stf: to be considered in the context of the patent */
+<!-- stf: to be considered in the context of the patent -->
 This type of enrollment utilizing an online connection to the PKI
 can be called *synchronous enrollment*.
 
@@ -225,17 +225,17 @@ along with requester authentication information:
   domain that stores the certification request combined with
   the requester authentication information (based on the IDevID)
   and potentially the information about successful verification of
-  the proof of possession /* Bro: siehe Issue #16. */(of the corresponding private key) in a way
+  the proof of possession <!-- Bro: siehe Issue #16. -->(of the corresponding private key) in a way
   preventing changes to the combined information.
-  Note that the information elements may not have been bound cryptographically. /* Bro: Den Satz habe ich nicht verstanden. */
+  Note that the information elements may not have been bound cryptographically. <!-- Bro: Den Satz habe ich nicht verstanden. -->
   When connectivity to backend PKI components is available, the trusted
   component forwards the certification request together with
   the requester information (authentication and proof of
-  possession) for further processing. /* Bro: siehe Issue #16. */
+  possession) for further processing. <!-- Bro: siehe Issue #16. -->
   This case offers only hop-by-hop security: the backend PKI must rely on the
   local pledge authentication result when performing the
   authorization and issuing the requested certificate.
-  In BRSKI the trusted component may /*Bro: Muss das hier nicht ein 'must' sein? */ /* stf: agree, proposal replace "may" with "is" */ be the EST server,
+  In BRSKI the trusted component may <!-- Bro: Muss das hier nicht ein 'must' sein? --> <!-- stf: agree, proposal replace "may" with "is" --> be the EST server,
   co-located with the registrar in the target domain.
 
 * Utilizing authenticated self-contained objects for the
@@ -249,10 +249,10 @@ along with requester authentication information:
 Focus of this document is the support of alternative enrollment protocols
 that allow handling authenticated self-contained
 objects for device credential bootstrapping.
-/* stf: took credential instead of certificate here to also allow for server generated keys */ 
+<!-- stf: took credential instead of certificate here to also allow for server generated keys -->
 This enhancement of BRSKI
 is named BRSKI-AE, where AE stands for both alternative enrollment protocols
-and asynchronous enrollment. /* Bro: Den Satz könnten wir auch streichen. */
+and asynchronous enrollment. <!-- Bro: Den Satz könnten wir auch streichen. -->
 Like BRSKI, this specification results in the pledge storing an X.509 domain
 certificate with the corresponding private key and sufficient information for verifying the domain
 registrar identity (LDevID CA certificate) as well as
@@ -262,7 +262,7 @@ The goals are to enhance BRSKI to
 * support alternative enrollment protocols,
 * support end-to-end security for enrollment, and
 * make it applicable to use cases involving asynchronous enrollment.
-/*Bro: Hier fehlt die MD Syntax. */
+<!-- Bro: Hier fehlt die MD Syntax. -->
 
 This is achieved by
 
@@ -288,14 +288,14 @@ The following terms are defined additionally:
 CA:
 : Certification authority, issues certificates.
 
-/* Bro: Ich würde eine Definition von EE noch ergänzen*/
+<!-- Bro: Ich würde eine Definition von EE noch ergänzen-->
 EE: 
 : End entity, her called pledge.  It is the entity that is onboarded to the target deployment domain. It holds a public-private key pair for which it requests a public-key certificate.  An identifier for the EE is given as the subject of its certificate.
 
 RA:
 : Registration authority, an optional system
   component to which a CA delegates certificate management
-  functions such as corresponding authorization checks and authentication of end entities requesting a certificate. /* Bro: Ich habe die beiden Gründe vertauscht. */
+  functions such as corresponding authorization checks and authentication of end entities requesting a certificate. <!-- Bro: Ich habe die beiden Gründe vertauscht. -->
 
 on-site:
 : Describes a component or service or
@@ -360,7 +360,7 @@ Examples are provided for
 * Infrastructure isolation policy 
 * Domains with less operational security 
 
-/*stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend die eigentlichen Application Examples in einen informative Annex zu bewegen. Ich habe den Text oben mal als Einleitung entsprechend angepasst. */  
+<!-- stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend die eigentlichen Application Examples in einen informative Annex zu bewegen. Ich habe den Text oben mal als Einleitung entsprechend angepasst. -->  
 
 ### Rolling stock
 
@@ -476,7 +476,7 @@ transfer this service to a backend service that offers a higher security level.
 For the requirements discussion we assume that the domain
 registrar receiving a certification request as an authenticated
 object is not always the (final) authorization point for this
-certification request. /* stf: Vorschlag den Rest des Absatzes zu loeschen */
+certification request. <!-- stf: Vorschlag den Rest des Absatzes zu loeschen -->
 If the domain registrar is the only authorization
 point and the pledge has a direct connection to it, BRSKI can be used directly.
 Note that BRSKI-AE may still be needed
