@@ -1051,10 +1051,11 @@ From IETF draft 04 -> IETF draft 05:
 
 * David von Oheimb became the editor.
 
-* Streamlined wording and improved grammar throughout the text.
+* Streamline wording, improve grammar, etc. throughout the text.
 
-* Shifted the focus more towards the use of alternative enrollment protocols.
+* Shift the emphasis towards supporting alternative enrollment protocols.
 
+* Update the title accordingly - prelimary change to be approved.
 
 From IETF draft 03 -> IETF draft 04:
 

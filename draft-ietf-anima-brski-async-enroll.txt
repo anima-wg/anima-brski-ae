@@ -1365,10 +1365,12 @@ Appendix A.  History of changes TBD RFC Editor: please delete
 
    *  David von Oheimb became the editor.
 
-   *  Streamlined wording and improved grammar throughout the text.
+   *  Streamline wording, improve grammar, etc. throughout the text.
 
-   *  Shifted the focus more towards the use of alternative enrollment
+   *  Shift the emphasis towards supporting alternative enrollment
       protocols.
+
+   *  Update the title accordingly - prelimary change to be approved.
 
    From IETF draft 03 -> IETF draft 04:
 
@@ -1392,8 +1394,6 @@ Appendix A.  History of changes TBD RFC Editor: please delete
       module).
 
    From IETF draft 01 -> IETF draft 02:
-
-
 
 
 
