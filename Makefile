@@ -50,19 +50,20 @@ log:
 
 commit: generate
 	# not including PDF because CI cannot find/install weasyprint
-	git commit ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html} \
+	git commit ${DRAFT}.{xml,txt,html} \
 	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
 	   || echo "No changes to commit"
 	git push -u origin
 
-upload:
-	cp -a ${DRAFT}.{md,xml,txt,html} /tmp
-	git checkout -- ${DRAFT}.{md,xml,txt,html}
+FILES=${DRAFT}{.{md,xml,txt,html},-${VERSION}.txt}
+upload: default
+	cp -a  ${FILES} /tmp
+	git checkout -- ${FILES}
 	git checkout main
-	cp -a /tmp/${DRAFT}.{md,xml,txt,html} .
-	git commit ${DRAFT}.{md,md,xml,txt,html}
+	cp -a /tmp/${FILES} .
+	git commit ${FILES}
 	git push
 	git checkout master
 
 clean:
-	git checkout -- ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html,pdf}
+	git checkout -- ${DRAFT}.{xml,txt,html,pdf}
