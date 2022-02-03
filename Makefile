@@ -9,7 +9,11 @@ default: ${DRAFT}-${VERSION}.txt
 
 .PRECIOUS: ${DRAFT}.{xml,txt,html,pdf}
 
-generate:
+generate: clean
+	git fetch origin
+	git rebase origin || \
+	  (git checkout --theirs origin/master -- ${DRAFT}.{xml,txt,html} && \
+	   git rebase --continue)
 	kdrfc --v3 -t -h ${PDF} ${DRAFT}.md
 
 # produces also .xml and .html:
@@ -44,11 +48,21 @@ diff:
 log:
 	git log -p ${DRAFT}.md
 
-commit: generate # not including PDF because CI cannot find/install weasyprint
-	@git commit ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html} \
+commit: generate
+	# not including PDF because CI cannot find/install weasyprint
+	git commit ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html} \
 	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
 	   || echo "No changes to commit"
-	@git push -u origin
+	git push -u origin
+
+upload:
+	cp -a ${DRAFT}.{md,xml,txt,html} /tmp
+	git checkout -- ${DRAFT}.{md,xml,txt,html}
+	git checkout main
+	cp -a /tmp/${DRAFT}.{md,xml,txt,html} .
+	git commit ${DRAFT}.{md,md,xml,txt,html}
+	git push
+	git checkout master
 
 clean:
-	@git checkout -- ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html,pdf}
+	git checkout -- ${DRAFT}-??.txt ${DRAFT}.{xml,txt,html,pdf}
