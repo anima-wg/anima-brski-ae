@@ -1,7 +1,6 @@
 ---
 
-title: 'BRSKI-AE: Alternative Enrollment Protocols for BRSKI
-Supporting Asynchronous Enrollment'
+title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
 docname: draft-ietf-anima-brski-async-enroll-04
 stand_alone: true
@@ -152,7 +151,7 @@ of its manufacturer such that it can verify signatures by the MASA.
 Trust by the domain in a new pledge is established by enrolling an LDevID certificate of the pledge that is specific to the target domain.
 For enrolling devices with such LDevID certificates,
 BRSKI typically utilizes Enrollment over Secure Transport (EST) {{RFC7030}}.
-<!-- Bro: Ich würde hier die Beschreibung der EST Spezifika kürzen oder weglassen. Wir wollen in diesem Dokument ja nicht die Protokolle gegeneinander vergleichen. --> 
+<!-- Bro: Ich würde hier die Beschreibung der EST Spezifika kürzen oder weglassen. Wir wollen in diesem Dokument ja nicht die Protokolle gegeneinander vergleichen. -->
 While using EST has the advantage that the mutually authenticated TLS connection
 established between the pledge and the registrar can be reused
 for protecting also the message exchange for enrolling the LDevID certificate,
@@ -279,7 +278,7 @@ to pick prefered one.
 This document relies on the terminology defined in {{RFC8995}}.
 The following terms are defined in addition:
 
-EE: 
+EE:
 : End entity, here called pledge.
   It is the entity that is onboarded to the target deployment domain.
   It holds a public-private key pair, for which it requests a public-key certificate.
@@ -348,11 +347,11 @@ of on-site PKI services and comprises use cases like the following.
 ## Application Examples {#app-examples}
 
 Bootstrapping is often handled differently, depending on the application domains.
-The informative annex [Ref] provides illustrative examples from
+The informative annex TBD-Ref provides illustrative examples from
 various automation domains and operational setups.
 They motivate the support of alternative enrollment protocols,
-based on the operational environments in the examples.  
-Examples are provided for 
+based on the operational environments in the examples.
+Examples are provided for
 
 * Rolling stock
 
@@ -362,11 +361,11 @@ Examples are provided for
 
 * Electric vehile charging infrastructures
 
-* Infrastructure isolation policy 
+* Infrastructure isolation policy
 
-* Domains with less operational security 
+* Domains with less operational security
 
-<!-- stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend die eigentlichen Application Examples in einen informative Annex zu bewegen. Ich habe den Text oben mal als Einleitung entsprechend angepasst. -->  
+<!-- stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend die eigentlichen Application Examples in einen informative Annex zu bewegen. Ich habe den Text oben mal als Einleitung entsprechend angepasst. -->
 
 ### Rolling stock
 
@@ -587,7 +586,7 @@ This approach {{I-D.selander-ace-coap-est-oscore}}
 may be considered as a further variant.
 
 
-# Adaptations to BRSKI
+# Adaptations to BRSKI {#uc1}
 
 In order to support alternative enrollment protocols, asynchronous enrollment,
 and more general system architectures,
@@ -603,7 +602,7 @@ In particular, the pledge initiates communication with the domain registrar
 and interacts with the MASA as usual.
 
 
-##  Architecture {#architecture} {#uc1}
+##  Architecture {#architecture}
 
 The key element of BRSKI-AE is that the authorization of a
 certification request MUST be performed based on an authenticated
@@ -642,8 +641,8 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 |        |     .                              |        .
 +--------+     ...............................|.........
                 on-site "domain" components   |
-                                              | e.g., RFC 7030,
-                                              |       RFC 4210, ...
+                                              | e.g., RFC 4210,
+                                              |       RFC 7030, ...
  .............................................|.....................
  . +---------------------------+     +--------v------------------+ .
  . | Public-Key Infrastructure <-----+ Registration Authority    | .
@@ -1029,7 +1028,7 @@ This document does not require IANA actions.
 
 # Security Considerations
 
-The security considerations as laid out in BRSKI {{RFC8995}} apply for 
+The security considerations as laid out in BRSKI {{RFC8995}} apply for
 the discovery and voucher exchange as well as for the status exchange information.
 
 The security considerations as laid out in the Lightweight CMP Profile
@@ -1052,17 +1051,18 @@ From IETF draft 04 -> IETF draft 05:
 
 * David von Oheimb became the editor.
 
-* Streamlined wording and improved grammar throughout the text.
+* Streamline wording, improve grammar, etc. throughout the text.
 
-* Shifted the focus more towards the use of alternative enrollment protocols.
+* Shift the emphasis towards supporting alternative enrollment protocols.
 
+* Update the title accordingly - prelimary change to be approved.
 
 From IETF draft 03 -> IETF draft 04:
 
-* Moved UC2 related parts defining the pledge in responder mode to a 
-  separate document. This required changes and adaptations in several 
-  sections. Main changes concerned the removal of the subsection for UC2 
-  as well as the removal of the YANG model related text as it is not 
+* Moved UC2 related parts defining the pledge in responder mode to a
+  separate document. This required changes and adaptations in several
+  sections. Main changes concerned the removal of the subsection for UC2
+  as well as the removal of the YANG model related text as it is not
   applicable in UC1.
 
 * Updated references to the Lightweight CMP Profile.
