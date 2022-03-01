@@ -345,10 +345,10 @@ of on-site PKI services and comprises use cases like the following.
   Final authorization is done by an RA residing in the operator domain.
 
 
-## Application Examples {#app-examples}
+## List of application examples {#list-examples}
 
 Bootstrapping can be handled in various ways, depending on the application domains.
-The informative annex TBD-Ref provides illustrative examples from
+The informative annex {{app-examples}} provides illustrative examples from
 various automation domains and operational setups.
 They motivate the support of alternative enrollment protocols,
 based on the operational environments in the examples.
@@ -365,116 +365,6 @@ Examples are provided for
 * Infrastructure isolation policy
 
 * Domains with less operational security
-
-<!-- stf: Auch nach der Diskussion gestern, eventuell ist es ausreichend die eigentlichen Application Examples in einen informative Annex zu bewegen. Ich habe den Text oben mal als Einleitung entsprechend angepasst. -->
-
-### Rolling stock
-
-Rolling stock or railroad cars contain a variety of sensors,
-actuators, and controllers, which communicate within the railroad car
-but also exchange information between railroad cars building a train,
-with track-side equipment, and/or possibly with backend systems.
-These devices are typically unaware of backend system
-connectivity. Managing certificates may be done during maintenance
-cycles of the railroad car, but can already be prepared during
-operation. Preparation will include generating certification requests,
-which are collected and later forwarded for
-processing, once the railroad car is connected to the operator backend.
-The authorization of the certification request is then done based on
-the operator's asset/inventory information in the backend.
-
-UNISIG has included a CMP profile for enrollment of TLS certificates of
-on-board and track-side components in the Subset-137 specifying the ETRAM/ETCS
-on-line key management for train control systems {{UNISIG-Subset-137}}.
-
-### Building automation
-
-In building automation scenarios, a detached
-building or the basement of a building may be equipped with sensors, actuators,
-and controllers that are connected with each other in a local network but
-with only limited or no connectivity to a central building management system.
-This problem may occur during installation time but also during operation.
-In such a situation a service technician collects the necessary data
-and transfers it between the local network and the central building management
-system, e.g., using a laptop or a mobile phone.
-This data may comprise parameters and settings
-required in the operational phase of the sensors/actuators, like a
-component certificate issued by the operator to authenticate against other
-components and services.
-
-The collected data may be provided by a domain registrar
-already existing in the local network. In this case
-connectivity to the backend PKI may be facilitated by the service
-technician's laptop.
-Alternatively, the data can also be collected from the
-pledges directly and provided to a domain registrar deployed in a
-different network as preparation for the operational phase. In this case, connectivity to the domain registrar
-may also be facilitated by the service technician's laptop.
-
-
-### Substation automation
-
-In electrical substation automation scenarios, a control center typically hosts
-PKI services to issue certificates for Intelligent Electronic Devices
-(IEDs) operated in a substation. Communication between the substation
-and control center is performed through a proxy/gateway/DMZ, which
-terminates protocol flows. Note that {{NERC-CIP-005-5}} requires
-inspection of protocols at the boundary of a security
-perimeter (the substation in this case).
-In addition, security management in substation automation assumes
-central support of several enrollment protocols in order to support the
-various capabilities of IEDs from different vendors. The IEC standard
-IEC62351-9 {{IEC-62351-9}} specifies mandatory
-support of two enrollment protocols: SCEP {{RFC8894}} and EST
-{{RFC7030}} for the infrastructure side, while
-the IED must only support one of the two.
-
-
-### Electric vehicle charging infrastructure
-
-For electric vehicle charging infrastructure, protocols have been
-defined for the interaction between the electric vehicle and the
-charging point (e.g., ISO 15118-2 {{ISO-IEC-15118-2}})
-as well as between the charging point and the charging point operator
-(e.g. OCPP {{OCPP}}). Depending on the authentication
-model, unilateral or mutual authentication is required. In both cases
-the charging point uses an X.509 certificate to authenticate itself
-in TLS connections between the electric vehicle and
-the charging point. The management of this certificate depends,
-among others, on the selected backend connectivity protocol.
-In the case of OCPP, this protocol is meant to be the only communication
-protocol between the charging point and the backend, carrying all
-information to control the charging operations and maintain the
-charging point itself. This means that the certificate management
-needs to be handled in-band of OCPP. This requires the ability to
-encapsulate the certificate management messages in a transport-independent way.
-Authenticated self-containment will support this by
-allowing the transport without a separate enrollment protocol,
-binding the messages to the identity of the communicating endpoints.
-
-
-### Infrastructure isolation policy
-
-This refers to any case in which network infrastructure is normally
-isolated from the Internet as a matter of policy, most likely for
-security reasons. In such a case, limited access to external PKI
-services will be allowed in carefully controlled short periods of
-time, for example when a batch of new devices is deployed, and
-forbidden or prevented at other times.
-
-
-### Less operational security in the target domain
-
-The registration authority performing (at least part of) the authorization of a
-certification request is a critical PKI component and therefore requires higher
-operational security than components utilizing the issued
-certificates for their security features. CAs may also demand higher
-security in the registration procedures. Especially the CA/Browser
-forum currently increases the security requirements in the certificate
-issuance procedures for publicly trusted certificates.
-There may be situations where the target domain does not offer a sufficient
-level of security to operate a registration authority and therefore wants to
-transfer this service to a backend service that offers a higher security level.
 
 
 # Requirements discussion and mapping to solution elements {#req-sol}
@@ -740,7 +630,7 @@ differences to the original approach as follows.
   authenticated self-contained objects.
 
 
-## Message Exchange
+## Message exchange
 
 The behavior of a pledge as described in {{RFC8995}} is kept with one exception.
 After finishing the imprinting phase (4)
@@ -869,7 +759,7 @@ The enrollment status telemetry is performed as specified in {{RFC8995}}
 although in BRSKI this is described as part of the enrollment phase.
 
 
-### Addressing Scheme Enhancements {#addressing}
+### Addressing scheme enhancements {#addressing}
 
 BRSKI-AE provides generalizations to the addressing scheme defined in
 BRSKI {{RFC8995}} to accommodate alternative enrollment protocols that
@@ -963,7 +853,7 @@ make it independent of the underlying TLS connection using OSCORE,
 which also entails that authenticated self-contained objects are used.
 
 
-## EST Handling
+## EST handling
 
 When using EST {{RFC7030}}, the following aspects and constraints
 need to be considered and the given extra requirements SHALL be observed:
@@ -996,7 +886,7 @@ need to be considered and the given extra requirements SHALL be observed:
   fullcmc is necessary as not specified in the context of EST \*/
 
 
-## CMP Handling
+## CMP handling
 
 Instead of using general CMP {{RFC4210}}, this specification
 refers to the Lightweight CMP Profile
@@ -1046,6 +936,117 @@ for their input and discussion on use cases and call flows.
 --- back
 
 
+# Application examples {#app-examples}
+
+This informative annex provides some detail to
+the application examples listed in {{list-examples}}.
+
+## Rolling stock
+
+Rolling stock or railroad cars contain a variety of sensors,
+actuators, and controllers, which communicate within the railroad car
+but also exchange information between railroad cars building a train,
+with track-side equipment, and/or possibly with backend systems.
+These devices are typically unaware of backend system
+connectivity. Managing certificates may be done during maintenance
+cycles of the railroad car, but can already be prepared during
+operation. Preparation will include generating certification requests,
+which are collected and later forwarded for
+processing, once the railroad car is connected to the operator backend.
+The authorization of the certification request is then done based on
+the operator's asset/inventory information in the backend.
+
+UNISIG has included a CMP profile for enrollment of TLS certificates of
+on-board and track-side components in the Subset-137 specifying the ETRAM/ETCS
+on-line key management for train control systems {{UNISIG-Subset-137}}.
+
+## Building automation
+
+In building automation scenarios, a detached
+building or the basement of a building may be equipped with sensors, actuators,
+and controllers that are connected with each other in a local network but
+with only limited or no connectivity to a central building management system.
+This problem may occur during installation time but also during operation.
+In such a situation a service technician collects the necessary data
+and transfers it between the local network and the central building management
+system, e.g., using a laptop or a mobile phone.
+This data may comprise parameters and settings
+required in the operational phase of the sensors/actuators, like a
+component certificate issued by the operator to authenticate against other
+components and services.
+
+The collected data may be provided by a domain registrar
+already existing in the local network. In this case
+connectivity to the backend PKI may be facilitated by the service
+technician's laptop.
+Alternatively, the data can also be collected from the
+pledges directly and provided to a domain registrar deployed in a
+different network as preparation for the operational phase. In this case, connectivity to the domain registrar
+may also be facilitated by the service technician's laptop.
+
+## Substation automation
+
+In electrical substation automation scenarios, a control center typically hosts
+PKI services to issue certificates for Intelligent Electronic Devices
+(IEDs) operated in a substation. Communication between the substation
+and control center is performed through a proxy/gateway/DMZ, which
+terminates protocol flows. Note that {{NERC-CIP-005-5}} requires
+inspection of protocols at the boundary of a security
+perimeter (the substation in this case).
+In addition, security management in substation automation assumes
+central support of several enrollment protocols in order to support the
+various capabilities of IEDs from different vendors. The IEC standard
+IEC62351-9 {{IEC-62351-9}} specifies mandatory
+support of two enrollment protocols: SCEP {{RFC8894}} and EST
+{{RFC7030}} for the infrastructure side, while
+the IED must only support one of the two.
+
+## Electric vehicle charging infrastructure
+
+For electric vehicle charging infrastructure, protocols have been
+defined for the interaction between the electric vehicle and the
+charging point (e.g., ISO 15118-2 {{ISO-IEC-15118-2}})
+as well as between the charging point and the charging point operator
+(e.g. OCPP {{OCPP}}). Depending on the authentication
+model, unilateral or mutual authentication is required. In both cases
+the charging point uses an X.509 certificate to authenticate itself
+in TLS connections between the electric vehicle and
+the charging point. The management of this certificate depends,
+among others, on the selected backend connectivity protocol.
+In the case of OCPP, this protocol is meant to be the only communication
+protocol between the charging point and the backend, carrying all
+information to control the charging operations and maintain the
+charging point itself. This means that the certificate management
+needs to be handled in-band of OCPP. This requires the ability to
+encapsulate the certificate management messages in a transport-independent way.
+Authenticated self-containment will support this by
+allowing the transport without a separate enrollment protocol,
+binding the messages to the identity of the communicating endpoints.
+
+## Infrastructure isolation policy
+
+This refers to any case in which network infrastructure is normally
+isolated from the Internet as a matter of policy, most likely for
+security reasons. In such a case, limited access to external PKI
+services will be allowed in carefully controlled short periods of
+time, for example when a batch of new devices is deployed, and
+forbidden or prevented at other times.
+
+
+## Less operational security in the target domain
+
+The registration authority performing (at least part of) the authorization of a
+certification request is a critical PKI component and therefore requires higher
+operational security than components utilizing the issued
+certificates for their security features. CAs may also demand higher
+security in the registration procedures. Especially the CA/Browser
+forum currently increases the security requirements in the certificate
+issuance procedures for publicly trusted certificates.
+There may be situations where the target domain does not offer a sufficient
+level of security to operate a registration authority and therefore wants to
+transfer this service to a backend service that offers a higher security level.
+
+
 # History of changes TBD RFC Editor: please delete {#app_history}
 
 From IETF draft 04 -> IETF draft 05:
@@ -1057,6 +1058,8 @@ From IETF draft 04 -> IETF draft 05:
 * Shift the emphasis towards supporting alternative enrollment protocols.
 
 * Update the title accordingly - prelimary change to be approved.
+
+* Move detailed application examples to informative annnex.
 
 From IETF draft 03 -> IETF draft 04:
 
