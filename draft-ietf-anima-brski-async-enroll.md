@@ -116,12 +116,11 @@ informative:
 
 --- abstract
 
-This document describes enhancements of
+This document enhances
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, {{RFC8995}}) to support
-end-to-end security and asynchronous operation of certficate enrollment
-by supporting alternative enrollment protocols.
-By making BRSKI flexible on the certificate enrollment protocol being used,
-this document <!-- Bro: Ich habe BRSKI-AE immer mit this document/specification ersetzt. --> allows employing protocols such as CMP, where the origin of certificate
+end-to-end security and asynchronous operation of certficate enrollment.
+Making BRSKI flexible on the certificate enrollment protocol being used,
+BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer
 by using self-contained (signature-wrapped) objects.
 
@@ -132,10 +131,10 @@ by using self-contained (signature-wrapped) objects.
 # Introduction
 
 BRSKI, as defined in {{RFC8995}}, specifies a solution for
-secure automated zero-touch bootstrapping of pledges <!-- Bro: ich würde durchgängig BRSKI Terminoligie verwenden-->
+secure automated zero-touch bootstrapping of new devices, so-called pledges,
 in an operational domain. This includes the discovery of the registrar
 in the target domain, time synchronization, and the exchange of security
-information necessary to establish trust between a pledge and the domain, and vice versa.
+information necessary to establish mutual trust between a pledge and the domain.
 
 Security information about the target domain, specifically the
 target domain certificate to be trusted by new pledges,
@@ -145,22 +144,24 @@ originating from a Manufacturer Authorized Signing Authority (MASA).
 They may be provided online (synchronously) or offline (asynchronously)
 via the domain registrar to the pledge.
 A pledge can authenticate the voucher because it is shipped with a trust anchor
-of its manufacturer such that it can verify signatures by the MASA.
-<!-- stf: validation vs. verification. Here it should be verification   Bro: Ich denke eher es geht um validation, da es nicht nur die Signaturprüfung, sonder die komplette Chain Validation umfasse. Wir hatten die Begriffe mal in PKI glossar definiert: https://wiki.ct.siemens.de/x/BaC8EQ -->
+of its manufacturer such that it can validate signatures (including related
+certificates) by the MASA.
 
-Trust by the domain in a new pledge is established by enrolling an LDevID certificate of the pledge that is specific to the target domain.
+Trust by the domain in a new pledge is established by enrolling
+an LDevID certificate of the pledge that is specific to the target domain.
 For enrolling devices with such LDevID certificates,
 BRSKI typically utilizes Enrollment over Secure Transport (EST) {{RFC7030}}.
 <!-- Bro: Ich würde hier die Beschreibung der EST Spezifika kürzen oder weglassen. Wir wollen in diesem Dokument ja nicht die Protokolle gegeneinander vergleichen. -->
-While using EST has the advantage that the mutually authenticated TLS connection
+Using EST has the advantage that the mutually authenticated TLS connection
 established between the pledge and the registrar can be reused
-for protecting also the message exchange for enrolling the LDevID certificate,
-it has the limitation that this cannot not provide end-to-end security for the
-certificate enrollment, because the TLS session terminates at the registrar,
-while the enrollment is done via multiple consequtive hops
-<!-- stf: AS BRSKI states the Registrar = RA would there still be a problem? May be as alternative: " ... if the enrollment is done via multiple consequtive hops." -->
-Moreover, properly binding the proof-of-identity of a certification requester to<!-- Bro: proof-of-origin -> proof-of-identity -->
-the proof-of-posession for the new private key via the so-called tls-unique is
+for protecting also the message exchange for enrolling the LDevID certificate.
+Yet it has the limitation that this cannot provide end-to-end security
+and auditability for
+the certificate enrollment because the TLS session terminates at the registrar,
+in particular in case the enrollment is done via multiple hops,
+part of which may even be not network-based.
+Moreover, properly binding the proof of identity of a certification requester to
+the proof of posession for the new private key via the so-called tls-unique is
 conceptually non-trivial and requires specific support by the TLS implementation.
 For these and other reasons (such as, more freedom w.r.t. proof-of-possession
 methods), it may be preferable to use an alternative enrollment protocol,
@@ -172,8 +173,8 @@ When using EST, the pledge interacts via TLS with the domain
 registrar, which acts as EST server and as registration authority (RA).
 The TLS connection is mutually authenticated, where the pledge uses an
 IDevID certificate issued by its manufacturer.
-In order to provide proof-of-origin of the certificate request,
-i.e., proof-of-identity of the requester, EST specifically relies on binding
+In order to provide proof of origin of the certificate request,
+i.e., proof of identity of the requester, EST specifically relies on binding
 the certification request to the underlying TLS channel via the 'tls-unique'
 {{RFC5929}}. <!-- Bro: siehe Issue #16. Ich glaube, dass wir diese Detailtiefe hier in der Einleitung nicht mehr brauchen, nachdem die ANIMA WG den Draft schon angenommen hat. -->
 The registrar terminates the security
@@ -200,7 +201,7 @@ In this document, enrollment that is not performed in a (time-wise) consistent
 way is called *asynchronous enrollment*.
 Asynchronous enrollment requires a store-and-forward transfer of certification
 requests along with the information needed for authenticating the requester.
-This enables off-line processing the request at a later point in time.
+This enables offline processing the request at a later point in time.
 
 A similar situation may occur through network segmentation, which is
 utilized in industrial systems to separate domains with different
@@ -219,13 +220,13 @@ along with requester authentication information:
   domain that stores the certification request combined with
   the requester authentication information (based on the IDevID)
   and potentially the information about successful verification of
-  the proof-of-possession (of the corresponding private key) in a way
+  the proof of possession (of the corresponding private key) in a way
   preventing changes to the combined information.
-  Note that the proof-of-identity and the proof-of-prossession
+  Note that the proof of identity and the proof of prossession
   may not have been bound cryptographically.
   When connectivity to backend PKI components is available, the trusted
   component forwards the certification request together with
-  the requester information (authentication and proof-ofpossession) for further processing.
+  the requester information (authentication and proof of possession) for further processing.
   This case offers only hop-by-hop security: the backend PKI must rely on the
   local pledge authentication result when performing the
   authorization and issuing the requested certificate.
@@ -238,15 +239,15 @@ along with requester authentication information:
   end-to-end security, reducing the need to trust in an intermediate domain
   component. Unauthorized modification of the requester
   information (request and authentication) can be detected during
-  the verification of the authenticated self-contained object.
+  the validation of the authenticated self-contained object.
 
 Focus of this document is the support of alternative enrollment protocols
 that allow handling authenticated self-contained objects for device credential bootstrapping.
 This enhancement of BRSKI is named BRSKI-AE,
-where AE stands for both alternative enrollment protocols and asynchronous enrollment.
+where AE stands for alternative enrollment protocols and for asynchronous enrollment.
 Like BRSKI, this specification results in the pledge storing an X.509 domain
-certificate with the corresponding private key and sufficient information for verifying the domain
-registrar identity (LDevID CA certificate) as well as
+certificate with the corresponding private key and sufficient information
+for verifying the domain registrar identity (LDevID CA certificate) as well as
 domain-specific X.509 device certificates (LDevID EE certificates).
 
 The goals are to enhance BRSKI to
@@ -279,7 +280,7 @@ This document relies on the terminology defined in {{RFC8995}}.
 The following terms are defined in addition:
 
 EE:
-: End entity, here called pledge.
+: End entity, in the BRSKI context called pledge.
   It is the entity that is onboarded to the target deployment domain.
   It holds a public-private key pair, for which it requests a public-key certificate.
   An identifier for the EE is given as the subject of the certificate.
@@ -320,21 +321,21 @@ authenticated self-contained object:
   the EE certificate.
 
 
-# Scope of solution
+# Scope of the solution
 
 ## Supported environment {#sup-env}
 
-This solution is intended to be used in domains that may have limited support
+BRSKI-AE is intended to be used in domains that may have limited support
 of on-site PKI services and comprises use cases like the following.
 
 * There are requirements or implementation restrictions
-  that do not allow the use of EST for enrolling LDevID certificates.
+  that do not allow using EST for enrolling LDevID certificates.
 
 * Pledges and/or the target deployment domain already have an established
   certificate management approach different from EST that shall be reused
   (e.g., in brownfield installations).
 
-* There is no registration authority available in the target domain.
+* There is no registration authority available on site in the target domain.
   Connectivity to an off-site RA is intermittent or entirely offline.
   A store-and-forward mechanism is used
   for communicating with the off-site services.
@@ -346,7 +347,7 @@ of on-site PKI services and comprises use cases like the following.
 
 ## Application Examples {#app-examples}
 
-Bootstrapping is often handled differently, depending on the application domains.
+Bootstrapping can be handled in various ways, depending on the application domains.
 The informative annex TBD-Ref provides illustrative examples from
 various automation domains and operational setups.
 They motivate the support of alternative enrollment protocols,
@@ -495,11 +496,11 @@ information to support asynchronous operation.
 
 At least the following properties are required:
 
-* proof-of-possession: demonstrates access to the private
+* proof of possession: demonstrates access to the private
   key corresponding to the public key contained in a certification request.
   This is typically achieved by a self-signature using the private key.
 
-* proof-of-identity: provides data origin authentication of a data object
+* proof of identity: provides data origin authentication of a data object
   such as a certificate request. This typically is achieved by a signature
   using the private key associated with the IDevID certificate of the pledge,
   or, in case of certificate updates, with the certificate to be updated.
@@ -509,7 +510,7 @@ based on existing technology described in IETF documents:
 
 * Certification request objects: Certification requests are
   data structures protecting only the integrity of the contained data
-  and providing proof-of-possession for a (locally generated) private key.
+  and providing proof of possession for a (locally generated) private key.
   Examples for certification request data structures are:
 
   * PKCS#10 {{RFC2986}}. The structure is self-signed to
@@ -517,7 +518,7 @@ based on existing technology described in IETF documents:
     that corresponds to the included public key of the requester.
 
   * CRMF {{RFC4211}}. Also this structure supports
-    integrity protection and proof-of-possession,
+    integrity protection and proof of possession,
     typically by a self-signature generated over (part of) the structure
     with the private key corresponding to the included public key.
     CRMF also supports further proof-of-possession methods
@@ -526,14 +527,14 @@ based on existing technology described in IETF documents:
   The integrity protection of certification request fields includes the public
   key because it is part of the data signed by the corresponding private key.
   Yet note that for the above examples this is not sufficient to provide data
-  origin authentication, i.e., proof-of-identity. This extra property can be
+  origin authentication, i.e., proof of identity. This extra property can be
   achieved by an additional binding to the IDevID of the pledge.
   This binding to source authentication supports the
   authorization decision for the certification request. The binding of data
   origin authentication to the certification request may be
   delegated to the protocol used for certificate management.
 
-* Solution options for proof-of-identity: The certification request should be
+* Solution options for proof of identity: The certification request should be
   bound to an existing authenticated credential (here, IDevID) to enable a proof
   of identity and, based on it, an authorization of the certification request.
   The binding may be achieved through security options in an
@@ -552,7 +553,7 @@ based on existing technology described in IETF documents:
     The tls-unique value results from the TLS handshake.
     Since the TLS handshake includes client
     authentication and the pledge utilizes its IDevID for it,
-    the proof-of-identity can be provided by the binding to
+    the proof of identity can be provided by the binding to
     the TLS session. This is supported in EST using the
     /simpleenroll endpoint. As an alternative to binding to the underlying
     authentication in the transport layer, {{RFC7030}} sketches wrapping the CSR
@@ -575,7 +576,7 @@ based on existing technology described in IETF documents:
   * CMC {{RFC5272}} also supports utilizing a shared secret (passphrase) or
     an existing certificate to protect certification requests,
     which can be either in CRMF or PKCS#10 format.
-    The proof-of-identity can be provided as part of a FullCMCRequest,
+    The proof of identity can be provided as part of a FullCMCRequest,
     based on CMS {{RFC5652}} and signed with an existing IDevID credential.
     Thus CMC does not rely on the security of the underlying transfer.
 
@@ -608,7 +609,7 @@ The key element of BRSKI-AE is that the authorization of a
 certification request MUST be performed based on an authenticated
 self-contained object, binding the certification request to the
 authentication using the IDevID. This enables interaction with
-off-site or off-line PKI (RA/CA) components.
+off-site or offline PKI (RA/CA) components.
 In addition, the authorization of the certification request MAY be done not only
 by the domain registrar but by PKI components residing in the backend
 of the domain operator (off-site) as described in {{sup-env}}.
@@ -685,9 +686,9 @@ of the pledge as well as the base services.
     information for authorizing the certification request.
   If the authorization is done off-site, the domain registrar MUST forward
   the certification request to the RA to perform the authorization there.
-  In this case  the certification request object MUST include
-  a proof-of-origin such that the authorization to be based on the
-  included pledge identity information.
+  In this case the certification request object MUST include
+  a proof of origin such that the authorization can be based on the
+  included and authenticated pledge identity information.
   As stated above, this SHOULD be done by an additional signature
   using the IDevID.
     The domain registrar here MAY act as an enrollment proxy or
@@ -767,7 +768,7 @@ This voucher exchange is performed as specified in {{RFC8995}}.
 
 As stated in {{req-sol}}, the enrollment MUST be
 performed using an authenticated self-contained object providing
-not only proof-of-possession but also proof-of-identity (source authentication).
+not only proof of possession but also proof of identity (source authentication).
 
 
 ~~~~
@@ -835,8 +836,8 @@ depicted in {{enrollfigure}}.
   in the subsequent certification request.
 
 * Cert Request: This certification request MUST contain the authenticated
-  self-contained object ensuring both proof-of-possession of the
-  corresponding private key and proof-of-identity of the requester.
+  self-contained object ensuring both proof of possession of the
+  corresponding private key and proof of identity of the requester.
 
 * Cert Response: The certification response message MUST contain on success the
   requested certificate and MAY include potentially further information, like
@@ -852,7 +853,7 @@ depicted in {{enrollfigure}}.
   can be answered either by another Cert Waiting, or a Cert Response.
 
 * Cert Confirm: positive or negative confirmation message by the pledge
-  the SHOULD be sent after receiving and verifying a new certificate.
+  the SHOULD be sent after receiving and validating a new certificate.
 
 * PKI/Registrar Confirm: An acknowledgment by the PKI or domain registrar
   that MUST be sent on reception of the Cert Confirm.
@@ -952,8 +953,8 @@ Open Issues:
 
 # Examples for signature-wrapping using existing enrollment protocols {#exist_prot}
 
-This section maps the requirements to support proof-of-possession and
-proof-of-identity to selected existing enrollment protocols.
+This section maps the requirements to support proof of possession and
+proof of identity to selected existing enrollment protocols.
 
 Note that the work in the ACE WG described in
 {{I-D.selander-ace-coap-est-oscore}} may be considered
@@ -967,16 +968,16 @@ which also entails that authenticated self-contained objects are used.
 When using EST {{RFC7030}}, the following aspects and constraints
 need to be considered and the given extra requirements SHALL be observed:
 
-* proof-of-possession is provided by using the specified PKCS#10
+* proof of possession is provided by using the specified PKCS#10
   structure in the request.
 
-* proof-of-identity SHALL be achieved by signing the certification request
+* proof of identity SHALL be achieved by signing the certification request
   object using the Full PKI Request option (including the /fullcmc endpoint).
   This provides sufficient
   information for the RA to make an authorization decision on the
   received certification request.
   Note: EST references CMC {{RFC5272}} for the
-  definition of the Full PKI Request. For proof-of-identity, the
+  definition of the Full PKI Request. For proof of identity, the
   signature of the SignedData of the Full PKI Request is
   performed using the IDevID credential of the pledge.
 
@@ -1004,11 +1005,11 @@ restricts full-featured CMP to the functionality needed here.
 
 When using this variant of CMP, the following requirements SHALL be observed:
 
-* For proof-of-possession, the approach defined in the Lightweight CMP Profile
+* For proof of possession, the approach defined in the Lightweight CMP Profile
   {{I-D.ietf-lamps-lightweight-cmp-profile}} section 4.1.1 (based on CRMF)
   or 4.1.4 (based on PCKS#10) SHALL be applied.
 
-* proof-of-identity SHALL be provided by using signature-based
+* proof of identity SHALL be provided by using signature-based
   protection of the certificate request message as outlined in section
   3.2. of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
