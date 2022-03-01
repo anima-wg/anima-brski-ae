@@ -134,61 +134,39 @@ BRSKI, as defined in {{RFC8995}}, specifies a solution for
 secure automated zero-touch bootstrapping of new devices, so-called pledges,
 in an operational domain. This includes the discovery of the registrar
 in the target domain, time synchronization, and the exchange of security
-information necessary to establish mutual trust between a pledge and the domain.
+information necessary to establish mutual trust between pledges and the domain.
 
-Security information about the target domain, specifically the
-target domain certificate to be trusted by new pledges,
-is exchanged utilizing voucher objects defined in {{RFC8366}}.
-These vouchers are self-contained signed objects
+A pledge gains trust in the target domain via the domain registrar as follows.
+It obtains security information about the domain,
+specifically the target domain certificate to be trusted,
+by requesting a voucher object defined in {{RFC8366}}.
+Such a voucher is a self-contained signed object
 originating from a Manufacturer Authorized Signing Authority (MASA).
-They may be provided online (synchronously) or offline (asynchronously)
-via the domain registrar to the pledge.
-A pledge can authenticate the voucher because it is shipped with a trust anchor
-of its manufacturer such that it can validate signatures (including related
-certificates) by the MASA.
+Therefore, the voucher may be provided
+in online mode (synchronously) or offline mode (asynchronously).
+The pledge can authenticate the voucher
+because it is shipped with a trust anchor of its manufacturer such that
+it can validate signatures (including related certificates) by the MASA.
 
-Trust by the domain in a new pledge is established by enrolling
+Trust by the target domain in a pledge is established by enrolling
 an LDevID certificate of the pledge that is specific to the target domain.
-For enrolling devices with such LDevID certificates,
+The target domain can validate the certification request of the pledge
+based on the trust anchor of the pledge manufacturer,
+which needs to pre-installed in the domain.
+
+For enrolling devices with LDevID certificates,
 BRSKI typically utilizes Enrollment over Secure Transport (EST) {{RFC7030}}.
-<!-- Bro: Ich würde hier die Beschreibung der EST Spezifika kürzen oder weglassen. Wir wollen in diesem Dokument ja nicht die Protokolle gegeneinander vergleichen. -->
-Using EST has the advantage that the mutually authenticated TLS connection
-established between the pledge and the registrar can be reused
-for protecting also the message exchange for enrolling the LDevID certificate.
-Yet it has the limitation that this cannot provide end-to-end security
-and auditability for
-the certificate enrollment because the TLS session terminates at the registrar,
-in particular in case the enrollment is done via multiple hops,
-part of which may even be not network-based.
-Moreover, properly binding the proof of identity of a certification requester to
-the proof of posession for the new private key via the so-called tls-unique is
-conceptually non-trivial and requires specific support by the TLS implementation.
-For these and other reasons (such as, more freedom w.r.t. proof-of-possession
-methods), it may be preferable to use an alternative enrollment protocol,
-such as CMP or CMC, that is more flexible and independent of the transfer level
-because it represents certification requests as authenticated self-contained
-objects. <!-- Bro: Ich würde grundsätzlich weniger technisch argumentieren, sondern allgemein sagen, dass es domain specific requirments geben kann, die ein andere Enrollment Protokoll fordern. Diese sind in Abschnitt 3.1 glaube ich schon highlevel gelistet. -->
+Using EST has its specific characteristics, detailed in {{using-est}}.
+In particular, it requires online or on-site availability of the RA
+for performing the final authorization decision on the certification request.
+This type of enrollment can be called *synchronous enrollment*.
+For various reasons,
+it may be preferable to use alternative enrollment protocols such as CMP or CMC
+that are more flexible and independent of the transfer level because they
+represent certification requests as authenticated self-contained objects.
 
-When using EST, the pledge interacts via TLS with the domain
-registrar, which acts as EST server and as registration authority (RA).
-The TLS connection is mutually authenticated, where the pledge uses an
-IDevID certificate issued by its manufacturer.
-In order to provide proof of origin of the certificate request,
-i.e., proof of identity of the requester, EST specifically relies on binding
-the certification request to the underlying TLS channel via the 'tls-unique'
-{{RFC5929}}. <!-- Bro: siehe Issue #16. Ich glaube, dass wir diese Detailtiefe hier in der Einleitung nicht mehr brauchen, nachdem die ANIMA WG den Draft schon angenommen hat. -->
-The registrar terminates the security
-association with the pledge and thus the binding between the
-certification request and the authentication of the pledge via TLS.
-The EST server uses the authenticated pledge identity provided by the IDevID
-for checking the authorization of the pledge for the given certification request
-before issuing to the pledge a domain-specific certificate (LDevID certificate).
-This approach typically requires online or on-site availability of the RA
-for performing the final authorization decision for the certification request.
-This type of enrollment utilizing an online connection to the PKI
-can be called *synchronous enrollment*.
-
-The required RA/CA components and/or asset management system may not be
+Depending on the application scenario,
+the required RA/CA components and/or asset management system may not be
 part of the registrar. They even may not be available on-site but rather be
 provided by remote backend systems. The registrar or its site may have no online
 connection with them or the connectivity may be intermittent.
@@ -933,7 +911,48 @@ Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
 
 
+
 --- back
+
+
+# Using EST for certificate enrollment {#using-est}
+
+When using EST with BRSKI, pledges interact via TLS with the domain registrar,
+which acts both as EST server and as registration authority (RA).
+The TLS connection is mutually authenticated,
+where the pledge uses its IDevID certificate issued by its manufacturer.
+
+In order to provide a strong proof of origin of the certificate request,
+EST has the option to include in the certification request
+the so-called tls-unique value {{RFC5929}} of the underlying TLS channel.
+This binding of the proof of identity of the TLS client, which is supposed to
+be the certificate requester, to the proof of posession for the private key is
+conceptually non-trivial and requires specific support by TLS implementations.
+
+The registrar terminates the security association with the pledge at TLS level
+and thus the binding between the certification request and the authentication
+of the pledge.
+The EST server uses the authenticated pledge identity provided by the IDevID
+for checking the authorization of the pledge for the given certification request
+before issuing to the pledge a domain-specific certificate (LDevID certificate).
+This approach typically requires online or on-site availability of the RA
+for performing the final authorization decision for the certification request.
+
+Using EST for BRSKI has the advantage that the mutually authenticated TLS
+connection established between the pledge and the registrar can be reused
+for protecting the message exchange needed for enrolling the LDevID certificate.
+This strongly simplifies the implementation of the enrollment message exchange.
+
+Yet the use of TLS has the limitation that this cannot provide auditability
+nor end-to-end security for the certificate enrollment request
+because the TLS session is transient and terminates at the registrar.
+This is a problem in particular if the enrollment is done via multiple hops,
+part of which may not even be network-based.
+
+A further limitation of using EST as the certificate enrollment protocol is that
+due to using PKCS#10 structures in enrollment requests,
+the only possible proof-of-possession method is a self-signature, which
+excludes requesting certificates for key types that do not support signing.
 
 
 # Application examples {#app-examples}
@@ -1059,7 +1078,7 @@ From IETF draft 04 -> IETF draft 05:
 
 * Update the title accordingly - prelimary change to be approved.
 
-* Move detailed application examples to informative annnex.
+* Move comments on EST and detailed application examples to informative annnex.
 
 From IETF draft 03 -> IETF draft 04:
 
