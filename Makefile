@@ -3,17 +3,19 @@ SHELL=bash # This is for supporting extended file name globbing
 DRAFT:=draft-ietf-anima-brski-async-enroll
 VERSION:=$(shell ./getver ${DRAFT}.md )
 
-.phony: default generate version diff log commit
+.phony: default update generate version diff log commit
 
 default: ${DRAFT}-${VERSION}.txt
 
 .PRECIOUS: ${DRAFT}.{xml,txt,html,pdf}
 
-generate: clean
+update: clean
 	git fetch origin
 	git rebase origin || \
 	  (git checkout --theirs origin/master -- ${DRAFT}.{xml,txt,html} && \
 	   git rebase --continue)
+
+generate:
 	kdrfc --v3 -t -h ${PDF} ${DRAFT}.md
 
 # produces also .xml and .html:
@@ -48,7 +50,7 @@ diff:
 log:
 	git log -p ${DRAFT}.md
 
-commit: generate
+commit: update generate
 	# not including PDF because CI cannot find/install weasyprint
 	git commit ${DRAFT}.{xml,txt,html} \
 	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
