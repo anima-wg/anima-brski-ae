@@ -50,7 +50,7 @@ diff:
 log:
 	git log -p ${DRAFT}.md
 
-commit: update generate
+commit: generate
 	# not including PDF because CI cannot find/install weasyprint
 	git commit ${DRAFT}.{xml,txt,html} \
 	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
