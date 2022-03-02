@@ -60,18 +60,18 @@ author:
   phone: "+41 44 878 9200"
   email: lear@cisco.com
 normative:
-  RFC2986:
   RFC4210:
-  RFC4211:
-  I-D.ietf-lamps-cmp-updates:
-  RFC7030:
   RFC8366:
   RFC8995:
+  I-D.ietf-lamps-cmp-updates:
+  I-D.ietf-lamps-lightweight-cmp-profile:
 informative:
+  RFC2986:
+  RFC4211:
   RFC5272:
   RFC5652:
   RFC5929:
-  I-D.ietf-lamps-lightweight-cmp-profile:
+  RFC7030:
   RFC8894:
   I-D.selander-ace-coap-est-oscore:
   IEC-62351-9:
@@ -816,15 +816,15 @@ make it independent of the underlying TLS connection using OSCORE,
 which also entails that authenticated self-contained objects are used.
 
 
-## EST handling
+## Instantiation to EST (informative)
 
 When using EST {{RFC7030}}, the following aspects and constraints
-need to be considered and the given extra requirements SHALL be observed:
+need to be considered and the given extra requirements need to be observed:
 
 * proof of possession is provided by using the specified PKCS#10
   structure in the request.
 
-* proof of identity SHALL be achieved by signing the certification request
+* proof of identity needs to be achieved by signing the certification request
   object using the Full PKI Request option (including the /fullcmc endpoint).
   This provides sufficient
   information for the RA to make an authorization decision on the
@@ -838,7 +838,7 @@ need to be considered and the given extra requirements SHALL be observed:
   the underlying TLS connection is not necessary. \*/
 
 * When the RA is temporarily not available, as per {{RFC7030}} section 4.2.3,
-  an HTTP status code 202 SHOULD be returned by the
+  an HTTP status code 202 should be returned by the
   Registrar. The pledge in this case will retry a /simpleenroll
   with a PKCS#10 request. Note that if the TLS connection is taken
   down during the waiting period, the PKCS#10 request needs to be
@@ -849,14 +849,15 @@ need to be considered and the given extra requirements SHALL be observed:
   fullcmc is necessary as not specified in the context of EST \*/
 
 
-## CMP handling
+## Instantiation to CMP (normative if CMP is chosen)
 
-Instead of using general CMP {{RFC4210}}, this specification
-refers to the Lightweight CMP Profile
-{{I-D.ietf-lamps-lightweight-cmp-profile}}, as it
-restricts full-featured CMP to the functionality needed here.
+Note: Instead of referring to CMP
+as specified in {{RFC4210}} and {{I-D.ietf-lamps-cmp-updates}},
+this document refers to the Lightweight CMP Profile
+{{I-D.ietf-lamps-lightweight-cmp-profile}} because
+the subset of CMP defined there is sufficient for the functionality needed here.
 
-When using this variant of CMP, the following requirements SHALL be observed:
+When using CMP, the following requirements SHALL be observed:
 
 * For proof of possession, the approach defined in the Lightweight CMP Profile
   {{I-D.ietf-lamps-lightweight-cmp-profile}} section 4.1.1 (based on CRMF)
