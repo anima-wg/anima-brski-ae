@@ -162,7 +162,10 @@ In particular, it requires online or on-site availability of the RA
 for performing the final authorization decision on the certification request.
 This type of enrollment can be called *synchronous enrollment*.
 For various reasons,
-it may be preferable to use alternative enrollment protocols such as CMP or CMC
+it may be preferable to use alternative enrollment protocols such as
+the Certificate Management Protocol (CMP) {{RFC4210}}
+profiled in {{I-D.ietf-lamps-lightweight-cmp-profile}}
+or Certificate Management over CMS (CMC) {{RFC5272}}.
 that are more flexible and independent of the transfer level because they
 represent certification requests as authenticated self-contained objects.
 
@@ -259,7 +262,7 @@ The following terms are defined in addition:
 
 EE:
 : End entity, in the BRSKI context called pledge.
-  It is the entity that is onboarded to the target deployment domain.
+  It is the entity that is bootstrapped to the target deployment domain.
   It holds a public-private key pair, for which it requests a public-key certificate.
   An identifier for the EE is given as the subject of the certificate.
 
@@ -410,7 +413,7 @@ based on existing technology described in IETF documents:
   certification request is (completely) done at the next communication hop.
   This binding can also be done in a transport-independent way by wrapping the
   certification request with signature employing an existing credential. In
-  the BRSKI context, this will be the IDevID initially, the LDevID for renewals.
+  the BRSKI context, this will be the IDevID.
   This requirement is addressed by existing enrollment protocols
   in various ways, such as:
 
@@ -504,7 +507,7 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 | Pledge |     .  |   Join     |       | Domain     <-----+
 |        |     .  |   Proxy    |       | Registrar/ |  .
 |        <-------->............<-------> Enrollment |  .
-|        |     .  |        BRSKI-AE    | Proxy      |  .
+|        |     .  |        BRSKI-AE    | Proxy/LRA  |  .
 | IDevID |     .  |            |       +------^-----+  .
 |        |     .  +------------+              |        .
 |        |     .                              |        .
@@ -701,7 +704,7 @@ depicted in {{enrollfigure}}.
   This request identifier may be either part of the enrollment
   protocol or can derived from the certification request.
 
-* Cert Polling: This is SHOULD be used by the pledge to query the registrar
+* Cert Polling: This SHOULD be used by the pledge to query the registrar
   whether the certification request meanwhile has been processed;
   can be answered either by another Cert Waiting, or a Cert Response.
 
@@ -718,8 +721,10 @@ as described in {{req-sol}}. Examples are available in {{exist_prot}}.
 
 ### Pledge - Registrar - enrollment status telemetry
 
-The enrollment status telemetry is performed as specified in {{RFC8995}}
-although in BRSKI this is described as part of the enrollment phase.
+The enrollment status telemetry is performed as specified in {{RFC8995}}.
+In BRSKI this is described as part of the enrollment phase,
+but due to the generalization on the enrollment protocol described in this document
+it fits better as a separate step here.
 
 
 ### Addressing scheme enhancements {#addressing}
@@ -765,7 +770,7 @@ preferred enrollment option is supported by the domain registrar
 by sending a request to its preferred enrollment endpoint
 and evaluating the HTTP response status code.
 
-The following figure provides an illustrative example for a domain
+The following list of endpoints provides an illustrative example for a domain
 registrar supporting several options for EST as well as for
 CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints to which the pledge may connect for bootstrapping. This
