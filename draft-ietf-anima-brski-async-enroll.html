@@ -12,7 +12,7 @@
 <meta content="
        This document enhances
 Bootstrapping Remote Secure Key Infrastructure (BRSKI,  ) to support
-end-to-end security and asynchronous operation of certficate enrollment. 
+end-to-end security and asynchronous operation of certificate enrollment. 
        Making BRSKI flexible on the certificate enrollment protocol being used,
 BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer
@@ -1245,7 +1245,7 @@ li > p:last-of-type {
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document enhances
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>) to support
-end-to-end security and asynchronous operation of certficate enrollment.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+end-to-end security and asynchronous operation of certificate enrollment.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">Making BRSKI flexible on the certificate enrollment protocol being used,
 BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
 requests and responses can be authenticated independently of message transfer
@@ -1450,7 +1450,10 @@ In particular, it requires online or on-site availability of the RA
 for performing the final authorization decision on the certification request.
 This type of enrollment can be called <em>synchronous enrollment</em>.
 For various reasons,
-it may be preferable to use alternative enrollment protocols such as CMP or CMC
+it may be preferable to use alternative enrollment protocols such as
+the Certificate Management Protocol (CMP) <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span>
+profiled in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>
+or Certificate Management over CMS (CMC) <span>[<a href="#RFC5272" class="xref">RFC5272</a>]</span>.
 that are more flexible and independent of the transfer level because they
 represent certification requests as authenticated self-contained objects.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Depending on the application scenario,
@@ -1485,7 +1488,7 @@ the requester authentication information (based on the IDevID)
 and potentially the information about successful verification of
 the proof of possession (of the corresponding private key) in a way
 preventing changes to the combined information.
-Note that the proof of identity and the proof of prossession
+Note that the proof of identity and the proof of possession
 may not have been bound cryptographically.
 When connectivity is available, the trusted component
 forwards the certification request together with the requester information
@@ -1534,7 +1537,7 @@ certifying component is (temporarily) not available.<a href="#section-1-13.2" cl
 <p id="section-1-14">This specification can be applied to both synchronous and asynchronous enrollment.<a href="#section-1-14" class="pilcrow">¶</a></p>
 <p id="section-1-15">In contrast to BRSKI, this specification supports offering multiple enrollment protocols
 on the infrastructure side, which enables pledges and their developers
-to pick prefered one.<a href="#section-1-15" class="pilcrow">¶</a></p>
+to pick the preferred one.<a href="#section-1-15" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1552,7 +1555,7 @@ The following terms are defined in addition:<a href="#section-2-2" class="pilcro
         <dt id="section-2-3.1">EE:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.2">
           <p id="section-2-3.2.1">End entity, in the BRSKI context called pledge.
-It is the entity that is onboarded to the target deployment domain.
+It is the entity that is bootstrapped to the target deployment domain.
 It holds a public-private key pair, for which it requests a public-key certificate.
 An identifier for the EE is given as the subject of the certificate.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
 </dd>
@@ -1659,7 +1662,7 @@ Examples are provided for<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.3">Electrical substation automation<a href="#section-3.2-2.3" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-3.2-2.4">Electric vehile charging infrastructures<a href="#section-3.2-2.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.2-2.4">Electric vehicle charging infrastructures<a href="#section-3.2-2.4" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-3.2-2.5">Infrastructure isolation policy<a href="#section-3.2-2.5" class="pilcrow">¶</a>
 </li>
@@ -1741,7 +1744,7 @@ underlying transport protocol such as TLS if the authorization of the
 certification request is (completely) done at the next communication hop.
 This binding can also be done in a transport-independent way by wrapping the
 certification request with signature employing an existing credential. In
-the BRSKI context, this will be the IDevID initially, the LDevID for renewals.
+the BRSKI context, this will be the IDevID.
 This requirement is addressed by existing enrollment protocols
 in various ways, such as:<a href="#section-4-6.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1782,11 +1785,6 @@ Thus CMC does not rely on the security of the underlying transfer.<a href="#sect
           </ul>
 </li>
       </ul>
-<p id="section-4-7">Note that, besides the existing enrollment protocols, there is
-ongoing work in the ACE WG to define an encapsulation of EST messages in
-OSCORE, which will result in a TLS-independent way of protecting EST.
-This approach <span>[<a href="#I-D.selander-ace-coap-est-oscore" class="xref">I-D.selander-ace-coap-est-oscore</a>]</span>
-may be considered as a further variant.<a href="#section-4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="uc1">
@@ -1842,7 +1840,7 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
 | Pledge |     .  |   Join     |       | Domain     &lt;-----+
 |        |     .  |   Proxy    |       | Registrar/ |  .
 |        &lt;--------&gt;............&lt;-------&gt; Enrollment |  .
-|        |     .  |        BRSKI-AE    | Proxy      |  .
+|        |     .  |        BRSKI-AE    | Proxy/LRA  |  .
 | IDevID |     .  |            |       +------^-----+  .
 |        |     .  +------------+              |        .
 |        |     .                              |        .
@@ -1866,7 +1864,7 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
 <p id="section-5.1-4">The architecture overview in <a href="#uc1figure" class="xref">Figure 1</a>
 has the same logical elements as BRSKI, but with more flexible placement
 of the authentication and authorization checks on certification requests.
-Depending on the application scenario, the registar <span class="bcp14">MAY</span> still do all of these
+Depending on the application scenario, the registrar <span class="bcp14">MAY</span> still do all of these
 checks (as is the case in BRSKI), or part of them, or none of them.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.1-5">The following list describes the components in the deployment target domain
 of the pledge as well as the base services.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
@@ -2059,7 +2057,7 @@ after a given time. For this a request identifier is necessary.
 This request identifier may be either part of the enrollment
 protocol or can derived from the certification request.<a href="#section-5.2.3-4.7" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.8">Cert Polling: This is <span class="bcp14">SHOULD</span> be used by the pledge to query the registrar
+            <li class="normal" id="section-5.2.3-4.8">Cert Polling: This <span class="bcp14">SHOULD</span> be used by the pledge to query the registrar
 whether the certification request meanwhile has been processed;
 can be answered either by another Cert Waiting, or a Cert Response.<a href="#section-5.2.3-4.8" class="pilcrow">¶</a>
 </li>
@@ -2080,8 +2078,10 @@ as described in <a href="#req-sol" class="xref">Section 4</a>. Examples are avai
           <h4 id="name-pledge-registrar-enrollment">
 <a href="#section-5.2.4" class="section-number selfRef">5.2.4. </a><a href="#name-pledge-registrar-enrollment" class="section-name selfRef">Pledge - Registrar - enrollment status telemetry</a>
           </h4>
-<p id="section-5.2.4-1">The enrollment status telemetry is performed as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>
-although in BRSKI this is described as part of the enrollment phase.<a href="#section-5.2.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.2.4-1">The enrollment status telemetry is performed as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.
+In BRSKI this is described as part of the enrollment phase,
+but due to the generalization on the enrollment protocol described in this document
+it fits better as a separate step here.<a href="#section-5.2.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="addressing">
@@ -2135,7 +2135,7 @@ domain registrar. The pledge will recognize whether its
 preferred enrollment option is supported by the domain registrar
 by sending a request to its preferred enrollment endpoint
 and evaluating the HTTP response status code.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">The following figure provides an illustrative example for a domain
+<p id="section-5.3-2">The following list of endpoints provides an illustrative example for a domain
 registrar supporting several options for EST as well as for
 CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints to which the pledge may connect for bootstrapping. This
@@ -2182,11 +2182,6 @@ encoding of the objects exchanged (ASN.1, JSON, CBOR, ...).
       </h2>
 <p id="section-6-1">This section maps the requirements to support proof of possession and
 proof of identity to selected existing enrollment protocols.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">Note that the work in the ACE WG described in
-<span>[<a href="#I-D.selander-ace-coap-est-oscore" class="xref">I-D.selander-ace-coap-est-oscore</a>]</span> may be considered
-here as well, as it also addresses the encapsulation of EST in a way to
-make it independent of the underlying TLS connection using OSCORE,
-which also entails that authenticated self-contained objects are used.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <div id="instantiation-to-est-informative">
 <section id="section-6.1">
         <h3 id="name-instantiation-to-est-inform">
@@ -2331,10 +2326,6 @@ for their input and discussion on use cases and call flows.<a href="#section-9-1
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.selander-ace-coap-est-oscore">[I-D.selander-ace-coap-est-oscore]</dt>
-        <dd>
-<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Raza, S.</span>, <span class="refAuthor">Furuhed, M.</span>, <span class="refAuthor">Vucinic, M.</span>, and <span class="refAuthor">T. Claeys</span>, <span class="refTitle">"Protecting EST Payloads with OSCORE"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-selander-ace-coap-est-oscore-05</span>, <time datetime="2021-05-05" class="refDate">5 May 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-selander-ace-coap-est-oscore-05.txt">https://www.ietf.org/archive/id/draft-selander-ace-coap-est-oscore-05.txt</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="IEC-62351-9">[IEC-62351-9]</dt>
         <dd>
 <span class="refAuthor">International Electrotechnical Commission</span>, <span class="refTitle">"IEC 62351 - Power systems management and associated information exchange - Data and communications security - Part 9: Cyber security key management for power system equipment"</span>, <span class="seriesInfo">IEC 62351-9</span>, <time datetime="2017-05" class="refDate">May 2017</time>. </dd>
@@ -2400,7 +2391,7 @@ where the pledge uses its IDevID certificate issued by its manufacturer.<a href=
 EST has the option to include in the certification request
 the so-called tls-unique value <span>[<a href="#RFC5929" class="xref">RFC5929</a>]</span> of the underlying TLS channel.
 This binding of the proof of identity of the TLS client, which is supposed to
-be the certificate requester, to the proof of posession for the private key is
+be the certificate requester, to the proof of possession for the private key is
 conceptually non-trivial and requires specific support by TLS implementations.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <p id="appendix-A-3">The registrar terminates the security association with the pledge at TLS level
 and thus the binding between the certification request and the authentication
@@ -2573,9 +2564,9 @@ transfer this service to a backend service that offers a higher security level.<
 </li>
         <li class="normal" id="appendix-C-2.3">Shift the emphasis towards supporting alternative enrollment protocols.<a href="#appendix-C-2.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-C-2.4">Update the title accordingly - prelimary change to be approved.<a href="#appendix-C-2.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-2.4">Update the title accordingly - preliminary change to be approved.<a href="#appendix-C-2.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-C-2.5">Move comments on EST and detailed application examples to informative annnex.<a href="#appendix-C-2.5" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-2.5">Move comments on EST and detailed application examples to informative annex.<a href="#appendix-C-2.5" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-3">From IETF draft 03 -&gt; IETF draft 04:<a href="#appendix-C-3" class="pilcrow">¶</a></p>
@@ -2762,10 +2753,6 @@ mapping to existing enrollment protocols by collecting
 boundary conditions.<a href="#appendix-C-18.5" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="appendix-C-19">LocalWords:  bcp uc prot vexchange enrollfigure req eo selander coap
-LocalWords:  oscore fullcmc simpleenroll tls env brski UC seriesinfo
-LocalWords:  Attrib lt docname ipr toc anima async wg symrefs ann
-LocalWords:  sortrefs iprnotified<a href="#appendix-C-19" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
