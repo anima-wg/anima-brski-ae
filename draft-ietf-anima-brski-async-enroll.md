@@ -73,7 +73,6 @@ informative:
   RFC5929:
   RFC7030:
   RFC8894:
-  I-D.selander-ace-coap-est-oscore:
   IEC-62351-9:
     title: 'IEC 62351 - Power systems management and associated information exchange
       - Data and communications security - Part 9: Cyber security key management for
@@ -451,11 +450,13 @@ based on existing technology described in IETF documents:
     based on CMS {{RFC5652}} and signed with an existing IDevID credential.
     Thus CMC does not rely on the security of the underlying transfer.
 
+<!--
 Note that, besides the existing enrollment protocols, there is
 ongoing work in the ACE WG to define an encapsulation of EST messages in
 OSCORE, which will result in a TLS-independent way of protecting EST.
 This approach {{I-D.selander-ace-coap-est-oscore}}
 may be considered as a further variant.
+-->
 
 
 # Adaptations to BRSKI {#uc1}
@@ -814,11 +815,13 @@ Open Issues:
 This section maps the requirements to support proof of possession and
 proof of identity to selected existing enrollment protocols.
 
+<!--
 Note that the work in the ACE WG described in
 {{I-D.selander-ace-coap-est-oscore}} may be considered
 here as well, as it also addresses the encapsulation of EST in a way to
 make it independent of the underlying TLS connection using OSCORE,
 which also entails that authenticated self-contained objects are used.
+-->
 
 
 ## Instantiation to EST (informative)
