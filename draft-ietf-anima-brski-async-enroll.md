@@ -117,7 +117,7 @@ informative:
 
 This document enhances
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, {{RFC8995}}) to support
-end-to-end security and asynchronous operation of certficate enrollment.
+end-to-end security and asynchronous operation of certificate enrollment.
 
 Making BRSKI flexible on the certificate enrollment protocol being used,
 BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
@@ -202,7 +202,7 @@ along with requester authentication information:
   and potentially the information about successful verification of
   the proof of possession (of the corresponding private key) in a way
   preventing changes to the combined information.
-  Note that the proof of identity and the proof of prossession
+  Note that the proof of identity and the proof of possession
   may not have been bound cryptographically.
   When connectivity is available, the trusted component
   forwards the certification request together with the requester information
@@ -250,7 +250,7 @@ This specification can be applied to both synchronous and asynchronous enrollmen
 
 In contrast to BRSKI, this specification supports offering multiple enrollment protocols
 on the infrastructure side, which enables pledges and their developers
-to pick prefered one.
+to pick the preferred one.
 
 # Terminology
 
@@ -340,7 +340,7 @@ Examples are provided for
 
 * Electrical substation automation
 
-* Electric vehile charging infrastructures
+* Electric vehicle charging infrastructures
 
 * Infrastructure isolation policy
 
@@ -529,7 +529,7 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 The architecture overview in {{uc1figure}}
 has the same logical elements as BRSKI, but with more flexible placement
 of the authentication and authorization checks on certification requests.
-Depending on the application scenario, the registar MAY still do all of these
+Depending on the application scenario, the registrar MAY still do all of these
 checks (as is the case in BRSKI), or part of them, or none of them.
 
 The following list describes the components in the deployment target domain
@@ -920,7 +920,7 @@ In order to provide a strong proof of origin of the certificate request,
 EST has the option to include in the certification request
 the so-called tls-unique value {{RFC5929}} of the underlying TLS channel.
 This binding of the proof of identity of the TLS client, which is supposed to
-be the certificate requester, to the proof of posession for the private key is
+be the certificate requester, to the proof of possession for the private key is
 conceptually non-trivial and requires specific support by TLS implementations.
 
 The registrar terminates the security association with the pledge at TLS level
@@ -1070,9 +1070,9 @@ From IETF draft 04 -> IETF draft 05:
 
 * Shift the emphasis towards supporting alternative enrollment protocols.
 
-* Update the title accordingly - prelimary change to be approved.
+* Update the title accordingly - preliminary change to be approved.
 
-* Move comments on EST and detailed application examples to informative annnex.
+* Move comments on EST and detailed application examples to informative annex.
 
 From IETF draft 03 -> IETF draft 04:
 
@@ -1257,7 +1257,9 @@ From individual version 00 -> 01:
   mapping to existing enrollment protocols by collecting
   boundary conditions.
 
+<!--
 LocalWords:  bcp uc prot vexchange enrollfigure req eo selander coap
 LocalWords:  oscore fullcmc simpleenroll tls env brski UC seriesinfo
 LocalWords:  Attrib lt docname ipr toc anima async wg symrefs ann
-LocalWords:  sortrefs iprnotified
+LocalWords:  sortrefs iprnotified Instantiation
+-->
