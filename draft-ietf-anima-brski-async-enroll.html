@@ -11,12 +11,12 @@
 <meta content="Eliot Lear" name="author">
 <meta content="
        This document enhances
-Bootstrapping Remote Secure Key Infrastructure (BRSKI,  ) to support
-end-to-end security and asynchronous operation of certificate enrollment. 
-       Making BRSKI flexible on the certificate enrollment protocol being used,
-BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
-requests and responses can be authenticated independently of message transfer
-by using self-contained (signature-wrapped) objects. 
+Bootstrapping Remote Secure Key Infrastructure (BRSKI,  )
+to allow employing alternative enrollment protocols, such as CMP. 
+       Using self-contained signed objects, the origin of enrollment requests and responses
+can be authenticated independently of message transfer.
+This supports end-to-end security and asynchronous operation of certificate enrollment
+and provides flexibility where to authenticate and authorize certification requests. 
     " name="description">
 <meta content="xml2rfc 3.12.3" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -33,7 +33,7 @@ by using self-contained (signature-wrapped) objects.
     kitchen 1.2.6
     lxml 4.8.0
     MarkupSafe 2.0.1
-    pycountry 22.1.10
+    pycountry 22.3.5
     pyflakes 2.4.0
     PyYAML 6.0
     requests 2.27.1
@@ -1199,7 +1199,7 @@ li > p:last-of-type {
 </tr></thead>
 <tfoot><tr>
 <td class="left">von Oheimb, et al.</td>
-<td class="center">Expires 5 September 2022</td>
+<td class="center">Expires 8 September 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1212,12 +1212,12 @@ li > p:last-of-type {
 <dd class="internet-draft">draft-ietf-anima-brski-async-enroll-05</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-03-04" class="published">4 March 2022</time>
+<time datetime="2022-03-07" class="published">7 March 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-09-05">5 September 2022</time></dd>
+<dd class="expires"><time datetime="2022-09-08">8 September 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1244,12 +1244,12 @@ li > p:last-of-type {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document enhances
-Bootstrapping Remote Secure Key Infrastructure (BRSKI, <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>) to support
-end-to-end security and asynchronous operation of certificate enrollment.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">Making BRSKI flexible on the certificate enrollment protocol being used,
-BRSKI-AE allows employing protocols such as CMP, where the origin of certificate
-requests and responses can be authenticated independently of message transfer
-by using self-contained (signature-wrapped) objects.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+Bootstrapping Remote Secure Key Infrastructure (BRSKI, <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>)
+to allow employing alternative enrollment protocols, such as CMP.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">Using self-contained signed objects, the origin of enrollment requests and responses
+can be authenticated independently of message transfer.
+This supports end-to-end security and asynchronous operation of certificate enrollment
+and provides flexibility where to authenticate and authorize certification requests.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1270,7 +1270,7 @@ by using self-contained (signature-wrapped) objects.<a href="#section-abstract-2
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 September 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 September 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1300,118 +1300,118 @@ by using self-contained (signature-wrapped) objects.<a href="#section-abstract-2
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="xref">2</a>.  <a href="#name-terminology" class="xref">Terminology</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-scope-of-the-solution" class="xref">Scope of the solution</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-supported-environment" class="xref">Supported environment</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-motivation" class="xref">Motivation</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-list-of-application-example" class="xref">List of application examples</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="xref">1.2</a>.  <a href="#name-supported-environment" class="xref">Supported environment</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="xref">1.3</a>.  <a href="#name-list-of-application-example" class="xref">List of application examples</a></p>
 </li>
             </ul>
 </li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-terminology" class="xref">Terminology</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-requirements-discussion-and" class="xref">Requirements discussion and mapping to solution elements</a></p>
+</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-requirements-discussion-and" class="xref">Requirements discussion and mapping to solution elements</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-adaptations-to-brski" class="xref">Adaptations to BRSKI</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-adaptations-to-brski" class="xref">Adaptations to BRSKI</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-architecture" class="xref">Architecture</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-architecture" class="xref">Architecture</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-message-exchange" class="xref">Message exchange</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-message-exchange" class="xref">Message exchange</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.1">
-                    <p id="section-toc.1-1.5.2.2.2.1.1"><a href="#section-5.2.1" class="xref">5.2.1</a>.  <a href="#name-pledge-registrar-discovery-" class="xref">Pledge - Registrar discovery and voucher exchange</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="xref">4.2.1</a>.  <a href="#name-pledge-registrar-discovery-" class="xref">Pledge - Registrar discovery and voucher exchange</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.2">
-                    <p id="section-toc.1-1.5.2.2.2.2.1"><a href="#section-5.2.2" class="xref">5.2.2</a>.  <a href="#name-registrar-masa-voucher-exch" class="xref">Registrar - MASA voucher exchange</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.2">
+                    <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="xref">4.2.2</a>.  <a href="#name-registrar-masa-voucher-exch" class="xref">Registrar - MASA voucher exchange</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.3">
-                    <p id="section-toc.1-1.5.2.2.2.3.1"><a href="#section-5.2.3" class="xref">5.2.3</a>.  <a href="#name-pledge-registrar-ra-ca-cert" class="xref">Pledge - Registrar - RA/CA certificate enrollment</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.3">
+                    <p id="section-toc.1-1.4.2.2.2.3.1"><a href="#section-4.2.3" class="xref">4.2.3</a>.  <a href="#name-pledge-registrar-ra-ca-cert" class="xref">Pledge - Registrar - RA/CA certificate enrollment</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.4">
-                    <p id="section-toc.1-1.5.2.2.2.4.1"><a href="#section-5.2.4" class="xref">5.2.4</a>.  <a href="#name-pledge-registrar-enrollment" class="xref">Pledge - Registrar - enrollment status telemetry</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.4">
+                    <p id="section-toc.1-1.4.2.2.2.4.1"><a href="#section-4.2.4" class="xref">4.2.4</a>.  <a href="#name-pledge-registrar-enrollment" class="xref">Pledge - Registrar - enrollment status telemetry</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.5">
-                    <p id="section-toc.1-1.5.2.2.2.5.1"><a href="#section-5.2.5" class="xref">5.2.5</a>.  <a href="#name-addressing-scheme-enhanceme" class="xref">Addressing scheme enhancements</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.5">
+                    <p id="section-toc.1-1.4.2.2.2.5.1"><a href="#section-4.2.5" class="xref">4.2.5</a>.  <a href="#name-addressing-scheme-enhanceme" class="xref">Addressing scheme enhancements</a></p>
 </li>
                 </ul>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-domain-registrar-support-of" class="xref">Domain registrar support of alternative enrollment protocols</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-domain-registrar-support-of" class="xref">Domain registrar support of alternative enrollment protocols</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-examples-for-signature-wrap" class="xref">Examples for signature-wrapping using existing enrollment protocols</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-instantiation-to-est-inform" class="xref">Instantiation to EST (informative)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-instantiation-to-cmp-normat" class="xref">Instantiation to CMP (normative if CMP is chosen)</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-examples-for-signature-wrap" class="xref">Examples for signature-wrapping using existing enrollment protocols</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-instantiation-to-est-inform" class="xref">Instantiation to EST (informative)</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-instantiation-to-cmp-normat" class="xref">Instantiation to CMP (normative if CMP is chosen)</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-references" class="xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-references" class="xref">References</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="xref">10.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="xref">10.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="xref">Appendix A</a>.  <a href="#name-using-est-for-certificate-e" class="xref">Using EST for certificate enrollment</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#appendix-A" class="xref">Appendix A</a>.  <a href="#name-using-est-for-certificate-e" class="xref">Using EST for certificate enrollment</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-B" class="xref">Appendix B</a>.  <a href="#name-application-examples" class="xref">Application examples</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="xref">Appendix B</a>.  <a href="#name-application-examples" class="xref">Application examples</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-B.1" class="xref">B.1</a>.  <a href="#name-rolling-stock" class="xref">Rolling stock</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-B.1" class="xref">B.1</a>.  <a href="#name-rolling-stock" class="xref">Rolling stock</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
-                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-B.2" class="xref">B.2</a>.  <a href="#name-building-automation" class="xref">Building automation</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-B.2" class="xref">B.2</a>.  <a href="#name-building-automation" class="xref">Building automation</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3">
-                <p id="section-toc.1-1.12.2.3.1"><a href="#appendix-B.3" class="xref">B.3</a>.  <a href="#name-substation-automation" class="xref">Substation automation</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-B.3" class="xref">B.3</a>.  <a href="#name-substation-automation" class="xref">Substation automation</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.4">
-                <p id="section-toc.1-1.12.2.4.1"><a href="#appendix-B.4" class="xref">B.4</a>.  <a href="#name-electric-vehicle-charging-i" class="xref">Electric vehicle charging infrastructure</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#appendix-B.4" class="xref">B.4</a>.  <a href="#name-electric-vehicle-charging-i" class="xref">Electric vehicle charging infrastructure</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.5">
-                <p id="section-toc.1-1.12.2.5.1"><a href="#appendix-B.5" class="xref">B.5</a>.  <a href="#name-infrastructure-isolation-po" class="xref">Infrastructure isolation policy</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#appendix-B.5" class="xref">B.5</a>.  <a href="#name-infrastructure-isolation-po" class="xref">Infrastructure isolation policy</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.6">
-                <p id="section-toc.1-1.12.2.6.1"><a href="#appendix-B.6" class="xref">B.6</a>.  <a href="#name-less-operational-security-i" class="xref">Less operational security in the target domain</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.6">
+                <p id="section-toc.1-1.11.2.6.1"><a href="#appendix-B.6" class="xref">B.6</a>.  <a href="#name-sites-with-insufficient-lev" class="xref">Sites with insufficient level of operational security</a></p>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-C" class="xref">Appendix C</a>.  <a href="#name-history-of-changes-tbd-rfc-" class="xref">History of changes TBD RFC Editor: please delete</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-C" class="xref">Appendix C</a>.  <a href="#name-history-of-changes-tbd-rfc-" class="xref">History of changes TBD RFC Editor: please delete</a></p>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#appendix-D" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-D" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1422,14 +1422,19 @@ by using self-contained (signature-wrapped) objects.<a href="#section-abstract-2
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">BRSKI, as defined in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>, specifies a solution for
-secure automated zero-touch bootstrapping of new devices, so-called pledges,
-in an operational domain. This includes the discovery of the registrar
-in the target domain, time synchronization, and the exchange of security
-information necessary to establish mutual trust between pledges and the domain.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">A pledge gains trust in the target domain via the domain registrar as follows.
+<div id="motivation">
+<section id="section-1.1">
+        <h3 id="name-motivation">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-motivation" class="section-name selfRef">Motivation</a>
+        </h3>
+<p id="section-1.1-1">BRSKI, as defined in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>, specifies a solution for
+secure automated zero-touch bootstrapping of new devices, so-called pledges.
+This includes the discovery of the registrar in the target domain,
+time synchronization, and the exchange of security information
+necessary to establish mutual trust between pledges and the target domain.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">A pledge gains trust in the target domain via the domain registrar as follows.
 It obtains security information about the domain,
-specifically the target domain certificate to be trusted,
+specifically a domain certificate to be trusted,
 by requesting a voucher object defined in <span>[<a href="#RFC8366" class="xref">RFC8366</a>]</span>.
 Such a voucher is a self-contained signed object
 originating from a Manufacturer Authorized Signing Authority (MASA).
@@ -1437,107 +1442,163 @@ Therefore, the voucher may be provided
 in online mode (synchronously) or offline mode (asynchronously).
 The pledge can authenticate the voucher
 because it is shipped with a trust anchor of its manufacturer such that
-it can validate signatures (including related certificates) by the MASA.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">Trust by the target domain in a pledge is established by enrolling
-an LDevID certificate of the pledge that is specific to the target domain.
-The target domain can validate the certification request of the pledge
-based on the trust anchor of the pledge manufacturer,
-which needs to pre-installed in the domain.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">For enrolling devices with LDevID certificates,
+it can validate signatures (including related certificates) by the MASA.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Trust by the target domain in a pledge is established by providing the pledge
+with a domain-specific LDevID certificate.
+The certification request of the pledge is signed using its IDevID secret and can be
+validated by the target domain using the trust anchor of the pledge manufacturer,
+which needs to pre-installed in the domain.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">For enrolling devices with LDevID certificates,
 BRSKI typically utilizes Enrollment over Secure Transport (EST) <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span>.
-Using EST has its specific characteristics, detailed in <a href="#using-est" class="xref">Appendix A</a>.
+EST has its specific characteristics, detailed in <a href="#using-est" class="xref">Appendix A</a>.
 In particular, it requires online or on-site availability of the RA
-for performing the final authorization decision on the certification request.
-This type of enrollment can be called <em>synchronous enrollment</em>.
+for performing the data origin authentication and final authorization decision
+on the certification request.
+This type of enrollment can be called 'synchronous enrollment'.
 For various reasons,
 it may be preferable to use alternative enrollment protocols such as
 the Certificate Management Protocol (CMP) <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span>
 profiled in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>
 or Certificate Management over CMS (CMC) <span>[<a href="#RFC5272" class="xref">RFC5272</a>]</span>.
-that are more flexible and independent of the transfer level because they
-represent certification requests as authenticated self-contained objects.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">Depending on the application scenario,
+that are more flexible and independent of the transfer mechanism because they
+represent certification request messages as authenticated self-contained objects.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">Depending on the application scenario,
 the required RA/CA components may not be part of the registrar.
 They even may not be available on-site but rather be
-provided by remote backend systems. The registrar or its site may not have
+provided by remote backend systems. The registrar or its deployment site may not have
 an online connection with them or the connectivity may be intermittent.
 This may be due to security requirements for operating the backend systems
 or due to site deployments where on-site or always-online operation
 may be not feasible or too costly.
-In such scenarios, the authorization of certification request
+In such scenarios, the authentication and authorization of certification requests
 will not or can not be performed on-site at enrollment time.
 In this document, enrollment that is not performed in a (time-wise) consistent
 way is called <em>asynchronous enrollment</em>.
 Asynchronous enrollment requires a store-and-forward transfer of certification
 requests along with the information needed for authenticating the requester.
-This allows offline processing the request at a later point in time.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">Application scenarios may also involve network segmentation, which is utilized
+This allows offline processing the request.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1-6">Application scenarios may also involve network segmentation, which is utilized
 in industrial systems to separate domains with different security needs.
-Such scenarios lead to similar requirements if the communication
-channel carrying the requester authentication is terminated
+Such scenarios lead to similar requirements if the TLS connection
+carrying the requester authentication is terminated
 and thus request messages need to be forwarded on further channels
-before the registrar/RA can authorize the certification request:
-in order to preserve the requester authentication, authentication information
-needs to be retained and ideally bound directly to the certification request.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">There are basically two approaches for forwarding certification requests
-along with requester authentication information:<a href="#section-1-7" class="pilcrow">¶</a></p>
+before the registrar/RA can authorize the certification request.
+In order to preserve the requester authentication, authentication information
+needs to be retained and ideally bound directly to the certification request.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
+<p id="section-1.1-7">There are basically two approaches for forwarding certification requests
+along with requester authentication information:<a href="#section-1.1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-8.1">Having a trusted component (e.g., a local RA) in the target
-domain that stores the certification request combined with
-the requester authentication information (based on the IDevID)
-and potentially the information about successful verification of
-the proof of possession (of the corresponding private key) in a way
+<li class="normal" id="section-1.1-8.1">A trusted component (e.g., a local RA) in the target domain is needed
+that forwards the certification request combined with the validated identity of
+the requester (e,g., its IDevID certificate)
+and an indication of successful verification of
+the proof-of-possession (of the corresponding private key) in a way
 preventing changes to the combined information.
-Note that the proof of identity and the proof of possession
-may not have been bound cryptographically.
 When connectivity is available, the trusted component
 forwards the certification request together with the requester information
-(authentication and proof of possession) for further processing.
-This approach offers only hop-by-hop security:
-the backend PKI must rely on the local pledge authentication result
+(authentication and proof-of-possession) for further processing.
+This approach offers only hop-by-hop security.
+The backend PKI must rely on the local pledge authentication result
+provided by the local RA
 when performing the authorization of the certification request.
 In BRSKI, the EST server is such a trusted component,
-being co-located with the registrar in the target domain.<a href="#section-1-8.1" class="pilcrow">¶</a>
+being co-located with the registrar in the target domain.<a href="#section-1.1-8.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-8.2">Utilizing an authenticated self-contained object for the enrollment,
+          <li class="normal" id="section-1.1-8.2">Involved components use authenticated self-contained objects for the enrollment,
 directly binding the certification request and the requester authentication
 in a cryptographic way.
 This approach supports end-to-end security,
-reducing the need to trust in intermediate domain components.
+without the need to trust in intermediate domain components.
 Manipulation of the request and the requester identity information
-can be detected during the validation of the self-contained object.<a href="#section-1-8.2" class="pilcrow">¶</a>
+can be detected during the validation of the self-contained signed object.<a href="#section-1.1-8.2" class="pilcrow">¶</a>
 </li>
-      </ul>
-<p id="section-1-9">Focus of this document is the support of alternative enrollment protocols
-that allow handling authenticated self-contained objects for device credential bootstrapping.
+        </ul>
+<p id="section-1.1-9">Focus of this document is the support of alternative enrollment protocols that allow
+using authenticated self-contained objects for device credential bootstrapping.
 This enhancement of BRSKI is named BRSKI-AE,
 where AE stands for alternative enrollment protocols and for asynchronous enrollment.
-Like BRSKI, this specification results in the pledge storing an X.509 domain
-certificate with the corresponding private key and sufficient information
-for verifying the domain registrar identity (LDevID CA certificate) as well as
-domain-specific X.509 device certificates (LDevID EE certificates).<a href="#section-1-9" class="pilcrow">¶</a></p>
-<p id="section-1-10">The goals are to enhance BRSKI to<a href="#section-1-10" class="pilcrow">¶</a></p>
+This specification carries over the main characteristics of BRSKI,
+namely that the pledge obtains trust anchor information
+for authenticating the domain registrar and other target domain components
+as well as a domain-specific X.509 device certificate (the LDevID certificate)
+along with the corresponding private key (the LDevID secret) and certificate chain.<a href="#section-1.1-9" class="pilcrow">¶</a></p>
+<p id="section-1.1-10">The goals are to enhance BRSKI to<a href="#section-1.1-10" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-11.1">support alternative enrollment protocols,<a href="#section-1-11.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1.1-11.1">support alternative enrollment protocols,<a href="#section-1.1-11.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-11.2">support end-to-end security for enrollment, and<a href="#section-1-11.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.1-11.2">support end-to-end security for enrollment, and<a href="#section-1.1-11.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-11.3">make it applicable to scenarios involving asynchronous enrollment.<a href="#section-1-11.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.1-11.3">make it applicable to scenarios involving asynchronous enrollment.<a href="#section-1.1-11.3" class="pilcrow">¶</a>
 </li>
-      </ul>
-<p id="section-1-12">This is achieved by<a href="#section-1-12" class="pilcrow">¶</a></p>
+        </ul>
+<p id="section-1.1-12">This is achieved by<a href="#section-1.1-12" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-13.1">extending the well-known URI approach with an additional path element
-indicating the enrollment protocol being used, and<a href="#section-1-13.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1.1-13.1">extending the well-known URI approach with an additional path element
+indicating the enrollment protocol being used, and<a href="#section-1.1-13.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-13.2">defining a certificate waiting indication and handling, for the case that the
-certifying component is (temporarily) not available.<a href="#section-1-13.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.1-13.2">defining a certificate waiting indication and handling, for the case that the
+certifying component is (temporarily) not available.<a href="#section-1.1-13.2" class="pilcrow">¶</a>
 </li>
-      </ul>
-<p id="section-1-14">This specification can be applied to both synchronous and asynchronous enrollment.<a href="#section-1-14" class="pilcrow">¶</a></p>
-<p id="section-1-15">In contrast to BRSKI, this specification supports offering multiple enrollment protocols
+        </ul>
+<p id="section-1.1-14">This specification can be applied to both synchronous and asynchronous enrollment.<a href="#section-1.1-14" class="pilcrow">¶</a></p>
+<p id="section-1.1-15">In contrast to BRSKI, this specification supports offering multiple enrollment protocols
 on the infrastructure side, which enables pledges and their developers
-to pick the preferred one.<a href="#section-1-15" class="pilcrow">¶</a></p>
+to pick the preferred one.<a href="#section-1.1-15" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sup-env">
+<section id="section-1.2">
+        <h3 id="name-supported-environment">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-supported-environment" class="section-name selfRef">Supported environment</a>
+        </h3>
+<p id="section-1.2-1">BRSKI-AE is intended to be used in domains that may have limited support
+of on-site PKI services and comprises application scenarios like the following.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.2-2.1">There are requirements or implementation restrictions
+that do not allow using EST for enrolling an LDevID certificate.<a href="#section-1.2-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.2">Pledges and/or the target domain already have an established
+certificate management approach different from EST that shall be reused
+(e.g., in brownfield installations).<a href="#section-1.2-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.3">There is no registration authority available on site in the target domain.
+Connectivity to an off-site RA is intermittent or entirely offline.
+A store-and-forward mechanism is used
+for communicating with the off-site services.<a href="#section-1.2-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.4">Authoritative actions of a local RA are limited and may not be sufficient
+for authorizing certification requests by pledges.
+Final authorization is done by an RA residing in the operator domain.<a href="#section-1.2-2.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="list-examples">
+<section id="section-1.3">
+        <h3 id="name-list-of-application-example">
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-list-of-application-example" class="section-name selfRef">List of application examples</a>
+        </h3>
+<p id="section-1.3-1">Bootstrapping can be handled in various ways, depending on the application domains.
+The informative <a href="#app-examples" class="xref">Appendix B</a> provides illustrative examples from
+various industrial control system environments and operational setups.
+They motivate the support of alternative enrollment protocols,
+based on the following examples of operational environments:<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.3-2.1">Rolling stock<a href="#section-1.3-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.3-2.2">Building automation<a href="#section-1.3-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.3-2.3">Electrical substation automation<a href="#section-1.3-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.3-2.4">Electric vehicle charging infrastructures<a href="#section-1.3-2.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.3-2.5">Infrastructure isolation policy<a href="#section-1.3-2.5" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.3-2.6">Sites with insufficient level of operational security<a href="#section-1.3-2.6" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
 </section>
 </div>
 <div id="terminology">
@@ -1549,238 +1610,191 @@ to pick the preferred one.<a href="#section-1-15" class="pilcrow">¶</a></p>
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">This document relies on the terminology defined in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.
+<p id="section-2-2">This document relies on the terminology defined in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>
+and <span>[<a href="#IEEE.802.1AR_2009" class="xref">IEEE.802.1AR_2009</a>]</span>.
 The following terms are defined in addition:<a href="#section-2-2" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-2-3">
         <dt id="section-2-3.1">EE:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.2">
           <p id="section-2-3.2.1">End entity, in the BRSKI context called pledge.
-It is the entity that is bootstrapped to the target deployment domain.
+It is the entity that is bootstrapped to the target domain.
 It holds a public-private key pair, for which it requests a public-key certificate.
-An identifier for the EE is given as the subject of the certificate.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+An identifier for the EE is given as the subject name of the certificate.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-3.3">RA:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.4">
           <p id="section-2-3.4.1">Registration authority, an optional system
 component to which a CA delegates certificate management functions
-such as authenticating requesters and performing authorization checks.<a href="#section-2-3.4.1" class="pilcrow">¶</a></p>
+such as authenticating requesters and performing authorization checks
+on certification requests.<a href="#section-2-3.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-3.5">CA:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.6">
-          <p id="section-2-3.6.1">Certification authority, issues certificates.<a href="#section-2-3.6.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.6.1">Certification authority, issues certificates
+and provides certificate status information.<a href="#section-2-3.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.7">on-site:</dt>
+<dt id="section-2-3.7">target domain:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.8">
-          <p id="section-2-3.8.1">Describes a component or service or
-functionality available in the target deployment domain.<a href="#section-2-3.8.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.8.1">The set of entities that share a common local trust anchor,
+independent of where the entities are deployed.<a href="#section-2-3.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.9">off-site:</dt>
+<dt id="section-2-3.9">site:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.10">
-          <p id="section-2-3.10.1">Describes a component or service or
-functionality available in an operator domain different from
-the target deployment domain. This may be a central site or a
-cloud service, to which only a temporary connection is available,
-or which is in a different administrative domain.<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.10.1">Describes the locality where an entity, e.g., pledge, registrar, RA, CA, is deployed.
+Different sites can belong to the same target domain.<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.11">asynchronous communication:</dt>
+<dt id="section-2-3.11">on-site:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.12">
-          <p id="section-2-3.12.1">Describes a time-wise interrupted communication
-between a pledge (EE) and a registrar or PKI component.<a href="#section-2-3.12.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.12.1">Describes a component or service or
+functionality available in the target deployment site.<a href="#section-2-3.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.13">synchronous communication:</dt>
+<dt id="section-2-3.13">off-site:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.14">
-          <p id="section-2-3.14.1">Describes a time-wise uninterrupted communication
-between a pledge (EE) and a registrar or PKI component.<a href="#section-2-3.14.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.14.1">Describes a component or service or
+functionality available in an operator site different from
+the target deployment site. This may be a central site or a
+cloud service, to which only a temporary connection is available.<a href="#section-2-3.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.15">authenticated self-contained object:</dt>
+<dt id="section-2-3.15">asynchronous communication:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.16">
-          <p id="section-2-3.16.1">Describes in this context an object
-that is cryptographically bound to an EE certificate
-(IDevID certificate or LDevID certificate) of a pledge. The
-binding is assumed to be provided through a digital signature
-of the actual object using the private key corresponding to
-the EE certificate.<a href="#section-2-3.16.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.16.1">Describes a time-wise interrupted communication
+between a pledge (EE) and a registrar or PKI component.<a href="#section-2-3.16.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.17">synchronous communication:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.18">
+          <p id="section-2-3.18.1">Describes a time-wise uninterrupted communication
+between a pledge (EE) and a registrar or PKI component.<a href="#section-2-3.18.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.19">authenticated self-contained object:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.20">
+          <p id="section-2-3.20.1">Describes in this context an object
+that is cryptographically bound to the IDevID certificate of a pledge.
+The binding is assumed to be provided through a digital signature
+of the actual object using the IDevID secret.<a href="#section-2-3.20.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
 </section>
 </div>
-<div id="scope-of-the-solution">
-<section id="section-3">
-      <h2 id="name-scope-of-the-solution">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-scope-of-the-solution" class="section-name selfRef">Scope of the solution</a>
-      </h2>
-<div id="sup-env">
-<section id="section-3.1">
-        <h3 id="name-supported-environment">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-supported-environment" class="section-name selfRef">Supported environment</a>
-        </h3>
-<p id="section-3.1-1">BRSKI-AE is intended to be used in domains that may have limited support
-of on-site PKI services and comprises application scenarios like the following.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1-2.1">There are requirements or implementation restrictions
-that do not allow using EST for enrolling LDevID certificates.<a href="#section-3.1-2.1" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.1-2.2">Pledges and/or the target deployment domain already have an established
-certificate management approach different from EST that shall be reused
-(e.g., in brownfield installations).<a href="#section-3.1-2.2" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.1-2.3">There is no registration authority available on site in the target domain.
-Connectivity to an off-site RA is intermittent or entirely offline.
-A store-and-forward mechanism is used
-for communicating with the off-site services.<a href="#section-3.1-2.3" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.1-2.4">Authoritative actions of a local RA are limited and may not be sufficient
-for authorizing certification requests by pledges.
-Final authorization is done by an RA residing in the operator domain.<a href="#section-3.1-2.4" class="pilcrow">¶</a>
-</li>
-        </ul>
-</section>
-</div>
-<div id="list-examples">
-<section id="section-3.2">
-        <h3 id="name-list-of-application-example">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-list-of-application-example" class="section-name selfRef">List of application examples</a>
-        </h3>
-<p id="section-3.2-1">Bootstrapping can be handled in various ways, depending on the application domains.
-The informative annex <a href="#app-examples" class="xref">Appendix B</a> provides illustrative examples from
-various automation domains and operational setups.
-They motivate the support of alternative enrollment protocols,
-based on the operational environments in the examples.
-Examples are provided for<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2-2.1">Rolling stock<a href="#section-3.2-2.1" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.2-2.2">Building automation<a href="#section-3.2-2.2" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.2-2.3">Electrical substation automation<a href="#section-3.2-2.3" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.2-2.4">Electric vehicle charging infrastructures<a href="#section-3.2-2.4" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.2-2.5">Infrastructure isolation policy<a href="#section-3.2-2.5" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.2-2.6">Domains with less operational security<a href="#section-3.2-2.6" class="pilcrow">¶</a>
-</li>
-        </ul>
-</section>
-</div>
-</section>
-</div>
 <div id="req-sol">
-<section id="section-4">
+<section id="section-3">
       <h2 id="name-requirements-discussion-and">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-requirements-discussion-and" class="section-name selfRef">Requirements discussion and mapping to solution elements</a>
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-requirements-discussion-and" class="section-name selfRef">Requirements discussion and mapping to solution elements</a>
       </h2>
-<p id="section-4-1">For the requirements discussion we assume that the domain
-registrar receiving a certification request as an authenticated
-object is not always the (final) authorization point for this
-certification request.
-If the domain registrar is the only authorization
-point and the pledge has a direct connection to it, BRSKI can be used directly.
-Note that BRSKI-AE may still be needed
-in this case, for instance when the pledge prefers a protocol other than EST.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">Based on the intended target environment described in <a href="#sup-env" class="xref">Section 3.1</a> and
-the application examples described in <a href="#app-examples" class="xref">Appendix B</a>, the following
-requirements are derived to support authenticated self-contained
-objects as container carrying certification requests and further
-information to support asynchronous operation.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">At least the following properties are required:<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-3-1">There were two main drivers for the definition of BRSKI-AE:<a href="#section-3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-4.1">proof of possession: demonstrates access to the private
-key corresponding to the public key contained in a certification request.
-This is typically achieved by a self-signature using the private key.<a href="#section-4-4.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3-2.1">The solution architecture may already use or require
+a certificate management protocol other than EST.
+Therefore, this other protocol should be usable for requesting LDevID certificates.<a href="#section-3-2.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-4-4.2">proof of identity: provides data origin authentication of a data object
-such as a certificate request. This typically is achieved by a signature
-using the private key associated with the IDevID certificate of the pledge,
-or, in case of certificate updates, with the certificate to be updated.<a href="#section-4-4.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-2.2">The domain registrar may not be the (final) point that authenticates and authorizes
+certification requests and the pledge may not have a direct connection to it.
+Therefore, certification requests should be self-contained signed objects.<a href="#section-3-2.2" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="section-4-5">Here is an incomplete list of solution examples,
-based on existing technology described in IETF documents:<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-3-3">Based on the intended target environment described in <a href="#sup-env" class="xref">Section 1.2</a> and
+the application examples described in <a href="#app-examples" class="xref">Appendix B</a>, the following
+requirements are derived to support authenticated self-contained objects
+as containers carrying certification requests.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">At least the following properties are required:<a href="#section-3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-6.1">
-          <p id="section-4-6.1.1">Certification request objects: Certification requests are
-data structures protecting only the integrity of the contained data
-and providing proof of possession for a (locally generated) private key.
-Examples for certification request data structures are:<a href="#section-4-6.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-4-6.1.2.1">PKCS#10 <span>[<a href="#RFC2986" class="xref">RFC2986</a>]</span>. The structure is self-signed to
-protect its integrity and prove possession of the private key
-that corresponds to the included public key of the requester.<a href="#section-4-6.1.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3-5.1">proof-of-possession: demonstrates access to the private
+key corresponding to the public key contained in a certification request.
+This is typically achieved by a self-signature using the corresponding private key.<a href="#section-3-5.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4-6.1.2.2">CRMF <span>[<a href="#RFC4211" class="xref">RFC4211</a>]</span>. Also this structure supports
-integrity protection and proof of possession,
+        <li class="normal" id="section-3-5.2">proof-of-identity: provides data origin authentication of
+the certification request. This typically is achieved by a signature
+using the IDevID secret of the pledge.<a href="#section-3-5.2" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-3-6">Here is an incomplete list of solution examples,
+based on existing technology described in IETF documents:<a href="#section-3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-7.1">
+          <p id="section-3-7.1.1">Certification request objects: Certification requests are
+data structures protecting only the integrity of the contained data
+and providing proof-of-possession for a (locally generated) private key.
+Examples for certification request data structures are:<a href="#section-3-7.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-7.1.2.1">PKCS#10 <span>[<a href="#RFC2986" class="xref">RFC2986</a>]</span>. This certification request structure is self-signed to
+protect its integrity and prove possession of the private key
+that corresponds to the public key included in the request.<a href="#section-3-7.1.2.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3-7.1.2.2">CRMF <span>[<a href="#RFC4211" class="xref">RFC4211</a>]</span>. Also this certificate request message format supports
+integrity protection and proof-of-possession,
 typically by a self-signature generated over (part of) the structure
 with the private key corresponding to the included public key.
 CRMF also supports further proof-of-possession methods
-for types of keys that do not support any signature algorithm.<a href="#section-4-6.1.2.2" class="pilcrow">¶</a>
+for types of keys that do not support any signature algorithm.<a href="#section-3-7.1.2.2" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-4-6.1.3">
+<p id="section-3-7.1.3">
 The integrity protection of certification request fields includes the public
 key because it is part of the data signed by the corresponding private key.
 Yet note that for the above examples this is not sufficient to provide data
-origin authentication, i.e., proof of identity. This extra property can be
+origin authentication, i.e., proof-of-identity. This extra property can be
 achieved by an additional binding to the IDevID of the pledge.
 This binding to source authentication supports the
 authorization decision for the certification request. The binding of data
 origin authentication to the certification request may be
-delegated to the protocol used for certificate management.<a href="#section-4-6.1.3" class="pilcrow">¶</a></p>
+delegated to the protocol used for certificate management.<a href="#section-3-7.1.3" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-6.2">
-          <p id="section-4-6.2.1">Solution options for proof of identity: The certification request should be
-bound to an existing authenticated credential (here, IDevID) to enable a proof
+        <li class="normal" id="section-3-7.2">
+          <p id="section-3-7.2.1">Solution options for proof-of-identity: The certification request should be bound to
+an existing authenticated credential (here, the IDevID certificate) to enable a proof
 of identity and, based on it, an authorization of the certification request.
 The binding may be achieved through security options in an
 underlying transport protocol such as TLS if the authorization of the
 certification request is (completely) done at the next communication hop.
 This binding can also be done in a transport-independent way by wrapping the
-certification request with signature employing an existing credential. In
+certification request with signature employing an existing IDevID.
 the BRSKI context, this will be the IDevID.
 This requirement is addressed by existing enrollment protocols
-in various ways, such as:<a href="#section-4-6.2.1" class="pilcrow">¶</a></p>
+in various ways, such as:<a href="#section-3-7.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-6.2.2.1">EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span> utilizes PKCS#10 to
+<li class="normal" id="section-3-7.2.2.1">EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span> utilizes PKCS#10 to
 encode the certification request. The Certificate Signing
-Request (CSR) may contain a binding to the underlying TLS session
-by including the tls-unique value in the self-signed CSR structure.
+Request (CSR) optionally provides a binding to the underlying TLS session
+by including the tls-unique value in the self-signed PKCS#10 structure.
 The tls-unique value results from the TLS handshake.
 Since the TLS handshake includes client
 authentication and the pledge utilizes its IDevID for it,
-the proof of identity can be provided by the binding to
-the TLS session. This is supported in EST using the
-/simpleenroll endpoint. As an alternative to binding to the underlying
-authentication in the transport layer, <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span> sketches wrapping the CSR
-with a Full PKI Request message using an existing certificate.<a href="#section-4-6.2.2.1" class="pilcrow">¶</a>
+the proof-of-identity is provided by such a binding to the TLS session.
+This can be supported using the EST /simpleenroll endpoint.
+Note that the binding of the TLS handshake to the CSR is optional in EST.
+As an alternative to binding to the underlying
+TLS authentication in the transport layer, <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span> sketches wrapping the CSR
+with a Full PKI Request message using an existing certificate.<a href="#section-3-7.2.2.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4-6.2.2.2">SCEP <span>[<a href="#RFC8894" class="xref">RFC8894</a>]</span> supports using a shared secret (passphrase) or
+            <li class="normal" id="section-3-7.2.2.2">SCEP <span>[<a href="#RFC8894" class="xref">RFC8894</a>]</span> supports using a shared secret (passphrase) or
 an existing certificate to protect CSRs based on
 SCEP Secure Message Objects using CMS wrapping
 (<span>[<a href="#RFC5652" class="xref">RFC5652</a>]</span>). Note that the wrapping using
-an existing IDevID credential in SCEP is referred to as renewal.
-Thus SCEP does not rely on the security of the underlying transfer.<a href="#section-4-6.2.2.2" class="pilcrow">¶</a>
+an existing IDevID in SCEP is referred to as renewal.
+Thus SCEP does not rely on the security of the underlying transfer.<a href="#section-3-7.2.2.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4-6.2.2.3">CMP <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span> supports using a shared secret (passphrase) or an existing
+            <li class="normal" id="section-3-7.2.2.3">CMP <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span> supports using a shared secret (passphrase) or an existing
 certificate, which may be an IDevID credential, to authenticate
 certification requests via the PKIProtection structure in a PKIMessage.
 The certification request is typically encoded utilizing CRMF,
 while PKCS#10 is supported as an alternative.
-Thus CMP does not rely on the security of the underlying transfer.<a href="#section-4-6.2.2.3" class="pilcrow">¶</a>
+Thus CMP does not rely on the security of the underlying transfer protocol.<a href="#section-3-7.2.2.3" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4-6.2.2.4">CMC <span>[<a href="#RFC5272" class="xref">RFC5272</a>]</span> also supports utilizing a shared secret (passphrase) or
+            <li class="normal" id="section-3-7.2.2.4">CMC <span>[<a href="#RFC5272" class="xref">RFC5272</a>]</span> also supports utilizing a shared secret (passphrase) or
 an existing certificate to protect certification requests,
-which can be either in CRMF or PKCS#10 format.
-The proof of identity can be provided as part of a FullCMCRequest,
-based on CMS <span>[<a href="#RFC5652" class="xref">RFC5652</a>]</span> and signed with an existing IDevID credential.
-Thus CMC does not rely on the security of the underlying transfer.<a href="#section-4-6.2.2.4" class="pilcrow">¶</a>
+which can be either in CRMF or PKCS#10 structure.
+The proof-of-identity can be provided as part of a FullCMCRequest,
+based on CMS <span>[<a href="#RFC5652" class="xref">RFC5652</a>]</span> and signed with an existing IDevID secret.
+Thus CMC does not rely on the security of the underlying transfer protocol.<a href="#section-3-7.2.2.4" class="pilcrow">¶</a>
 </li>
           </ul>
 </li>
@@ -1788,40 +1802,41 @@ Thus CMC does not rely on the security of the underlying transfer.<a href="#sect
 </section>
 </div>
 <div id="uc1">
-<section id="section-5">
+<section id="section-4">
       <h2 id="name-adaptations-to-brski">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-adaptations-to-brski" class="section-name selfRef">Adaptations to BRSKI</a>
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-adaptations-to-brski" class="section-name selfRef">Adaptations to BRSKI</a>
       </h2>
-<p id="section-5-1">In order to support alternative enrollment protocols, asynchronous enrollment,
+<p id="section-4-1">In order to support alternative enrollment protocols, asynchronous enrollment,
 and more general system architectures,
 BRSKI-AE lifts some restrictions of BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.
 This way, authenticated self-contained objects such as those described in
-<a href="#req-sol" class="xref">Section 4</a> above can be used for certificate enrollment.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">The enhancements needed are kept to a minimum in order to ensure reuse of
+<a href="#req-sol" class="xref">Section 3</a> above can be used for certificate enrollment.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">The enhancements needed are kept to a minimum in order to ensure reuse of
 already defined architecture elements and interactions.
 In general, the communication follows the BRSKI model and utilizes the existing
 BRSKI architecture elements.
 In particular, the pledge initiates communication with the domain registrar
-and interacts with the MASA as usual.<a href="#section-5-2" class="pilcrow">¶</a></p>
+and interacts with the MASA as usual.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <div id="architecture">
-<section id="section-5.1">
+<section id="section-4.1">
         <h3 id="name-architecture">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-architecture" class="section-name selfRef">Architecture</a>
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-architecture" class="section-name selfRef">Architecture</a>
         </h3>
-<p id="section-5.1-1">The key element of BRSKI-AE is that the authorization of a certification request
+<p id="section-4.1-1">The key element of BRSKI-AE is that the authorization of a certification request
 <span class="bcp14">MUST</span> be performed based on an authenticated self-contained object.
-The certification request is bound to a proof of origin based on the IDevID.
+The certification request is bound in a self-contained way
+to a proof-of-origin based on the IDevID.
 Consequently, the authentication and authorization of the certification request
-<span class="bcp14">MAY</span> be done by the domain registrar and/or by other PKI components, which may
-be offline or reside in some central backend of the domain operator  (off-site)
-as described in <a href="#sup-env" class="xref">Section 3.1</a>. The deployment or on-site domain of the pledge and
-registrar may have no or only temporary (intermittent) connectivity to them.
-The certification request <span class="bcp14">MAY</span> also be piggybacked on another protocol.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">This leads to generalizations in the
-placement and enhancements of the logical elements as shown in <a href="#uc1figure" class="xref">Figure 1</a>.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<span class="bcp14">MAY</span> be done by the domain registrar and/or by other domain components. These components
+may be offline or reside in some central backend of the domain operator (off-site)
+as described in <a href="#sup-env" class="xref">Section 1.2</a>. The registrar and other on-site domain components
+may have no or only temporary (intermittent) connectivity to them.
+The certification request <span class="bcp14">MAY</span> also be piggybacked on another protocol.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">This leads to generalizations in the
+placement and enhancements of the logical elements as shown in <a href="#uc1figure" class="xref">Figure 1</a>.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <span id="name-architecture-overview-using"></span><div id="uc1figure">
 <figure id="figure-1">
-          <div class="alignLeft art-text artwork" id="section-5.1-3.1">
+          <div class="alignLeft art-text artwork" id="section-4.1-3.1">
 <pre>
                                            +------------------------+
    +--------------Drop-Ship---------------&gt;| Vendor Service         |
@@ -1861,122 +1876,108 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
 <a href="#name-architecture-overview-using" class="selfRef">Architecture overview using off-site PKI components</a>
           </figcaption></figure>
 </div>
-<p id="section-5.1-4">The architecture overview in <a href="#uc1figure" class="xref">Figure 1</a>
+<p id="section-4.1-4">The architecture overview in <a href="#uc1figure" class="xref">Figure 1</a>
 has the same logical elements as BRSKI, but with more flexible placement
 of the authentication and authorization checks on certification requests.
 Depending on the application scenario, the registrar <span class="bcp14">MAY</span> still do all of these
-checks (as is the case in BRSKI), or part of them, or none of them.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.1-5">The following list describes the components in the deployment target domain
-of the pledge as well as the base services.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
+checks (as is the case in BRSKI), or part of them, or none of them.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.1-5">The following list describes the on-site components in the target domain
+of the pledge shown in  <a href="#uc1figure" class="xref">Figure 1</a>.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1-6.1">Join Proxy: same functionality as described in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.<a href="#section-5.1-6.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.1-6.1">Join Proxy: same functionality as described in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.<a href="#section-4.1-6.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-5.1-6.2">Domain Registrar / Enrollment Proxy: in BRSKI-AE,
+          <li class="normal" id="section-4.1-6.2">
+            <p id="section-4.1-6.2.1">Domain Registrar / Enrollment Proxy / LRA: in BRSKI-AE,
 the domain registrar has mostly the same functionality as in BRSKI, namely
 to facilitate the communication of the pledge with the MASA and the PKI.
-Yet there is a difference regarding certificate enrollment, detailed below.<a href="#section-5.1-6.2" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-5.1-6.3">Voucher exchange: the voucher exchange with the MASA  via
-the domain registrar is performed as described in BRSKI.<a href="#section-5.1-6.3" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-5.1-6.4">Certificate enrollment: in contrast to BRSKI, the domain registrar
-possibly does not fully perform the authorization of certification requests.
-If at least part of the authorization is done by some external RA component,
-the domain registrar <span class="bcp14">MUST</span> forward the certification request to this RA.
-To this end, the certification request object <span class="bcp14">MUST</span> include
-a proof of origin such that the authorization can be based on the
-authenticated pledge identity information.
-The proof of origin <span class="bcp14">SHOULD</span> be done by an additional signature using the IDevID.
-Hence the domain registrar <span class="bcp14">MAY</span> act as a local registration authority (LRA)
-or simply as an enrollment proxy, and it can also handle the
-situation that it has only intermittent connection to an off-site PKI
-by storing the authenticated certification request and
-forwarding it to the RA upon re-established connectivity.<a href="#section-5.1-6.4" class="pilcrow">¶</a>
+Yet in contrast to BRSKI, the registrar offers different enrollment protocols
+and <span class="bcp14">MAY</span> act as a local registration authority (LRA) or simply as an enrollment proxy.
+In such cases, the domain registrar forwards the certification request
+to some off-site RA component, which performs at least part of the authorization.
+This also covers the case that the registrar has only intermittent connection
+and forwards the certification request to the RA upon re-established connectivity.<a href="#section-4.1-6.2.1" class="pilcrow">¶</a></p>
+<p id="section-4.1-6.2.2">
+Note: To support alternative enrollment protocols, the URI scheme
+for addressing the domain registrar is generalized (see <a href="#addressing" class="xref">Section 4.2.5</a>).<a href="#section-4.1-6.2.2" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-7">Since BRSKI uses EST for the certificate enrollment,
-while BRSKI-AE uses authenticated self-contained objects,
-the definitions of the pledge and the domain registrar are modified
-by allowing the use of alternative enrollment protocols
-and generalizing the scheme for addressing the domain registrar (see <a href="#addressing" class="xref">Section 5.2.5</a>).<a href="#section-5.1-7" class="pilcrow">¶</a></p>
-<p id="section-5.1-8">The following list describes the vendor-related components/service
-outside the deployment domain.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
+<p id="section-4.1-7">The following list describes the components provided by the vendor or manufacturer
+outside the target domain.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1-9.1">MASA: general functionality as described in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.
-Note that the interaction with the MASA may be
-synchronous (voucher request with nonce) or asynchronous
-(voucher request without nonce).<a href="#section-5.1-9.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.1-8.1">
+            <p id="section-4.1-8.1.1">MASA: general functionality as described in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.
+The voucher exchange with the MASA via the domain registrar
+is performed as described in BRSKI.<a href="#section-4.1-8.1.1" class="pilcrow">¶</a></p>
+<p id="section-4.1-8.1.2">
+Note: The interaction with the MASA may be synchronous (voucher request with nonce)
+or asynchronous (voucher request without nonce).<a href="#section-4.1-8.1.2" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-9.2">Ownership tracker: as defined in BRSKI.<a href="#section-5.1-9.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.1-8.2">Ownership tracker: as defined in BRSKI.<a href="#section-4.1-8.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-5.1-10">The following list describes the operator-related components/service
-operated in the off-site backend of the domain.<a href="#section-5.1-10" class="pilcrow">¶</a></p>
+<p id="section-4.1-9">The following list describes the target domain components that can optionally be
+operated in the off-site backend of the target domain.<a href="#section-4.1-9" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1-11.1">PKI RA: Performs certificate management functions for the domain
+<li class="normal" id="section-4.1-10.1">PKI RA: Performs certificate management functions for the domain
 as a centralized public-key infrastructure for the domain operator.
 As far as not already done by the domain registrar, it performs the final
-validation and authorization of certification requests. The authorization
-may require interaction with an asset management system, etc.<a href="#section-5.1-11.1" class="pilcrow">¶</a>
+validation and authorization of certification requests.<a href="#section-4.1-10.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-5.1-11.2">PKI CA: Performs certificate generation by signing the certificate structure
-requested in already authenticated and authorized certification requests.<a href="#section-5.1-11.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.1-10.2">PKI CA: Performs certificate generation by signing the certificate structure
+requested in already authenticated and authorized certification requests.<a href="#section-4.1-10.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-5.1-12">Based on BRSKI and the architectural changes, the original protocol
-flow is divided into three phases showing commonalities and
-differences to the original approach as follows.<a href="#section-5.1-12" class="pilcrow">¶</a></p>
+<p id="section-4.1-11">Based on the diagram in Section 2.1 of BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> and the architectural changes,
+the original protocol flow is divided into three phases showing commonalities
+and differences to the original approach as follows.<a href="#section-4.1-11" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1-13.1">Discovery phase: same as in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> steps (1) and (2)<a href="#section-5.1-13.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.1-12.1">Discovery phase: same as in BRSKI steps (1) and (2)<a href="#section-4.1-12.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-5.1-13.2">Voucher exchange with deployment domain registrar: same as in BRSKI steps (3) and (4).<a href="#section-5.1-13.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.1-12.2">Voucher exchange phase: same as in BRSKI steps (3) and (4).<a href="#section-4.1-12.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-5.1-13.3">Enrollment phase: step (5) is changed to using authenticated self-contained objects.<a href="#section-5.1-13.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.1-12.3">Enrollment phase: step (5) is changed to employing an alternative enrollment protocol
+that uses authenticated self-contained objects.<a href="#section-4.1-12.3" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
 </div>
 <div id="message-exchange">
-<section id="section-5.2">
+<section id="section-4.2">
         <h3 id="name-message-exchange">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-message-exchange" class="section-name selfRef">Message exchange</a>
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-message-exchange" class="section-name selfRef">Message exchange</a>
         </h3>
-<p id="section-5.2-1">The behavior of a pledge as described in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> is kept with one exception.
-After finishing the imprinting phase (4)
-the enrollment phase (5) <span class="bcp14">MUST</span> be performed with a method supporting
-authenticated self-contained objects.
-Note that EST with simple-enroll cannot be applied here
-because it binds the pledge authentication to the transport channel (TLS) rather than
-to the certification request object itself, so this form of authentication
-is not visible / verifiable to authorization points outside the registrar.
-<a href="#exist_prot" class="xref">Section 6</a> discusses selected suitable enrollment protocols and options applicable.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">The behavior of a pledge described in Section 2.1 of BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>
+is kept with one exception.
+After finishing the Imprint step (4), the Enroll step (5) <span class="bcp14">MUST</span> be performed
+with an enrollment protocol utilizing authenticated self-contained objects.
+<a href="#exist_prot" class="xref">Section 5</a> discusses selected suitable enrollment protocols and options applicable.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <div id="discovery">
-<section id="section-5.2.1">
+<section id="section-4.2.1">
           <h4 id="name-pledge-registrar-discovery-">
-<a href="#section-5.2.1" class="section-number selfRef">5.2.1. </a><a href="#name-pledge-registrar-discovery-" class="section-name selfRef">Pledge - Registrar discovery and voucher exchange</a>
+<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-pledge-registrar-discovery-" class="section-name selfRef">Pledge - Registrar discovery and voucher exchange</a>
           </h4>
-<p id="section-5.2.1-1">The discovery phase and voucher exchange is applied as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.<a href="#section-5.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-1">The discovery phase and voucher exchange are applied as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="vexchange">
-<section id="section-5.2.2">
+<section id="section-4.2.2">
           <h4 id="name-registrar-masa-voucher-exch">
-<a href="#section-5.2.2" class="section-number selfRef">5.2.2. </a><a href="#name-registrar-masa-voucher-exch" class="section-name selfRef">Registrar - MASA voucher exchange</a>
+<a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-registrar-masa-voucher-exch" class="section-name selfRef">Registrar - MASA voucher exchange</a>
           </h4>
-<p id="section-5.2.2-1">This voucher exchange is performed as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.<a href="#section-5.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-1">This voucher exchange is performed as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="enroll">
-<section id="section-5.2.3">
+<section id="section-4.2.3">
           <h4 id="name-pledge-registrar-ra-ca-cert">
-<a href="#section-5.2.3" class="section-number selfRef">5.2.3. </a><a href="#name-pledge-registrar-ra-ca-cert" class="section-name selfRef">Pledge - Registrar - RA/CA certificate enrollment</a>
+<a href="#section-4.2.3" class="section-number selfRef">4.2.3. </a><a href="#name-pledge-registrar-ra-ca-cert" class="section-name selfRef">Pledge - Registrar - RA/CA certificate enrollment</a>
           </h4>
-<p id="section-5.2.3-1">As stated in <a href="#req-sol" class="xref">Section 4</a>, the enrollment <span class="bcp14">MUST</span> be
+<p id="section-4.2.3-1">As stated in <a href="#req-sol" class="xref">Section 3</a>, the enrollment <span class="bcp14">MUST</span> be
 performed using an authenticated self-contained object providing
-not only proof of possession but also proof of identity (source authentication).<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
+not only proof-of-possession but also proof-of-identity (source authentication).<a href="#section-4.2.3-1" class="pilcrow">¶</a></p>
 <span id="name-certificate-enrollment"></span><div id="enrollfigure">
 <figure id="figure-2">
-            <div class="alignLeft art-text artwork" id="section-5.2.3-2.1">
+            <div class="alignLeft art-text artwork" id="section-4.2.3-2.1">
 <pre>
 +--------+                        +------------+     +------------+
 | Pledge |                        | Domain     |     | Operator   |
@@ -1984,14 +1985,14 @@ not only proof of possession but also proof of identity (source authentication).
 |        |                        |  (JRC)     |     | (OPKI)     |
 +--------+                        +------------+     +------------+
   /--&gt;                                      |                    |
-[Recommended Request of CA Certificates]    |                    |
+[Optional request of CA certificates]       |                    |
   |---------- CA Certs Request ------------&gt;|                    |
   |              [if connection to operator domain is available] |
   |                                         |-Request CA Certs -&gt;|
   |                                         |&lt;-CA Certs Response-|
   |&lt;-------- CA Certs Response--------------|                    |
   /--&gt;                                      |                    |
-[Recommended Request of Certificate Attributes to be included]   |
+[Optional request of attributes to be included in Cert Request]  |
   |---------- Attribute Request -----------&gt;|                    |
   |              [if connection to operator domain is available] |
   |                                         |-Attribute Request-&gt;|
@@ -2000,16 +2001,15 @@ not only proof of possession but also proof of identity (source authentication).
   /--&gt;                                      |                    |
 [Certification request]                     |                    |
   |-------------- Cert Request ------------&gt;|                    |
-  |            [when connection to off-site domain is available] |
+  |      [when connection to off-site components is unavailable] |
+  |&lt;----- optional: Cert Waiting Response --|                    |
+  |                                         |                    |
+  |-------optional: Cert Polling ----------&gt;|                    |
+  |                                         |                    |
+  |        [when connection to off-site components is available] |
   |                                         |--- Cert Request --&gt;|
-  /--&gt;                                      |                    |
-[Optional Certificate Waiting indication]   |                    |
-  |&lt;----- Cert Waiting Response ------------|                    |
-  |                                         |                    |
-  |-- Cert Polling (with orig request ID) -&gt;|                    |
-  |                                         |                    |
   |                                         |&lt;-- Cert Response --|
-  |&lt;-- Cert Response (with Certificate) ----|                    |
+  |&lt;------------- Cert Response ------------|                    |
   /--&gt;                                      |                    |
 [Optional certificate confirmation]         |                    |
   |-------------- Cert Confirm ------------&gt;|                    |
@@ -2022,101 +2022,105 @@ not only proof of possession but also proof of identity (source authentication).
 <a href="#name-certificate-enrollment" class="selfRef">Certificate enrollment</a>
             </figcaption></figure>
 </div>
-<p id="section-5.2.3-3">The following list provides an abstract description of the flow
-depicted in <a href="#enrollfigure" class="xref">Figure 2</a>.<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-3">The following list provides an abstract description of the flow
+depicted in <a href="#enrollfigure" class="xref">Figure 2</a>.<a href="#section-4.2.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2.3-4.1">CA Cert Request: The pledge <span class="bcp14">SHOULD</span> request the latest relevant
-CA Certificates. This ensures that the pledge has the
+<li class="normal" id="section-4.2.3-4.1">CA Cert Request: The pledge optionally requests the latest relevant
+CA certificates. This ensures that the pledge has the
 complete set of current CA certificates beyond the
-pinned-domain-cert (which may be the domain registrar certificate
-contained in the voucher).<a href="#section-5.2.3-4.1" class="pilcrow">¶</a>
+pinned-domain-cert (which is contained in the voucher
+and may be just the domain registrar certificate).<a href="#section-4.2.3-4.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.2">CA Cert Response: <span class="bcp14">SHOULD</span> contain at least the CA certificate of
-the issuing CA.<a href="#section-5.2.3-4.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.2">CA Cert Response: It <span class="bcp14">MUST</span> contain the current root CA certificate,
+which typically is the LDevID trust anchor, and any additional certificates
+that the pledge may need to validate certificates.<a href="#section-4.2.3-4.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.3">Attribute Request: Typically, the automated bootstrapping occurs
+            <li class="normal" id="section-4.2.3-4.3">Attribute Request: Typically, the automated bootstrapping occurs
 without local administrative configuration of the pledge.
 Nevertheless, there are cases in which the pledge may also
-include additional attributes specific to the deployment domain
+include additional attributes specific to the target domain
 into the certification request. To get these attributes in
-advance, the attribute request <span class="bcp14">SHOULD</span> be used.<a href="#section-5.2.3-4.3" class="pilcrow">¶</a>
+advance, the attribute request can be used.<a href="#section-4.2.3-4.3" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.4">Attribute Response: <span class="bcp14">SHOULD</span> contain the attributes to be included
-in the subsequent certification request.<a href="#section-5.2.3-4.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.4">Attribute Response: It <span class="bcp14">MUST</span> contain the attributes to be included
+in the subsequent certification request.<a href="#section-4.2.3-4.4" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.5">Cert Request: This certification request <span class="bcp14">MUST</span> contain the authenticated
-self-contained object ensuring both proof of possession of the
-corresponding private key and proof of identity of the requester.<a href="#section-5.2.3-4.5" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.5">Cert Request: This certification request <span class="bcp14">MUST</span> contain the
+authenticated self-contained object ensuring both proof-of-possession of the
+corresponding private key and proof-of-identity of the requester.<a href="#section-4.2.3-4.5" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.6">Cert Response: The certification response message <span class="bcp14">MUST</span> contain on success the
-requested certificate and <span class="bcp14">MAY</span> include potentially further information, like
-certificates of intermediary CAs on the certification path.<a href="#section-5.2.3-4.6" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.6">Cert Response: The certification response message <span class="bcp14">MUST</span> contain on success
+the requested certificate and <span class="bcp14">MAY</span> include further information,
+like certificates of intermediate CAs.<a href="#section-4.2.3-4.6" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.7">Cert Waiting: Optional waiting indication for the pledge, which <span class="bcp14">SHOULD</span> retry
-after a given time. For this a request identifier is necessary.
-This request identifier may be either part of the enrollment
-protocol or can derived from the certification request.<a href="#section-5.2.3-4.7" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.7">Cert Waiting Response: Optional waiting indication for the pledge,
+which <span class="bcp14">SHOULD</span> poll for a Cert Response after a given time.
+To this end, a request identifier is necessary.
+The request identifier may be either part of the enrollment
+protocol or can be derived from the certification request.<a href="#section-4.2.3-4.7" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.8">Cert Polling: This <span class="bcp14">SHOULD</span> be used by the pledge to query the registrar
-whether the certification request meanwhile has been processed;
-can be answered either by another Cert Waiting, or a Cert Response.<a href="#section-5.2.3-4.8" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.8">Cert Polling: This <span class="bcp14">SHOULD</span> be used by the pledge in reaction to
+a Cert Waiting Response to query the registrar
+whether the certification request meanwhile has been processed.
+It <span class="bcp14">MUST</span> be answered either by another Cert Waiting, or the Cert Response.<a href="#section-4.2.3-4.8" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.9">Cert Confirm: positive or negative confirmation message by the pledge
-the <span class="bcp14">SHOULD</span> be sent after receiving and validating a new certificate.<a href="#section-5.2.3-4.9" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.9">Cert Confirm: An optional confirmation sent after the requested certificate
+has been received and validated.
+It contains a positive or negative confirmation by the pledge whether
+the certificate was successfully enrolled and fits its needs.<a href="#section-4.2.3-4.9" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.2.3-4.10">PKI/Registrar Confirm: An acknowledgment by the PKI or domain registrar
-that <span class="bcp14">MUST</span> be sent on reception of the Cert Confirm.<a href="#section-5.2.3-4.10" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-4.10">PKI/Registrar Confirm: An acknowledgment by the PKI or registrar
+that <span class="bcp14">MUST</span> be sent on reception of the Cert Confirm.<a href="#section-4.2.3-4.10" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-5.2.3-5">The generic messages described above <span class="bcp14">MAY</span> be implemented using various
-enrollment protocols supporting authenticated self-contained request objects,
-as described in <a href="#req-sol" class="xref">Section 4</a>. Examples are available in <a href="#exist_prot" class="xref">Section 6</a>.<a href="#section-5.2.3-5" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-5">The generic messages described above may be implemented using various
+enrollment protocols supporting authenticated self-contained objects,
+as described in <a href="#req-sol" class="xref">Section 3</a>. Examples are available in <a href="#exist_prot" class="xref">Section 5</a>.<a href="#section-4.2.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="pledge-registrar-enrollment-status-telemetry">
-<section id="section-5.2.4">
+<section id="section-4.2.4">
           <h4 id="name-pledge-registrar-enrollment">
-<a href="#section-5.2.4" class="section-number selfRef">5.2.4. </a><a href="#name-pledge-registrar-enrollment" class="section-name selfRef">Pledge - Registrar - enrollment status telemetry</a>
+<a href="#section-4.2.4" class="section-number selfRef">4.2.4. </a><a href="#name-pledge-registrar-enrollment" class="section-name selfRef">Pledge - Registrar - enrollment status telemetry</a>
           </h4>
-<p id="section-5.2.4-1">The enrollment status telemetry is performed as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.
+<p id="section-4.2.4-1">The enrollment status telemetry is performed as specified in <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>.
 In BRSKI this is described as part of the enrollment phase,
 but due to the generalization on the enrollment protocol described in this document
-it fits better as a separate step here.<a href="#section-5.2.4-1" class="pilcrow">¶</a></p>
+it fits better as a separate step here.<a href="#section-4.2.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="addressing">
-<section id="section-5.2.5">
+<section id="section-4.2.5">
           <h4 id="name-addressing-scheme-enhanceme">
-<a href="#section-5.2.5" class="section-number selfRef">5.2.5. </a><a href="#name-addressing-scheme-enhanceme" class="section-name selfRef">Addressing scheme enhancements</a>
+<a href="#section-4.2.5" class="section-number selfRef">4.2.5. </a><a href="#name-addressing-scheme-enhanceme" class="section-name selfRef">Addressing scheme enhancements</a>
           </h4>
-<p id="section-5.2.5-1">BRSKI-AE provides generalizations to the addressing scheme defined in
+<p id="section-4.2.5-1">BRSKI-AE provides generalizations to the addressing scheme defined in
 BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> to accommodate alternative enrollment protocols that
 use authenticated self-contained objects for certification requests.
 As this is supported by various existing enrollment protocols,
-they can be directly employed (see also <a href="#exist_prot" class="xref">Section 6</a>).<a href="#section-5.2.5-1" class="pilcrow">¶</a></p>
-<p id="section-5.2.5-2">The addressing scheme in BRSKI for client certificate request and
-CA certificate distribution function during the enrollment uses
-the definition from EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span>, here on the
-example on simple enrollment: "/.well-known/est/simpleenroll"
+they can be directly employed (see also <a href="#exist_prot" class="xref">Section 5</a>).<a href="#section-4.2.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.5-2">The addressing scheme in BRSKI for certification requests and
+the related CA certificates and CSR attributes retrieval functions
+uses the definition from EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span>; here on the
+example of simple enrollment: "/.well-known/est/simpleenroll".
 This approach is generalized to the following notation:
 "/.well-known/&lt;enrollment-protocol&gt;/&lt;request&gt;"
-in which &lt;enrollment-protocol&gt; can be an already existing protocol or
-a newly defined approach. Note that enrollment is considered here
-as a sequence of at least a certification request and a certification
-response. In case of existing enrollment protocols the following
-notation is used proving compatibility to BRSKI:<a href="#section-5.2.5-2" class="pilcrow">¶</a></p>
+in which &lt;enrollment-protocol&gt; refers to a certificate enrollment protocol.
+Note that enrollment is considered here a message sequence
+that contains at least a certification request and a certification response.
+The following conventions are used in order to provide maximal compatibility to BRSKI:<a href="#section-4.2.5-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2.5-3.1">&lt;enrollment-protocol&gt;: <span class="bcp14">MUST</span> reference the protocol being used,
-which <span class="bcp14">MAY</span> be EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span> as in BRSKI
-or CMP, CMC, SCEP, or a newly defined approach.
+<li class="normal" id="section-4.2.5-3.1">
+              <p id="section-4.2.5-3.1.1">&lt;enrollment-protocol&gt;: <span class="bcp14">MUST</span> reference the protocol being used, which
+<span class="bcp14">MAY</span> be CMP, CMC, SCEP, EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span> as in BRSKI, or a newly defined approach.<a href="#section-4.2.5-3.1.1" class="pilcrow">¶</a></p>
+<p id="section-4.2.5-3.1.2">
 Note: additional endpoints (well-known URIs) at the registrar
-may need to be defined by the utilized enrollment protocol.<a href="#section-5.2.5-3.1" class="pilcrow">¶</a>
+may need to be defined by the enrollment protocol being used.<a href="#section-4.2.5-3.1.2" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.2.5-3.2">&lt;request&gt;: depending on the utilized enrollment protocol,
-the &lt;request&gt; path component <span class="bcp14">MUST</span> describe the required operation at the
-registrar side. Enrollment protocols are expected to
-define their request endpoints, as done by existing protocols
-(see also <a href="#exist_prot" class="xref">Section 6</a>).<a href="#section-5.2.5-3.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.5-3.2">&lt;request&gt;: if present, the &lt;request&gt; path component <span class="bcp14">MUST</span> describe,
+depending on the enrollment protocol being used, the operation requested.
+Enrollment protocols are expected to define their request endpoints,
+as done by existing protocols (see also <a href="#exist_prot" class="xref">Section 5</a>).<a href="#section-4.2.5-3.2" class="pilcrow">¶</a>
 </li>
           </ul>
 </section>
@@ -2124,26 +2128,26 @@ define their request endpoints, as done by existing protocols
 </section>
 </div>
 <div id="discovery_eo">
-<section id="section-5.3">
+<section id="section-4.3">
         <h3 id="name-domain-registrar-support-of">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-domain-registrar-support-of" class="section-name selfRef">Domain registrar support of alternative enrollment protocols</a>
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-domain-registrar-support-of" class="section-name selfRef">Domain registrar support of alternative enrollment protocols</a>
         </h3>
-<p id="section-5.3-1">Well-known URIs for various endpoints on the domain registrar are
-already defined as part of the base BRSKI specification. In
-addition, alternative enrollment endpoints <span class="bcp14">MAY</span> be supported at the
-domain registrar. The pledge will recognize whether its
+<p id="section-4.3-1">Well-known URIs for various endpoints on the domain registrar are
+already defined as part of the base BRSKI specification or indirectly by EST.
+In addition, alternative enrollment endpoints <span class="bcp14">MAY</span> be supported at the registrar.
+The pledge will recognize whether its
 preferred enrollment option is supported by the domain registrar
 by sending a request to its preferred enrollment endpoint
-and evaluating the HTTP response status code.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">The following list of endpoints provides an illustrative example for a domain
-registrar supporting several options for EST as well as for
+and evaluating the HTTP response status code.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">The following list of endpoints provides an illustrative example for
+a domain registrar supporting several options for EST as well as for
 CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints to which the pledge may connect for bootstrapping. This
 includes the voucher handling as well as the enrollment endpoints.
 The CMP related enrollment endpoints are defined as well-known URIs
 in CMP Updates <span>[<a href="#I-D.ietf-lamps-cmp-updates" class="xref">I-D.ietf-lamps-cmp-updates</a>]</span>
-and the Lightweight CMP profile <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.3-3">
+and the Lightweight CMP profile <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.3-3">
 <pre>
   &lt;/brski/voucherrequest&gt;,ct=voucher-cms+json
   &lt;/brski/voucher_status&gt;,ct=json
@@ -2152,143 +2156,131 @@ and the Lightweight CMP profile <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-
   &lt;/est/fullcmc&gt;;ct=pkcs7-mime
   &lt;/est/csrattrs&gt;;ct=pkcs7-mime
   &lt;/cmp/initialization&gt;;ct=pkixcmp
-  &lt;/cmp/certification&gt;;ct=pkixcmp
-  &lt;/cmp/keyupdate&gt;;ct=pkixcmp
   &lt;/cmp/p10&gt;;ct=pkixcmp
   &lt;/cmp/getcacerts&gt;;ct=pkixcmp
   &lt;/cmp/getcertreqtemplate&gt;;ct=pkixcmp
 
-</pre><a href="#section-5.3-3" class="pilcrow">¶</a>
+</pre><a href="#section-4.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-5.3-4">TBD RFC Editor: please delete /*<a href="#section-5.3-4" class="pilcrow">¶</a></p>
-<p id="section-5.3-5">Open Issues:<a href="#section-5.3-5" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5.3-6.1">In addition to the current content types, we may specify that
-the response provides information about various content types
-as multiple values. This would allow to further adapt the
-encoding of the objects exchanged (ASN.1, JSON, CBOR, ...).
--&gt; dependent on the utilized protocol.
-*/<a href="#section-5.3-6.1" class="pilcrow">¶</a>
-</li>
-        </ul>
 </section>
 </div>
 </section>
 </div>
 <div id="exist_prot">
-<section id="section-6">
+<section id="section-5">
       <h2 id="name-examples-for-signature-wrap">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-examples-for-signature-wrap" class="section-name selfRef">Examples for signature-wrapping using existing enrollment protocols</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-examples-for-signature-wrap" class="section-name selfRef">Examples for signature-wrapping using existing enrollment protocols</a>
       </h2>
-<p id="section-6-1">This section maps the requirements to support proof of possession and
-proof of identity to selected existing enrollment protocols.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This section maps the requirements to support proof-of-possession and
+proof-of-identity to selected existing enrollment protocols.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="instantiation-to-est-informative">
-<section id="section-6.1">
+<section id="section-5.1">
         <h3 id="name-instantiation-to-est-inform">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-instantiation-to-est-inform" class="section-name selfRef">Instantiation to EST (informative)</a>
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-instantiation-to-est-inform" class="section-name selfRef">Instantiation to EST (informative)</a>
         </h3>
-<p id="section-6.1-1">When using EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span>, the following aspects and constraints
-need to be considered and the given extra requirements need to be observed:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">When using EST <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span>, the following aspects and constraints
+need to be considered and the given extra requirements need to be fulfilled,
+which adapt Section 5.9.3 of BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span>:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1-2.1">proof of possession is provided by using the specified PKCS#10
-structure in the request.<a href="#section-6.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5.1-2.1">proof-of-possession is provided typically by using the specified PKCS#10
+structure in the request.
+Together with Full PKI requests, also CRMF can be used.<a href="#section-5.1-2.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-6.1-2.2">proof of identity needs to be achieved by signing the certification request
+          <li class="normal" id="section-5.1-2.2">
+            <p id="section-5.1-2.2.1">proof-of-identity needs to be achieved by signing the certification request
 object using the Full PKI Request option (including the /fullcmc endpoint).
-This provides sufficient
-information for the RA to make an authorization decision on the
+This provides sufficient information for the RA to authenticate the pledge
+as the origin of the request and to make an authorization decision on the
 received certification request.
 Note: EST references CMC <span>[<a href="#RFC5272" class="xref">RFC5272</a>]</span> for the
-definition of the Full PKI Request. For proof of identity, the
+definition of the Full PKI Request. For proof-of-identity, the
 signature of the SignedData of the Full PKI Request is
-performed using the IDevID credential of the pledge.<a href="#section-6.1-2.2" class="pilcrow">¶</a>
+performed using the IDevID secret of the pledge.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2.2.2">
+Note: In this case the binding to the underlying TLS connection is not necessary.<a href="#section-5.1-2.2.2" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.1-2.3">TBD RFC Editor: please delete /* TBD: in this case the binding to
-the underlying TLS connection is not necessary. */<a href="#section-6.1-2.3" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-6.1-2.4">When the RA is temporarily not available, as per <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span> section 4.2.3,
-an HTTP status code 202 should be returned by the
-Registrar. The pledge in this case will retry a /simpleenroll
-with a PKCS#10 request. Note that if the TLS connection is taken
-down during the waiting period, the PKCS#10 request needs to be
-rebuilt if it contains the unique identifier (tls_unique) from
-the underlying TLS connection for the binding.<a href="#section-6.1-2.4" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-6.1-2.5">TBD RFC Editor: please delete /* TBD: clarification of retry for
-fullcmc is necessary as not specified in the context of EST */<a href="#section-6.1-2.5" class="pilcrow">¶</a>
+          <li class="normal" id="section-5.1-2.3">When the RA is temporarily not available, as per Section 4.2.3 of <span>[<a href="#RFC7030" class="xref">RFC7030</a>]</span>,
+an HTTP status code 202 should be returned by the registrar,
+and the pledge will repeat the initial Full PKI Request<a href="#section-5.1-2.3" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
 </div>
 <div id="instantiation-to-cmp-normative-if-cmp-is-chosen">
-<section id="section-6.2">
+<section id="section-5.2">
         <h3 id="name-instantiation-to-cmp-normat">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-instantiation-to-cmp-normat" class="section-name selfRef">Instantiation to CMP (normative if CMP is chosen)</a>
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-instantiation-to-cmp-normat" class="section-name selfRef">Instantiation to CMP (normative if CMP is chosen)</a>
         </h3>
-<p id="section-6.2-1">Note: Instead of referring to CMP
+<p id="section-5.2-1">Note: Instead of referring to CMP
 as specified in <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span> and <span>[<a href="#I-D.ietf-lamps-cmp-updates" class="xref">I-D.ietf-lamps-cmp-updates</a>]</span>,
 this document refers to the Lightweight CMP Profile
 <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> because
-the subset of CMP defined there is sufficient for the functionality needed here.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">When using CMP, the following requirements <span class="bcp14">SHALL</span> be observed:<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+the subset of CMP defined there is sufficient for the functionality needed here.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">When using CMP, the following requirements <span class="bcp14">SHALL</span> be fulfilled:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.2-3.1">For proof of possession, the approach defined in the Lightweight CMP Profile
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> section 4.1.1 (based on CRMF)
-or 4.1.4 (based on PCKS#10) <span class="bcp14">SHALL</span> be applied.<a href="#section-6.2-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5.2-3.1">For proof-of-possession, the approach defined in Section 4.1.1 (based on CRMF)
+or Section 4.1.4 (based on PKCS#10) of the Lightweight CMP Profile
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> <span class="bcp14">SHALL</span> be applied.<a href="#section-5.2-3.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-6.2-3.2">proof of identity <span class="bcp14">SHALL</span> be provided by using signature-based
-protection of the certificate request message as outlined in section
-3.2. of <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-6.2-3.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-5.2-3.2">proof-of-identity <span class="bcp14">SHALL</span> be provided by using signature-based
+protection of the certification request message as outlined in
+Section 3.2. of <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> using the IDevID secret.<a href="#section-5.2-3.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-6.2-3.3">When the RA/CA is not available, a waiting indication <span class="bcp14">SHALL</span> be
-returned in the PKIStatus by the Registrar as specified in sections 4.4 and
-5.1.2 of <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> for delayed delivery.<a href="#section-6.2-3.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-5.2-3.3">When the Cert Response from the RA/CA is not available and if polling is supported,
+the registrar <span class="bcp14">SHALL</span> a Cert Waiting Response as specified in
+Sections 4.4 and 5.1.2 of <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-5.2-3.3" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-6.2-3.4">Requesting CA certificates and certificate request attributes <span class="bcp14">SHALL</span> be
-implemented a specified in sections 4.3.1 and 4.3.3 of
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-6.2-3.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-5.2-3.4">As far as requesting CA certificates or certificate request attributes is supported,
+they <span class="bcp14">SHALL</span> be implemented as specified in
+Sections 4.3.1 and 4.3.3 of <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span>.<a href="#section-5.2-3.4" class="pilcrow">¶</a>
 </li>
         </ul>
+<p id="section-5.2-4">TBD RFC Editor: please delete /* ToDo:
+The following aspects need to be further specified:
+* Whether to use /getcacerts or the caPubs and extraCerts fields
+  to return trust anchor and CA Certificates
+* Whether to use /getcertreqtemplate or modify the CRMF and use raVerified
+* Whether to specify the usage of /p10 */<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-7">
+<section id="section-6">
       <h2 id="name-iana-considerations">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-7-1">This document does not require IANA actions.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">This document does not require IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-8">
+<section id="section-7">
       <h2 id="name-security-considerations">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-8-1">The security considerations as laid out in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> apply for
-the discovery and voucher exchange as well as for the status exchange information.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">The security considerations as laid out in the Lightweight CMP Profile
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> apply as far as CMP is used.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-7-1">The security considerations as laid out in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> apply for
+the discovery and voucher exchange as well as for the status exchange information.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">The security considerations as laid out in the Lightweight CMP Profile
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> apply as far as CMP is used.<a href="#section-7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
-<section id="section-9">
+<section id="section-8">
       <h2 id="name-acknowledgments">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="section-9-1">We would like to thank
+<p id="section-8-1">We would like to thank
 Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
-for their input and discussion on use cases and call flows.<a href="#section-9-1" class="pilcrow">¶</a></p>
+for their input and discussion on use cases and call flows.<a href="#section-8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-10">
+<section id="section-9">
       <h2 id="name-references">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
-<section id="section-10.1">
+<section id="section-9.1">
         <h3 id="name-normative-references">
-<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="I-D.ietf-lamps-cmp-updates">[I-D.ietf-lamps-cmp-updates]</dt>
@@ -2298,6 +2290,10 @@ for their input and discussion on use cases and call flows.<a href="#section-9-1
 <dt id="I-D.ietf-lamps-lightweight-cmp-profile">[I-D.ietf-lamps-lightweight-cmp-profile]</dt>
         <dd>
 <span class="refAuthor">Brockhaus, H.</span>, <span class="refAuthor">Oheimb, D. V.</span>, and <span class="refAuthor">S. Fries</span>, <span class="refTitle">"Lightweight Certificate Management Protocol (CMP) Profile"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-lightweight-cmp-profile-10</span>, <time datetime="2022-02-01" class="refDate">1 February 2022</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-10.txt">https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-10.txt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IEEE.802.1AR_2009">[IEEE.802.1AR_2009]</dt>
+        <dd>
+<span class="refAuthor">IEEE</span>, <span class="refTitle">"IEEE Standard for Local and metropolitan area networks - Secure Device Identity"</span>, <span class="seriesInfo">IEEE 802.1AR-2009</span>, <span class="seriesInfo">DOI 10.1109/ieeestd.2009.5367679</span>, <time datetime="2009-12-28" class="refDate">28 December 2009</time>, <span>&lt;<a href="http://ieeexplore.ieee.org/servlet/opac?punumber=5367676">http://ieeexplore.ieee.org/servlet/opac?punumber=5367676</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -2321,9 +2317,9 @@ for their input and discussion on use cases and call flows.<a href="#section-9-1
 <dd class="break"></dd>
 </dl>
 </section>
-<section id="section-10.2">
+<section id="section-9.2">
         <h3 id="name-informative-references">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="IEC-62351-9">[IEC-62351-9]</dt>
@@ -2387,11 +2383,11 @@ for their input and discussion on use cases and call flows.<a href="#section-9-1
 which acts both as EST server and as registration authority (RA).
 The TLS connection is mutually authenticated,
 where the pledge uses its IDevID certificate issued by its manufacturer.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2">In order to provide a strong proof of origin of the certificate request,
+<p id="appendix-A-2">In order to provide a strong proof-of-origin of the certification request,
 EST has the option to include in the certification request
 the so-called tls-unique value <span>[<a href="#RFC5929" class="xref">RFC5929</a>]</span> of the underlying TLS channel.
-This binding of the proof of identity of the TLS client, which is supposed to
-be the certificate requester, to the proof of possession for the private key is
+This binding of the proof-of-identity of the TLS client, which is supposed to
+be the certificate requester, to the proof-of-possession for the private key is
 conceptually non-trivial and requires specific support by TLS implementations.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <p id="appendix-A-3">The registrar terminates the security association with the pledge at TLS level
 and thus the binding between the certification request and the authentication
@@ -2422,7 +2418,7 @@ excludes requesting certificates for key types that do not support signing.<a hr
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-application-examples" class="section-name selfRef">Application examples</a>
       </h2>
 <p id="appendix-B-1">This informative annex provides some detail to
-the application examples listed in <a href="#list-examples" class="xref">Section 3.2</a>.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+the application examples listed in <a href="#list-examples" class="xref">Section 1.3</a>.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <div id="rolling-stock">
 <section id="appendix-B.1">
         <h3 id="name-rolling-stock">
@@ -2468,7 +2464,8 @@ connectivity to the backend PKI may be facilitated by the service
 technician's laptop.
 Alternatively, the data can also be collected from the
 pledges directly and provided to a domain registrar deployed in a
-different network as preparation for the operational phase. In this case, connectivity to the domain registrar
+different network as preparation for the operational phase.
+In this case, connectivity to the domain registrar
 may also be facilitated by the service technician's laptop.<a href="#appendix-B.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2532,10 +2529,10 @@ time, for example when a batch of new devices is deployed, and
 forbidden or prevented at other times.<a href="#appendix-B.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="less-operational-security-in-the-target-domain">
+<div id="sites-with-insufficient-level-of-operational-security">
 <section id="appendix-B.6">
-        <h3 id="name-less-operational-security-i">
-<a href="#appendix-B.6" class="section-number selfRef">B.6. </a><a href="#name-less-operational-security-i" class="section-name selfRef">Less operational security in the target domain</a>
+        <h3 id="name-sites-with-insufficient-lev">
+<a href="#appendix-B.6" class="section-number selfRef">B.6. </a><a href="#name-sites-with-insufficient-lev" class="section-name selfRef">Sites with insufficient level of operational security</a>
         </h3>
 <p id="appendix-B.6-1">The registration authority performing (at least part of) the authorization of a
 certification request is a critical PKI component and therefore requires higher
@@ -2544,9 +2541,9 @@ certificates for their security features. CAs may also demand higher
 security in the registration procedures. Especially the CA/Browser
 forum currently increases the security requirements in the certificate
 issuance procedures for publicly trusted certificates.
-There may be situations where the target domain does not offer a sufficient
-level of security to operate a registration authority and therefore wants to
-transfer this service to a backend service that offers a higher security level.<a href="#appendix-B.6-1" class="pilcrow">¶</a></p>
+In case the on-site components of the target domain cannot be operated securely
+enough for the needs of a registration authority, this service should be
+transferred to an off-site backend component that has a sufficient level of security.<a href="#appendix-B.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2560,13 +2557,15 @@ transfer this service to a backend service that offers a higher security level.<
 <ul class="normal">
 <li class="normal" id="appendix-C-2.1">David von Oheimb became the editor.<a href="#appendix-C-2.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-C-2.2">Streamline wording, improve grammar, etc. throughout the text.<a href="#appendix-C-2.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-2.2">Streamline wording, consolidate terminology, improve grammar, etc.<a href="#appendix-C-2.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-2.3">Shift the emphasis towards supporting alternative enrollment protocols.<a href="#appendix-C-2.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-2.4">Update the title accordingly - preliminary change to be approved.<a href="#appendix-C-2.4" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-2.5">Move comments on EST and detailed application examples to informative annex.<a href="#appendix-C-2.5" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-C-2.6">Move the remaining text of section 3 as two new sub-sections of section 1.<a href="#appendix-C-2.6" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-3">From IETF draft 03 -&gt; IETF draft 04:<a href="#appendix-C-3" class="pilcrow">¶</a></p>
@@ -2632,7 +2631,7 @@ pledge (issue #5) included in UC2.<a href="#appendix-C-8.9" class="pilcrow">¶</
       </ul>
 <p id="appendix-C-9">From IETF draft 00 -&gt; IETF draft 01:<a href="#appendix-C-9" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-10.1">Update of scope in <a href="#sup-env" class="xref">Section 3.1</a> to include in
+<li class="normal" id="appendix-C-10.1">Update of scope in <a href="#sup-env" class="xref">Section 1.2</a> to include in
 which the pledge acts as a server. This is one main motivation
 for use case 2.<a href="#appendix-C-10.1" class="pilcrow">¶</a>
 </li>
@@ -2645,7 +2644,7 @@ pledge as well as the endpoint definition on the pledge.<a href="#appendix-C-10.
 </li>
         <li class="normal" id="appendix-C-10.4">Clarification in discovery options for enrollment endpoints at
 the domain registrar based on well-known endpoints in
-<a href="#discovery_eo" class="xref">Section 5.3</a> do not result in additional
+<a href="#discovery_eo" class="xref">Section 4.3</a> do not result in additional
 /.well-known URIs. Update of the illustrative example.
 Note that the change to /brski for the voucher related endpoints
 has been taken over in the BRSKI main document.<a href="#appendix-C-10.4" class="pilcrow">¶</a>
@@ -2659,7 +2658,7 @@ has been taken over in the BRSKI main document.<a href="#appendix-C-10.4" class=
 <ul class="normal">
 <li class="normal" id="appendix-C-12.1">Inclusion of discovery options of enrollment endpoints at
 the domain registrar based on well-known endpoints in
-<a href="#discovery_eo" class="xref">Section 5.3</a> as replacement of section 5.1.3
+<a href="#discovery_eo" class="xref">Section 4.3</a> as replacement of section 5.1.3
 in the individual draft. This is intended to support both use
 cases in the document. An illustrative example is provided.<a href="#appendix-C-12.1" class="pilcrow">¶</a>
 </li>
@@ -2667,16 +2666,16 @@ cases in the document. An illustrative example is provided.<a href="#appendix-C-
 pledge-agent use case UC2, e.g. to
 accommodate distribution of CA certificates.<a href="#appendix-C-12.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-C-12.3">Updated CMP example in <a href="#exist_prot" class="xref">Section 6</a> to use
+        <li class="normal" id="appendix-C-12.3">Updated CMP example in <a href="#exist_prot" class="xref">Section 5</a> to use
 Lightweight CMP instead of CMP, as the draft already provides
 the necessary /.well-known endpoints.<a href="#appendix-C-12.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-12.4">Requirements discussion moved to separate section in
-<a href="#req-sol" class="xref">Section 4</a>. Shortened description of proof
+<a href="#req-sol" class="xref">Section 3</a>. Shortened description of proof
 of identity binding and mapping to existing protocols.<a href="#appendix-C-12.4" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-12.5">Removal of copied call flows for voucher exchange and registrar
-discovery flow from <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> in <a href="#uc1" class="xref">Section 5</a> to avoid doubling or text or
+discovery flow from <span>[<a href="#RFC8995" class="xref">RFC8995</a>]</span> in <a href="#uc1" class="xref">Section 4</a> to avoid doubling or text or
 inconsistencies.<a href="#appendix-C-12.5" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-12.6">Reworked abstract and introduction to be more crisp regarding
@@ -2706,7 +2705,7 @@ related BRSKI-AE call flow.<a href="#appendix-C-14.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-14.4">Update of provided examples of the addressing approach used in
 BRSKI to allow for support of multiple enrollment protocols in
-<a href="#addressing" class="xref">Section 5.2.5</a>.<a href="#appendix-C-14.4" class="pilcrow">¶</a>
+<a href="#addressing" class="xref">Section 4.2.5</a>.<a href="#appendix-C-14.4" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-15">From individual version 01 -&gt; 02:<a href="#appendix-C-15" class="pilcrow">¶</a></p>
@@ -2715,7 +2714,7 @@ BRSKI to allow for support of multiple enrollment protocols in
 IDevID and LDevID.<a href="#appendix-C-16.1" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-16.2">Definition of the addressing approach used in BRSKI to allow for
-support of multiple enrollment protocols in <a href="#addressing" class="xref">Section 5.2.5</a>.  This
+support of multiple enrollment protocols in <a href="#addressing" class="xref">Section 4.2.5</a>.  This
 section also contains a first
 discussion of an optional discovery mechanism to address
 situations in which the registrar supports more than one enrollment
@@ -2723,11 +2722,11 @@ approach. Discovery should avoid that the pledge performs a trial
 and error of enrollment protocols.<a href="#appendix-C-16.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-16.3">Update of description of architecture elements and
-changes to BRSKI in <a href="#architecture" class="xref">Section 5.1</a>.<a href="#appendix-C-16.3" class="pilcrow">¶</a>
+changes to BRSKI in <a href="#architecture" class="xref">Section 4.1</a>.<a href="#appendix-C-16.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-16.4">Enhanced consideration of existing enrollment protocols in the
 context of mapping the requirements to existing solutions in
-<a href="#req-sol" class="xref">Section 4</a> and in <a href="#exist_prot" class="xref">Section 6</a>.<a href="#appendix-C-16.4" class="pilcrow">¶</a>
+<a href="#req-sol" class="xref">Section 3</a> and in <a href="#exist_prot" class="xref">Section 5</a>.<a href="#appendix-C-16.4" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-17">From individual version 00 -&gt; 01:<a href="#appendix-C-17" class="pilcrow">¶</a></p>
@@ -2740,15 +2739,15 @@ complicate the use case. Note that the voucher exchange can
 already be handled in an asynchronous manner and is therefore
 not considered further. This resulted in removal of the
 alternative path the MASA in Figure 1 and the associated
-description in <a href="#architecture" class="xref">Section 5.1</a>.<a href="#appendix-C-18.2" class="pilcrow">¶</a>
+description in <a href="#architecture" class="xref">Section 4.1</a>.<a href="#appendix-C-18.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-18.3">Enhancement of description of architecture elements and
-changes to BRSKI in <a href="#architecture" class="xref">Section 5.1</a>.<a href="#appendix-C-18.3" class="pilcrow">¶</a>
+changes to BRSKI in <a href="#architecture" class="xref">Section 4.1</a>.<a href="#appendix-C-18.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-18.4">Consideration of existing enrollment protocols in the context
-of mapping the requirements to existing solutions in <a href="#req-sol" class="xref">Section 4</a>.<a href="#appendix-C-18.4" class="pilcrow">¶</a>
+of mapping the requirements to existing solutions in <a href="#req-sol" class="xref">Section 3</a>.<a href="#appendix-C-18.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-C-18.5">New section starting <a href="#exist_prot" class="xref">Section 6</a> with the
+        <li class="normal" id="appendix-C-18.5">New section starting <a href="#exist_prot" class="xref">Section 5</a> with the
 mapping to existing enrollment protocols by collecting
 boundary conditions.<a href="#appendix-C-18.5" class="pilcrow">¶</a>
 </li>
