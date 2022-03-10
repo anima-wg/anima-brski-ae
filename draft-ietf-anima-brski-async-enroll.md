@@ -182,7 +182,7 @@ may be not feasible or too costly.
 In such scenarios, the authentication and authorization of certification requests
 will not or can not be performed on-site at enrollment time.
 In this document, enrollment that is not performed in a (time-wise) consistent
-way is called *asynchronous enrollment*.
+way is called 'asynchronous enrollment'.
 Asynchronous enrollment requires a store-and-forward transfer of certification
 requests along with the information needed for authenticating the requester.
 This allows offline processing the request.
@@ -855,7 +855,7 @@ When using CMP, the following requirements SHALL be fulfilled:
   Section 3.2. of {{I-D.ietf-lamps-lightweight-cmp-profile}} using the IDevID secret.
 
 * When the Cert Response from the RA/CA is not available and if polling is supported,
-  the registrar SHALL a Cert Waiting Response as specified in
+  the registrar SHALL return a Cert Waiting Response as specified in
   Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 * As far as requesting CA certificates or certificate request attributes is supported,
@@ -864,9 +864,10 @@ When using CMP, the following requirements SHALL be fulfilled:
 
 TBD RFC Editor: please delete /* ToDo:
 The following aspects need to be further specified:
-* Whether to use /getcacerts or the caPubs and extraCerts fields
-  to return trust anchor and CA Certificates
-* Whether to use /getcertreqtemplate or modify the CRMF and use raVerified
+* Whether to use /getcacerts or the caPubs and extraCerts fields when
+  further to-be-trusted (root CA) certificates and possibly other CA certs are needed
+* Whether to use /getcertreqtemplate or let the registrar modify the CRMF and use raVerified
+* Specify the optional use of implicitConfirm as alternative to certConf
 * Whether to specify the usage of /p10 */
 
 
