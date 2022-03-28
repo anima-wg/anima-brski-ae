@@ -1,6 +1,6 @@
 SHELL=bash # This is for supporting extended file name globbing
 
-DRAFT:=draft-ietf-anima-brski-async-enroll
+DRAFT:=draft-ietf-anima-brski-ae
 VERSION:=$(shell ./getver ${DRAFT}.md )
 
 .phony: default update generate version diff log commit

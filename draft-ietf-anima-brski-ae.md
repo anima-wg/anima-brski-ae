@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-async-enroll-05
+docname: draft-ietf-anima-brski-ae-06
 stand_alone: true
 ipr: trust200902
 area: Operations and Management
@@ -1049,6 +1049,10 @@ transferred to an off-site backend component that has a sufficient level of secu
 
 
 # History of changes TBD RFC Editor: please delete {#app_history}
+
+From IETF draft 06 -> IETF draft 06:
+
+* Renamed the repo and files from anima-brski-async-enroll to anima-brski-ae
 
 From IETF draft 04 -> IETF draft 05:
 
