@@ -607,14 +607,11 @@ is not visible / verifiable to authorization points outside the registrar.-->
 {{exist_prot}} discusses selected suitable enrollment protocols and options applicable.
 
 <figure title="BRSKI-AE abstract protocol overview">
-    <!-- Image converted from BRSKI-AE_abstract_protocol_overview.png
-         using https://www.freeconvert.com/png-to-svg
-         which provides reasonable quality but unfortunately removed some colors.
-    -->
-    <artset>
-        <artwork type="svg" src="BRSKI-AE_abstract_protocol_overview.svg" />
-        <artwork type="ascii-art" src="BRSKI-AE_abstract_protocol_overview.txt" />
-    </artset>
+    <!-- Image converted from PDF using https://www.zamzar.com/convert/pdf-to-svg/-->
+    <artwork src="overview.svg">
+[ Cannot render SVG graphics - please view
+  https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/overview.png ]
+    </artwork>
 </figure>
 
 ### Pledge - Registrar discovery and voucher exchange {#discovery}

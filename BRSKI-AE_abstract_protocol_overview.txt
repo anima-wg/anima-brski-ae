@@ -1,3 +1,0 @@
-[ Cannot render SVG graphics - please view
-  https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/overview.png ]
-
