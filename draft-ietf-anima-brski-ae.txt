@@ -5,10 +5,10 @@
 ANIMA WG                                              D. von Oheimb, Ed.
 Internet-Draft                                                  S. Fries
 Intended status: Standards Track                            H. Brockhaus
-Expires: 29 September 2022                                       Siemens
+Expires: 1 October 2022                                          Siemens
                                                                  E. Lear
                                                            Cisco Systems
-                                                           28 March 2022
+                                                           30 March 2022
 
 
           BRSKI-AE: Alternative Enrollment Protocols in BRSKI
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 September 2022.
+   This Internet-Draft will expire on 1 October 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 1]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 1]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 2]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 2]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 3]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 3]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 4]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 4]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 5]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 5]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 6]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 6]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 7]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 7]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 8]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 8]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022               [Page 9]
+von Oheimb, et al.       Expires 1 October 2022                 [Page 9]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 10]
+von Oheimb, et al.       Expires 1 October 2022                [Page 10]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 11]
+von Oheimb, et al.       Expires 1 October 2022                [Page 11]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -669,7 +669,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 12]
+von Oheimb, et al.       Expires 1 October 2022                [Page 12]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -687,6 +687,11 @@ Internet-Draft                  BRSKI-AE                      March 2022
    the Enroll step (5) MUST be performed with an enrollment protocol
    utilizing authenticated self-contained objects.  Section 5 discusses
    selected suitable enrollment protocols and options applicable.
+
+[ Cannot render SVG graphics - please view
+  https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/overview.png ]
+
+            Figure 2: BRSKI-AE abstract protocol overview
 
 4.2.1.  Pledge - Registrar discovery and voucher exchange
 
@@ -720,12 +725,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-
-
-
-
-
-von Oheimb, et al.      Expires 29 September 2022              [Page 13]
+von Oheimb, et al.       Expires 1 October 2022                [Page 13]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -768,10 +768,10 @@ Internet-Draft                  BRSKI-AE                      March 2022
      |                                         |<-- PKI Confirm ----|
      |<------------- PKI/Registrar Confirm ----|                    |
 
-                      Figure 2: Certificate enrollment
+                      Figure 3: Certificate enrollment
 
    The following list provides an abstract description of the flow
-   depicted in Figure 2.
+   depicted in Figure 3.
 
    *  CA Cert Request: The pledge optionally requests the latest
       relevant CA certificates.  This ensures that the pledge has the
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 14]
+von Oheimb, et al.       Expires 1 October 2022                [Page 14]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 15]
+von Oheimb, et al.       Expires 1 October 2022                [Page 15]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 16]
+von Oheimb, et al.       Expires 1 October 2022                [Page 16]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 17]
+von Oheimb, et al.       Expires 1 October 2022                [Page 17]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 18]
+von Oheimb, et al.       Expires 1 October 2022                [Page 18]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 19]
+von Oheimb, et al.       Expires 1 October 2022                [Page 19]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 20]
+von Oheimb, et al.       Expires 1 October 2022                [Page 20]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1173,7 +1173,7 @@ Appendix A.  Using EST for certificate enrollment
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 21]
+von Oheimb, et al.       Expires 1 October 2022                [Page 21]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1229,7 +1229,7 @@ Appendix B.  Application examples
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 22]
+von Oheimb, et al.       Expires 1 October 2022                [Page 22]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1285,7 +1285,7 @@ B.2.  Building automation
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 23]
+von Oheimb, et al.       Expires 1 October 2022                [Page 23]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1341,7 +1341,7 @@ B.5.  Infrastructure isolation policy
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 24]
+von Oheimb, et al.       Expires 1 October 2022                [Page 24]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1397,7 +1397,7 @@ Appendix C.  History of changes TBD RFC Editor: please delete
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 25]
+von Oheimb, et al.       Expires 1 October 2022                [Page 25]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 26]
+von Oheimb, et al.       Expires 1 October 2022                [Page 26]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 27]
+von Oheimb, et al.       Expires 1 October 2022                [Page 27]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 28]
+von Oheimb, et al.       Expires 1 October 2022                [Page 28]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1621,7 +1621,7 @@ Authors' Addresses
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 29]
+von Oheimb, et al.       Expires 1 October 2022                [Page 29]
 
 Internet-Draft                  BRSKI-AE                      March 2022
 
@@ -1677,4 +1677,4 @@ Internet-Draft                  BRSKI-AE                      March 2022
 
 
 
-von Oheimb, et al.      Expires 29 September 2022              [Page 30]
+von Oheimb, et al.       Expires 1 October 2022                [Page 30]
