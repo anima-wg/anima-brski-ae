@@ -608,7 +608,7 @@ is not visible / verifiable to authorization points outside the registrar.-->
 
 <figure title="BRSKI-AE abstract protocol overview">
     <!-- Image converted from PDF using https://www.zamzar.com/convert/pdf-to-svg/-->
-    <artwork src="overview.svg">
+    <artwork src="overview-bw.svg">
 [ Cannot render SVG graphics - please view
   https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/overview.png ]
     </artwork>
@@ -1059,6 +1059,8 @@ transferred to an off-site backend component that has a sufficient level of secu
 From IETF draft 06 -> IETF draft 06:
 
 * Renamed the repo and files from anima-brski-async-enroll to anima-brski-ae
+
+* Added graphics for abstract protocol overview as suggested by Toerless Eckert
 
 From IETF draft 04 -> IETF draft 05:
 
