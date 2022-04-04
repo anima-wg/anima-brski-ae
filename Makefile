@@ -1,7 +1,15 @@
 DRAFT:=draft-ietf-anima-brski-ae
 
-html: xml
-	xml2rfc ${DRAFT}.xml --html
+all: ${DRAFT}.txt ${DRAFT}.html ${DRAFT}.pdf
 
-xml:
-	kdrfc ${DRAFT}.md
+%.xml: %.md
+	kdrfc --v3 -x $?
+
+%.txt: %.xml
+	xml2rfc --text -o $@ $?
+
+%.html: %.xml
+	xml2rfc --html -o $@ $?
+
+%.pdf: %.xml
+	xml2rfc --pdf -o $@ $?
