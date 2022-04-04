@@ -182,7 +182,7 @@ may be not feasible or too costly.
 In such scenarios, the authentication and authorization of certification requests
 will not or can not be performed on-site at enrollment time.
 In this document, enrollment that is not performed in a (time-wise) consistent
-way is called *asynchronous enrollment*.
+way is called 'asynchronous enrollment'.
 Asynchronous enrollment requires a store-and-forward transfer of certification
 requests along with the information needed for authenticating the requester.
 This allows offline processing the request.
@@ -255,7 +255,7 @@ In contrast to BRSKI, this specification supports offering multiple enrollment p
 on the infrastructure side, which enables pledges and their developers
 to pick the preferred one.
 
-## Supported environment {#sup-env}
+## Supported Environment {#sup-env}
 
 BRSKI-AE is intended to be used in domains that may have limited support
 of on-site PKI services and comprises application scenarios like the following.
@@ -277,7 +277,7 @@ of on-site PKI services and comprises application scenarios like the following.
   Final authorization is done by an RA residing in the operator domain.
 
 
-## List of application examples {#list-examples}
+## List of Application Examples {#list-examples}
 
 Bootstrapping can be handled in various ways, depending on the application domains.
 The informative {{app-examples}} provides illustrative examples from
@@ -355,7 +355,9 @@ authenticated self-contained object:
   of the actual object using the IDevID secret.
 
 
-# Requirements discussion and mapping to solution elements {#req-sol}
+# Requirements and Mapping to Solutions {#req-sol}
+
+## Basic Requirements
 
 There were two main drivers for the definition of BRSKI-AE:
 
@@ -382,10 +384,12 @@ At least the following properties are required:
   the certification request. This typically is achieved by a signature
   using the IDevID secret of the pledge.
 
-Here is an incomplete list of solution examples,
+The rest of this section gives an incomplete list of solution examples,
 based on existing technology described in IETF documents:
 
-* Certification request objects: Certification requests are
+## Solution Options for Proof-of-possession
+
+  Certification request objects: Certification requests are
   data structures protecting only the integrity of the contained data
   and providing proof-of-possession for a (locally generated) private key.
   Examples for certification request data structures are:
@@ -411,7 +415,9 @@ based on existing technology described in IETF documents:
   origin authentication to the certification request may be
   delegated to the protocol used for certificate management.
 
-* Solution options for proof-of-identity: The certification request should be bound to
+## Solution Options for Proof-of-identity
+
+  The certification request should be bound to
   an existing authenticated credential (here, the IDevID certificate) to enable a proof
   of identity and, based on it, an authorization of the certification request.
   The binding may be achieved through security options in an
@@ -533,7 +539,7 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
  ...................................................................
          off-site or central "domain" components
 ~~~~
-{: #uc1figure title='Architecture overview using off-site PKI components' artwork-align="left"}
+{: #uc1figure title='Architecture Overview Using Off-site PKI Components' artwork-align="left"}
 
 The architecture overview in {{uc1figure}}
 has the same logical elements as BRSKI, but with more flexible placement
@@ -594,7 +600,7 @@ and differences to the original approach as follows.
   that uses authenticated self-contained objects.
 
 
-## Message exchange
+## Message Exchange
 
 The behavior of a pledge described in Section 2.1 of BRSKI {{RFC8995}}
 is kept with one exception.
@@ -606,7 +612,7 @@ to the certification request object itself, so this form of authentication
 is not visible / verifiable to authorization points outside the registrar.-->
 {{exist_prot}} discusses selected suitable enrollment protocols and options applicable.
 
-<figure title="BRSKI-AE abstract protocol overview">
+<figure title="BRSKI-AE Abstract Protocol Overview">
     <!-- Image converted from PDF using https://www.zamzar.com/convert/pdf-to-svg/-->
     <artwork src="overview-bw.svg">
 [ Cannot render SVG graphics - please view
@@ -614,17 +620,17 @@ is not visible / verifiable to authorization points outside the registrar.-->
     </artwork>
 </figure>
 
-### Pledge - Registrar discovery and voucher exchange {#discovery}
+**Pledge - registrar discovery and voucher exchange**
 
 The discovery phase and voucher exchange are applied as specified in {{RFC8995}}.
 
 
-### Registrar - MASA voucher exchange {#vexchange}
+**Registrar - MASA voucher exchange**
 
 This voucher exchange is performed as specified in {{RFC8995}}.
 
 
-### Pledge - Registrar - RA/CA certificate enrollment {#enroll}
+**Pledge - registrar - RA/CA certificate enrollment**
 
 As stated in {{req-sol}}, the enrollment MUST be
 performed using an authenticated self-contained object providing
@@ -632,56 +638,52 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 
 
 ~~~~
-+--------+                        +------------+     +------------+
-| Pledge |                        | Domain     |     | Operator   |
-|        |                        | Registrar  |     | RA/CA      |
-|        |                        |  (JRC)     |     | (OPKI)     |
-+--------+                        +------------+     +------------+
-  /-->                                      |                    |
-[Optional request of CA certificates]       |                    |
-  |---------- CA Certs Request ------------>|                    |
-  |              [if connection to operator domain is available] |
-  |                                         |-Request CA Certs ->|
-  |                                         |<-CA Certs Response-|
-  |<-------- CA Certs Response--------------|                    |
-  /-->                                      |                    |
-[Optional request of attributes to be included in Cert Request]  |
-  |---------- Attribute Request ----------->|                    |
-  |              [if connection to operator domain is available] |
-  |                                         |-Attribute Request->|
-  |                                         |<- Attrib Response -|
-  |<--------- Attribute Response -----------|                    |
-  /-->                                      |                    |
-[Certification request]                     |                    |
-  |-------------- Cert Request ------------>|                    |
-  |      [when connection to off-site components is unavailable] |
-  |<----- optional: Cert Waiting Response --|                    |
-  |                                         |                    |
-  |-------optional: Cert Polling ---------->|                    |
-  |                                         |                    |
-  |        [when connection to off-site components is available] |
-  |                                         |--- Cert Request -->|
-  |                                         |<-- Cert Response --|
-  |<------------- Cert Response ------------|                    |
-  /-->                                      |                    |
-[Optional certificate confirmation]         |                    |
-  |-------------- Cert Confirm ------------>|                    |
-  |                                         |--- Cert Confirm -->|
-  |                                         |<-- PKI Confirm ----|
-  |<------------- PKI/Registrar Confirm ----|                    |
++--------+                        +------------+        +------------+
+| Pledge |                        | Domain     |        | Operator   |
+|        |                        | Registrar  |        | RA/CA      |
+|        |                        |  (JRC)     |        | (PKI)      |
++--------+                        +------------+        +------------+
+  /-->                                      |                       |
+[Optional request of CA certificates]       |                       |
+  |---------- CA Certs Request ------------>|                       |
+  |                 [if connection to operator domain is available] |
+  |                                         |-- CA Certs Request -->|
+  |                                         |<- CA Certs Response --|
+  |<--------- CA Certs Response ------------|                       |
+  /-->                                      |                       |
+[Optional request of attributes to include in Certificate Request]  |
+  |---------- Attribute Request ----------->|                       |
+  |                 [if connection to operator domain is available] |
+  |                                         |- Attribute Request -->|
+  |                                         |<- Attribute Response -|
+  |<--------- Attribute Response -----------|                       |
+  /-->                                      |                       |
+[Mandatory certificate request]             |                       |
+  |---------- Certificate Request --------->|                       |
+  |                 [if connection to operator domain is available] |
+  |                                         |-Certificate Request ->|
+  |                                         |<- Certificate Resp. --|
+  |<--------- Certificate Response ---------|                       |
+  /-->                                      |                       |
+[Optional certificate confirmation]         |                       |
+  |---------- Certificate Confirm --------->|                       |
+  |                 [if connection to operator domain is available] |
+  |                                         |-Certificate Confirm ->|
+  |                                         |<---- PKI Confirm -----|
+  |<--------- PKI/Registrar Confirm --------|                       |
 ~~~~
-{: #enrollfigure title='Certificate enrollment' artwork-align="left"}
+{: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
 The following list provides an abstract description of the flow
 depicted in {{enrollfigure}}.
 
-* CA Cert Request: The pledge optionally requests the latest relevant
+* CA Certs Request: The pledge optionally requests the latest relevant
   CA certificates. This ensures that the pledge has the
   complete set of current CA certificates beyond the
   pinned-domain-cert (which is contained in the voucher
   and may be just the domain registrar certificate).
 
-* CA Cert Response: It MUST contain the current root CA certificate,
+* CA Certs Response: It MUST contain the current root CA certificate,
   which typically is the LDevID trust anchor, and any additional certificates
   that the pledge may need to validate certificates.
 
@@ -695,27 +697,16 @@ depicted in {{enrollfigure}}.
 * Attribute Response: It MUST contain the attributes to be included
   in the subsequent certification request.
 
-* Cert Request: This certification request MUST contain the
+* Certificate Request: This certification request MUST contain the
   authenticated self-contained object ensuring both proof-of-possession of the
   corresponding private key and proof-of-identity of the requester.
 
-* Cert Response: The certification response message MUST contain on success
+* Certificate Response: The certification response message MUST contain on success
   the requested certificate and MAY include further information,
   like certificates of intermediate CAs.
 
-* Cert Waiting Response: Optional waiting indication for the pledge,
-  which SHOULD poll for a Cert Response after a given time.
-  To this end, a request identifier is necessary.
-  The request identifier may be either part of the enrollment
-  protocol or can be derived from the certification request.
-
-* Cert Polling: This SHOULD be used by the pledge in reaction to
-  a Cert Waiting Response to query the registrar
-  whether the certification request meanwhile has been processed.
-  It MUST be answered either by another Cert Waiting, or the Cert Response.
-
-* Cert Confirm: An optional confirmation sent after the requested certificate
-  has been received and validated.
+* Certificate Confirm: An optional confirmation sent
+  after the requested certificate has been received and validated.
   It contains a positive or negative confirmation by the pledge whether
   the certificate was successfully enrolled and fits its needs.
 
@@ -727,7 +718,7 @@ enrollment protocols supporting authenticated self-contained objects,
 as described in {{req-sol}}. Examples are available in {{exist_prot}}.
 
 
-### Pledge - Registrar - enrollment status telemetry
+**Pledge - registrar - enrollment status telemetry**
 
 The enrollment status telemetry is performed as specified in {{RFC8995}}.
 In BRSKI this is described as part of the enrollment phase,
@@ -735,7 +726,7 @@ but due to the generalization on the enrollment protocol described in this docum
 it fits better as a separate step here.
 
 
-### Addressing scheme enhancements {#addressing}
+## Enhancements to Addressing Scheme {#addressing}
 
 BRSKI-AE provides generalizations to the addressing scheme defined in
 BRSKI {{RFC8995}} to accommodate alternative enrollment protocols that
@@ -766,7 +757,7 @@ The following conventions are used in order to provide maximal compatibility to 
   as done by existing protocols (see also {{exist_prot}}).
 
 
-## Domain registrar support of alternative enrollment protocols {#discovery_eo}
+## Domain Registrar Support of Alternative Enrollment Protocols {#discovery_eo}
 
 Well-known URIs for various endpoints on the domain registrar are
 already defined as part of the base BRSKI specification or indirectly by EST.
@@ -802,10 +793,11 @@ and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 {: artwork-align="left"}
 
 
-# Examples for signature-wrapping using existing enrollment protocols {#exist_prot}
+# Instantiation to Existing Enrollment Protocols {#exist_prot}
 
 This section maps the requirements to support proof-of-possession and
-proof-of-identity to selected existing enrollment protocols.
+proof-of-identity to selected existing enrollment protocols
+handles provides further aspects of instantiating them in BRSKI-AE.
 
 <!--
 Note that the work in the ACE WG described in
@@ -816,7 +808,7 @@ which also entails that authenticated self-contained objects are used.
 -->
 
 
-## Instantiation to EST (informative)
+## BRSKI-EST-fullCMC: Instantiation to EST (informative)
 
 When using EST {{RFC7030}}, the following aspects and constraints
 need to be considered and the given extra requirements need to be fulfilled,
@@ -843,7 +835,7 @@ which adapt Section 5.9.3 of BRSKI {{RFC8995}}:
   and the pledge will repeat the initial Full PKI Request
 
 
-## Instantiation to CMP (normative if CMP is chosen)
+## BRSKI-CMP: Instantiation to CMP (normative if CMP is chosen)
 
 Note: Instead of referring to CMP
 as specified in {{RFC4210}} and {{I-D.ietf-lamps-cmp-updates}},
@@ -851,30 +843,42 @@ this document refers to the Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}} because
 the subset of CMP defined there is sufficient for the functionality needed here.
 
-When using CMP, the following requirements SHALL be fulfilled:
+When using CMP, the following specific implementation requirements apply
+(cf. {{enrollfigure}}).
 
-* For proof-of-possession, the approach defined in Section 4.1.1 (based on CRMF)
+* CA Certs Request
+  * Requesting CA certificates over CMP is OPTIONAL.<br>
+  If supported, it SHALL be implemented as specified in
+  Section 4.3.1 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+
+* Attribute Request
+  * Requesting certificate request attributes over CMP is OPTIONAL.<br>
+  If supported, it SHALL be implemented as specified in
+  Section 4.3.3 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  Note that alternatively the registrar MAY modify the contents of requested certificate contents
+  as specified in Section 5.2.3.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+
+* Certificate Request
+  * Proof-of-possession SHALL be provided as defined in Section 4.1.1 (based on CRMF)
   or Section 4.1.4 (based on PKCS#10) of the Lightweight CMP Profile
-  {{I-D.ietf-lamps-lightweight-cmp-profile}} SHALL be applied.
+  {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  The `caPubs` field of certificate response messages SHOULD not be used.
 
-* proof-of-identity SHALL be provided by using signature-based
+  * Proof-of-identity SHALL be provided by using signature-based
   protection of the certification request message as outlined in
   Section 3.2. of {{I-D.ietf-lamps-lightweight-cmp-profile}} using the IDevID secret.
 
-* When the Cert Response from the RA/CA is not available and if polling is supported,
-  the registrar SHALL a Cert Waiting Response as specified in
-  Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+* Certificate Confirm
+  * Explicit confirmation of new certificates to the RA
+  MAY be used as specified in Section 4.1.1
+  of the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  Note that independently of certificate confirmation within CMP,
+  enrollment status telemetry with the registrar will be performed
+  as described in Section 5.9.4 of BRSKI {{RFC8995}}.
 
-* As far as requesting CA certificates or certificate request attributes is supported,
-  they SHALL be implemented as specified in
-  Sections 4.3.1 and 4.3.3 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
-
-TBD RFC Editor: please delete /* ToDo:
-The following aspects need to be further specified:
-* Whether to use /getcacerts or the caPubs and extraCerts fields
-  to return trust anchor and CA Certificates
-* Whether to use /getcertreqtemplate or modify the CRMF and use raVerified
-* Whether to specify the usage of /p10 */
+* If delayed delivery of responses (for instance, to support asynchronous enrollment)
+  within CMP is needed, it SHALL be performed
+  as specified in Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 
 # IANA Considerations
@@ -902,7 +906,7 @@ for their input and discussion on use cases and call flows.
 --- back
 
 
-# Using EST for certificate enrollment {#using-est}
+# Using EST for Certificate Enrollment {#using-est}
 
 When using EST with BRSKI, pledges interact via TLS with the domain registrar,
 which acts both as EST server and as registration authority (RA).
@@ -942,12 +946,12 @@ the only possible proof-of-possession method is a self-signature, which
 excludes requesting certificates for key types that do not support signing.
 
 
-# Application examples {#app-examples}
+# Application Examples {#app-examples}
 
 This informative annex provides some detail to
 the application examples listed in {{list-examples}}.
 
-## Rolling stock
+## Rolling Stock
 
 Rolling stock or railroad cars contain a variety of sensors,
 actuators, and controllers, which communicate within the railroad car
@@ -966,7 +970,7 @@ UNISIG has included a CMP profile for enrollment of TLS certificates of
 on-board and track-side components in the Subset-137 specifying the ETRAM/ETCS
 on-line key management for train control systems {{UNISIG-Subset-137}}.
 
-## Building automation
+## Building Automation
 
 In building automation scenarios, a detached
 building or the basement of a building may be equipped with sensors, actuators,
@@ -991,7 +995,7 @@ different network as preparation for the operational phase.
 In this case, connectivity to the domain registrar
 may also be facilitated by the service technician's laptop.
 
-## Substation automation
+## Substation Automation
 
 In electrical substation automation scenarios, a control center typically hosts
 PKI services to issue certificates for Intelligent Electronic Devices
@@ -1008,7 +1012,7 @@ support of two enrollment protocols: SCEP {{RFC8894}} and EST
 {{RFC7030}} for the infrastructure side, while
 the IED must only support one of the two.
 
-## Electric vehicle charging infrastructure
+## Electric Vehicle Charging Infrastructure
 
 For electric vehicle charging infrastructure, protocols have been
 defined for the interaction between the electric vehicle and the
@@ -1030,7 +1034,7 @@ Authenticated self-containment will support this by
 allowing the transport without a separate enrollment protocol,
 binding the messages to the identity of the communicating endpoints.
 
-## Infrastructure isolation policy
+## Infrastructure Isolation Policy
 
 This refers to any case in which network infrastructure is normally
 isolated from the Internet as a matter of policy, most likely for
@@ -1040,7 +1044,7 @@ time, for example when a batch of new devices is deployed, and
 forbidden or prevented at other times.
 
 
-## Sites with insufficient level of operational security
+## Sites with Insufficient Level of Operational Security
 
 The registration authority performing (at least part of) the authorization of a
 certification request is a critical PKI component and therefore requires higher
@@ -1054,13 +1058,17 @@ enough for the needs of a registration authority, this service should be
 transferred to an off-site backend component that has a sufficient level of security.
 
 
-# History of changes TBD RFC Editor: please delete {#app_history}
+# History of Changes TBD RFC Editor: please delete {#app_history}
 
 From IETF draft 06 -> IETF draft 06:
 
 * Renamed the repo and files from anima-brski-async-enroll to anima-brski-ae
 
 * Added graphics for abstract protocol overview as suggested by Toerless Eckert
+
+* Balanced (sub-)sections and their headers
+
+* Added details on CMP instance, now called BRSKI-CMP
 
 From IETF draft 04 -> IETF draft 05:
 
@@ -1260,8 +1268,8 @@ From individual version 00 -> 01:
   boundary conditions.
 
 <!--
-LocalWords:  bcp uc prot vexchange enrollfigure req eo selander coap
-LocalWords:  oscore fullcmc simpleenroll tls env brski UC seriesinfo
-LocalWords:  Attrib lt docname ipr toc anima async wg symrefs ann
-LocalWords:  sortrefs iprnotified Instantiation caPubs raVerified
+LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap
+LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo
+LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae
+LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo
 -->
