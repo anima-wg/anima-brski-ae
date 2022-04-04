@@ -614,7 +614,7 @@ is not visible / verifiable to authorization points outside the registrar.-->
     </artwork>
 </figure>
 
-### Pledge - Registrar discovery and voucher exchange {#discovery}
+### Pledge - registrar discovery and voucher exchange {#discovery}
 
 The discovery phase and voucher exchange are applied as specified in {{RFC8995}}.
 
@@ -624,7 +624,7 @@ The discovery phase and voucher exchange are applied as specified in {{RFC8995}}
 This voucher exchange is performed as specified in {{RFC8995}}.
 
 
-### Pledge - Registrar - RA/CA certificate enrollment {#enroll}
+### Pledge - registrar - RA/CA certificate enrollment {#enroll}
 
 As stated in {{req-sol}}, the enrollment MUST be
 performed using an authenticated self-contained object providing
@@ -727,7 +727,7 @@ enrollment protocols supporting authenticated self-contained objects,
 as described in {{req-sol}}. Examples are available in {{exist_prot}}.
 
 
-### Pledge - Registrar - enrollment status telemetry
+### Pledge - registrar - enrollment status telemetry
 
 The enrollment status telemetry is performed as specified in {{RFC8995}}.
 In BRSKI this is described as part of the enrollment phase,
@@ -878,12 +878,12 @@ The following aspects need to be further specified:
 * Whether to specify the usage of /p10 */
 
 
-# IANA Considerations
+# IANA considerations
 
 This document does not require IANA actions.
 
 
-# Security Considerations
+# Security considerations
 
 The security considerations as laid out in BRSKI {{RFC8995}} apply for
 the discovery and voucher exchange as well as for the status exchange information.
