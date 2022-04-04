@@ -355,7 +355,9 @@ authenticated self-contained object:
   of the actual object using the IDevID secret.
 
 
-# Requirements Discussion and Mapping to Solution Elements {#req-sol}
+# Requirements and Mapping to Solutions {#req-sol}
+
+## Basic Requirements
 
 There were two main drivers for the definition of BRSKI-AE:
 
@@ -382,10 +384,12 @@ At least the following properties are required:
   the certification request. This typically is achieved by a signature
   using the IDevID secret of the pledge.
 
-Here is an incomplete list of solution examples,
+The rest of this section gives an incomplete list of solution examples,
 based on existing technology described in IETF documents:
 
-* Certification request objects: Certification requests are
+## Solution Options for Proof-of-possession
+
+  Certification request objects: Certification requests are
   data structures protecting only the integrity of the contained data
   and providing proof-of-possession for a (locally generated) private key.
   Examples for certification request data structures are:
@@ -411,7 +415,9 @@ based on existing technology described in IETF documents:
   origin authentication to the certification request may be
   delegated to the protocol used for certificate management.
 
-* Solution options for proof-of-identity: The certification request should be bound to
+## Solution Options for Proof-of-identity
+
+  The certification request should be bound to
   an existing authenticated credential (here, the IDevID certificate) to enable a proof
   of identity and, based on it, an authorization of the certification request.
   The binding may be achieved through security options in an
@@ -614,17 +620,17 @@ is not visible / verifiable to authorization points outside the registrar.-->
     </artwork>
 </figure>
 
-### Pledge - Registrar Discovery and Voucher Exchange {#discovery}
+**Pledge - registrar discovery and voucher exchange**
 
 The discovery phase and voucher exchange are applied as specified in {{RFC8995}}.
 
 
-### Registrar - MASA Voucher Exchange {#vexchange}
+**Registrar - MASA voucher exchange**
 
 This voucher exchange is performed as specified in {{RFC8995}}.
 
 
-### Pledge - Registrar - RA/CA Certificate Enrollment {#enroll}
+**Pledge - registrar - RA/CA certificate enrollment**
 
 As stated in {{req-sol}}, the enrollment MUST be
 performed using an authenticated self-contained object providing
@@ -727,7 +733,7 @@ enrollment protocols supporting authenticated self-contained objects,
 as described in {{req-sol}}. Examples are available in {{exist_prot}}.
 
 
-### Pledge - Registrar - Enrollment Status Telemetry
+**Pledge - registrar - enrollment status telemetry**
 
 The enrollment status telemetry is performed as specified in {{RFC8995}}.
 In BRSKI this is described as part of the enrollment phase,
@@ -735,7 +741,7 @@ but due to the generalization on the enrollment protocol described in this docum
 it fits better as a separate step here.
 
 
-### Addressing Scheme Enhancements {#addressing}
+## Enhancements to Addressing Scheme {#addressing}
 
 BRSKI-AE provides generalizations to the addressing scheme defined in
 BRSKI {{RFC8995}} to accommodate alternative enrollment protocols that
@@ -802,10 +808,11 @@ and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 {: artwork-align="left"}
 
 
-# Examples for Signature-wrapping Using Existing Enrollment Protocols {#exist_prot}
+# Instantiation to Existing Enrollment Protocols {#exist_prot}
 
 This section maps the requirements to support proof-of-possession and
-proof-of-identity to selected existing enrollment protocols.
+proof-of-identity to selected existing enrollment protocols
+handles provides further aspects of instantiating them in BRSKI-AE.
 
 <!--
 Note that the work in the ACE WG described in
