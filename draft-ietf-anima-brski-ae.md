@@ -851,23 +851,35 @@ this document refers to the Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}} because
 the subset of CMP defined there is sufficient for the functionality needed here.
 
-When using CMP, the following requirements SHALL be fulfilled:
+When using CMP, the following specific requirements apply:
 
-* For proof-of-possession, the approach defined in Section 4.1.1 (based on CRMF)
+* Proof-of-possession SHALL be provided as defined in Section 4.1.1 (based on CRMF)
   or Section 4.1.4 (based on PKCS#10) of the Lightweight CMP Profile
-  {{I-D.ietf-lamps-lightweight-cmp-profile}} SHALL be applied.
+  {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
-* proof-of-identity SHALL be provided by using signature-based
+* Proof-of-identity SHALL be provided by using signature-based
   protection of the certification request message as outlined in
   Section 3.2. of {{I-D.ietf-lamps-lightweight-cmp-profile}} using the IDevID secret.
 
-* When the Cert Response from the RA/CA is not available and if polling is supported,
-  the registrar SHALL return a Cert Waiting Response as specified in
-  Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+* Requesting and delivering CA certificates over CMP is OPTIONAL.
+  If supported, it SHALL be implemented as specified in
+  Section 4.3.1 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+  The caPubs field of certificate response messages SHOULD not be used.
 
-* As far as requesting CA certificates or certificate request attributes is supported,
-  they SHALL be implemented as specified in
-  Sections 4.3.1 and 4.3.3 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+* Requesting certificate request attributes over CMP is OPTIONAL.
+  If supported, it SHALL be implemented as specified in
+  Section 4.3.3 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  Note that the registrar MAY modify the contents of requested certificate contents
+  as specified in Section 5.2.3.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+
+* If delayed delivery of responses within CMP needs to be supported, it SHALL be performed
+  as specified in Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+
+* Implicit confirmation of new certificates MAY be used as specified in Section 4.1.1
+  of the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  Note that independently of certificate confirmation within CMP,
+  enrollment status telemetry with the registrar will be performed
+  as described in Section 5.9.4 of BRSKI {{RFC8995}}.
 
 TBD RFC Editor: please delete /* ToDo:
 The following aspects need to be further specified:
