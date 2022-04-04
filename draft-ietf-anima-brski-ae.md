@@ -255,7 +255,7 @@ In contrast to BRSKI, this specification supports offering multiple enrollment p
 on the infrastructure side, which enables pledges and their developers
 to pick the preferred one.
 
-## Supported environment {#sup-env}
+## Supported Environment {#sup-env}
 
 BRSKI-AE is intended to be used in domains that may have limited support
 of on-site PKI services and comprises application scenarios like the following.
@@ -277,7 +277,7 @@ of on-site PKI services and comprises application scenarios like the following.
   Final authorization is done by an RA residing in the operator domain.
 
 
-## List of application examples {#list-examples}
+## List of Application Examples {#list-examples}
 
 Bootstrapping can be handled in various ways, depending on the application domains.
 The informative {{app-examples}} provides illustrative examples from
@@ -355,7 +355,7 @@ authenticated self-contained object:
   of the actual object using the IDevID secret.
 
 
-# Requirements discussion and mapping to solution elements {#req-sol}
+# Requirements Discussion and Mapping to Solution Elements {#req-sol}
 
 There were two main drivers for the definition of BRSKI-AE:
 
@@ -594,7 +594,7 @@ and differences to the original approach as follows.
   that uses authenticated self-contained objects.
 
 
-## Message exchange
+## Message Exchange
 
 The behavior of a pledge described in Section 2.1 of BRSKI {{RFC8995}}
 is kept with one exception.
@@ -614,17 +614,17 @@ is not visible / verifiable to authorization points outside the registrar.-->
     </artwork>
 </figure>
 
-### Pledge - registrar discovery and voucher exchange {#discovery}
+### Pledge - Registrar Discovery and Voucher Exchange {#discovery}
 
 The discovery phase and voucher exchange are applied as specified in {{RFC8995}}.
 
 
-### Registrar - MASA voucher exchange {#vexchange}
+### Registrar - MASA Voucher Exchange {#vexchange}
 
 This voucher exchange is performed as specified in {{RFC8995}}.
 
 
-### Pledge - registrar - RA/CA certificate enrollment {#enroll}
+### Pledge - Registrar - RA/CA Certificate Enrollment {#enroll}
 
 As stated in {{req-sol}}, the enrollment MUST be
 performed using an authenticated self-contained object providing
@@ -727,7 +727,7 @@ enrollment protocols supporting authenticated self-contained objects,
 as described in {{req-sol}}. Examples are available in {{exist_prot}}.
 
 
-### Pledge - registrar - enrollment status telemetry
+### Pledge - Registrar - Enrollment Status Telemetry
 
 The enrollment status telemetry is performed as specified in {{RFC8995}}.
 In BRSKI this is described as part of the enrollment phase,
@@ -735,7 +735,7 @@ but due to the generalization on the enrollment protocol described in this docum
 it fits better as a separate step here.
 
 
-### Addressing scheme enhancements {#addressing}
+### Addressing Scheme Enhancements {#addressing}
 
 BRSKI-AE provides generalizations to the addressing scheme defined in
 BRSKI {{RFC8995}} to accommodate alternative enrollment protocols that
@@ -766,7 +766,7 @@ The following conventions are used in order to provide maximal compatibility to 
   as done by existing protocols (see also {{exist_prot}}).
 
 
-## Domain registrar support of alternative enrollment protocols {#discovery_eo}
+## Domain Registrar Support of Alternative Enrollment Protocols {#discovery_eo}
 
 Well-known URIs for various endpoints on the domain registrar are
 already defined as part of the base BRSKI specification or indirectly by EST.
@@ -802,7 +802,7 @@ and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 {: artwork-align="left"}
 
 
-# Examples for signature-wrapping using existing enrollment protocols {#exist_prot}
+# Examples for Signature-wrapping Using Existing Enrollment Protocols {#exist_prot}
 
 This section maps the requirements to support proof-of-possession and
 proof-of-identity to selected existing enrollment protocols.
@@ -878,12 +878,12 @@ The following aspects need to be further specified:
 * Whether to specify the usage of /p10 */
 
 
-# IANA considerations
+# IANA Considerations
 
 This document does not require IANA actions.
 
 
-# Security considerations
+# Security Considerations
 
 The security considerations as laid out in BRSKI {{RFC8995}} apply for
 the discovery and voucher exchange as well as for the status exchange information.
@@ -903,7 +903,7 @@ for their input and discussion on use cases and call flows.
 --- back
 
 
-# Using EST for certificate enrollment {#using-est}
+# Using EST for Certificate Enrollment {#using-est}
 
 When using EST with BRSKI, pledges interact via TLS with the domain registrar,
 which acts both as EST server and as registration authority (RA).
@@ -943,12 +943,12 @@ the only possible proof-of-possession method is a self-signature, which
 excludes requesting certificates for key types that do not support signing.
 
 
-# Application examples {#app-examples}
+# Application Examples {#app-examples}
 
 This informative annex provides some detail to
 the application examples listed in {{list-examples}}.
 
-## Rolling stock
+## Rolling Stock
 
 Rolling stock or railroad cars contain a variety of sensors,
 actuators, and controllers, which communicate within the railroad car
@@ -967,7 +967,7 @@ UNISIG has included a CMP profile for enrollment of TLS certificates of
 on-board and track-side components in the Subset-137 specifying the ETRAM/ETCS
 on-line key management for train control systems {{UNISIG-Subset-137}}.
 
-## Building automation
+## Building Automation
 
 In building automation scenarios, a detached
 building or the basement of a building may be equipped with sensors, actuators,
@@ -992,7 +992,7 @@ different network as preparation for the operational phase.
 In this case, connectivity to the domain registrar
 may also be facilitated by the service technician's laptop.
 
-## Substation automation
+## Substation Automation
 
 In electrical substation automation scenarios, a control center typically hosts
 PKI services to issue certificates for Intelligent Electronic Devices
@@ -1009,7 +1009,7 @@ support of two enrollment protocols: SCEP {{RFC8894}} and EST
 {{RFC7030}} for the infrastructure side, while
 the IED must only support one of the two.
 
-## Electric vehicle charging infrastructure
+## Electric Vehicle Charging Infrastructure
 
 For electric vehicle charging infrastructure, protocols have been
 defined for the interaction between the electric vehicle and the
@@ -1031,7 +1031,7 @@ Authenticated self-containment will support this by
 allowing the transport without a separate enrollment protocol,
 binding the messages to the identity of the communicating endpoints.
 
-## Infrastructure isolation policy
+## Infrastructure Isolation Policy
 
 This refers to any case in which network infrastructure is normally
 isolated from the Internet as a matter of policy, most likely for
@@ -1041,7 +1041,7 @@ time, for example when a batch of new devices is deployed, and
 forbidden or prevented at other times.
 
 
-## Sites with insufficient level of operational security
+## Sites with Insufficient Level of Operational Security
 
 The registration authority performing (at least part of) the authorization of a
 certification request is a critical PKI component and therefore requires higher
@@ -1055,7 +1055,7 @@ enough for the needs of a registration authority, this service should be
 transferred to an off-site backend component that has a sufficient level of security.
 
 
-# History of changes TBD RFC Editor: please delete {#app_history}
+# History of Changes TBD RFC Editor: please delete {#app_history}
 
 From IETF draft 06 -> IETF draft 06:
 
