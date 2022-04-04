@@ -1,19 +1,19 @@
 # BRSKI Asynchronous Enrollment
 
-This is the working area for the WG Internet-Draft, "Support of asynchronous Enrollment in BRSKI (BRSKI-AE)"
+This is the working area for the WG Internet-Draft, "BRSKI-AE: Alternative Enrollment Protocols in BRSKI"
 
-* [Current WG Draft](https://tools.ietf.org/html/draft-ietf-anima-brski-async-enroll-02)
+* [Current WG Draft](https://tools.ietf.org/html/draft-ietf-anima-brski-async-enroll)
 * [Datatracker page](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/)
 
 
 Links not working yet:
 
-* [Editor's Copy](https://anima-wg.github.io/anima-brski-async-enroll/#go.draft-ietf-anima-brski-async-enroll.html)
-* [Compare Editor's Copy to Individual Draft](https://anima-wg.github.io/anima-brski-async-enroll/#go.draft-ietf-anima-brski-async-enroll.diff)
+* [Editor's Copy](https://anima-wg.github.io/anima-brski-ae/#go.draft-ietf-anima-brski-ae.html)
+* [Compare Editor's Copy to Individual Draft](https://anima-wg.github.io/anima-brski-ae/#go.draft-ietf-anima-brski-ae.diff)
 
 ## Building the Draft
 
-Formatted text and HTML versions of the draft can be built using `make`.
+Text, PDF, XML, and HTML versions of the draft can be built using `make`.
 
 ```sh
 $ make
