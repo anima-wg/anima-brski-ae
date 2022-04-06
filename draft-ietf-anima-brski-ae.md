@@ -614,7 +614,7 @@ is not visible / verifiable to authorization points outside the registrar.-->
 
 <figure title="BRSKI-AE Abstract Protocol Overview">
     <!-- Image converted from PDF using https://www.zamzar.com/convert/pdf-to-svg/-->
-    <artwork src="overview-bw.svg">
+    <artwork>
 [ Cannot render SVG graphics - please view
   https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/overview.png ]
     </artwork>
