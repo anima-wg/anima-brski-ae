@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-00
+docname: draft-ietf-anima-brski-ae-01
 stand_alone: true
 ipr: trust200902
 area: Operations and Management
