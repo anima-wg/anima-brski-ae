@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-06
+docname: draft-ietf-anima-brski-ae-00
 stand_alone: true
 ipr: trust200902
 area: Operations and Management
@@ -117,7 +117,7 @@ informative:
 --- abstract
 
 This document enhances
-Bootstrapping Remote Secure Key Infrastructure (BRSKI, {{RFC8995}})
+Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995)
 to allow employing alternative enrollment protocols, such as CMP.
 
 Using self-contained signed objects, the origin of enrollment requests and responses
@@ -613,10 +613,11 @@ is not visible / verifiable to authorization points outside the registrar.-->
 {{exist_prot}} discusses selected suitable enrollment protocols and options applicable.
 
 <figure title="BRSKI-AE Abstract Protocol Overview">
-    <!-- Image converted from PDF using https://www.zamzar.com/convert/pdf-to-svg/-->
     <artwork>
-[ Cannot render SVG graphics - please view
-  https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/overview.png ]
+[
+ Cannot render SVG graphics - please view
+ https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/o.png
+]
     </artwork>
 </figure>
 
@@ -638,39 +639,39 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 
 
 ~~~~
-+--------+                        +------------+        +------------+
-| Pledge |                        | Domain     |        | Operator   |
-|        |                        | Registrar  |        | RA/CA      |
-|        |                        |  (JRC)     |        | (PKI)      |
-+--------+                        +------------+        +------------+
-  /-->                                      |                       |
-[Optional request of CA certificates]       |                       |
-  |---------- CA Certs Request ------------>|                       |
-  |                 [if connection to operator domain is available] |
-  |                                         |-- CA Certs Request -->|
-  |                                         |<- CA Certs Response --|
-  |<--------- CA Certs Response ------------|                       |
-  /-->                                      |                       |
-[Optional request of attributes to include in Certificate Request]  |
-  |---------- Attribute Request ----------->|                       |
-  |                 [if connection to operator domain is available] |
-  |                                         |- Attribute Request -->|
-  |                                         |<- Attribute Response -|
-  |<--------- Attribute Response -----------|                       |
-  /-->                                      |                       |
-[Mandatory certificate request]             |                       |
-  |---------- Certificate Request --------->|                       |
-  |                 [if connection to operator domain is available] |
-  |                                         |-Certificate Request ->|
-  |                                         |<- Certificate Resp. --|
-  |<--------- Certificate Response ---------|                       |
-  /-->                                      |                       |
-[Optional certificate confirmation]         |                       |
-  |---------- Certificate Confirm --------->|                       |
-  |                 [if connection to operator domain is available] |
-  |                                         |-Certificate Confirm ->|
-  |                                         |<---- PKI Confirm -----|
-  |<--------- PKI/Registrar Confirm --------|                       |
++--------+                        +------------+       +------------+
+| Pledge |                        | Domain     |       | Operator   |
+|        |                        | Registrar  |       | RA/CA      |
+|        |                        |  (JRC)     |       | (PKI)      |
++--------+                        +------------+       +------------+
+ /-->                                      |                       |
+[Optional request of CA certificates]      |                       |
+ |---------- CA Certs Request ------------>|                       |
+ |                 [if connection to operator domain is available] |
+ |                                         |-- CA Certs Request -->|
+ |                                         |<- CA Certs Response --|
+ |<--------- CA Certs Response ------------|                       |
+ /-->                                      |                       |
+[Optional request of attributes to include in Certificate Request] |
+ |---------- Attribute Request ----------->|                       |
+ |                 [if connection to operator domain is available] |
+ |                                         |- Attribute Request -->|
+ |                                         |<- Attribute Response -|
+ |<--------- Attribute Response -----------|                       |
+ /-->                                      |                       |
+[Mandatory certificate request]            |                       |
+ |---------- Certificate Request --------->|                       |
+ |                 [if connection to operator domain is available] |
+ |                                         |-Certificate Request ->|
+ |                                         |<- Certificate Resp. --|
+ |<--------- Certificate Response ---------|                       |
+ /-->                                      |                       |
+[Optional certificate confirmation]        |                       |
+ |---------- Certificate Confirm --------->|                       |
+ |                 [if connection to operator domain is available] |
+ |                                         |-Certificate Confirm ->|
+ |                                         |<---- PKI Confirm -----|
+ |<--------- PKI/Registrar Confirm --------|                       |
 ~~~~
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
@@ -862,7 +863,7 @@ When using CMP, the following specific implementation requirements apply
   * Proof-of-possession SHALL be provided as defined in Section 4.1.1 (based on CRMF)
   or Section 4.1.4 (based on PKCS#10) of the Lightweight CMP Profile
   {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
-  The `caPubs` field of certificate response messages SHOULD not be used.
+  The `caPubs` field of certificate response messages SHOULD NOT be used.
 
   * Proof-of-identity SHALL be provided by using signature-based
   protection of the certification request message as outlined in
