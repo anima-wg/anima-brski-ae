@@ -773,7 +773,7 @@ a domain registrar supporting several options for EST as well as for
 CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints to which the pledge may connect for bootstrapping. This
 includes the voucher handling as well as the enrollment endpoints.
-The CMP related enrollment endpoints are defined as well-known URIs
+The CMP-related enrollment endpoints are defined as well-known URIs
 in CMP Updates {{I-D.ietf-lamps-cmp-updates}}
 and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
@@ -1087,7 +1087,7 @@ From IETF draft 04 -> IETF draft 05:
 
 From IETF draft 03 -> IETF draft 04:
 
-* Moved UC2 related parts defining the pledge in responder mode to a
+* Moved UC2-related parts defining the pledge in responder mode to a
   separate document. This required changes and adaptations in several
   sections. Main changes concerned the removal of the subsection for UC2
   as well as the removal of the YANG model related text as it is not
@@ -1163,7 +1163,7 @@ From IETF draft 00 -> IETF draft 01:
   the domain registrar based on well-known endpoints in
   {{discovery_eo}} do not result in additional
   /.well-known URIs. Update of the illustrative example.
-  Note that the change to /brski for the voucher related endpoints
+  Note that the change to /brski for the voucher-related endpoints
   has been taken over in the BRSKI main document.
 
 * Updated references.
@@ -1269,7 +1269,7 @@ From individual version 00 -> 01:
   boundary conditions.
 
 <!--
-LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap
+LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap br
 LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo
 LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo
