@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-01
+docname: draft-ietf-anima-brski-ae-02
 stand_alone: true
 ipr: trust200902
 area: Operations and Management
@@ -1074,7 +1074,13 @@ transferred to an off-site backend component that has a sufficient level of secu
 
 # History of Changes TBD RFC Editor: please delete {#app_history}
 
-From IETF draft 06 -> IETF draft 06:
+From IETF draft 01 -> IETF draft 02:
+
+* Architecture: clarify registrar role including RA/LRA/enrollment proxy
+
+* CMP: add reference to CoAP Transport for CMPV2 and Constrained BRSKI
+
+From IETF draft 05 -> IETF draft ae-01:
 
 * Renamed the repo and files from anima-brski-async-enroll to anima-brski-ae
 
