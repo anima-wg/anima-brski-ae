@@ -747,22 +747,22 @@ they can be directly employed (see also {{exist_prot}}).
 
 The addressing scheme in BRSKI for certification requests and
 the related CA certificates and CSR attributes retrieval functions
-uses the definition from EST {{RFC7030}}; here on the
-example of simple enrollment: "/.well-known/est/simpleenroll".
+uses the definition from EST {{RFC7030}},
+here on the example of simple enrollment: `"/.well-known/est/simpleenroll"`.
 This approach is generalized to the following notation:
-"/.well-known/&lt;enrollment-protocol&gt;/&lt;request&gt;"
-in which &lt;enrollment-protocol&gt; refers to a certificate enrollment protocol.
+`"/.well-known/<enrollment-protocol>/<request>"`
+in which `<enrollment-protocol>` refers to a certificate enrollment protocol.
 Note that enrollment is considered here a message sequence
 that contains at least a certification request and a certification response.
 The following conventions are used in order to provide maximal compatibility to BRSKI:
 
-* &lt;enrollment-protocol&gt;: MUST reference the protocol being used, which
+* `<enrollment-protocol>`: MUST reference the protocol being used, which
   MAY be CMP, CMC, SCEP, EST {{RFC7030}} as in BRSKI, or a newly defined approach.
 
   Note: additional endpoints (well-known URIs) at the registrar
   may need to be defined by the enrollment protocol being used.
 
-* &lt;request&gt;: if present, the &lt;request&gt; path component MUST describe,
+* `<request>`: if present, this path component MUST describe,
   depending on the enrollment protocol being used, the operation requested.
   Enrollment protocols are expected to define their request endpoints,
   as done by existing protocols (see also {{exist_prot}}).
