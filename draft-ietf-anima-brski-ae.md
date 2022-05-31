@@ -65,6 +65,8 @@ normative:
   RFC8995:
   I-D.ietf-lamps-cmp-updates:
   I-D.ietf-lamps-lightweight-cmp-profile:
+  I-D.msahni-ace-cmpv2-coap-transport:
+  I-D.ietf-anima-constrained-voucher:
   IEEE.802.1AR_2009:
 informative:
   RFC2986:
@@ -886,6 +888,12 @@ When using CMP, the following specific implementation requirements apply
   within CMP is needed, it SHALL be performed
   as specified in Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
+BRSKI-AE with CMP can also be combined with
+Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}},
+using CoAP for enrollment message transport as described by
+CoAP Transport for CMPV2 {{I-D.msahni-ace-cmpv2-coap-transport}}.
+In this scenario, of course the EST-specific parts
+of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
 # IANA Considerations
 
