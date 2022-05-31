@@ -519,12 +519,12 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
    V                                                      |
 +--------+     .........................................  |
 |        |     .                                       .  | BRSKI-
-|        |     .  +------------+       +------------+  .  | MASA
-| Pledge |     .  |   Join     |       | Domain     <-----+
-|        |     .  |   Proxy    |       | Registrar/ |  .
-|        <-------->............<-------> Enrollment |  .
-|        |     .  |        BRSKI-AE    | Proxy/LRA  |  .
-| IDevID |     .  |            |       +------^-----+  .
+|        |     .  +------------+     +--------------+  .  | MASA
+| Pledge |     .  |   Join     |     | Domain       <-----+
+|        |     .  |   Proxy    |     | Registrar w/ |  .
+|        <-------->............<-----> Enrollment   |  .
+|        |     .  |        BRSKI-AE  | Proxy/LRA/RA |  .
+| IDevID |     .  |            |     +--------^-----+  .
 |        |     .  +------------+              |        .
 |        |     .                              |        .
 +--------+     ...............................|.........
@@ -548,22 +548,27 @@ Depending on the application scenario, the registrar MAY still do all of these
 checks (as is the case in BRSKI), or part of them, or none of them.
 
 The following list describes the on-site components in the target domain
-of the pledge shown in  {{uc1figure}}.
+of the pledge shown in {{uc1figure}}.
 
 * Join Proxy: same functionality as described in BRSKI {{RFC8995}}.
 
-* Domain Registrar / Enrollment Proxy / LRA: in BRSKI-AE,
+* Domain Registrar including RA, LRA, or Enrollment Proxy: in BRSKI-AE,
   the domain registrar has mostly the same functionality as in BRSKI, namely
   to facilitate the communication of the pledge with the MASA and the PKI.
-  Yet in contrast to BRSKI, the registrar offers different enrollment protocols
-  and MAY act as a local registration authority (LRA) or simply as an enrollment proxy.
+  Yet there are two generalizations.
+  The registrar MAY offer different enrollment protocols. For supporting this,
+  the URI scheme for addressing the domain registrar is generalized
+  (see {{addressing}}).
+  The registrar MAY also delegate (part of) its certificate enrollment support
+  to an external entity. That is, alternatively to including a full RA, it may
+  include a local registration authority (LRA) or just an enrollment proxy.
   In such cases, the domain registrar forwards the certification request
   to some off-site RA component, which performs at least part of the authorization.
   This also covers the case that the registrar has only intermittent connection
   and forwards the certification request to the RA upon re-established connectivity.
-
-  Note: To support alternative enrollment protocols, the URI scheme
-  for addressing the domain registrar is generalized (see {{addressing}}).
+  Still all certificate enrollment traffic goes via the registrar, such that
+  from the pledge perspective there is no difference in connectivity and
+  the registrar is involved in all steps, including enrollment status telemetry.
 
 The following list describes the components provided by the vendor or manufacturer
 outside the target domain.
