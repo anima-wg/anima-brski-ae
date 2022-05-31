@@ -558,16 +558,19 @@ of the pledge shown in {{uc1figure}}.
   the domain registrar has mostly the same functionality as in BRSKI, namely
   to facilitate the communication of the pledge with the MASA and the PKI.
   Yet there are two generalizations.
+
   The registrar MAY offer different enrollment protocols. For supporting this,
   the URI scheme for addressing the domain registrar is generalized
   (see {{addressing}}).
+
   The registrar MAY also delegate (part of) its certificate enrollment support
-  to an external entity. That is, alternatively to including a full RA, it may
-  include a local registration authority (LRA) or just an enrollment proxy.
-  In such cases, the domain registrar forwards the certification request
-  to some off-site RA component, which performs at least part of the authorization.
+  to a separate system. That is, alternatively to having full RA functionality,
+  the registrar may act as a local registration authority (LRA)
+  or just as an enrollment proxy.
+  In such cases, the domain registrar may forward the certification request to
+  some off-site RA component that performs part of the enrollment authorization.
   This also covers the case that the registrar has only intermittent connection
-  and forwards the certification request to the RA upon re-established connectivity.
+  and forwards certification requests to the RA upon re-established connectivity.<br>
   Still all certificate enrollment traffic goes via the registrar, such that
   from the pledge perspective there is no difference in connectivity and
   the registrar is involved in all steps, including enrollment status telemetry.
