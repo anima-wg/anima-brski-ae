@@ -55,15 +55,16 @@ commit: generate
 	git commit ${DRAFT}.{xml,txt,html} \
 	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
 	   || echo "No changes to commit"
-	git push -u origin
+	git push origin
 
-FILES=${DRAFT}{.{md,xml,txt,html},-${VERSION}.txt}
+FILES=${DRAFT}{.{md,xml,txt,html,pdf},-${VERSION}.txt}
 upload: default
 	cp -a  ${FILES} /tmp
 	git checkout -- ${FILES}
 	git checkout main
 	cp -a /tmp/${FILES} .
-	git commit ${FILES}
+	git add ${DRAFT}-${VERSION}.txt
+	git commit -m "${DRAFT}-${VERSION}" ${FILES}
 	git push
 	git checkout master
 
