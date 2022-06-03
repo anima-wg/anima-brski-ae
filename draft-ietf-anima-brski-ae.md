@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-01
+docname: draft-ietf-anima-brski-ae-02
 stand_alone: true
 ipr: trust200902
 area: Operations and Management
@@ -65,6 +65,8 @@ normative:
   RFC8995:
   I-D.ietf-lamps-cmp-updates:
   I-D.ietf-lamps-lightweight-cmp-profile:
+  I-D.msahni-ace-cmpv2-coap-transport:
+  I-D.ietf-anima-constrained-voucher:
   IEEE.802.1AR_2009:
 informative:
   RFC2986:
@@ -519,12 +521,12 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
    V                                                      |
 +--------+     .........................................  |
 |        |     .                                       .  | BRSKI-
-|        |     .  +------------+       +------------+  .  | MASA
-| Pledge |     .  |   Join     |       | Domain     <-----+
-|        |     .  |   Proxy    |       | Registrar/ |  .
-|        <-------->............<-------> Enrollment |  .
-|        |     .  |        BRSKI-AE    | Proxy/LRA  |  .
-| IDevID |     .  |            |       +------^-----+  .
+|        |     .  +------------+     +--------------+  .  | MASA
+| Pledge |     .  |   Join     |     | Domain       <-----+
+|        |     .  |   Proxy    |     | Registrar w/ |  .
+|        <-------->............<-----> Enrollment   |  .
+|        |     .  |        BRSKI-AE  | Proxy/LRA/RA |  .
+| IDevID |     .  |            |     +--------^-----+  .
 |        |     .  +------------+              |        .
 |        |     .                              |        .
 +--------+     ...............................|.........
@@ -548,22 +550,30 @@ Depending on the application scenario, the registrar MAY still do all of these
 checks (as is the case in BRSKI), or part of them, or none of them.
 
 The following list describes the on-site components in the target domain
-of the pledge shown in  {{uc1figure}}.
+of the pledge shown in {{uc1figure}}.
 
 * Join Proxy: same functionality as described in BRSKI {{RFC8995}}.
 
-* Domain Registrar / Enrollment Proxy / LRA: in BRSKI-AE,
+* Domain Registrar including RA, LRA, or Enrollment Proxy: in BRSKI-AE,
   the domain registrar has mostly the same functionality as in BRSKI, namely
   to facilitate the communication of the pledge with the MASA and the PKI.
-  Yet in contrast to BRSKI, the registrar offers different enrollment protocols
-  and MAY act as a local registration authority (LRA) or simply as an enrollment proxy.
-  In such cases, the domain registrar forwards the certification request
-  to some off-site RA component, which performs at least part of the authorization.
-  This also covers the case that the registrar has only intermittent connection
-  and forwards the certification request to the RA upon re-established connectivity.
+  Yet there are two generalizations.
 
-  Note: To support alternative enrollment protocols, the URI scheme
-  for addressing the domain registrar is generalized (see {{addressing}}).
+  The registrar MAY offer different enrollment protocols. For supporting this,
+  the URI scheme for addressing the domain registrar is generalized
+  (see {{addressing}}).
+
+  The registrar MAY also delegate (part of) its certificate enrollment support
+  to a separate system. That is, alternatively to having full RA functionality,
+  the registrar may act as a local registration authority (LRA)
+  or just as an enrollment proxy.
+  In such cases, the domain registrar may forward the certification request to
+  some off-site RA component that performs part of the enrollment authorization.
+  This also covers the case that the registrar has only intermittent connection
+  and forwards certification requests to the RA upon re-established connectivity.<br>
+  Still all certificate enrollment traffic goes via the registrar, such that
+  from the pledge perspective there is no difference in connectivity and
+  the registrar is involved in all steps, including enrollment status telemetry.
 
 The following list describes the components provided by the vendor or manufacturer
 outside the target domain.
@@ -737,22 +747,22 @@ they can be directly employed (see also {{exist_prot}}).
 
 The addressing scheme in BRSKI for certification requests and
 the related CA certificates and CSR attributes retrieval functions
-uses the definition from EST {{RFC7030}}; here on the
-example of simple enrollment: "/.well-known/est/simpleenroll".
+uses the definition from EST {{RFC7030}},
+here on the example of simple enrollment: `"/.well-known/est/simpleenroll"`.
 This approach is generalized to the following notation:
-"/.well-known/&lt;enrollment-protocol&gt;/&lt;request&gt;"
-in which &lt;enrollment-protocol&gt; refers to a certificate enrollment protocol.
+`"/.well-known/<enrollment-protocol>/<request>"`
+in which `<enrollment-protocol>` refers to a certificate enrollment protocol.
 Note that enrollment is considered here a message sequence
 that contains at least a certification request and a certification response.
 The following conventions are used in order to provide maximal compatibility to BRSKI:
 
-* &lt;enrollment-protocol&gt;: MUST reference the protocol being used, which
+* `<enrollment-protocol>`: MUST reference the protocol being used, which
   MAY be CMP, CMC, SCEP, EST {{RFC7030}} as in BRSKI, or a newly defined approach.
 
   Note: additional endpoints (well-known URIs) at the registrar
   may need to be defined by the enrollment protocol being used.
 
-* &lt;request&gt;: if present, the &lt;request&gt; path component MUST describe,
+* `<request>`: if present, this path component MUST describe,
   depending on the enrollment protocol being used, the operation requested.
   Enrollment protocols are expected to define their request endpoints,
   as done by existing protocols (see also {{exist_prot}}).
@@ -773,7 +783,7 @@ a domain registrar supporting several options for EST as well as for
 CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints to which the pledge may connect for bootstrapping. This
 includes the voucher handling as well as the enrollment endpoints.
-The CMP related enrollment endpoints are defined as well-known URIs
+The CMP-related enrollment endpoints are defined as well-known URIs
 in CMP Updates {{I-D.ietf-lamps-cmp-updates}}
 and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
@@ -881,6 +891,12 @@ When using CMP, the following specific implementation requirements apply
   within CMP is needed, it SHALL be performed
   as specified in Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
+BRSKI-AE with CMP can also be combined with
+Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}},
+using CoAP for enrollment message transport as described by
+CoAP Transport for CMPV2 {{I-D.msahni-ace-cmpv2-coap-transport}}.
+In this scenario, of course the EST-specific parts
+of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
 # IANA Considerations
 
@@ -1061,7 +1077,13 @@ transferred to an off-site backend component that has a sufficient level of secu
 
 # History of Changes TBD RFC Editor: please delete {#app_history}
 
-From IETF draft 06 -> IETF draft 06:
+From IETF draft 01 -> IETF draft 02:
+
+* Architecture: clarify registrar role including RA/LRA/enrollment proxy
+
+* CMP: add reference to CoAP Transport for CMPV2 and Constrained BRSKI
+
+From IETF draft 05 -> IETF draft ae-01:
 
 * Renamed the repo and files from anima-brski-async-enroll to anima-brski-ae
 
@@ -1087,7 +1109,7 @@ From IETF draft 04 -> IETF draft 05:
 
 From IETF draft 03 -> IETF draft 04:
 
-* Moved UC2 related parts defining the pledge in responder mode to a
+* Moved UC2-related parts defining the pledge in responder mode to a
   separate document. This required changes and adaptations in several
   sections. Main changes concerned the removal of the subsection for UC2
   as well as the removal of the YANG model related text as it is not
@@ -1163,7 +1185,7 @@ From IETF draft 00 -> IETF draft 01:
   the domain registrar based on well-known endpoints in
   {{discovery_eo}} do not result in additional
   /.well-known URIs. Update of the illustrative example.
-  Note that the change to /brski for the voucher related endpoints
+  Note that the change to /brski for the voucher-related endpoints
   has been taken over in the BRSKI main document.
 
 * Updated references.
@@ -1269,7 +1291,7 @@ From individual version 00 -> 01:
   boundary conditions.
 
 <!--
-LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap
+LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap br
 LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo
 LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo
