@@ -1077,11 +1077,12 @@ transferred to an off-site backend component that has a sufficient level of secu
 
 # History of Changes TBD RFC Editor: please delete {#app_history}
 
-From IETF draft 01 -> IETF draft 02:
+From IETF draft ae-01 -> IETF draft ae-02:
 
 * Architecture: clarify registrar role including RA/LRA/enrollment proxy
 
 * CMP: add reference to CoAP Transport for CMPV2 and Constrained BRSKI
+
 
 From IETF draft 05 -> IETF draft ae-01:
 
@@ -1106,6 +1107,7 @@ From IETF draft 04 -> IETF draft 05:
 * Move comments on EST and detailed application examples to informative annex.
 
 * Move the remaining text of section 3 as two new sub-sections of section 1.
+
 
 From IETF draft 03 -> IETF draft 04:
 
