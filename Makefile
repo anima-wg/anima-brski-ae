@@ -1,3 +1,5 @@
+SHELL=bash # This is for supporting extended file name globbing
+
 DRAFT:=draft-ietf-anima-brski-ae
 
 all: ${DRAFT}.txt ${DRAFT}.html ${DRAFT}.pdf
@@ -13,3 +15,6 @@ all: ${DRAFT}.txt ${DRAFT}.html ${DRAFT}.pdf
 
 %.pdf: %.xml
 	xml2rfc --pdf -o $@ $?
+
+clean:
+	git checkout -- ${DRAFT}.{xml,txt,html,pdf}
