@@ -59,6 +59,10 @@ author:
   country: Switzerland
   phone: "+41 44 878 9200"
   email: lear@cisco.com
+venue: 
+  group: 
+  anima mail: {anima@ietf.org}
+  github: anima-wg/anima-brski-ae
 normative:
   RFC4210:
   RFC8366:
@@ -1094,6 +1098,8 @@ From IETF draft ae-01 -> IETF draft ae-02:
 * Architecture: clarify registrar role including RA/LRA/enrollment proxy
 
 * CMP: add reference to CoAP Transport for CMPV2 and Constrained BRSKI
+
+* Included venue information
 
 
 From IETF draft 05 -> IETF draft ae-01:
