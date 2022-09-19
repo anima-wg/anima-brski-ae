@@ -515,36 +515,37 @@ The certification request MAY also be piggybacked on another protocol.
 This leads to generalizations in the
 placement and enhancements of the logical elements as shown in {{uc1figure}}.
 
-~~~~
-                                           +------------------------+
-   +--------------Drop-Ship--------------->| Vendor Service         |
-   |                                       +------------------------+
-   |                                       | M anufacturer|         |
-   |                                       | A uthorized  |Ownership|
-   |                                       | S igning     |Tracker  |
-   |                                       | A uthority   |         |
-   |                                       +--------------+---------+
+~~~~ aasvg
+                                         +------------------------+
+   +--------------Drop-Ship------------->| Vendor Service         |
+   |                                     +------------------------+
+   |                                     | M anufacturer|         |
+   |                                     | A uthorized  |Ownership|
+   |                                     | S igning     |Tracker  |
+   |                                     | A uthority   |         |
+   |                                     +--------------+---------+
    |                                                      ^
    |                                                      |
    V                                                      |
 +--------+     .........................................  |
 |        |     .                                       .  | BRSKI-
-|        |     .  +------------+     +--------------+  .  | MASA
-| Pledge |     .  |   Join     |     | Domain       <-----+
-|        |     .  |   Proxy    |     | Registrar w/ |  .
-|        <-------->............<-----> Enrollment   |  .
-|        |     .  |        BRSKI-AE  | Proxy/LRA/RA |  .
-| IDevID |     .  |            |     +--------^-----+  .
-|        |     .  +------------+              |        .
+|        |     .  +----------+       +--------------+  .  | MASA
+| Pledge |     .  |   Join   |       | Domain       |<----+
+|        |     .  |   Proxy  |       | Registrar w/ |  .
+|        |<------>|..........|<----->| Enrollment   |  .
+|        |     .  |          | BRSKI | Proxy/LRA/RA |  .
+| IDevID |     .  |          |  -AE  +--------------+  .
+|        |     .  +----------+                ^        .
 |        |     .                              |        .
 +--------+     ...............................|.........
                 on-site "domain" components   |
                                               | e.g., RFC 4210,
                                               |       RFC 7030, ...
- .............................................|.....................
- . +---------------------------+     +--------v------------------+ .
- . | Public-Key Infrastructure <-----+ Registration Authority    | .
- . | PKI CA                    +-----> PKI RA                    | .
+ .............................................|....................
+ .                                            v                    .
+ . +---------------------------+     +---------------------------+ .
+ . | Public-Key Infrastructure |<----+ Registration Authority    | .
+ . | PKI CA                    +---->| PKI RA                    | .
  . +---------------------------+     +---------------------------+ .
  ...................................................................
          off-site or central "domain" components
