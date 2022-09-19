@@ -59,8 +59,8 @@ author:
   country: Switzerland
   phone: "+41 44 878 9200"
   email: lear@cisco.com
-venue: 
-  group: 
+venue:
+  group: anima
   anima mail: {anima@ietf.org}
   github: anima-wg/anima-brski-ae
 normative:
