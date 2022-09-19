@@ -561,18 +561,18 @@ checks (as is the case in BRSKI), or part of them, or none of them.
 The following list describes the on-site components in the target domain
 of the pledge shown in {{uc1figure}}.
 
-* Join Proxy: same functionality as described in BRSKI {{RFC8995}}.
+* Join Proxy: same functionality as described in BRSKI {{RFC8995, Section 4}}
 
 * Domain Registrar including RA, LRA, or Enrollment Proxy: in BRSKI-AE,
   the domain registrar has mostly the same functionality as in BRSKI, namely
   to facilitate the communication of the pledge with the MASA and the PKI.
-  Yet there are two generalizations.
+  Yet there are two generalizations:
 
-  The registrar MAY offer different enrollment protocols. For supporting this,
+  1. The registrar MAY offer different enrollment protocols. For supporting this,
   the URI scheme for addressing the domain registrar is generalized
   (see {{addressing}}).
 
-  The registrar MAY also delegate (part of) its certificate enrollment support
+  2. The registrar MAY also delegate (part of) its certificate enrollment support
   to a separate system. That is, alternatively to having full RA functionality,
   the registrar may act as a local registration authority (LRA)
   or just as an enrollment proxy.
