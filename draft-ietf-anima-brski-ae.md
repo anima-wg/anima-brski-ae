@@ -657,35 +657,35 @@ performed using an authenticated self-contained object providing
 not only proof-of-possession but also proof-of-identity (source authentication).
 
 
-~~~~
+~~~~ aasvg
 +--------+                        +------------+       +------------+
 | Pledge |                        | Domain     |       | Operator   |
 |        |                        | Registrar  |       | RA/CA      |
 |        |                        |  (JRC)     |       | (PKI)      |
 +--------+                        +------------+       +------------+
  /-->                                      |                       |
-[Optional request of CA certificates]      |                       |
+ |  [Optional request of CA certificates]  |                       |
  |---------- CA Certs Request ------------>|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-- CA Certs Request -->|
  |                                         |<- CA Certs Response --|
  |<--------- CA Certs Response ------------|                       |
- /-->                                      |                       |
-[Optional request of attributes to include in Certificate Request] |
+ |-->  [Optional request of attributes to  |                       |
+ |     include in  Certificate Request]    |                       |
  |---------- Attribute Request ----------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |- Attribute Request -->|
  |                                         |<- Attribute Response -|
  |<--------- Attribute Response -----------|                       |
- /-->                                      |                       |
-[Mandatory certificate request]            |                       |
+ |-->                                      |                       |
+ |  [Mandatory certificate request]        |                       |
  |---------- Certificate Request --------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-Certificate Request ->|
  |                                         |<- Certificate Resp. --|
  |<--------- Certificate Response ---------|                       |
- /-->                                      |                       |
-[Optional certificate confirmation]        |                       |
+ |-->  [Optional certificate confirmation] |                       |
+ |                                         |                       |
  |---------- Certificate Confirm --------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-Certificate Confirm ->|
