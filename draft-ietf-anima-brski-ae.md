@@ -669,73 +669,73 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 +--------+                        +------------+       +------------+
  /-->                                      |                       |
  |  [Optional request of CA certificates]  |                       |
- |---------- CA Certs Request [1]--------->|                       |
+ |---------- CA Certs Request (1)--------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-- CA Certs Request -->|
  |                                         |<- CA Certs Response --|
- |<--------- CA Certs Response [2]---------|                       |
+ |<--------- CA Certs Response (2)---------|                       |
  |-->                                      |                       |
  |  [Optional request of attributes        |                       |
  |   to include in Certificate Request]    |                       |
- |---------- Attribute Request [3]-------->|                       |
+ |---------- Attribute Request (3)-------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |- Attribute Request -->|
  |                                         |<- Attribute Response -|
- |<--------- Attribute Response [4]--------|                       |
+ |<--------- Attribute Response (4)--------|                       |
  |-->                                      |                       |
  |  [Mandatory certificate request]        |                       |
- |---------- Certificate Request [5]------>|                       |
+ |---------- Certificate Request (5)------>|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-Certificate Request ->|
  |                                         |<- Certificate Resp. --|
- |<--------- Certificate Response [6]------|                       |
+ |<--------- Certificate Response (6)------|                       |
  |-->                                      |                       |
  |  [Optional certificate confirmation]    |                       |
- |---------- Certificate Confirm [7]------>|                       |
+ |---------- Certificate Confirm (7)------>|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-Certificate Confirm ->|
  |                                         |<---- PKI Confirm -----|
- |<--------- PKI/Registrar Confirm [8]-----|                       |
+ |<--------- PKI/Registrar Confirm (8)-----|                       |
 ~~~~
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
 The following list provides an abstract description of the flow
 depicted in {{enrollfigure}}.
 
-* CA Certs Request [1]: The pledge optionally requests the latest relevant
+* CA Certs Request (1): The pledge optionally requests the latest relevant
   CA certificates. This ensures that the pledge has the
   complete set of current CA certificates beyond the
   pinned-domain-cert (which is contained in the voucher
   and may be just the domain registrar certificate).
 
-* CA Certs Response [2]: It MUST contain the current root CA certificate,
+* CA Certs Response (2): It MUST contain the current root CA certificate,
   which typically is the LDevID trust anchor, and any additional certificates
   that the pledge may need to validate certificates.
 
-* Attribute Request [3]: Typically, the automated bootstrapping occurs
+* Attribute Request (3): Typically, the automated bootstrapping occurs
   without local administrative configuration of the pledge.
   Nevertheless, there are cases in which the pledge may also
   include additional attributes specific to the target domain
   into the certification request. To get these attributes in
   advance, the attribute request can be used.
 
-* Attribute Response [4]: It MUST contain the attributes to be included
+* Attribute Response (4): It MUST contain the attributes to be included
   in the subsequent certification request.
 
-* Certificate Request [5]: This certification request MUST contain the
+* Certificate Request (5): This certification request MUST contain the
   authenticated self-contained object ensuring both proof-of-possession of the
   corresponding private key and proof-of-identity of the requester.
 
-* Certificate Response [6]: The certification response message MUST contain on success
+* Certificate Response (6): The certification response message MUST contain on success
   the requested certificate and MAY include further information,
   like certificates of intermediate CAs.
 
-* Certificate Confirm [7]: An optional confirmation sent
+* Certificate Confirm (7): An optional confirmation sent
   after the requested certificate has been received and validated.
   It contains a positive or negative confirmation by the pledge whether
   the certificate was successfully enrolled and fits its needs.
 
-* PKI/Registrar Confirm [8]: An acknowledgment by the PKI or registrar
+* PKI/Registrar Confirm (8): An acknowledgment by the PKI or registrar
   that MUST be sent on reception of the Cert Confirm.
 
 The generic messages described above may be implemented using various
