@@ -60,6 +60,8 @@ author:
   phone: "+41 44 878 9200"
   email: lear@cisco.com
 venue:
+  group: anima
+  anima mail: {anima@ietf.org}
   github: anima-wg/anima-brski-ae
 normative:
   RFC4210:
