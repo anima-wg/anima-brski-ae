@@ -670,8 +670,9 @@ not only proof-of-possession but also proof-of-identity (source authentication).
  |                                         |-- CA Certs Request -->|
  |                                         |<- CA Certs Response --|
  |<--------- CA Certs Response [2]---------|                       |
- |-->  [Optional request of attributes to  |                       |
- |     include in  Certificate Request]    |                       |
+ |-->                                      |                       |
+ |  [Optional request of attributes        |                       |
+ |   to include in Certificate Request]    |                       |
  |---------- Attribute Request [3]-------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |- Attribute Request -->|
@@ -684,8 +685,8 @@ not only proof-of-possession but also proof-of-identity (source authentication).
  |                                         |-Certificate Request ->|
  |                                         |<- Certificate Resp. --|
  |<--------- Certificate Response [6]------|                       |
- |-->  [Optional certificate confirmation] |                       |
- |                                         |                       |
+ |-->                                      |                       |
+ |  [Optional certificate confirmation]    |                       |
  |---------- Certificate Confirm [7]------>|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-Certificate Confirm ->|
