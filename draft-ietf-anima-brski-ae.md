@@ -162,7 +162,11 @@ The certification request of the pledge is signed using its IDevID secret and ca
 validated by the target domain using the trust anchor of the pledge manufacturer,
 which needs to pre-installed in the domain.
 
-SZTP {{?RFC8572}} is an example of another mode where vouchers may be delivered asynchronously by tools that include portable USB "thumb" drives.  However, SZTP does not do signed voucher requests, so it does not allow the domain to verify the identity of the device in the same way, nor does it deploy LDevID to the device in the same way.
+SZTP {{?RFC8572}} is an example of another mode where vouchers may be
+delivered asynchronously by tools such as portable USB "thumb" drives.
+However, SZTP does not do signed voucher requests,
+so it does not allow the domain to verify the identity of the device
+in the same way, nor does it deploy LDevIDs to the device in the same way.
 
 For enrolling devices with LDevID certificates,
 BRSKI typically utilizes Enrollment over Secure Transport (EST) {{RFC7030}}.
