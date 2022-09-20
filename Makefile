@@ -1,20 +1,12 @@
-SHELL=bash # This is for supporting extended file name globbing
+LIBDIR := lib
+include $(LIBDIR)/main.mk
 
-DRAFT:=draft-ietf-anima-brski-ae
+$(LIBDIR)/main.mk:
+ifneq (,$(shell grep "path *= *$(LIBDIR)" .gitmodules 2>/dev/null))
+	git submodule sync
+	git submodule update $(CLONE_ARGS) --init
+else
+	git clone -q --depth 10 $(CLONE_ARGS) \
+	    -b main https://github.com/martinthomson/i-d-template $(LIBDIR)
+endif
 
-all: ${DRAFT}.txt ${DRAFT}.html ${DRAFT}.pdf
-
-%.xml: %.md
-	kdrfc --v3 -x $?
-
-%.txt: %.xml
-	xml2rfc --text -o $@ $?
-
-%.html: %.xml
-	xml2rfc --html -o $@ $?
-
-%.pdf: %.xml
-	xml2rfc --pdf -o $@ $?
-
-clean:
-	git checkout -- ${DRAFT}.{xml,txt,html,pdf}
