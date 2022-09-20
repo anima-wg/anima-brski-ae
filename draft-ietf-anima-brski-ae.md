@@ -234,8 +234,8 @@ along with requester authentication information:
 
 Focus of this document is the support of alternative enrollment protocols that allow
 using authenticated self-contained objects for device credential bootstrapping.
-This enhancement of BRSKI is named BRSKI-AE,
-where AE stands for *A*lternative *E*nrollment protocols and for *A*synchronous *E*nrollment.
+This enhancement of BRSKI is named BRSKI-AE, where AE stands for
+**A**lternative **E**nrollment and for **A**synchronous **E**nrollment.
 This specification carries over the main characteristics of BRSKI,
 namely that the pledge obtains trust anchor information
 for authenticating the domain registrar and other target domain components
