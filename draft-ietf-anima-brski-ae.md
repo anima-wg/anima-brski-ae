@@ -1100,7 +1100,7 @@ List of reviewers (besides the authors):
 
 * Toerless Eckert - TODO
 
-* Michael Richardson - TODO
+* Michael Richardson
 
 * TBD - TODO
 
