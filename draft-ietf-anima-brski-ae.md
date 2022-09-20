@@ -59,8 +59,8 @@ author:
   country: Switzerland
   phone: "+41 44 878 9200"
   email: lear@cisco.com
-venue: 
-  group: 
+venue:
+  group: anima
   anima mail: {anima@ietf.org}
   github: anima-wg/anima-brski-ae
 normative:
@@ -139,12 +139,12 @@ and provides flexibility where to authenticate and authorize certification reque
 ## Motivation
 
 BRSKI, as defined in {{RFC8995}}, specifies a solution for
-secure automated zero-touch bootstrapping of new devices, so-called pledges.
+secure automated zero-touch bootstrapping of new devices, which are given the name _pledges_.
 This includes the discovery of the registrar in the target domain,
 time synchronization, and the exchange of security information
 necessary to establish mutual trust between pledges and the target domain.
 
-A pledge gains trust in the target domain via the domain registrar as follows.
+A pledge gains trust in the target domain via the domain registrar as follows:
 It obtains security information about the domain,
 specifically a domain certificate to be trusted,
 by requesting a voucher object defined in {{RFC8366}}.
@@ -153,7 +153,7 @@ originating from a Manufacturer Authorized Signing Authority (MASA).
 Therefore, the voucher may be provided
 in online mode (synchronously) or offline mode (asynchronously).
 The pledge can authenticate the voucher
-because it is shipped with a trust anchor of its manufacturer such that
+because it is shipped with trust anchor(s) by its manufacturer such that
 it can validate signatures (including related certificates) by the MASA.
 
 Trust by the target domain in a pledge is established by providing the pledge
@@ -161,6 +161,12 @@ with a domain-specific LDevID certificate.
 The certification request of the pledge is signed using its IDevID secret and can be
 validated by the target domain using the trust anchor of the pledge manufacturer,
 which needs to pre-installed in the domain.
+
+SZTP {{?RFC8572}} is an example of another mode where vouchers may be
+delivered asynchronously by tools such as portable USB "thumb" drives.
+However, SZTP does not do signed voucher requests,
+so it does not allow the domain to verify the identity of the device
+in the same way, nor does it deploy LDevIDs to the device in the same way.
 
 For enrolling devices with LDevID certificates,
 BRSKI typically utilizes Enrollment over Secure Transport (EST) {{RFC7030}}.
@@ -174,11 +180,12 @@ it may be preferable to use alternative enrollment protocols such as
 the Certificate Management Protocol (CMP) {{RFC4210}}
 profiled in {{I-D.ietf-lamps-lightweight-cmp-profile}}
 or Certificate Management over CMS (CMC) {{RFC5272}}.
-that are more flexible and independent of the transfer mechanism because they
-represent certification request messages as authenticated self-contained objects.
+These protocols are more flexible, and
+by representing the certification request messages as authenticated self-contained objects,
+they are designed to be independent of the transfer mechanism.
 
 Depending on the application scenario,
-the required RA/CA components may not be part of the registrar.
+the required RA/CA components may not be part of the BRSKI registrar.
 They even may not be available on-site but rather be
 provided by remote backend systems. The registrar or its deployment site may not have
 an online connection with them or the connectivity may be intermittent.
@@ -231,8 +238,8 @@ along with requester authentication information:
 
 Focus of this document is the support of alternative enrollment protocols that allow
 using authenticated self-contained objects for device credential bootstrapping.
-This enhancement of BRSKI is named BRSKI-AE,
-where AE stands for alternative enrollment protocols and for asynchronous enrollment.
+This enhancement of BRSKI is named BRSKI-AE, where AE stands for
+**A**lternative **E**nrollment and for **A**synchronous **E**nrollment.
 This specification carries over the main characteristics of BRSKI,
 namely that the pledge obtains trust anchor information
 for authenticating the domain registrar and other target domain components
@@ -404,7 +411,7 @@ based on existing technology described in IETF documents:
     protect its integrity and prove possession of the private key
     that corresponds to the public key included in the request.
 
-  * CRMF {{RFC4211}}. Also this certificate request message format supports
+  * CRMF {{RFC4211}}. This certificate request message format also supports
     integrity protection and proof-of-possession,
     typically by a self-signature generated over (part of) the structure
     with the private key corresponding to the included public key.
@@ -416,8 +423,9 @@ based on existing technology described in IETF documents:
   Yet note that for the above examples this is not sufficient to provide data
   origin authentication, i.e., proof-of-identity. This extra property can be
   achieved by an additional binding to the IDevID of the pledge.
-  This binding to source authentication supports the
-  authorization decision for the certification request. The binding of data
+  This binding to the source authentication supports the
+  authorization decision of the certification request.
+  The binding of data
   origin authentication to the certification request may be
   delegated to the protocol used for certificate management.
 
@@ -430,7 +438,7 @@ based on existing technology described in IETF documents:
   underlying transport protocol such as TLS if the authorization of the
   certification request is (completely) done at the next communication hop.
   This binding can also be done in a transport-independent way by wrapping the
-  certification request with signature employing an existing IDevID.
+  certification request with a signature employing an existing IDevID.
   the BRSKI context, this will be the IDevID.
   This requirement is addressed by existing enrollment protocols
   in various ways, such as:
@@ -512,35 +520,36 @@ This leads to generalizations in the
 placement and enhancements of the logical elements as shown in {{uc1figure}}.
 
 ~~~~
-                                           +------------------------+
-   +--------------Drop-Ship--------------->| Vendor Service         |
-   |                                       +------------------------+
-   |                                       | M anufacturer|         |
-   |                                       | A uthorized  |Ownership|
-   |                                       | S igning     |Tracker  |
-   |                                       | A uthority   |         |
-   |                                       +--------------+---------+
+                                         +------------------------+
+   +--------------Drop-Ship------------->| Vendor Service         |
+   |                                     +------------------------+
+   |                                     | M anufacturer|         |
+   |                                     | A uthorized  |Ownership|
+   |                                     | S igning     |Tracker  |
+   |                                     | A uthority   |         |
+   |                                     +--------------+---------+
    |                                                      ^
    |                                                      |
    V                                                      |
 +--------+     .........................................  |
 |        |     .                                       .  | BRSKI-
-|        |     .  +------------+     +--------------+  .  | MASA
-| Pledge |     .  |   Join     |     | Domain       <-----+
-|        |     .  |   Proxy    |     | Registrar w/ |  .
-|        <-------->............<-----> Enrollment   |  .
-|        |     .  |        BRSKI-AE  | Proxy/LRA/RA |  .
-| IDevID |     .  |            |     +--------^-----+  .
-|        |     .  +------------+              |        .
+|        |     .  +-------+          +--------------+  .  | MASA
+| Pledge |     .  | Join  |          | Domain       |<----+
+|        |     .  | Proxy |          | Registrar w/ |  .
+|        |<------>|.......|<-------->| Enrollment   |  .
+|        |     .  |       | BRSKI-AE | Proxy/LRA/RA |  .
+| IDevID |     .  |       |          +--------------+  .
+|        |     .  +-------+                   ^        .
 |        |     .                              |        .
 +--------+     ...............................|.........
                 on-site "domain" components   |
                                               | e.g., RFC 4210,
                                               |       RFC 7030, ...
- .............................................|.....................
- . +---------------------------+     +--------v------------------+ .
- . | Public-Key Infrastructure <-----+ Registration Authority    | .
- . | PKI CA                    +-----> PKI RA                    | .
+ .............................................|....................
+ .                                            v                    .
+ . +---------------------------+     +---------------------------+ .
+ . | Public-Key Infrastructure |<----+ Registration Authority    | .
+ . | PKI CA                    +---->| PKI RA                    | .
  . +---------------------------+     +---------------------------+ .
  ...................................................................
          off-site or central "domain" components
@@ -556,18 +565,18 @@ checks (as is the case in BRSKI), or part of them, or none of them.
 The following list describes the on-site components in the target domain
 of the pledge shown in {{uc1figure}}.
 
-* Join Proxy: same functionality as described in BRSKI {{RFC8995}}.
+* Join Proxy: same functionality as described in BRSKI {{RFC8995, Section 4}}
 
 * Domain Registrar including RA, LRA, or Enrollment Proxy: in BRSKI-AE,
   the domain registrar has mostly the same functionality as in BRSKI, namely
   to facilitate the communication of the pledge with the MASA and the PKI.
-  Yet there are two generalizations.
+  Yet there are two generalizations:
 
-  The registrar MAY offer different enrollment protocols. For supporting this,
+  1. The registrar MAY offer different enrollment protocols. For supporting this,
   the URI scheme for addressing the domain registrar is generalized
   (see {{addressing}}).
 
-  The registrar MAY also delegate (part of) its certificate enrollment support
+  2. The registrar MAY also delegate (part of) its certificate enrollment support
   to a separate system. That is, alternatively to having full RA functionality,
   the registrar may act as a local registration authority (LRA)
   or just as an enrollment proxy.
@@ -659,73 +668,74 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 |        |                        |  (JRC)     |       | (PKI)      |
 +--------+                        +------------+       +------------+
  /-->                                      |                       |
-[Optional request of CA certificates]      |                       |
- |---------- CA Certs Request ------------>|                       |
+ |  [Optional request of CA certificates]  |                       |
+ |---------- CA Certs Request (1)--------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-- CA Certs Request -->|
  |                                         |<- CA Certs Response --|
- |<--------- CA Certs Response ------------|                       |
- /-->                                      |                       |
-[Optional request of attributes to include in Certificate Request] |
- |---------- Attribute Request ----------->|                       |
+ |<--------- CA Certs Response (2)---------|                       |
+ |-->                                      |                       |
+ |  [Optional request of attributes        |                       |
+ |   to include in Certificate Request]    |                       |
+ |---------- Attribute Request (3)-------->|                       |
  |                 [if connection to operator domain is available] |
  |                                         |- Attribute Request -->|
  |                                         |<- Attribute Response -|
- |<--------- Attribute Response -----------|                       |
- /-->                                      |                       |
-[Mandatory certificate request]            |                       |
- |---------- Certificate Request --------->|                       |
+ |<--------- Attribute Response (4)--------|                       |
+ |-->                                      |                       |
+ |  [Mandatory certificate request]        |                       |
+ |---------- Certificate Request (5)------>|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-Certificate Request ->|
  |                                         |<- Certificate Resp. --|
- |<--------- Certificate Response ---------|                       |
- /-->                                      |                       |
-[Optional certificate confirmation]        |                       |
- |---------- Certificate Confirm --------->|                       |
+ |<--------- Certificate Response (6)------|                       |
+ |-->                                      |                       |
+ |  [Optional certificate confirmation]    |                       |
+ |---------- Certificate Confirm (7)------>|                       |
  |                 [if connection to operator domain is available] |
  |                                         |-Certificate Confirm ->|
  |                                         |<---- PKI Confirm -----|
- |<--------- PKI/Registrar Confirm --------|                       |
+ |<--------- PKI/Registrar Confirm (8)-----|                       |
 ~~~~
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
 The following list provides an abstract description of the flow
 depicted in {{enrollfigure}}.
 
-* CA Certs Request: The pledge optionally requests the latest relevant
+* CA Certs Request (1): The pledge optionally requests the latest relevant
   CA certificates. This ensures that the pledge has the
   complete set of current CA certificates beyond the
   pinned-domain-cert (which is contained in the voucher
   and may be just the domain registrar certificate).
 
-* CA Certs Response: It MUST contain the current root CA certificate,
+* CA Certs Response (2): It MUST contain the current root CA certificate,
   which typically is the LDevID trust anchor, and any additional certificates
   that the pledge may need to validate certificates.
 
-* Attribute Request: Typically, the automated bootstrapping occurs
+* Attribute Request (3): Typically, the automated bootstrapping occurs
   without local administrative configuration of the pledge.
   Nevertheless, there are cases in which the pledge may also
   include additional attributes specific to the target domain
   into the certification request. To get these attributes in
   advance, the attribute request can be used.
 
-* Attribute Response: It MUST contain the attributes to be included
+* Attribute Response (4): It MUST contain the attributes to be included
   in the subsequent certification request.
 
-* Certificate Request: This certification request MUST contain the
+* Certificate Request (5): This certification request MUST contain the
   authenticated self-contained object ensuring both proof-of-possession of the
   corresponding private key and proof-of-identity of the requester.
 
-* Certificate Response: The certification response message MUST contain on success
+* Certificate Response (6): The certification response message MUST contain on success
   the requested certificate and MAY include further information,
   like certificates of intermediate CAs.
 
-* Certificate Confirm: An optional confirmation sent
+* Certificate Confirm (7): An optional confirmation sent
   after the requested certificate has been received and validated.
   It contains a positive or negative confirmation by the pledge whether
   the certificate was successfully enrolled and fits its needs.
 
-* PKI/Registrar Confirm: An acknowledgment by the PKI or registrar
+* PKI/Registrar Confirm (8): An acknowledgment by the PKI or registrar
   that MUST be sent on reception of the Cert Confirm.
 
 The generic messages described above may be implemented using various
