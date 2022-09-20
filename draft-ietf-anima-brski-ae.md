@@ -533,13 +533,13 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
    V                                                      |
 +--------+     .........................................  |
 |        |     .                                       .  | BRSKI-
-|        |     .  +----------+       +--------------+  .  | MASA
-| Pledge |     .  |   Join   |       | Domain       |<----+
-|        |     .  |   Proxy  |       | Registrar w/ |  .
-|        |<------>|..........|<----->| Enrollment   |  .
-|        |     .  |          | BRSKI | Proxy/LRA/RA |  .
-| IDevID |     .  |          |  -AE  +--------------+  .
-|        |     .  +----------+                ^        .
+|        |     .  +-------+          +--------------+  .  | MASA
+| Pledge |     .  | Join  |          | Domain       |<----+
+|        |     .  | Proxy |          | Registrar w/ |  .
+|        |<------>|.......|<-------->| Enrollment   |  .
+|        |     .  |       | BRSKI-AE | Proxy/LRA/RA |  .
+| IDevID |     .  |       |          +--------------+  .
+|        |     .  +-------+                   ^        .
 |        |     .                              |        .
 +--------+     ...............................|.........
                 on-site "domain" components   |
