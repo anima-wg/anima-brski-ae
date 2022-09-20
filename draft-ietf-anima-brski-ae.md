@@ -611,7 +611,7 @@ operated in the off-site backend of the target domain.
 * PKI CA: Performs certificate generation by signing the certificate structure
   requested in already authenticated and authorized certification requests.
 
-Based on the diagram in Section 2.1 of BRSKI {{RFC8995}} and the architectural changes,
+Based on the diagram in BRSKI {{RFC8995, Section 2.1}} and the architectural changes,
 the original protocol flow is divided into three phases showing commonalities
 and differences to the original approach as follows.
 
@@ -625,7 +625,7 @@ and differences to the original approach as follows.
 
 ## Message Exchange
 
-The behavior of a pledge described in Section 2.1 of BRSKI {{RFC8995}}
+The behavior of a pledge described in BRSKI {{RFC8995, Section 2.1}}
 is kept with one exception.
 After finishing the Imprint step (4), the Enroll step (5) MUST be performed
 with an enrollment protocol utilizing authenticated self-contained objects.
@@ -837,7 +837,7 @@ which also entails that authenticated self-contained objects are used.
 
 When using EST {{RFC7030}}, the following aspects and constraints
 need to be considered and the given extra requirements need to be fulfilled,
-which adapt Section 5.9.3 of BRSKI {{RFC8995}}:
+which adapt BRSKI {{RFC8995, Section 5.9.3}}:
 
 * proof-of-possession is provided typically by using the specified PKCS#10
   structure in the request.
@@ -855,7 +855,7 @@ which adapt Section 5.9.3 of BRSKI {{RFC8995}}:
 
   Note: In this case the binding to the underlying TLS connection is not necessary.
 
-* When the RA is temporarily not available, as per Section 4.2.3 of {{RFC7030}},
+* When the RA is temporarily not available, as per {{RFC7030, Section 4.2.3}},
   an HTTP status code 202 should be returned by the registrar,
   and the pledge will repeat the initial Full PKI Request
 
@@ -874,36 +874,41 @@ When using CMP, the following specific implementation requirements apply
 * CA Certs Request
   * Requesting CA certificates over CMP is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
-  Section 4.3.1 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.3.1}}.
 
 * Attribute Request
   * Requesting certificate request attributes over CMP is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
-  Section 4.3.3 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.3.3}}.<br>
   Note that alternatively the registrar MAY modify the contents of requested certificate contents
-  as specified in Section 5.2.3.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+  as specified in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.2.3.2}}.
 
 * Certificate Request
-  * Proof-of-possession SHALL be provided as defined in Section 4.1.1 (based on CRMF)
-  or Section 4.1.4 (based on PKCS#10) of the Lightweight CMP Profile
-  {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  * Proof-of-possession SHALL be provided as defined in
+  the Lightweight CMP Profile
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}} (based on CRMF) or
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.4}} (based on PKCS#10).
+  <br>
   The `caPubs` field of certificate response messages SHOULD NOT be used.
 
   * Proof-of-identity SHALL be provided by using signature-based
-  protection of the certification request message as outlined in
-  Section 3.2. of {{I-D.ietf-lamps-lightweight-cmp-profile}} using the IDevID secret.
+  protection of the certification request message
+  as outlined in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 3.2}}
+  using the IDevID secret.
 
 * Certificate Confirm
   * Explicit confirmation of new certificates to the RA
-  MAY be used as specified in Section 4.1.1
-  of the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.<br>
+  MAY be used as specified in the Lightweight CMP Profile
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}}.<br>
   Note that independently of certificate confirmation within CMP,
   enrollment status telemetry with the registrar will be performed
-  as described in Section 5.9.4 of BRSKI {{RFC8995}}.
+  as described in BRSKI {{RFC8995, Section 5.9.4}}.
 
 * If delayed delivery of responses (for instance, to support asynchronous enrollment)
   within CMP is needed, it SHALL be performed
-  as specified in Sections 4.4 and 5.1.2 of {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+  as specified in the Lightweight CMP Profile
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.4}} and
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.1.2}}.
 
 BRSKI-AE with CMP can also be combined with
 Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}},
