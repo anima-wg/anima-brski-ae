@@ -519,7 +519,7 @@ The certification request MAY also be piggybacked on another protocol.
 This leads to generalizations in the
 placement and enhancements of the logical elements as shown in {{uc1figure}}.
 
-~~~~
+~~~~ aasvg
                                          +------------------------+
    +--------------Drop-Ship------------->| Vendor Service         |
    |                                     +------------------------+
@@ -661,7 +661,7 @@ performed using an authenticated self-contained object providing
 not only proof-of-possession but also proof-of-identity (source authentication).
 
 
-~~~~
+~~~~ aasvg
 +--------+                        +------------+       +------------+
 | Pledge |                        | Domain     |       | Operator   |
 |        |                        | Registrar  |       | RA/CA      |
