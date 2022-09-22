@@ -612,16 +612,18 @@ operated in the off-site backend of the target domain.
   requested in already authenticated and authorized certification requests.
 
 Based on the diagram in BRSKI {{RFC8995, Section 2.1}} and the architectural changes,
-the original protocol flow is divided into three phases showing commonalities
+the original protocol flow is divided into four phases showing commonalities
 and differences to the original approach as follows.
 
-* Discovery phase: same as in BRSKI steps (1) and (2)
+* Discovery phase: same as in BRSKI steps (1) and (2).
 
 * Voucher exchange phase: same as in BRSKI steps (3) and (4).
 
-* Enrollment phase: step (5) is changed to employing an alternative enrollment protocol
-  that uses authenticated self-contained objects.
+* Certifiate enrollment phase: the use of EST in step (5) is changed
+  to employing a certificate enrollment protocol that uses
+  an authenticated self-contained object for requesting the LDevID certificate.
 
+- Enrollment status telemetry phase: the final exchange of BRSKI step (5).
 
 ## Message Exchange
 
@@ -644,19 +646,29 @@ is not visible / verifiable to authorization points outside the registrar.-->
     </artwork>
 </figure>
 
-**Pledge - registrar discovery and voucher exchange**
 
-The discovery phase and voucher exchange are applied as specified in {{RFC8995}}.
+### Pledge - registrar discovery
 
-
-**Registrar - MASA voucher exchange**
-
-This voucher exchange is performed as specified in {{RFC8995}}.
+The discovery is done as specified in {{RFC8995}}.
 
 
-**Pledge - registrar - RA/CA certificate enrollment**
+### Pledge - registrar - MASA voucher exchange
 
-As stated in {{req-sol}}, the enrollment MUST be
+The voucher exchange is performed as specified in {{RFC8995}}.
+
+
+### Pledge - registrar - RA/CA certificate enrollment
+
+The certificate enrollment phase may involve several exchanges of requests
+and responses. Which of the optional exchanges are actually used depends on
+the certificate enrollment protocol being used and on the application scenario.
+
+These potential exchanges cover all those supported by the use of EST in BRSKI.
+The optional last one, namely certificate confirmation,
+is not supported by EST, but by CMP and other enrollment protocols.
+
+The only mandatory message exchange is for the actual certificate request.
+As stated in {{req-sol}}, the latter request MUST be
 performed using an authenticated self-contained object providing
 not only proof-of-possession but also proof-of-identity (source authentication).
 
@@ -671,29 +683,29 @@ not only proof-of-possession but also proof-of-identity (source authentication).
  |  [Optional request of CA certificates]  |                       |
  |---------- CA Certs Request (1)--------->|                       |
  |                 [if connection to operator domain is available] |
- |                                         |-- CA Certs Request -->|
- |                                         |<- CA Certs Response --|
+ |                                         |---CA Certs Request -->|
+ |                                         |<--CA Certs Response---|
  |<--------- CA Certs Response (2)---------|                       |
  |-->                                      |                       |
  |  [Optional request of attributes        |                       |
  |   to include in Certificate Request]    |                       |
  |---------- Attribute Request (3)-------->|                       |
  |                 [if connection to operator domain is available] |
- |                                         |- Attribute Request -->|
- |                                         |<- Attribute Response -|
+ |                                         |--- Attribute Req. --->|
+ |                                         |<-- Attribute Resp. ---|
  |<--------- Attribute Response (4)--------|                       |
  |-->                                      |                       |
  |  [Mandatory certificate request]        |                       |
  |---------- Certificate Request (5)------>|                       |
  |                 [if connection to operator domain is available] |
- |                                         |-Certificate Request ->|
- |                                         |<- Certificate Resp. --|
+ |                                         |--- Certificate Req.-->|
+ |                                         |<--Certificate Resp.---|
  |<--------- Certificate Response (6)------|                       |
  |-->                                      |                       |
  |  [Optional certificate confirmation]    |                       |
  |---------- Certificate Confirm (7)------>|                       |
  |                 [if connection to operator domain is available] |
- |                                         |-Certificate Confirm ->|
+ |                                         |---Certificate Conf.-->|
  |                                         |<---- PKI Confirm -----|
  |<--------- PKI/Registrar Confirm (8)-----|                       |
 ~~~~
@@ -708,7 +720,7 @@ depicted in {{enrollfigure}}.
   pinned-domain-cert (which is contained in the voucher
   and may be just the domain registrar certificate).
 
-* CA Certs Response (2): It MUST contain the current root CA certificate,
+* CA Certs Response (2): This MUST contain the current root CA certificate,
   which typically is the LDevID trust anchor, and any additional certificates
   that the pledge may need to validate certificates.
 
@@ -719,36 +731,43 @@ depicted in {{enrollfigure}}.
   into the certification request. To get these attributes in
   advance, the attribute request can be used.
 
-* Attribute Response (4): It MUST contain the attributes to be included
+* Attribute Response (4): This MUST contain the attributes to be included
   in the subsequent certification request.
 
-* Certificate Request (5): This certification request MUST contain the
+* Certificate Request (5): This MUST contain the
   authenticated self-contained object ensuring both proof-of-possession of the
   corresponding private key and proof-of-identity of the requester.
 
-* Certificate Response (6): The certification response message MUST contain on success
+* Certificate Response (6): This MUST contain on success
   the requested certificate and MAY include further information,
   like certificates of intermediate CAs.
 
 * Certificate Confirm (7): An optional confirmation sent
   after the requested certificate has been received and validated.
-  It contains a positive or negative confirmation by the pledge whether
-  the certificate was successfully enrolled and fits its needs.
+  It contains a positive or negative confirmation by the pledge to the PKI
+  whether the certificate was successfully enrolled and fits its needs.
 
-* PKI/Registrar Confirm (8): An acknowledgment by the PKI or registrar
+* PKI/Registrar Confirm (8): An acknowledgment by the PKI
   that MUST be sent on reception of the Cert Confirm.
 
-The generic messages described above may be implemented using various
-enrollment protocols supporting authenticated self-contained objects,
-as described in {{req-sol}}. Examples are available in {{exist_prot}}.
+The generic messages described above may be implemented using any certificate
+enrollment protocol that supports authenticated self-contained objects for the
+certificate request as described in {{req-sol}}.
+Examples are available in {{exist_prot}}.
+
+Note that the optional certficate confirmation by the pledge to the PKI
+described above is independent of the mandatory enrollment status telemetry
+done between the pledge and the registrar in the final phase of BRSKI-AE,
+described next.
 
 
-**Pledge - registrar - enrollment status telemetry**
+### Pledge - registrar enrollment status telemetry
 
 The enrollment status telemetry is performed as specified in {{RFC8995}}.
-In BRSKI this is described as part of the enrollment phase,
-but due to the generalization on the enrollment protocol described in this document
-it fits better as a separate step here.
+
+In BRSKI this is described as part of the enrollment step, but
+due to the generalization on the enrollment protocol described in this document
+its regarded as a separate phase here.
 
 
 ## Enhancements to Addressing Scheme {#addressing}
@@ -1106,7 +1125,15 @@ List of reviewers (besides the authors):
 
 From IETF draft ae-02 -> IETF draft ae-03:
 
-Reviews - TODO
+* In response to review by Michael Richardson,
+  - slightly improve the structuring of the Message Exchange section 4.2 and
+    add some detail on the request/resonse exchanges for the enrollment phase
+  - add reference to SZTP (RFC 8572)
+  - Extend venue information
+  - Convert output of ASCII-art figures to SVG format
+  - Various small other text improvements as suggested/provided
+* TODO
+
 
 From IETF draft ae-01 -> IETF draft ae-02:
 
@@ -1114,7 +1141,7 @@ From IETF draft ae-01 -> IETF draft ae-02:
 
 * CMP: add reference to CoAP Transport for CMPV2 and Constrained BRSKI
 
-* Included venue information
+* Include venue information
 
 
 From IETF draft 05 -> IETF draft ae-01:
