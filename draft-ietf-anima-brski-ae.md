@@ -5,6 +5,7 @@ abbrev: BRSKI-AE
 docname: draft-ietf-anima-brski-ae-03
 stand_alone: true
 ipr: trust200902
+submissionType: IETF
 area: Operations and Management
 wg: ANIMA WG
 kw: Internet-Draft
