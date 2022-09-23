@@ -51,15 +51,6 @@ author:
   country: Germany
   email: hendrik.brockhaus@siemens.com
   uri: https://www.siemens.com/
-- ins: E. Lear
-  name: Eliot Lear
-  org: Cisco Systems
-  street: Richtistrasse 7
-  city: Wallisellen
-  code: CH-8304
-  country: Switzerland
-  phone: "+41 44 878 9200"
-  email: lear@cisco.com
 venue:
   group: anima
   anima mail: {anima@ietf.org}
@@ -970,10 +961,13 @@ The security considerations as laid out in the Lightweight CMP Profile
 
 # Acknowledgments
 
-We would like to thank
-Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
+We thank Eliot Lear
+or his contributions as a co-author at an earlier draft stage.
+
+We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
 
+Moreover, we thank Michael Richardson and TBD for their reviews.
 
 
 --- back
@@ -1153,9 +1147,9 @@ From IETF draft ae-02 -> IETF draft ae-03:
   - Extend venue information
   - Convert output of ASCII-art figures to SVG format
   - Various small other text improvements as suggested/provided
-* remove the tentative informative instantiation to EST-fullCMC
+* Remove the tentative informative instantiation to EST-fullCMC
 * TODO
-
+* Remove Eliot Lear as a co-author
 
 From IETF draft ae-01 -> IETF draft ae-02:
 
