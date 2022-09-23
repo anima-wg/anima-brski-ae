@@ -1,3 +1,11 @@
+# software needed (on Linux):
+# pip install xml2rfc
+# sudo gem install kramdown-rfc2629
+# sudo apt install weasyprint # for PDF output
+# npm install -g aasv         # for aasvg support
+# sudo apt install python3-venv
+# sudo gem install enscript
+
 SHELL=bash # This is for supporting extended file name globbing
 
 DRAFT:=draft-ietf-anima-brski-ae
@@ -51,9 +59,8 @@ log:
 	git log -p ${DRAFT}.md
 
 commit: generate
-	# not including PDF because CI cannot find/install weasyprint
-	git commit ${DRAFT}.{xml,txt,html} \
-	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
+	git commit ${DRAFT}.{xml,txt,html,pdf} \
+	   -m "CI - ietf-draft-files (xml, txt, html, pdf) updated" \
 	   || echo "No changes to commit"
 	git push origin
 
