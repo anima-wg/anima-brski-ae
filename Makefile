@@ -1,3 +1,11 @@
+# software needed (on Linux):
+# pip install xml2rfc
+# sudo gem install kramdown-rfc2629
+# sudo apt install weasyprint # for PDF output
+# npm install -g aasv         # for aasvg support
+# sudo apt install python3-venv
+# sudo gem install enscript
+
 SHELL=bash # This is for supporting extended file name globbing
 
 DRAFT:=draft-ietf-anima-brski-ae
