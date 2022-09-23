@@ -59,9 +59,8 @@ log:
 	git log -p ${DRAFT}.md
 
 commit: generate
-	# not including PDF because CI cannot find/install weasyprint
-	git commit ${DRAFT}.{xml,txt,html} \
-	   -m "CI - ietf-draft-files (xml, txt, html) updated" \
+	git commit ${DRAFT}.{xml,txt,html,pdf} \
+	   -m "CI - ietf-draft-files (xml, txt, html, pdf) updated" \
 	   || echo "No changes to commit"
 	git push origin
 
