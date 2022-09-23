@@ -626,7 +626,7 @@ and differences to the original approach as follows.
 
 - Enrollment status telemetry phase: the final exchange of BRSKI step (5).
 
-## Message Exchange
+## Message Exchange {#message_ex}
 
 The behavior of a pledge described in BRSKI {{RFC8995, Section 2.1}}
 is kept with one exception.
@@ -648,17 +648,17 @@ is not visible / verifiable to authorization points outside the registrar.-->
 </figure>
 
 
-### Pledge - registrar discovery
+### Pledge - Registrar Discovery
 
 The discovery is done as specified in {{RFC8995}}.
 
 
-### Pledge - registrar - MASA voucher exchange
+### Pledge - Registrar - MASA Voucher Exchange
 
 The voucher exchange is performed as specified in {{RFC8995}}.
 
 
-### Pledge - registrar - RA/CA certificate enrollment
+### Pledge - Registrar - RA/CA Certificate Enrollment
 
 The certificate enrollment phase may involve several exchanges of requests
 and responses. Which of the optional exchanges are actually used depends on
@@ -762,7 +762,7 @@ done between the pledge and the registrar in the final phase of BRSKI-AE,
 described next.
 
 
-### Pledge - registrar enrollment status telemetry
+### Pledge - Registrar Enrollment Status Telemetry
 
 The enrollment status telemetry is performed as specified in {{RFC8995}}.
 
@@ -771,7 +771,7 @@ due to the generalization on the enrollment protocol described in this document
 its regarded as a separate phase here.
 
 
-## Enhancements to Addressing Scheme {#addressing}
+## Enhancements to the Addressing Scheme {#addressing}
 
 BRSKI-AE provides generalizations to the addressing scheme defined in
 BRSKI {{RFC8995}} to accommodate alternative enrollment protocols that
@@ -790,8 +790,9 @@ Note that enrollment is considered here a message sequence
 that contains at least a certification request and a certification response.
 The following conventions are used in order to provide maximal compatibility to BRSKI:
 
-* `<enrollment-protocol>`: MUST reference the protocol being used, which
-  MAY be CMP, CMC, SCEP, EST {{RFC7030}} as in BRSKI, or a newly defined approach.
+* `<enrollment-protocol>`: MUST reference the protocol being used,
+  which MAY be EST {{RFC7030}} as in BRSKI, CMP,
+  or an identifier for any other defined instantiation of BRSKI-AE.
 
   Note: additional endpoints (well-known URIs) at the registrar
   may need to be defined by the enrollment protocol being used.
@@ -802,7 +803,7 @@ The following conventions are used in order to provide maximal compatibility to 
   as done by existing protocols (see also {{exist_prot}}).
 
 
-## Domain Registrar Support of Alternative Enrollment Protocols {#discovery_eo}
+<!-- ## Domain Registrar Support of Alternative Enrollment Protocols -->
 
 Well-known URIs for various endpoints on the domain registrar are
 already defined as part of the base BRSKI specification or indirectly by EST.
@@ -827,12 +828,12 @@ and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
   </brski/voucher_status>,ct=json
   </brski/enrollstatus>,ct=json
   </est/cacerts>;ct=pkcs7-mime
-  </est/fullcmc>;ct=pkcs7-mime
   </est/csrattrs>;ct=pkcs7-mime
-  </cmp/initialization>;ct=pkixcmp
-  </cmp/p10>;ct=pkixcmp
+  </est/fullcmc>;ct=pkcs7-mime
   </cmp/getcacerts>;ct=pkixcmp
   </cmp/getcertreqtemplate>;ct=pkixcmp
+  </cmp/initialization>;ct=pkixcmp
+  </cmp/p10>;ct=pkixcmp
 
 ~~~~
 {: artwork-align="left"}
@@ -1127,8 +1128,11 @@ List of reviewers (besides the authors):
 From IETF draft ae-02 -> IETF draft ae-03:
 
 * In response to review by Michael Richardson,
-  - slightly improve the structuring of the Message Exchange section 4.2 and
+  - slightly improve the structuring of the Message Exchange {{message_ex}} and
     add some detail on the request/resonse exchanges for the enrollment phase
+  - merge the 'Enhancements to the Addressing Scheme' {{addressing}}
+    with the subsequent one:
+    'Domain Registrar Support of Alternative Enrollment Protocols'
   - add reference to SZTP (RFC 8572)
   - Extend venue information
   - Convert output of ASCII-art figures to SVG format
@@ -1245,9 +1249,9 @@ From IETF draft 00 -> IETF draft 01:
 * First description of exchanged object types (needs more work)
 
 * Clarification in discovery options for enrollment endpoints at
-  the domain registrar based on well-known endpoints in
-  {{discovery_eo}} do not result in additional
-  /.well-known URIs. Update of the illustrative example.
+  the domain registrar based on well-known endpoints in {{addressing}}
+  do not result in additional /.well-known URIs.
+  Update of the illustrative example.
   Note that the change to /brski for the voucher-related endpoints
   has been taken over in the BRSKI main document.
 
@@ -1260,7 +1264,7 @@ From individual version 03 -> IETF draft 00:
 
 * Inclusion of discovery options of enrollment endpoints at
   the domain registrar based on well-known endpoints in
-  {{discovery_eo}} as replacement of section 5.1.3
+  {{addressing}} as replacement of section 5.1.3
   in the individual draft. This is intended to support both use
   cases in the document. An illustrative example is provided.
 
