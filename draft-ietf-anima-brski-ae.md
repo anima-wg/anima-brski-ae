@@ -455,9 +455,13 @@ based on existing technology described in IETF documents:
     the proof-of-identity is provided by such a binding to the TLS session.
     This can be supported using the EST /simpleenroll endpoint.
     Note that the binding of the TLS handshake to the CSR is optional in EST.
-    As an alternative to binding to the underlying
-    TLS authentication in the transport layer, {{RFC7030}} sketches wrapping the CSR
-    with a Full PKI Request message using an existing certificate.
+
+    {{RFC7030, Section 2.5}} sketches wrapping the CSR with a Full PKI Request
+    message sent to the /fullcmc endpoint.
+    This would allow for source authentication
+    <!-- removed as it is not the only option: using an existing certificate -->
+    at message level as an alternative to indirectly binding
+    to the underlying TLS authentication in the transport layer.
 
   * SCEP {{RFC8894}} supports using a shared secret (passphrase) or
     an existing certificate to protect CSRs based on
@@ -844,43 +848,7 @@ and the Lightweight CMP profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 This section maps the requirements to support proof-of-possession and
 proof-of-identity to selected existing enrollment protocols
-handles provides further aspects of instantiating them in BRSKI-AE.
-
-<!--
-Note that the work in the ACE WG described in
-{{I-D.selander-ace-coap-est-oscore}} may be considered
-here as well, as it also addresses the encapsulation of EST in a way to
-make it independent of the underlying TLS connection using OSCORE,
-which also entails that authenticated self-contained objects are used.
--->
-
-
-## BRSKI-EST-fullCMC: Instantiation to EST (informative)
-
-When using EST {{RFC7030}}, the following aspects and constraints
-need to be considered and the given extra requirements need to be fulfilled,
-which adapt BRSKI {{RFC8995, Section 5.9.3}}:
-
-* proof-of-possession is provided typically by using the specified PKCS#10
-  structure in the request.
-  Together with Full PKI requests, also CRMF can be used.
-
-* proof-of-identity needs to be achieved by signing the certification request
-  object using the Full PKI Request option (including the /fullcmc endpoint).
-  This provides sufficient information for the RA to authenticate the pledge
-  as the origin of the request and to make an authorization decision on the
-  received certification request.
-  Note: EST references CMC {{RFC5272}} for the
-  definition of the Full PKI Request. For proof-of-identity, the
-  signature of the SignedData of the Full PKI Request is
-  performed using the IDevID secret of the pledge.
-
-  Note: In this case the binding to the underlying TLS connection is not necessary.
-
-* When the RA is temporarily not available, as per {{RFC7030, Section 4.2.3}},
-  an HTTP status code 202 should be returned by the registrar,
-  and the pledge will repeat the initial Full PKI Request
-
+and provides further aspects of instantiating them in BRSKI-AE.
 
 ## BRSKI-CMP: Instantiation to CMP (normative if CMP is chosen)
 
@@ -938,6 +906,53 @@ using CoAP for enrollment message transport as described by
 CoAP Transport for CMPV2 {{I-D.msahni-ace-cmpv2-coap-transport}}.
 In this scenario, of course the EST-specific parts
 of {{I-D.ietf-anima-constrained-voucher}} do not apply.
+
+
+## Other Instantiations of BRSKI-AE
+
+Further instantations of BRSKI-AE can be done.  They are left for future work.
+For instance, the fullCMC variant of EST sketched in {{RFC7030, Section 2.5}},
+could be used here, but also CMC {{RFC5272}} directly,
+and the 'renewal' option of SCEP {{RFC8894}}.
+
+
+<!--
+## BRSKI-EST-fullCMC: Instantiation to EST (informative)
+
+When using EST {{RFC7030}}, the following aspects and constraints
+need to be considered and the given extra requirements need to be fulfilled,
+which adapt BRSKI {{RFC8995, Section 5.9.3}}:
+
+* proof-of-possession is provided typically by using the specified PKCS#10
+  structure in the request.
+  Together with Full PKI requests, also CRMF can be used.
+
+* proof-of-identity needs to be achieved by signing the certification request
+  object using the Full PKI Request option (including the /fullcmc endpoint).
+  This provides sufficient information for the RA to authenticate the pledge
+  as the origin of the request and to make an authorization decision on the
+  received certification request.
+  Note: EST references CMC {{RFC5272}} for the
+  definition of the Full PKI Request. For proof-of-identity, the
+  signature of the SignedData of the Full PKI Request is
+  performed using the IDevID secret of the pledge.
+
+  Note: In this case the binding to the underlying TLS connection is not necessary.
+
+* When the RA is temporarily not available, as per {{RFC7030, Section 4.2.3}},
+  an HTTP status code 202 should be returned by the registrar,
+  and the pledge will repeat the initial Full PKI Request
+-->
+
+
+<!--
+Note that the work in the ACE WG described in
+{{I-D.selander-ace-coap-est-oscore}} may be considered
+here as well, as it also addresses the encapsulation of EST in a way to
+make it independent of the underlying TLS connection using OSCORE,
+which also entails that authenticated self-contained objects are used.
+-->
+
 
 # IANA Considerations
 
@@ -1138,6 +1153,7 @@ From IETF draft ae-02 -> IETF draft ae-03:
   - Extend venue information
   - Convert output of ASCII-art figures to SVG format
   - Various small other text improvements as suggested/provided
+* remove the tentative informative instantiation to EST-fullCMC
 * TODO
 
 
