@@ -51,6 +51,15 @@ author:
   country: Germany
   email: hendrik.brockhaus@siemens.com
   uri: https://www.siemens.com/
+contributor:
+  name: Eliot Lear
+  org: Cisco Systems
+  street: Richtistrasse 7
+  city: Wallisellen
+  code: CH-8304
+  country: Switzerland
+  phone: "+41 44 878 9200"
+  email: lear@cisco.com
 venue:
   group: anima
   anima mail: {anima@ietf.org}
@@ -1149,7 +1158,7 @@ From IETF draft ae-02 -> IETF draft ae-03:
   - Various small other text improvements as suggested/provided
 * Remove the tentative informative instantiation to EST-fullCMC
 * TODO
-* Remove Eliot Lear as a co-author
+* Move Eliot Lear from co-author to contributor, add him to the acknowledgments
 
 From IETF draft ae-01 -> IETF draft ae-02:
 
