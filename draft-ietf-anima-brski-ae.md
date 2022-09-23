@@ -80,6 +80,7 @@ informative:
   RFC5652:
   RFC5929:
   RFC7030:
+  RFC8572:
   RFC8894:
   IEC-62351-9:
     title: 'IEC 62351 - Power systems management and associated information exchange
@@ -163,7 +164,7 @@ The certification request of the pledge is signed using its IDevID secret and ca
 validated by the target domain using the trust anchor of the pledge manufacturer,
 which needs to pre-installed in the domain.
 
-SZTP {{?RFC8572}} is an example of another mode where vouchers may be
+SZTP {{RFC8572}} is an example of another mode where vouchers may be
 delivered asynchronously by tools such as portable USB "thumb" drives.
 However, SZTP does not do signed voucher requests,
 so it does not allow the domain to verify the identity of the device
