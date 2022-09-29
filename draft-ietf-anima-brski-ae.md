@@ -51,6 +51,15 @@ author:
   country: Germany
   email: hendrik.brockhaus@siemens.com
   uri: https://www.siemens.com/
+contributor:
+  name: Eliot Lear
+  org: Cisco Systems
+  street: Richtistrasse 7
+  city: Wallisellen
+  code: CH-8304
+  country: Switzerland
+  phone: "+41 44 878 9200"
+  email: lear@cisco.com
 venue:
   group: anima
   anima mail: {anima@ietf.org}
@@ -132,10 +141,13 @@ and provides flexibility where to authenticate and authorize certification reque
 ## Motivation
 
 BRSKI, as defined in {{RFC8995}}, specifies a solution for
-secure automated zero-touch bootstrapping of new devices, which are given the name _pledges_.
+secure automated zero-touch bootstrapping of new devices,
+which are given the name _pledges_.
 This includes the discovery of the registrar in the target domain,
 time synchronization, and the exchange of security information
 necessary to establish mutual trust between pledges and the target domain.
+As explained in {{terminology}}, the _target domain_, or _domain_ for short,
+is defined as the set of entities that share a common local trust anchor.
 
 A pledge gains trust in the target domain via the domain registrar as follows:
 It obtains security information about the domain,
@@ -151,8 +163,9 @@ it can validate signatures (including related certificates) by the MASA.
 
 Trust by the target domain in a pledge is established by providing the pledge
 with a domain-specific LDevID certificate.
-The certification request of the pledge is signed using its IDevID secret and can be
-validated by the target domain using the trust anchor of the pledge manufacturer,
+The certification request of the pledge is signed using its IDevID secret
+and can be validated by the target domain (e.g., by the domain registrar)
+using the trust anchor of the pledge manufacturer,
 which needs to pre-installed in the domain.
 
 SZTP {{RFC8572}} is an example of another mode where vouchers may be
@@ -191,7 +204,7 @@ In this document, enrollment that is not performed in a (time-wise) consistent
 way is called 'asynchronous enrollment'.
 Asynchronous enrollment requires a store-and-forward transfer of certification
 requests along with the information needed for authenticating the requester.
-This allows offline processing the request.
+This allows offline processing of the request.
 
 Application scenarios may also involve network segmentation, which is utilized
 in industrial systems to separate domains with different security needs.
@@ -205,8 +218,9 @@ needs to be retained and ideally bound directly to the certification request.
 There are basically two approaches for forwarding certification requests
 along with requester authentication information:
 
-* A trusted component (e.g., a local RA) in the target domain is needed
-  that forwards the certification request combined with the validated identity of
+* A trusted component (e.g., a local RA as part the registrar)
+  in the target domain is needed that forwards the certification request
+  combined with the validated identity of
   the requester (e,g., its IDevID certificate)
   and an indication of successful verification of
   the proof-of-possession (of the corresponding private key) in a way
@@ -221,7 +235,8 @@ along with requester authentication information:
   In BRSKI, the EST server is such a trusted component,
   being co-located with the registrar in the target domain.
 
-* Involved components use authenticated self-contained objects for the enrollment,
+* A trusted intermediate domain component is not needed when involved
+  components use authenticated self-contained objects for the enrollment,
   directly binding the certification request and the requester authentication
   in a cryptographic way.
   This approach supports end-to-end security,
@@ -304,7 +319,7 @@ based on the following examples of operational environments:
 * Sites with insufficient level of operational security
 
 
-# Terminology
+# Terminology {#terminology}
 
 {::boilerplate bcp14-tagged}
 
@@ -312,17 +327,19 @@ This document relies on the terminology defined in {{RFC8995}}
 and {{IEEE.802.1AR_2009}}.<!-- TBD DvO: Have not found version of 2014 -->
 The following terms are defined in addition:
 
-EE:
-: End entity, in the BRSKI context called pledge.
-  It is the entity that is bootstrapped to the target domain.
-  It holds a public-private key pair, for which it requests a public-key certificate.
-  An identifier for the EE is given as the subject name of the certificate.
+pledge:
+: a device that asks to be bootstrapped to the target domain.
+  It holds a public-private key pair, for which it requests an X.509 certificate.
+  An identifier for the pledge is given as the subject name of the certificate.
 
 RA:
 : Registration authority, an optional system
   component to which a CA delegates certificate management functions
   such as authenticating requesters and performing authorization checks
   on certification requests.
+
+LRA:
+: an RA that is local to the target domain.
 
 CA:
 : Certification authority, issues certificates
@@ -348,11 +365,11 @@ off-site:
 
 asynchronous communication:
 : Describes a time-wise interrupted communication
-  between a pledge (EE) and a registrar or PKI component.
+  between a pledge and a registrar or PKI component.
 
 synchronous communication:
 : Describes a time-wise uninterrupted communication
-  between a pledge (EE) and a registrar or PKI component.
+  between a pledge and a registrar or PKI component.
 
 authenticated self-contained object:
 : Describes in this context an object
@@ -390,7 +407,7 @@ At least the following properties are required:
   the certification request. This typically is achieved by a signature
   using the IDevID secret of the pledge.
 
-The rest of this section gives an incomplete list of solution examples,
+The rest of this section gives an non-exhaustive list of solution examples,
 based on existing technology described in IETF documents:
 
 ## Solution Options for Proof-of-possession
@@ -432,7 +449,7 @@ based on existing technology described in IETF documents:
   certification request is (completely) done at the next communication hop.
   This binding can also be done in a transport-independent way by wrapping the
   certification request with a signature employing an existing IDevID.
-  the BRSKI context, this will be the IDevID.
+  In the BRSKI context, this will be the IDevID.
   This requirement is addressed by existing enrollment protocols
   in various ways, such as:
 
@@ -870,7 +887,8 @@ When using CMP, the following specific implementation requirements apply
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}} (based on CRMF) or
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.4}} (based on PKCS#10).
   <br>
-  The `caPubs` field of certificate response messages SHOULD NOT be used.
+  In certificate response messages the `caPubs` field, which generally in CMP
+  may convey CA certificates to the requester, SHOULD NOT be used.
 
   * Proof-of-identity SHALL be provided by using signature-based
   protection of the certification request message
@@ -967,7 +985,7 @@ or his contributions as a co-author at an earlier draft stage.
 We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
 
-Moreover, we thank Michael Richardson and TBD for their reviews.
+Moreover, we thank Michael Richardson and Rajeev Ranjan for their reviews.
 
 
 --- back
@@ -1133,7 +1151,7 @@ List of reviewers (besides the authors):
 
 * Michael Richardson
 
-* TBD - TODO
+* Rajeev Ranjan
 
 From IETF draft ae-02 -> IETF draft ae-03:
 
@@ -1148,8 +1166,9 @@ From IETF draft ae-02 -> IETF draft ae-03:
   - Convert output of ASCII-art figures to SVG format
   - Various small other text improvements as suggested/provided
 * Remove the tentative informative instantiation to EST-fullCMC
-* TODO
-* Remove Eliot Lear as a co-author
+* Move Eliot Lear from co-author to contributor, add him to the acknowledgments
+* Add explanations for terms such as 'target domain' and 'caPubs'
+* Fix minor editorial issues
 
 From IETF draft ae-01 -> IETF draft ae-02:
 
@@ -1370,7 +1389,7 @@ From individual version 00 -> 01:
 
 <!--
 LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap br
-LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo
+LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo IDevID
 LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo
 -->
