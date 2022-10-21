@@ -101,31 +101,35 @@ and provides flexibility where to authenticate and authorize certification reque
 
 <t>BRSKI, as defined in <xref target="RFC8995"/>, specifies a solution for
 secure automated zero-touch bootstrapping of new devices,
-which are given the name <em>pledges</em>.
-This includes the discovery of the registrar in the target domain,
-time synchronization, and the exchange of security information
+which are given the name <em>pledges</em>, in the domain they should inoperate with.
+This includes the discovery of the registrar representing the target domain,
+time synchronization or validation, and the exchange of security information
 necessary to establish mutual trust between pledges and the target domain.
 As explained in <xref target="terminology"/>, the <em>target domain</em>, or <em>domain</em> for short,
 is defined as the set of entities that share a common local trust anchor.</t>
 
-<t>A pledge gains trust in the target domain via the domain registrar as follows:
-It obtains security information about the domain,
-specifically a domain certificate to be trusted,
-by requesting a voucher object defined in <xref target="RFC8366"/>.
-Such a voucher is a self-contained signed object
-originating from a Manufacturer Authorized Signing Authority (MASA).
-Therefore, the voucher may be provided
-in online mode (synchronously) or offline mode (asynchronously).
-The pledge can authenticate the voucher
-because it is shipped with trust anchor(s) by its manufacturer such that
-it can validate signatures (including related certificates) by the MASA.</t>
+<section anchor="voucher-exchange-for-trust-anchor-establishment"><name>Voucher Exchange for Trust Anchor Establishment</name>
 
-<t>Trust by the target domain in a pledge is established by providing the pledge
-with a domain-specific LDevID certificate.
-The certification request of the pledge is signed using its IDevID secret
-and can be validated by the target domain (e.g., by the domain registrar)
-using the trust anchor of the pledge manufacturer,
-which needs to pre-installed in the domain.</t>
+<t>Initially, a pledge has a trust anchor only of its manufacturer, not yet
+of any target domain.  In order for the pledge to automatically and securely
+obtain trust in a suitable target domain represented by its registrar,
+BRSKI uses vouchers defined in <xref target="RFC8366"></xref>.
+A voucher is a cryptographic object issued by
+the Manufacturer Authorized Signing Authority (MASA) of the pledge manufacturer
+to the specific pledge identified by the included device serial number.
+It is signed with the credentials of the MASA and
+can be validated by the manufacturer trust anchor imprinted with the pledge.
+So the pledge can accept the voucher contents, which indicate to the pledge
+that it can trust the domain identified by the given certificate.</t>
+
+<t>While RFC 8995 only specifies a single, online set of protocol option to
+communicate the voucher between MASA, registar, and pledge
+(BRSKI-EST and BRSKI-MASA, see <xref section="2" sectionFormat="comma" target="RFC8995"/>),
+it also desribes the architecture for how the voucher
+may be provided in online mode (synchronously) or offline mode (asynchronously).
+So for the voucher exchange offline mode is basically supported
+because the vouchers are self-contained signed objects,
+such that their security does not rely on protection by the underlying transfer.</t>
 
 <t>SZTP <xref target="RFC8572"/> is an example of another mode where vouchers may be
 delivered asynchronously by tools such as portable USB "thumb" drives.
@@ -133,15 +137,39 @@ However, SZTP does not do signed voucher requests,
 so it does not allow the domain to verify the identity of the device
 in the same way, nor does it deploy LDevIDs to the device in the same way.</t>
 
-<t>For enrolling devices with LDevID certificates,
-BRSKI typically utilizes Enrollment over Secure Transport (EST) <xref target="RFC7030"/>.
+</section>
+<section anchor="enrollment-of-ldevid-certificate"><name>Enrollment of LDevID Certificate</name>
+
+<t>Trust by the target domain in a pledge is established by enrolling the pledge
+with a domain-specific Locally significant Device IDentity (LDevID) certificate.</t>
+
+<t>Recall that for certificate enrollment it is crucial to authenticate the
+entity requesting the certificate.  Checking both the identity and the
+authorization of the requester is the job of a registration authority (RA).
+With BRSKI-EST, there is only one RA instance, co-located with the registrar.</t>
+
+<t>The certification request of the pledge is signed using its IDevID secret.
+It can be validated by the target domain (e.g., by the domain registrar)
+using the trust anchor of the pledge manufacturer,
+which needs to pre-installed in the domain.</t>
+
+<t>For enrolling devices with LDevID certificates, BRSKI specifies
+how Enrollment over Secure Transport (EST) <xref target="RFC7030"/> can be used.
 EST has its specific characteristics, detailed in <xref target="using-est"/>.
-In particular, it requires online or on-site availability of the RA
-for performing the data origin authentication and final authorization decision
-on the certification request.
+In particular, it requires online on-site availability of the RA
+for performing the data origin authentication
+and final authorization decision on the certification request.
 This type of enrollment can be called 'synchronous enrollment'.
-For various reasons,
-it may be preferable to use alternative enrollment protocols such as
+EST, BRSKI-EST, and BRSKI-MASA as used in RFC 8995 are tied to a specific
+transport, TLS, which may not be suitable for the target use case outlined
+by the examples in <xref target="list-examples"/>. Therefore deployments may require
+different transport, see Constrained Voucher Artifacts for Bootstrapping
+Protocols <xref target="I-D.ietf-anima-constrained-voucher"/> and EST-coaps <xref target="RFC9148"/>.</t>
+
+<t>Since EST does not support offline enrolment, it may be preferable
+for the reasons given in this section and depending on
+application scenarios as outlined in <xref target="list-examples"/> and <xref target="app-examples"/>
+to use alternative enrollment protocols such as
 the Certificate Management Protocol (CMP) <xref target="RFC4210"/>
 profiled in <xref target="I-D.ietf-lamps-lightweight-cmp-profile"/>
 or Certificate Management over CMS (CMC) <xref target="RFC5272"/>.
@@ -149,28 +177,40 @@ These protocols are more flexible, and
 by representing the certification request messages as authenticated self-contained objects,
 they are designed to be independent of the transfer mechanism.</t>
 
-<t>Depending on the application scenario,
-the required RA/CA components may not be part of the BRSKI registrar.
-They even may not be available on-site but rather be
-provided by remote backend systems. The registrar or its deployment site may not have
-an online connection with them or the connectivity may be intermittent.
+<t>Depending on the application scenario, the required components of an RA
+may not be part of the BRSKI registrar. They even may not be available on-site
+but rather be provided by remote backend systems.
+The RA functionality may also be split into an on-site local RA (LRA)
+and a central RA component in the backend, referred to as PKI RA.
+For certification authorities (CAs) it is common to be located in the backend.
+The registrar or its deployment site may not have an online connection
+with these RA/CA components or the connectivity may be intermittent.
 This may be due to security requirements for operating the backend systems
-or due to site deployments where on-site or always-online operation
+or due to deployments where on-site or always-online operation
 may be not feasible or too costly.
-In such scenarios, the authentication and authorization of certification requests
-will not or can not be performed on-site at enrollment time.
-In this document, enrollment that is not performed in a (time-wise) consistent
-way is called 'asynchronous enrollment'.
-Asynchronous enrollment requires a store-and-forward transfer of certification
-requests along with the information needed for authenticating the requester.
-This allows offline processing of the request.</t>
+In such scenarios, the authentication and authorization of certification
+requests will not or can not be performed on-site.</t>
+
+<t>In this document, enrollment that is not performed over an online connection
+is called 'asynchronous enrollment'.
+Asynchronous enrollment means that messages need to be forwarded through
+offline methods (e.g., Sneakernet/USB sticks) and/or at some point in time
+only part of the communication path is available.
+Messages need to be stored,
+along with the information needed for authenticating their origin,
+in front of an unavailable segment for potentially long time (e.g., days)
+before they can be forwarded.
+This implies that end-to-end security between the parties involved
+can not be provided by an authenticated (and often confidential)
+communications channel such as TLS used in EST/BRSKI-EST/BRSKI-MASA.</t>
 
 <t>Application scenarios may also involve network segmentation, which is utilized
-in industrial systems to separate domains with different security needs.
-Such scenarios lead to similar requirements if the TLS connection
+in industrial systems to separate domains with different security needs --
+see also <xref target="infrastructure-isolation"/>.
+Such scenarios lead to similar requirements if the TLS channel
 carrying the requester authentication is terminated
 and thus request messages need to be forwarded on further channels
-before the registrar/RA can authorize the certification request.
+before the registrar or RA can authorize the certification request.
 In order to preserve the requester authentication, authentication information
 needs to be retained and ideally bound directly to the certification request.</t>
 
@@ -178,34 +218,36 @@ needs to be retained and ideally bound directly to the certification request.</t
 along with requester authentication information:</t>
 
 <t><list style="symbols">
-  <t>A trusted component (e.g., a local RA as part the registrar)
-in the target domain is needed that forwards the certification request
-combined with the validated identity of
-the requester (e,g., its IDevID certificate)
-and an indication of successful verification of
-the proof-of-possession (of the corresponding private key) in a way
+  <t>The component in the target domain that forwards the certification request,
+such as a local RA being part of the registrar, combines
+the certification request with the validated identity of the requester
+(e,g., its IDevID certificate) and an indication of successful verification of
+the proof of possession (of the corresponding private key) in a way
 preventing changes to the combined information.
+This implies that it must be trusted by the PKI.
 When connectivity is available, the trusted component
 forwards the certification request together with the requester information
-(authentication and proof-of-possession) for further processing.
-This approach offers only hop-by-hop security.
-The backend PKI must rely on the local pledge authentication result
-provided by the local RA
-when performing the authorization of the certification request.
-In BRSKI, the EST server is such a trusted component,
-being co-located with the registrar in the target domain.</t>
+(authentication and proof of possession) for further processing.
+This approach offers hop-by-hop security, but not end-to-end security.  <vspace blankLines='1'/>
+In BRSKI, the EST server, being co-located with the registrar in the domain,
+is such a component that needs to be trusted by the backend PKI components.
+They must rely on the local pledge authentication result provided by that
+component when performing the final authorization of the certification request.</t>
   <t>A trusted intermediate domain component is not needed when involved
 components use authenticated self-contained objects for the enrollment,
 directly binding the certification request and the requester authentication
-in a cryptographic way.
-This approach supports end-to-end security,
+in a cryptographic way.  This approach supports end-to-end security,
 without the need to trust in intermediate domain components.
 Manipulation of the request and the requester identity information
-can be detected during the validation of the self-contained signed object.</t>
+can be detected during the validation of the self-contained signed object.  <vspace blankLines='1'/>
+Note that with this approach the way in which enrollment requests are
+forwarded by the registrar to the backend PKI components does not contribute
+to their security and therefore does not need to be addressed here.</t>
 </list></t>
 
-<t>Focus of this document is the support of alternative enrollment protocols that allow
-using authenticated self-contained objects for device credential bootstrapping.
+<t>Focus of this document is the support of alternative enrollment protocols that
+allow the second approach, i.e.,
+using authenticated self-contained objects for device certificate enrollment.
 This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 <strong>A</strong>lternative <strong>E</strong>nrollment and for <strong>A</strong>synchronous <strong>E</strong>nrollment.
 This specification carries over the main characteristics of BRSKI,
@@ -214,18 +256,19 @@ for authenticating the domain registrar and other target domain components
 as well as a domain-specific X.509 device certificate (the LDevID certificate)
 along with the corresponding private key (the LDevID secret) and certificate chain.</t>
 
-<t>The goals are to enhance BRSKI to</t>
+<t>The goals are to provide an interpretation of BRSKI
+using enrollment protocols alternatively to EST that</t>
 
 <t><list style="symbols">
-  <t>support alternative enrollment protocols,</t>
-  <t>support end-to-end security for enrollment, and</t>
+  <t>support end-to-end security for LDevID certificate enrollment and</t>
   <t>make it applicable to scenarios involving asynchronous enrollment.</t>
 </list></t>
 
 <t>This is achieved by</t>
 
 <t><list style="symbols">
-  <t>extending the well-known URI approach with an additional path element
+  <t>extending the well-known URI approach of BRSKI and EST message
+with an additional path element
 indicating the enrollment protocol being used, and</t>
   <t>defining a certificate waiting indication and handling, for the case that the
 certifying component is (temporarily) not available.</t>
@@ -233,29 +276,34 @@ certifying component is (temporarily) not available.</t>
 
 <t>This specification can be applied to both synchronous and asynchronous enrollment.</t>
 
-<t>In contrast to BRSKI, this specification supports offering multiple enrollment protocols
+<t>As an improvment over BRSKI,
+this specification supports offering multiple enrollment protocols
 on the infrastructure side, which enables pledges and their developers
 to pick the preferred one.</t>
 
 </section>
-<section anchor="sup-env"><name>Supported Environment</name>
+</section>
+<section anchor="sup-env"><name>Supported Environments</name>
 
-<t>BRSKI-AE is intended to be used in domains that may have limited support
-of on-site PKI services and comprises application scenarios like the following.</t>
+<t>BRSKI-AE is intended to be used in <!-- domains that may have limited support of
+on-site PKI services and comprises application scenarios --> like the following.</t>
 
 <t><list style="symbols">
-  <t>There are requirements or implementation restrictions
-that do not allow using EST for enrolling an LDevID certificate.</t>
-  <t>Pledges and/or the target domain already have an established
+  <t>Scenarios indirectly excluding the use of EST for certificate enrollment,
+such as the requirement for end-to-end authentication of the requester.</t>
+  <t>Scenarios having implementation restrictions
+that speak against using EST for certificate enrollment,
+such as the use of a library that does not support EST but CMP.</t>
+  <t>Pledges and/or the target domain already having an established
 certificate management approach different from EST that shall be reused
-(e.g., in brownfield installations).</t>
-  <t>There is no registration authority available on site in the target domain.
-Connectivity to an off-site RA is intermittent or entirely offline.
+(e.g., in brownfield installations where CMP is used).</t>
+  <t>No RA being available on site in the target domain.
+Connectivity to an off-site PKI RA is intermittent or entirely offline.
 A store-and-forward mechanism is used
 for communicating with the off-site services.</t>
-  <t>Authoritative actions of a local RA are limited and may not be sufficient
-for authorizing certification requests by pledges.
-Final authorization is done by an RA residing in the operator domain.</t>
+  <t>Authoritative actions of a local RA being not sufficient
+for fully authorizing certification requests by pledges.
+Final authorization then is done by a PKI RA residing in the backend.</t>
 </list></t>
 
 </section>
@@ -287,70 +335,103 @@ described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and
 appear in all capitals, as shown here.</t>
 
 <t>This document relies on the terminology defined in <xref target="RFC8995"/>
-and <xref target="IEEE.802.1AR_2009"/>.<!-- TBD DvO: Have not found version of 2014 -->
-The following terms are defined in addition:</t>
+and <xref target="IEEE.8802.1AR_2014"/>.
+The following terms are defined partly in addition.</t>
 
 <dl>
-  <dt>pledge:</dt>
-  <dd>
-    <t>a device that asks to be bootstrapped to the target domain.
-It holds a public-private key pair, for which it requests an X.509 certificate.
-An identifier for the pledge is given as the subject name of the certificate.</t>
-  </dd>
-  <dt>RA:</dt>
-  <dd>
-    <t>Registration authority, an optional system
-component to which a CA delegates certificate management functions
-such as authenticating requesters and performing authorization checks
-on certification requests.</t>
-  </dd>
-  <dt>LRA:</dt>
-  <dd>
-    <t>an RA that is local to the target domain.</t>
-  </dd>
-  <dt>CA:</dt>
-  <dd>
-    <t>Certification authority, issues certificates
-and provides certificate status information.</t>
-  </dd>
-  <dt>target domain:</dt>
-  <dd>
-    <t>The set of entities that share a common local trust anchor,
-independent of where the entities are deployed.</t>
-  </dd>
-  <dt>site:</dt>
-  <dd>
-    <t>Describes the locality where an entity, e.g., pledge, registrar, RA, CA, is deployed.
-Different sites can belong to the same target domain.</t>
-  </dd>
-  <dt>on-site:</dt>
-  <dd>
-    <t>Describes a component or service or
-functionality available in the target deployment site.</t>
-  </dd>
-  <dt>off-site:</dt>
-  <dd>
-    <t>Describes a component or service or
-functionality available in an operator site different from
-the target deployment site. This may be a central site or a
-cloud service, to which only a temporary connection is available.</t>
-  </dd>
   <dt>asynchronous communication:</dt>
   <dd>
-    <t>Describes a time-wise interrupted communication
-between a pledge and a registrar or PKI component.</t>
-  </dd>
-  <dt>synchronous communication:</dt>
-  <dd>
-    <t>Describes a time-wise uninterrupted communication
+    <t>time-wise interrupted communication
 between a pledge and a registrar or PKI component.</t>
   </dd>
   <dt>authenticated self-contained object:</dt>
   <dd>
-    <t>Describes in this context an object
+    <t>data structure
 that is cryptographically bound to the IDevID certificate of a pledge.
 The binding is assumed to be provided through a digital signature
 of the actual object using the IDevID secret.</t>
+  </dd>
+  <dt>backend:</dt>
+  <dd>
+    <t>same as off-site</t>
+  </dd>
+  <dt>BRSKI-AE:</dt>
+  <dd>
+    <t>Variation of BRSKI <xref target="RFC8995"/> in which BRSKI-EST, the enrollment protocol
+between pledge and the registrar including the RA, is replaced by
+alternative enrollment protocols such as Lightweight CMP.
+To this end a new URI scheme used for performing the certificate enrolment.
+BRSKI-AE enables the use of other enrolment protocols between pledge and
+registrar and to any backend RA components with end-to-end security.</t>
+  </dd>
+  <dt>CA:</dt>
+  <dd>
+    <t>Certification Authority, which is the PKI component that issues certificates
+and provides certificate status information.</t>
+  </dd>
+  <dt>domain:</dt>
+  <dd>
+    <t>shorthand for target domain</t>
+  </dd>
+  <dt>IDevID:</dt>
+  <dd>
+    <t>Initial Device IDentifier, provided by the manufacturer and comprising of
+a private key, an X.509 certificate with chain, and a related trust anchor.</t>
+  </dd>
+  <dt>LDevID:</dt>
+  <dd>
+    <t>Locally significant Device IDentifier, provided by the target domain
+and comprising of
+a private key, an X.509 certificate with chain, and a related trust anchor.</t>
+  </dd>
+  <dt>local RA (LRA):</dt>
+  <dd>
+    <t>RA that is on site with the registrar and that may be needed in addition
+to an off-site RA.</t>
+  </dd>
+  <dt>on-site:</dt>
+  <dd>
+    <t>locality of a component or service or functionality
+in the local target deployment site of the registar.</t>
+  </dd>
+  <dt>off-site:</dt>
+  <dd>
+    <t>locality of component or service or functionality
+in an operator site different from
+the target deployment site. This may be a central site or a
+cloud service, to which only a temporary connection is available.</t>
+  </dd>
+  <dt>PKI RA:</dt>
+  <dd>
+    <t>off-site RA in the backend of the target domain</t>
+  </dd>
+  <dt>pledge:</dt>
+  <dd>
+    <t>device that is to be bootstrapped to the target domain.
+It requests an LDevID using an IDevID installed by its manufacturer.</t>
+  </dd>
+  <dt>RA:</dt>
+  <dd>
+    <t>Registration Authority, which is the PKI component to which
+a CA typically delegates certificate management functions
+such as authenticating requesters and performing authorization checks
+on certification requests.</t>
+  </dd>
+  <dt>site:</dt>
+  <dd>
+    <t>the locality where an entity, e.g., pledge, registrar, RA, CA, is deployed.
+Different sites can belong to the same target domain.</t>
+  </dd>
+  <dt>synchronous communication:</dt>
+  <dd>
+    <t>time-wise uninterrupted communication
+between a pledge and a registrar or PKI component.</t>
+  </dd>
+  <dt>target domain:</dt>
+  <dd>
+    <t>the set of entities that the pledge should be able to operate with
+and that share a common local trust anchor,
+independent of where the entities are deployed.</t>
   </dd>
 </dl>
 
@@ -359,7 +440,7 @@ of the actual object using the IDevID secret.</t>
 
 <section anchor="basic-requirements"><name>Basic Requirements</name>
 
-<t>There were two main drivers for the definition of BRSKI-AE:</t>
+<t>There are two main drivers for the definition of BRSKI-AE:</t>
 
 <t><list style="symbols">
   <t>The solution architecture may already use or require
@@ -378,23 +459,26 @@ as containers carrying certification requests.</t>
 <t>At least the following properties are required:</t>
 
 <t><list style="symbols">
-  <t>proof-of-possession: demonstrates access to the private
+  <t><em>Proof of possession</em>: demonstrates access to the private
 key corresponding to the public key contained in a certification request.
 This is typically achieved by a self-signature using the corresponding private key.</t>
-  <t>proof-of-identity: provides data origin authentication of
-the certification request. This typically is achieved by a signature
-using the IDevID secret of the pledge.</t>
+  <t><em>Proof of identity</em>, also called <em>proof of origin</em>:
+provides data origin authentication of the certification request.
+Typically this is achieved by a signature using the pledge IDevID secret
+over some data, which needs to include a sufficiently strong identifier
+of the pledge, such as the device serial number
+typically included in the subject of the IDevID certificate.</t>
 </list></t>
 
 <t>The rest of this section gives an non-exhaustive list of solution examples,
 based on existing technology described in IETF documents:</t>
 
 </section>
-<section anchor="solution-options-for-proof-of-possession"><name>Solution Options for Proof-of-possession</name>
+<section anchor="solution-options-for-proof-of-possession"><name>Solution Options for proof of Possession</name>
 
 <t>Certification request objects: Certification requests are
   data structures protecting only the integrity of the contained data
-  and providing proof-of-possession for a (locally generated) private key.
+  and providing proof of possession for a (locally generated) private key.
   Examples for certification request data structures are:</t>
 
 <t><list style="symbols">
@@ -402,7 +486,7 @@ based on existing technology described in IETF documents:</t>
 protect its integrity and prove possession of the private key
 that corresponds to the public key included in the request.</t>
   <t>CRMF <xref target="RFC4211"/>. This certificate request message format also supports
-integrity protection and proof-of-possession,
+integrity protection and proof of possession,
 typically by a self-signature generated over (part of) the structure
 with the private key corresponding to the included public key.
 CRMF also supports further proof-of-possession methods
@@ -412,7 +496,7 @@ for types of keys that do not support any signature algorithm.</t>
 <t>The integrity protection of certification request fields includes the public
   key because it is part of the data signed by the corresponding private key.
   Yet note that for the above examples this is not sufficient to provide data
-  origin authentication, i.e., proof-of-identity. This extra property can be
+  origin authentication, i.e., proof of identity. This extra property can be
   achieved by an additional binding to the IDevID of the pledge.
   This binding to the source authentication supports the
   authorization decision of the certification request.
@@ -421,11 +505,11 @@ for types of keys that do not support any signature algorithm.</t>
   delegated to the protocol used for certificate management.</t>
 
 </section>
-<section anchor="solution-options-for-proof-of-identity"><name>Solution Options for Proof-of-identity</name>
+<section anchor="solution-options-for-proof-of-identity"><name>Solution Options for proof of Identity</name>
 
-<t>The certification request should be bound to
-  an existing authenticated credential (here, the IDevID certificate) to enable a proof
-  of identity and, based on it, an authorization of the certification request.
+<t>The certification request should be bound to an existing authenticated
+  credential (here, the IDevID certificate) to enable a proof of identity
+  and, based on it, an authorization of the certification request.
   The binding may be achieved through security options in an
   underlying transport protocol such as TLS if the authorization of the
   certification request is (completely) done at the next communication hop.
@@ -441,9 +525,9 @@ encode the certification request. The Certificate Signing
 Request (CSR) optionally provides a binding to the underlying TLS session
 by including the tls-unique value in the self-signed PKCS#10 structure.
 The tls-unique value results from the TLS handshake.
-Since the TLS handshake includes client
+Since the TLS handshake includes certificate-based client
 authentication and the pledge utilizes its IDevID for it,
-the proof-of-identity is provided by such a binding to the TLS session.
+the proof of identity is provided by such a binding to the TLS session.
 This can be supported using the EST /simpleenroll endpoint.
 Note that the binding of the TLS handshake to the CSR is optional in EST.  <vspace blankLines='1'/>
 <xref section="2.5" sectionFormat="comma" target="RFC7030"/> sketches wrapping the CSR with a Full PKI Request
@@ -456,20 +540,22 @@ to the underlying TLS authentication in the transport layer.</t>
 an existing certificate to protect CSRs based on
 SCEP Secure Message Objects using CMS wrapping
 (<xref target="RFC5652"/>). Note that the wrapping using
-an existing IDevID in SCEP is referred to as renewal.
-Thus SCEP does not rely on the security of the underlying transfer.</t>
+an existing IDevID in SCEP is referred to as <em>renewal</em>.
+This way
+SCEP does not rely on the security of the underlying message transfer.</t>
   <t>CMP <xref target="RFC4210"/> supports using a shared secret (passphrase) or an existing
 certificate, which may be an IDevID credential, to authenticate
 certification requests via the PKIProtection structure in a PKIMessage.
 The certification request is typically encoded utilizing CRMF,
 while PKCS#10 is supported as an alternative.
-Thus CMP does not rely on the security of the underlying transfer protocol.</t>
+Thus CMP does not rely on the security of the underlying message transfer.</t>
   <t>CMC <xref target="RFC5272"/> also supports utilizing a shared secret (passphrase) or
 an existing certificate to protect certification requests,
 which can be either in CRMF or PKCS#10 structure.
-The proof-of-identity can be provided as part of a FullCMCRequest,
+The proof of identity can be provided as part of a FullCMCRequest,
 based on CMS <xref target="RFC5652"/> and signed with an existing IDevID secret.
-Thus CMC does not rely on the security of the underlying transfer protocol.</t>
+Thus
+also CMC does not rely on the security of the underlying message transfer.</t>
 </list></t>
 
 <!--
@@ -484,11 +570,12 @@ may be considered as a further variant.
 </section>
 <section anchor="uc1"><name>Adaptations to BRSKI</name>
 
-<t>In order to support alternative enrollment protocols, asynchronous enrollment,
-and more general system architectures,
-BRSKI-AE lifts some restrictions of BRSKI <xref target="RFC8995"/>.
+<t>In order to support alternative certificate enrollment protocols,
+asynchronous enrollment, and more general system architectures,
+BRSKI-AE provides some generalizations on BRSKI <xref target="RFC8995"/>.
 This way, authenticated self-contained objects such as those described in
-<xref target="req-sol"/> above can be used for certificate enrollment.</t>
+<xref target="req-sol"/> above can be used for certificate enrollment,
+and RA functionality can be distributed freely in the target domain.</t>
 
 <t>The enhancements needed are kept to a minimum in order to ensure reuse of
 already defined architecture elements and interactions.
@@ -502,7 +589,7 @@ and interacts with the MASA as usual.</t>
 <t>The key element of BRSKI-AE is that the authorization of a certification request
 <bcp14>MUST</bcp14> be performed based on an authenticated self-contained object.
 The certification request is bound in a self-contained way
-to a proof-of-origin based on the IDevID.
+to a proof of origin based on the IDevID.
 Consequently, the authentication and authorization of the certification request
 <bcp14>MAY</bcp14> be done by the domain registrar and/or by other domain components. These components
 may be offline or reside in some central backend of the domain operator (off-site)
@@ -513,22 +600,22 @@ The certification request <bcp14>MAY</bcp14> also be piggybacked on another prot
 <t>This leads to generalizations in the
 placement and enhancements of the logical elements as shown in <xref target="uc1figure"/>.</t>
 
-<figure title="Architecture Overview Using Off-site PKI Components" anchor="uc1figure"><artset><artwork  type="svg" align="left"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="560" width="552" viewBox="0 0 552 560" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
+<figure title="Architecture Overview Using Off-site PKI Components" anchor="uc1figure"><artset><artwork  type="svg" align="left"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="560" width="544" viewBox="0 0 544 560" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
 <path d="M 8,208 L 8,368" fill="none" stroke="black"/>
 <path d="M 32,48 L 32,200" fill="none" stroke="black"/>
 <path d="M 32,464 L 32,512" fill="none" stroke="black"/>
 <path d="M 80,208 L 80,368" fill="none" stroke="black"/>
-<path d="M 152,240 L 152,336" fill="none" stroke="black"/>
-<path d="M 216,240 L 216,336" fill="none" stroke="black"/>
-<path d="M 256,464 L 256,512" fill="none" stroke="black"/>
+<path d="M 112,464 L 112,512" fill="none" stroke="black"/>
+<path d="M 152,240 L 152,320" fill="none" stroke="black"/>
+<path d="M 160,464 L 160,512" fill="none" stroke="black"/>
+<path d="M 216,240 L 216,320" fill="none" stroke="black"/>
 <path d="M 304,240 L 304,320" fill="none" stroke="black"/>
-<path d="M 304,464 L 304,512" fill="none" stroke="black"/>
 <path d="M 336,32 L 336,144" fill="none" stroke="black"/>
 <path d="M 376,328 L 376,456" fill="none" stroke="black"/>
 <path d="M 424,240 L 424,320" fill="none" stroke="black"/>
 <path d="M 456,72 L 456,144" fill="none" stroke="black"/>
 <path d="M 472,152 L 472,256" fill="none" stroke="black"/>
-<path d="M 528,464 L 528,512" fill="none" stroke="black"/>
+<path d="M 504,464 L 504,512" fill="none" stroke="black"/>
 <path d="M 536,32 L 536,144" fill="none" stroke="black"/>
 <path d="M 336,32 L 536,32" fill="none" stroke="black"/>
 <path d="M 32,48 L 144,48" fill="none" stroke="black"/>
@@ -541,25 +628,25 @@ placement and enhancements of the logical elements as shown in <xref target="uc1
 <path d="M 432,256 L 472,256" fill="none" stroke="black"/>
 <path d="M 88,288 L 144,288" fill="none" stroke="black"/>
 <path d="M 224,288 L 296,288" fill="none" stroke="black"/>
+<path d="M 152,320 L 216,320" fill="none" stroke="black"/>
 <path d="M 304,320 L 424,320" fill="none" stroke="black"/>
-<path d="M 152,336 L 216,336" fill="none" stroke="black"/>
 <path d="M 8,368 L 80,368" fill="none" stroke="black"/>
-<path d="M 32,464 L 256,464" fill="none" stroke="black"/>
-<path d="M 304,464 L 528,464" fill="none" stroke="black"/>
-<path d="M 264,480 L 304,480" fill="none" stroke="black"/>
-<path d="M 256,496 L 296,496" fill="none" stroke="black"/>
-<path d="M 32,512 L 256,512" fill="none" stroke="black"/>
-<path d="M 304,512 L 528,512" fill="none" stroke="black"/>
+<path d="M 32,464 L 112,464" fill="none" stroke="black"/>
+<path d="M 160,464 L 504,464" fill="none" stroke="black"/>
+<path d="M 120,480 L 160,480" fill="none" stroke="black"/>
+<path d="M 112,496 L 152,496" fill="none" stroke="black"/>
+<path d="M 32,512 L 112,512" fill="none" stroke="black"/>
+<path d="M 160,512 L 504,512" fill="none" stroke="black"/>
 <polygon class="arrowhead" points="480,152 468,146.4 468,157.6" fill="black" transform="rotate(270,472,152)"/>
 <polygon class="arrowhead" points="440,256 428,250.4 428,261.6" fill="black" transform="rotate(180,432,256)"/>
 <polygon class="arrowhead" points="384,456 372,450.4 372,461.6" fill="black" transform="rotate(90,376,456)"/>
 <polygon class="arrowhead" points="384,328 372,322.4 372,333.6" fill="black" transform="rotate(270,376,328)"/>
 <polygon class="arrowhead" points="336,48 324,42.4 324,53.6" fill="black" transform="rotate(0,328,48)"/>
-<polygon class="arrowhead" points="304,496 292,490.4 292,501.6" fill="black" transform="rotate(0,296,496)"/>
 <polygon class="arrowhead" points="304,288 292,282.4 292,293.6" fill="black" transform="rotate(0,296,288)"/>
-<polygon class="arrowhead" points="272,480 260,474.4 260,485.6" fill="black" transform="rotate(180,264,480)"/>
 <polygon class="arrowhead" points="232,288 220,282.4 220,293.6" fill="black" transform="rotate(180,224,288)"/>
+<polygon class="arrowhead" points="160,496 148,490.4 148,501.6" fill="black" transform="rotate(0,152,496)"/>
 <polygon class="arrowhead" points="152,288 140,282.4 140,293.6" fill="black" transform="rotate(0,144,288)"/>
+<polygon class="arrowhead" points="128,480 116,474.4 116,485.6" fill="black" transform="rotate(180,120,480)"/>
 <polygon class="arrowhead" points="96,288 84,282.4 84,293.6" fill="black" transform="rotate(180,88,288)"/>
 <polygon class="arrowhead" points="40,200 28,194.4 28,205.6" fill="black" transform="rotate(90,32,200)"/>
 <g class="text">
@@ -596,21 +683,23 @@ placement and enhancements of the logical elements as shown in <xref target="uc1
 <text x="356" y="292">Enrollment</text>
 <text x="448" y="292">.</text>
 <text x="128" y="308">.</text>
-<text x="260" y="308">BRSKI-AE</text>
 <text x="364" y="308">Proxy/LRA/RA</text>
 <text x="448" y="308">.</text>
 <text x="44" y="324">IDevID</text>
 <text x="128" y="324">.</text>
 <text x="448" y="324">.</text>
-<text x="128" y="340">.</text>
+<text x="140" y="340">BRSKI-AE</text>
+<text x="200" y="340">(over</text>
+<text x="244" y="340">TLS)</text>
 <text x="448" y="340">.</text>
 <text x="128" y="356">.</text>
 <text x="448" y="356">.</text>
 <text x="248" y="372">...............................</text>
 <text x="416" y="372">.........</text>
-<text x="160" y="388">on-site</text>
-<text x="228" y="388">&quot;domain&quot;</text>
-<text x="308" y="388">components</text>
+<text x="128" y="388">on-site</text>
+<text x="192" y="388">(local)</text>
+<text x="252" y="388">domain</text>
+<text x="324" y="388">components</text>
 <text x="408" y="404">e.g.,</text>
 <text x="448" y="404">RFC</text>
 <text x="488" y="404">4210,</text>
@@ -618,31 +707,36 @@ placement and enhancements of the logical elements as shown in <xref target="uc1
 <text x="488" y="420">7030,</text>
 <text x="528" y="420">...</text>
 <text x="192" y="436">.............................................</text>
-<text x="460" y="436">....................</text>
+<text x="452" y="436">..................</text>
 <text x="16" y="452">.</text>
-<text x="544" y="452">.</text>
+<text x="68" y="452">Public-Key</text>
+<text x="172" y="452">Infrastructure</text>
+<text x="520" y="452">.</text>
 <text x="16" y="468">.</text>
-<text x="544" y="468">.</text>
+<text x="520" y="468">.</text>
 <text x="16" y="484">.</text>
-<text x="84" y="484">Public-Key</text>
-<text x="188" y="484">Infrastructure</text>
-<text x="364" y="484">Registration</text>
-<text x="456" y="484">Authority</text>
-<text x="544" y="484">.</text>
+<text x="220" y="484">Registration</text>
+<text x="312" y="484">Authority</text>
+<text x="520" y="484">.</text>
 <text x="16" y="500">.</text>
 <text x="56" y="500">PKI</text>
 <text x="84" y="500">CA</text>
-<text x="328" y="500">PKI</text>
-<text x="356" y="500">RA</text>
-<text x="544" y="500">.</text>
+<text x="184" y="500">PKI</text>
+<text x="212" y="500">RA</text>
+<text x="256" y="500">(unless</text>
+<text x="308" y="500">part</text>
+<text x="340" y="500">of</text>
+<text x="380" y="500">Domain</text>
+<text x="452" y="500">Registrar)</text>
+<text x="520" y="500">.</text>
 <text x="16" y="516">.</text>
-<text x="544" y="516">.</text>
-<text x="280" y="532">...................................................................</text>
+<text x="520" y="516">.</text>
+<text x="268" y="532">................................................................</text>
 <text x="108" y="548">off-site</text>
-<text x="156" y="548">or</text>
-<text x="200" y="548">central</text>
-<text x="268" y="548">&quot;domain&quot;</text>
-<text x="348" y="548">components</text>
+<text x="184" y="548">(central,</text>
+<text x="260" y="548">backend)</text>
+<text x="324" y="548">domain</text>
+<text x="396" y="548">components</text>
 </g>
 </svg>
 </artwork><artwork  type="ascii-art" align="left"><![CDATA[
@@ -663,22 +757,22 @@ placement and enhancements of the logical elements as shown in <xref target="uc1
 | Pledge |     .  | Join  |          | Domain       |<----+
 |        |     .  | Proxy |          | Registrar w/ |  .
 |        |<------>|.......|<-------->| Enrollment   |  .
-|        |     .  |       | BRSKI-AE | Proxy/LRA/RA |  .
-| IDevID |     .  |       |          +--------------+  .
-|        |     .  +-------+                   ^        .
+|        |     .  |       |          | Proxy/LRA/RA |  .
+| IDevID |     .  +-------+          +--------------+  .
+|        |   BRSKI-AE (over TLS)              ^        .
 |        |     .                              |        .
 +--------+     ...............................|.........
-                on-site "domain" components   |
+            on-site (local) domain components |
                                               | e.g., RFC 4210,
                                               |       RFC 7030, ...
- .............................................|....................
- .                                            v                    .
- . +---------------------------+     +---------------------------+ .
- . | Public-Key Infrastructure |<----+ Registration Authority    | .
- . | PKI CA                    +---->| PKI RA                    | .
- . +---------------------------+     +---------------------------+ .
- ...................................................................
-         off-site or central "domain" components
+ .............................................|..................
+ . Public-Key Infrastructure                  v                 .
+ . +---------+     +------------------------------------------+ .
+ . |         |<----+ Registration Authority                   | .
+ . | PKI CA  +---->| PKI RA (unless part of Domain Registrar) | .
+ . +---------+     +------------------------------------------+ .
+ ................................................................
+         off-site (central, backend) domain components
 ]]></artwork></artset></figure>
 
 <t>The architecture overview in <xref target="uc1figure"/>
@@ -696,32 +790,46 @@ of the pledge shown in <xref target="uc1figure"/>.</t>
 the domain registrar has mostly the same functionality as in BRSKI, namely
 to facilitate the communication of the pledge with the MASA and the PKI.
 Yet there are two generalizations:  <list style="numbers">
-      <t>The registrar <bcp14>MAY</bcp14> offer different enrollment protocols. For supporting this,
+      <t>The registrar <bcp14>SHOULD</bcp14> offer to the pledge certificate enrollment protocols
+other than EST. For supporting this,
 the URI scheme for addressing the domain registrar is generalized
 (see <xref target="addressing"/>).</t>
+    </list>
+For the upstream enrollment message exchange with backend PKI components,
+in order to support the end-to-end proof of identity of the pledge, the same
+enrollment protocol <bcp14>MUST</bcp14> be used as between the pledge and the registrar.
+Between the pledge and the registrar the enrollment request messages
+are tunneled over the TLS channel already established between these entities.
+The registrar optionally checks the requests and passes them to the PKI.
+On the way back, responses by the PKI are forwared by the registrar to the
+pledge on the existing TLS channel.  <list style="numbers">
       <t>The registrar <bcp14>MAY</bcp14> also delegate (part of) its certificate enrollment support
 to a separate system. That is, alternatively to having full RA functionality,
 the registrar may act as a local registration authority (LRA)
 or just as an enrollment proxy.
 In such cases, the domain registrar may forward the certification request to
-some off-site RA component that performs part of the enrollment authorization.
+some off-site RA component, also called PKI RA here, that performs
+the remaining parts of the enrollment request validation and authorization.
 This also covers the case that the registrar has only intermittent connection
-and forwards certification requests to the RA upon re-established connectivity.<br />
+and forwards certification requests to off-site PKI components
+upon re-established connectivity.<br /></t>
+    </list>
 Still all certificate enrollment traffic goes via the registrar, such that
 from the pledge perspective there is no difference in connectivity and
-the registrar is involved in all steps, including enrollment status telemetry.</t>
-    </list></t>
+the registrar is involved in all steps.
+The final step of BRSKI, namely the enrollment status telemetry, is also kept.</t>
 </list></t>
 
 <t>The following list describes the components provided by the vendor or manufacturer
 outside the target domain.</t>
 
 <t><list style="symbols">
-  <t>MASA: general functionality as described in BRSKI <xref target="RFC8995"/>.
+  <t>MASA: functionality as described in BRSKI <xref target="RFC8995"/>.
 The voucher exchange with the MASA via the domain registrar
 is performed as described in BRSKI.  <vspace blankLines='1'/>
-Note: The interaction with the MASA may be synchronous (voucher request with nonce)
-or asynchronous (voucher request without nonce).</t>
+Note: From the definition of the interaction with the MASA in
+<xref section="5" sectionFormat="comma" target="RFC8995"/> follows that it may be synchronous
+(voucher request with nonce) or asynchronous (voucher request without nonce).</t>
   <t>Ownership tracker: as defined in BRSKI.</t>
 </list></t>
 
@@ -732,7 +840,8 @@ operated in the off-site backend of the target domain.</t>
   <t>PKI RA: Performs certificate management functions for the domain
 as a centralized public-key infrastructure for the domain operator.
 As far as not already done by the domain registrar, it performs the final
-validation and authorization of certification requests.</t>
+validation and authorization of certification requests.  Otherwise,
+the RA co-located with the domain registrar directly connects to the PKI CA.</t>
   <t>PKI CA: Performs certificate generation by signing the certificate structure
 requested in already authenticated and authorized certification requests.</t>
 </list></t>
@@ -746,7 +855,14 @@ and differences to the original approach as follows.</t>
   <t>Voucher exchange phase: same as in BRSKI steps (3) and (4).</t>
   <t>Certifiate enrollment phase: the use of EST in step (5) is changed
 to employing a certificate enrollment protocol that uses
-an authenticated self-contained object for requesting the LDevID certificate.</t>
+an authenticated self-contained object for requesting the LDevID certificate.  <vspace blankLines='1'/>
+Still for transporting certificate enrollment request and response
+messages between the pledge and the registrar, the TLS channel established
+between them via the join proxy is used.
+So the enrollment protocol <bcp14>MUST</bcp14> support this.
+Due to this architecture, the pledge does not need to establish
+an additional connection for certificate enrollment and
+the registrar retains control over the certificate enrollment traffic.</t>
   <t>Enrollment status telemetry phase: the final exchange of BRSKI step (5).</t>
 </list></t>
 
@@ -786,28 +902,26 @@ is not visible / verifiable to authorization points outside the registrar.-->
 <section anchor="pledge-registrar-raca-certificate-enrollment"><name>Pledge - Registrar - RA/CA Certificate Enrollment</name>
 
 <t>The certificate enrollment phase may involve several exchanges of requests
-and responses. Which of the optional exchanges are actually used depends on
-the certificate enrollment protocol being used and on the application scenario.</t>
+and responses.
+Which of the message exchanges marked <bcp14>OPTIONAL</bcp14> in the below <xref target="enrollfigure"/>
+are potentially used, or are actually required or prohibited to be used,
+depends on the application scenario and on the employed enrollment protocol.</t>
 
-<t>These potential exchanges cover all those supported by the use of EST in BRSKI.
-The optional last one, namely certificate confirmation,
+<t>These <bcp14>OPTIONAL</bcp14> exchanges cover all those supported by the use of EST in BRSKI.
+The last <bcp14>OPTIONAL</bcp14> one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.</t>
 
-<t>The only mandatory message exchange is for the actual certificate request.
-As stated in <xref target="req-sol"/>, the latter request <bcp14>MUST</bcp14> be
-performed using an authenticated self-contained object providing
-not only proof-of-possession but also proof-of-identity (source authentication).</t>
+<t>The only generally MANDATORY message exchange is for the actual certificate
+request and response.  As stated in <xref target="req-sol"/>, the ertificate equest
+<bcp14>MUST</bcp14> be performed using an authenticated self-contained object providing
+not only proof of possession but also proof of identity (source authentication).</t>
 
 <figure title="Certificate Enrollment" anchor="enrollfigure"><artset><artwork  type="svg" align="left"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="576" width="560" viewBox="0 0 560 576" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
 <path d="M 8,32 L 8,96" fill="none" stroke="black"/>
 <path d="M 16,128 L 16,560" fill="none" stroke="black"/>
 <path d="M 80,32 L 80,96" fill="none" stroke="black"/>
 <path d="M 280,32 L 280,96" fill="none" stroke="black"/>
-<path d="M 352,104 L 352,144" fill="none" stroke="black"/>
-<path d="M 352,176 L 352,272" fill="none" stroke="black"/>
-<path d="M 352,304 L 352,384" fill="none" stroke="black"/>
-<path d="M 352,416 L 352,496" fill="none" stroke="black"/>
-<path d="M 352,528 L 352,560" fill="none" stroke="black"/>
+<path d="M 352,104 L 352,560" fill="none" stroke="black"/>
 <path d="M 384,32 L 384,96" fill="none" stroke="black"/>
 <path d="M 448,32 L 448,96" fill="none" stroke="black"/>
 <path d="M 544,104 L 544,560" fill="none" stroke="black"/>
@@ -883,7 +997,7 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 <text x="320" y="84">(JRC)</text>
 <text x="480" y="84">(PKI)</text>
 <text x="16" y="116">/</text>
-<text x="72" y="132">[Optional</text>
+<text x="72" y="132">[OPTIONAL</text>
 <text x="144" y="132">request</text>
 <text x="188" y="132">of</text>
 <text x="212" y="132">CA</text>
@@ -892,13 +1006,8 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 <text x="152" y="148">Certs</text>
 <text x="208" y="148">Request</text>
 <text x="252" y="148">(1</text>
-<text x="168" y="164">[if</text>
-<text x="228" y="164">connection</text>
-<text x="284" y="164">to</text>
-<text x="332" y="164">operator</text>
-<text x="396" y="164">domain</text>
-<text x="436" y="164">is</text>
-<text x="492" y="164">available]</text>
+<text x="400" y="164">[OPTIONAL</text>
+<text x="488" y="164">forwarding]</text>
 <text x="388" y="180">CA</text>
 <text x="424" y="180">Certs</text>
 <text x="480" y="180">Request</text>
@@ -909,7 +1018,7 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 <text x="152" y="212">Certs</text>
 <text x="212" y="212">Response</text>
 <text x="260" y="212">(2</text>
-<text x="72" y="244">[Optional</text>
+<text x="72" y="244">[OPTIONAL</text>
 <text x="144" y="244">request</text>
 <text x="188" y="244">of</text>
 <text x="244" y="244">attributes</text>
@@ -921,13 +1030,8 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 <text x="144" y="276">Attribute</text>
 <text x="216" y="276">Request</text>
 <text x="260" y="276">(3</text>
-<text x="168" y="292">[if</text>
-<text x="228" y="292">connection</text>
-<text x="284" y="292">to</text>
-<text x="332" y="292">operator</text>
-<text x="396" y="292">domain</text>
-<text x="436" y="292">is</text>
-<text x="492" y="292">available]</text>
+<text x="400" y="292">[OPTIONAL</text>
+<text x="488" y="292">forwarding]</text>
 <text x="424" y="308">Attribute</text>
 <text x="484" y="308">Req.</text>
 <text x="424" y="324">Attribute</text>
@@ -935,19 +1039,14 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 <text x="144" y="340">Attribute</text>
 <text x="220" y="340">Response</text>
 <text x="268" y="340">(4</text>
-<text x="76" y="372">[Mandatory</text>
+<text x="76" y="372">[MANDATORY</text>
 <text x="168" y="372">certificate</text>
 <text x="252" y="372">request]</text>
 <text x="152" y="388">Certificate</text>
 <text x="232" y="388">Request</text>
 <text x="276" y="388">(5</text>
-<text x="168" y="404">[if</text>
-<text x="228" y="404">connection</text>
-<text x="284" y="404">to</text>
-<text x="332" y="404">operator</text>
-<text x="396" y="404">domain</text>
-<text x="436" y="404">is</text>
-<text x="492" y="404">available]</text>
+<text x="400" y="404">[OPTIONAL</text>
+<text x="488" y="404">forwarding]</text>
 <text x="432" y="420">Certificate</text>
 <text x="496" y="420">Req</text>
 <text x="424" y="436">Certificate</text>
@@ -955,19 +1054,14 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 <text x="152" y="452">Certificate</text>
 <text x="236" y="452">Response</text>
 <text x="284" y="452">(6</text>
-<text x="72" y="484">[Optional</text>
+<text x="72" y="484">[OPTIONAL</text>
 <text x="160" y="484">certificate</text>
 <text x="264" y="484">confirmation]</text>
 <text x="152" y="500">Certificate</text>
 <text x="232" y="500">Confirm</text>
 <text x="276" y="500">(7</text>
-<text x="168" y="516">[if</text>
-<text x="228" y="516">connection</text>
-<text x="284" y="516">to</text>
-<text x="332" y="516">operator</text>
-<text x="396" y="516">domain</text>
-<text x="436" y="516">is</text>
-<text x="492" y="516">available]</text>
+<text x="400" y="516">[OPTIONAL</text>
+<text x="488" y="516">forwarding]</text>
 <text x="424" y="532">Certificate</text>
 <text x="492" y="532">Conf</text>
 <text x="416" y="548">PKI</text>
@@ -984,35 +1078,56 @@ not only proof-of-possession but also proof-of-identity (source authentication).
 |        |                        |  (JRC)     |       | (PKI)      |
 +--------+                        +------------+       +------------+
  /-->                                      |                       |
- |  [Optional request of CA certificates]  |                       |
+ |  [OPTIONAL request of CA certificates]  |                       |
  |---------- CA Certs Request (1)--------->|                       |
- |                 [if connection to operator domain is available] |
+ |                                         | [OPTIONAL forwarding] |
  |                                         |---CA Certs Request -->|
  |                                         |<--CA Certs Response---|
  |<--------- CA Certs Response (2)---------|                       |
  |-->                                      |                       |
- |  [Optional request of attributes        |                       |
+ |  [OPTIONAL request of attributes        |                       |
  |   to include in Certificate Request]    |                       |
  |---------- Attribute Request (3)-------->|                       |
- |                 [if connection to operator domain is available] |
+ |                                         | [OPTIONAL forwarding] |
  |                                         |--- Attribute Req. --->|
  |                                         |<-- Attribute Resp. ---|
  |<--------- Attribute Response (4)--------|                       |
  |-->                                      |                       |
- |  [Mandatory certificate request]        |                       |
+ |  [MANDATORY certificate request]        |                       |
  |---------- Certificate Request (5)------>|                       |
- |                 [if connection to operator domain is available] |
+ |                                         | [OPTIONAL forwarding] |
  |                                         |--- Certificate Req.-->|
  |                                         |<--Certificate Resp.---|
  |<--------- Certificate Response (6)------|                       |
  |-->                                      |                       |
- |  [Optional certificate confirmation]    |                       |
+ |  [OPTIONAL certificate confirmation]    |                       |
  |---------- Certificate Confirm (7)------>|                       |
- |                 [if connection to operator domain is available] |
+ |                                         | [OPTIONAL forwarding] |
  |                                         |---Certificate Conf.-->|
  |                                         |<---- PKI Confirm -----|
  |<--------- PKI/Registrar Confirm (8)-----|                       |
 ]]></artwork></artset></figure>
+
+<t>Note that the various connections between the registrar and the PKI components
+of the operator (RA/CA) may be intermittent or off-line.
+Messages are to be sent as soon as sufficient transfer capacity is available.</t>
+
+<t>The label "[<bcp14>OPTIONAL</bcp14> forwarding]" means that on receiving from a pledge
+a request of the given type (or certificate confirmation),
+depending on the application scenario, the enrollment protocol being used,
+and the capabilities of the registrar and the local RA possibly co-located
+with it, the registrar <bcp14>MAY</bcp14> answer the request itself.
+For CA certificates request/response this would require for example
+explicit provisioning of the certificates at the registrar.</t>
+
+<t>Unless providing the answer directly, the registrar <bcp14>MUST</bcp14> forward the request to
+a backend PKI component and forward any resulting response back to the pledge.
+The registrar <bcp14>MAY</bcp14> cache responses containg CA certificates or attributes
+and use them later for responding directly, as far as suitable.
+Typically all certificate requests will be forwarded to the backend PKI,
+but even for these the registrar <bcp14>MAY</bcp14> answer them if adequate,
+for instance returning an error response in case the registrar determines
+that the request is not acceptable.</t>
 
 <t>The following list provides an abstract description of the flow
 depicted in <xref target="enrollfigure"/>.</t>
@@ -1031,12 +1146,15 @@ without local administrative configuration of the pledge.
 Nevertheless, there are cases in which the pledge may also
 include additional attributes specific to the target domain
 into the certification request. To get these attributes in
-advance, the attribute request can be used.</t>
+advance, the attribute request can be used.  <vspace blankLines='1'/>
+For example, <xref section="6.11.7.2" sectionFormat="comma" target="RFC8994"/> specifies
+how the attribute request is used to signal to the pledge
+the acp-node-name field required for enrolment into an ACP domain.</t>
   <t>Attribute Response (4): This <bcp14>MUST</bcp14> contain the attributes to be included
 in the subsequent certification request.</t>
   <t>Certificate Request (5): This <bcp14>MUST</bcp14> contain the
-authenticated self-contained object ensuring both proof-of-possession of the
-corresponding private key and proof-of-identity of the requester.</t>
+authenticated self-contained object ensuring both proof of possession of the
+corresponding private key and proof of identity of the requester.</t>
   <t>Certificate Response (6): This <bcp14>MUST</bcp14> contain on success
 the requested certificate and <bcp14>MAY</bcp14> include further information,
 like certificates of intermediate CAs.</t>
@@ -1050,7 +1168,7 @@ that <bcp14>MUST</bcp14> be sent on reception of the Cert Confirm.</t>
 
 <t>The generic messages described above may be implemented using any certificate
 enrollment protocol that supports authenticated self-contained objects for the
-certificate request as described in <xref target="req-sol"/>.
+certificate request as described in <xref target="req-sol"/> and tunneling over TLS.
 Examples are available in <xref target="exist_prot"/>.</t>
 
 <t>Note that the optional certficate confirmation by the pledge to the PKI
@@ -1069,13 +1187,14 @@ its regarded as a separate phase here.</t>
 
 </section>
 </section>
-<section anchor="addressing"><name>Enhancements to the Addressing Scheme</name>
+<section anchor="addressing"><name>Enhancements to the Endpoint Addressing Scheme of BRSKI</name>
 
 <t>BRSKI-AE provides generalizations to the addressing scheme defined in
-BRSKI <xref target="RFC8995"/> to accommodate alternative enrollment protocols that
-use authenticated self-contained objects for certification requests.
+BRSKI <xref section="5" sectionFormat="comma" target="RFC8995"/> to accommodate alternative enrollment protocols
+that use authenticated self-contained objects for certification requests.
 As this is supported by various existing enrollment protocols,
-they can be directly employed (see also <xref target="exist_prot"/>).</t>
+they can be employed without modifications to existing PKI RAs/CAs
+supporting the respective enrolment protocol (see also <xref target="exist_prot"/>).</t>
 
 <t>The addressing scheme in BRSKI for certification requests and
 the related CA certificates and CSR attributes retrieval functions
@@ -1086,14 +1205,16 @@ This approach is generalized to the following notation:
 in which <spanx style="verb">&lt;enrollment-protocol&gt;</spanx> refers to a certificate enrollment protocol.
 Note that enrollment is considered here a message sequence
 that contains at least a certification request and a certification response.
-The following conventions are used in order to provide maximal compatibility to BRSKI:</t>
+The following conventions are used to provide maximal compatibility with BRSKI:</t>
 
 <t><list style="symbols">
-  <t><spanx style="verb">&lt;enrollment-protocol&gt;</spanx>: <bcp14>MUST</bcp14> reference the protocol being used,
-which <bcp14>MAY</bcp14> be EST <xref target="RFC7030"/> as in BRSKI, CMP,
-or an identifier for any other defined instantiation of BRSKI-AE.  <vspace blankLines='1'/>
-Note: additional endpoints (well-known URIs) at the registrar
-may need to be defined by the enrollment protocol being used.</t>
+  <t><spanx style="verb">&lt;enrollment-protocol&gt;</spanx>: <bcp14>MUST</bcp14> reference the protocol being used.
+Existing values include EST <xref target="RFC7030"></xref> as in BRSKI and CMP as in
+<xref target="I-D.ietf-lamps-lightweight-cmp-profile"></xref> and <xref target="brski-cmp-instance"/> below.
+Values for other existing protocols such as CMC or SCP or CMC,
+or for newly defined protocols, require their own specifications
+for their use of the <spanx style="verb">&lt;enrollment-protocol&gt;</spanx> and <spanx style="verb">&lt;request&gt;</spanx> URI components
+and are outside the scope of this document.</t>
   <t><spanx style="verb">&lt;request&gt;</spanx>: if present, this path component <bcp14>MUST</bcp14> describe,
 depending on the enrollment protocol being used, the operation requested.
 Enrollment protocols are expected to define their request endpoints,
@@ -1104,11 +1225,14 @@ as done by existing protocols (see also <xref target="exist_prot"/>).</t>
 
 <t>Well-known URIs for various endpoints on the domain registrar are
 already defined as part of the base BRSKI specification or indirectly by EST.
-In addition, alternative enrollment endpoints <bcp14>MAY</bcp14> be supported at the registrar.
-The pledge will recognize whether its
-preferred enrollment option is supported by the domain registrar
-by sending a request to its preferred enrollment endpoint
-and evaluating the HTTP response status code.</t>
+In addition, alternative enrollment endpoints <bcp14>MAY</bcp14> be supported at the registrar.</t>
+
+<t>A pledge <bcp14>SHOULD</bcp14> use the endpoints defined for the enrollment protocol(s)
+that it is capable of.
+It will recognize whether its preferred protocol or the request that it tries
+to perform is supported by the domain registrar
+by sending a request to its preferred enrollment endpoint according to the above
+addressing scheme and evaluating the HTTP status code in the response.</t>
 
 <t>The following list of endpoints provides an illustrative example for
 a domain registrar supporting several options for EST as well as for
@@ -1117,7 +1241,7 @@ endpoints to which the pledge may connect for bootstrapping. This
 includes the voucher handling as well as the enrollment endpoints.
 The CMP-related enrollment endpoints are defined as well-known URIs
 in CMP Updates <xref target="I-D.ietf-lamps-cmp-updates"/>
-and the Lightweight CMP profile <xref target="I-D.ietf-lamps-lightweight-cmp-profile"/>.</t>
+and the Lightweight CMP Profile <xref target="I-D.ietf-lamps-lightweight-cmp-profile"/>.</t>
 
 <figure><artwork align="left"><![CDATA[
   </brski/voucherrequest>,ct=voucher-cms+json
@@ -1137,11 +1261,11 @@ and the Lightweight CMP profile <xref target="I-D.ietf-lamps-lightweight-cmp-pro
 </section>
 <section anchor="exist_prot"><name>Instantiation to Existing Enrollment Protocols</name>
 
-<t>This section maps the requirements to support proof-of-possession and
-proof-of-identity to selected existing enrollment protocols
+<t>This section maps the requirements to support proof of possession and
+proof of identity to selected existing enrollment protocols
 and provides further aspects of instantiating them in BRSKI-AE.</t>
 
-<section anchor="brski-cmp-instantiation-to-cmp-normative-if-cmp-is-chosen"><name>BRSKI-CMP: Instantiation to CMP (normative if CMP is chosen)</name>
+<section anchor="brski-cmp-instance"><name>BRSKI-CMP: Instantiation to CMP</name>
 
 <t>Note: Instead of referring to CMP
 as specified in <xref target="RFC4210"/> and <xref target="I-D.ietf-lamps-cmp-updates"/>,
@@ -1169,21 +1293,21 @@ as specified in <xref section="5.2.3.2" sectionFormat="comma" target="I-D.ietf-l
     </list></t>
   <t>Certificate Request
   <list style="symbols">
-      <t>Proof-of-possession <bcp14>SHALL</bcp14> be provided as defined in
+      <t>Proof of possession <bcp14>SHALL</bcp14> be provided as defined in
 the Lightweight CMP Profile
 <xref section="4.1.1" sectionFormat="comma" target="I-D.ietf-lamps-lightweight-cmp-profile"/> (based on CRMF) or
 <xref section="4.1.4" sectionFormat="comma" target="I-D.ietf-lamps-lightweight-cmp-profile"/> (based on PKCS#10).
 <br />
 In certificate response messages the <spanx style="verb">caPubs</spanx> field, which generally in CMP
 may convey CA certificates to the requester, <bcp14>SHOULD NOT</bcp14> be used.</t>
-      <t>Proof-of-identity <bcp14>SHALL</bcp14> be provided by using signature-based
+      <t>Proof of identity <bcp14>SHALL</bcp14> be provided by using signature-based
 protection of the certification request message
 as outlined in <xref section="3.2" sectionFormat="comma" target="I-D.ietf-lamps-lightweight-cmp-profile"/>
 using the IDevID secret.</t>
     </list></t>
   <t>Certificate Confirm
   <list style="symbols">
-      <t>Explicit confirmation of new certificates to the RA
+      <t>Explicit confirmation of new certificates to the RA/CA
 <bcp14>MAY</bcp14> be used as specified in the Lightweight CMP Profile
 <xref section="4.1.1" sectionFormat="comma" target="I-D.ietf-lamps-lightweight-cmp-profile"/>.<br />
 Note that independently of certificate confirmation within CMP,
@@ -1195,56 +1319,74 @@ within CMP is needed, it <bcp14>SHALL</bcp14> be performed
 as specified in the Lightweight CMP Profile
 <xref section="4.4" sectionFormat="comma" target="I-D.ietf-lamps-lightweight-cmp-profile"/> and
 <xref section="5.1.2" sectionFormat="comma" target="I-D.ietf-lamps-lightweight-cmp-profile"/>.</t>
+  <t>Due to the use of self-contained signed request messages providing
+end-to-end security and the general indepencene of CMP of message transfer,
+the way in which messages are exchanged by the registrar with backend PKI
+(RA/CA) components is out of scope of this document. It can be freely chosen
+according to the needs of the application scenario (e.g., using HTTP).
+CMP Updates <xref target="I-D.ietf-lamps-cmp-updates"/> and
+the Lightweight CMP Profile <xref target="I-D.ietf-lamps-lightweight-cmp-profile"/>
+provide requirements for interoperability.</t>
 </list></t>
 
 <t>BRSKI-AE with CMP can also be combined with
 Constrained BRSKI <xref target="I-D.ietf-anima-constrained-voucher"/>,
 using CoAP for enrollment message transport as described by
-CoAP Transport for CMPV2 <xref target="I-D.msahni-ace-cmpv2-coap-transport"/>.
+CoAP Transport for CMPV2 <xref target="I-D.ietf-ace-cmpv2-coap-transport"/>.
 In this scenario, of course the EST-specific parts
 of <xref target="I-D.ietf-anima-constrained-voucher"/> do not apply.</t>
 
 </section>
 <section anchor="other-instantiations-of-brski-ae"><name>Other Instantiations of BRSKI-AE</name>
 
-<t>Further instantations of BRSKI-AE can be done.  They are left for future work.
-For instance, the fullCMC variant of EST sketched in <xref section="2.5" sectionFormat="comma" target="RFC7030"/>,
-could be used here, but also CMC <xref target="RFC5272"/> directly,
-and the 'renewal' option of SCEP <xref target="RFC8894"/>.</t>
+<t>Further instantiations of BRSKI-AE can be done.  They are left for future work.</t>
+
+<t>In particular, CMC <xref target="RFC5272"/> (using its in-band source authentication options)
+and SCEP <xref target="RFC8894"/> (using its 'renewal' option) could be used.</t>
+
+<t>The fullCMC variant of EST sketched in <xref section="2.5" sectionFormat="comma" target="RFC7030"/>
+might also be used here. For EST-fullCMC further specification is necessary.
+<!--
+Yet most likely it will not be followed up
+because, by now, no implementations of this EST variant are known,
+and no reasons are known why it could be preferable over using BRSKI-CMP.
+--></t>
 
 <!--
-## BRSKI-EST-fullCMC: Instantiation to EST (informative)
+## BRSKI-EST-fullCMC: Instantiation to EST
 
 When using EST {{RFC7030}}, the following aspects and constraints
 need to be considered and the given extra requirements need to be fulfilled,
 which adapt BRSKI {{RFC8995, Section 5.9.3}}:
 
-* proof-of-possession is provided typically by using the specified PKCS#10
+* Proof of possession is provided typically by using the specified PKCS#10
   structure in the request.
   Together with Full PKI requests, also CRMF can be used.
 
-* proof-of-identity needs to be achieved by signing the certification request
+* Proof of identity needs to be achieved by signing the certification request
   object using the Full PKI Request option (including the /fullcmc endpoint).
   This provides sufficient information for the RA to authenticate the pledge
   as the origin of the request and to make an authorization decision on the
   received certification request.
-  Note: EST references CMC {{RFC5272}} for the
-  definition of the Full PKI Request. For proof-of-identity, the
-  signature of the SignedData of the Full PKI Request is
-  performed using the IDevID secret of the pledge.
+  Note:
+  EST references CMC {{RFC5272}} for the definition of the Full PKI Request.
+  For proof of identity, the signature of the SignedData of the Full PKI Request
+  is performed using the IDevID secret of the pledge.  The data signed
+  must include include a sufficiently strong identifier of the pledge,
+  e.g, the subject of its IDevID certificate.
 
-  Note: In this case the binding to the underlying TLS connection is not necessary.
+  Note: In this case the binding to the underlying TLS channel is not necessary.
 
 * When the RA is temporarily not available, as per {{RFC7030, Section 4.2.3}},
   an HTTP status code 202 should be returned by the registrar,
-  and the pledge will repeat the initial Full PKI Request
+  and the pledge will repeat the initial Full PKI Request later.
 -->
 
 <!--
 Note that the work in the ACE WG described in
 {{I-D.selander-ace-coap-est-oscore}} may be considered
 here as well, as it also addresses the encapsulation of EST in a way to
-make it independent of the underlying TLS connection using OSCORE,
+make it independent of the underlying TLS channel using OSCORE,
 which also entails that authenticated self-contained objects are used.
 -->
 
@@ -1385,7 +1527,7 @@ for their input and discussion on use cases and call flows.</t>
       <author fullname='Steffen Fries' initials='S.' surname='Fries'>
          <organization>Siemens AG</organization>
       </author>
-      <date day='8' month='July' year='2022'/>
+      <date day='5' month='October' year='2022'/>
       <abstract>
 	 <t>   This document aims at simple, interoperable, and automated PKI
    management operations covering typical use cases of industrial and
@@ -1395,42 +1537,40 @@ for their input and discussion on use cases and call flows.</t>
    but sufficiently detailed and self-contained way.  To make secure
    certificate management for simple scenarios and constrained devices
    as lightweight as possible, only the most crucial types of operations
-   and options are specified as mandatory.  More special and complex use
-   cases are supported as well, by features specified as recommended or
-   optional.
+   and options are specified as mandatory.  More specialized or complex
+   use cases are supported with optional features.
 
 	 </t>
       </abstract>
    </front>
-   <seriesInfo name='Internet-Draft' value='draft-ietf-lamps-lightweight-cmp-profile-13'/>
-   <format target='https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-13.txt' type='TXT'/>
+   <seriesInfo name='Internet-Draft' value='draft-ietf-lamps-lightweight-cmp-profile-14'/>
+   <format target='https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-14.txt' type='TXT'/>
 </reference>
 
 
-<reference anchor='I-D.msahni-ace-cmpv2-coap-transport'>
+<reference anchor='I-D.ietf-ace-cmpv2-coap-transport'>
    <front>
-      <title>CoAP Transport for CMPV2</title>
+      <title>CoAP Transfer for the Certificate Management Protocol</title>
       <author fullname='Mohit Sahni' initials='M.' surname='Sahni'>
          <organization>Palo Alto Networks</organization>
       </author>
       <author fullname='Saurabh Tripathi' initials='S.' surname='Tripathi'>
          <organization>Palo Alto Networks</organization>
       </author>
-      <date day='5' month='October' year='2020'/>
+      <date day='19' month='September' year='2022'/>
       <abstract>
 	 <t>   This document specifies the use of Constrained Application Protocol
-   (CoAP) as a transport medium for the Certificate Management Protocol
-   Version 2 (CMPv2) and Lightweight CMP Profile
-   [Lightweight-CMP-Profile] CMPv2 defines the interaction between
-   various PKI entities for the purpose of certificate creation and
-   management.  CoAP is an HTTP like client-server protocol used by
-   various constrained devices in IoT space.
+   (CoAP) as a transfer mechanism for the Certificate Management
+   Protocol (CMP).  CMP defines the interaction between various PKI
+   entities for the purpose of certificate creation and management.
+   CoAP is an HTTP-like client-server protocol used by various
+   constrained devices in the IoT space.
 
 	 </t>
       </abstract>
    </front>
-   <seriesInfo name='Internet-Draft' value='draft-msahni-ace-cmpv2-coap-transport-01'/>
-   <format target='https://www.ietf.org/archive/id/draft-msahni-ace-cmpv2-coap-transport-01.txt' type='TXT'/>
+   <seriesInfo name='Internet-Draft' value='draft-ietf-ace-cmpv2-coap-transport-05'/>
+   <format target='https://www.ietf.org/archive/id/draft-ietf-ace-cmpv2-coap-transport-05.txt' type='TXT'/>
 </reference>
 
 
@@ -1473,18 +1613,18 @@ for their input and discussion on use cases and call flows.</t>
    <format target='https://www.ietf.org/archive/id/draft-ietf-anima-constrained-voucher-18.txt' type='TXT'/>
 </reference>
 
-<reference anchor='IEEE.802.1AR_2009' target='http://ieeexplore.ieee.org/servlet/opac?punumber=5367676'>
+<reference anchor='IEEE.8802.1AR_2014' target='http://ieeexplore.ieee.org/servlet/opac?punumber=6739982'>
  <front>
-  <title>IEEE Standard for Local and metropolitan area networks - Secure Device Identity</title>
+  <title>ISO/IEC/IEEE International Standard for Information technology -- Telecommunications and information exchange between systems -- Local and metropolitan area networks -- Part 1AR: Secure device identity</title>
   <author>
    <organization>IEEE</organization>
   </author>
-  <date day='28' month='December' year='2009'/>
+  <date day='13' month='February' year='2014'/>
   <abstract><t>A secure device identifier (DevID) is cryptographically bound to a device and supports authentication of the devices identity. Locally significant identities can be securely associated with an initial manufacturer-provisioned DevID and used in provisioning and authentication protocols toallow a network administrator to establish the trustworthiness of a device and select appropriate policies for transmission and reception of data and control protocols to and from the device.</t>
    </abstract>
  </front>
- <seriesInfo name='IEEE' value='802.1AR-2009'/>
- <seriesInfo name='DOI' value='10.1109/ieeestd.2009.5367679'/>
+ <seriesInfo name='IEEE' value='8802.1AR-2014'/>
+ <seriesInfo name='DOI' value='10.1109/ieeestd.2014.6739984'/>
 </reference>
 
 
@@ -1596,6 +1736,19 @@ for their input and discussion on use cases and call flows.</t>
 
 
 
+<reference anchor='RFC6402' target='https://www.rfc-editor.org/info/rfc6402'>
+<front>
+<title>Certificate Management over CMS (CMC) Updates</title>
+<author fullname='J. Schaad' initials='J.' surname='Schaad'><organization/></author>
+<date month='November' year='2011'/>
+<abstract><t>This document contains a set of updates to the base syntax for CMC, a Certificate Management protocol using the Cryptographic Message Syntax (CMS).  This document updates RFC 5272, RFC 5273, and RFC 5274.</t><t>The new items in this document are: new controls for future work in doing server side key generation, definition of a Subject Information Access value to identify CMC servers, and the registration of a port number for TCP/IP for the CMC service to run on.  [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='RFC' value='6402'/>
+<seriesInfo name='DOI' value='10.17487/RFC6402'/>
+</reference>
+
+
+
 <reference anchor='RFC7030' target='https://www.rfc-editor.org/info/rfc7030'>
 <front>
 <title>Enrollment over Secure Transport</title>
@@ -1635,6 +1788,37 @@ for their input and discussion on use cases and call flows.</t>
 </front>
 <seriesInfo name='RFC' value='8894'/>
 <seriesInfo name='DOI' value='10.17487/RFC8894'/>
+</reference>
+
+
+
+<reference anchor='RFC8994' target='https://www.rfc-editor.org/info/rfc8994'>
+<front>
+<title>An Autonomic Control Plane (ACP)</title>
+<author fullname='T. Eckert' initials='T.' role='editor' surname='Eckert'><organization/></author>
+<author fullname='M. Behringer' initials='M.' role='editor' surname='Behringer'><organization/></author>
+<author fullname='S. Bjarnason' initials='S.' surname='Bjarnason'><organization/></author>
+<date month='May' year='2021'/>
+<abstract><t>Autonomic functions need a control plane to communicate, which depends on some addressing and routing.  This Autonomic Control Plane should ideally be self-managing and be as independent as possible of configuration.  This document defines such a plane and calls it the &quot;Autonomic Control Plane&quot;, with the primary use as a control plane for autonomic functions.  It also serves as a &quot;virtual out-of-band channel&quot; for Operations, Administration, and Management (OAM) communications over a network that provides automatically configured, hop-by-hop authenticated and encrypted communications via automatically configured IPv6 even when the network is not configured or is misconfigured.</t></abstract>
+</front>
+<seriesInfo name='RFC' value='8994'/>
+<seriesInfo name='DOI' value='10.17487/RFC8994'/>
+</reference>
+
+
+
+<reference anchor='RFC9148' target='https://www.rfc-editor.org/info/rfc9148'>
+<front>
+<title>EST-coaps: Enrollment over Secure Transport with the Secure Constrained Application Protocol</title>
+<author fullname='P. van der Stok' initials='P.' surname='van der Stok'><organization/></author>
+<author fullname='P. Kampanakis' initials='P.' surname='Kampanakis'><organization/></author>
+<author fullname='M. Richardson' initials='M.' surname='Richardson'><organization/></author>
+<author fullname='S. Raza' initials='S.' surname='Raza'><organization/></author>
+<date month='April' year='2022'/>
+<abstract><t>Enrollment over Secure Transport (EST) is used as a certificate provisioning protocol over HTTPS. Low-resource devices often use the lightweight Constrained Application Protocol (CoAP) for message exchanges. This document defines how to transport EST payloads over secure CoAP (EST-coaps), which allows constrained devices to use existing EST functionality for provisioning certificates.</t></abstract>
+</front>
+<seriesInfo name='RFC' value='9148'/>
+<seriesInfo name='DOI' value='10.17487/RFC9148'/>
 </reference>
 
 
@@ -1695,41 +1879,64 @@ for their input and discussion on use cases and call flows.</t>
 <section anchor="using-est"><name>Using EST for Certificate Enrollment</name>
 
 <t>When using EST with BRSKI, pledges interact via TLS with the domain registrar,
-which acts both as EST server and as registration authority (RA).
-The TLS connection is mutually authenticated,
+which acts both as EST server and as the PKI RA.
+The TLS channel is mutually authenticated,
 where the pledge uses its IDevID certificate issued by its manufacturer.</t>
 
-<t>In order to provide a strong proof-of-origin of the certification request,
-EST has the option to include in the certification request
-the so-called tls-unique value <xref target="RFC5929"/> of the underlying TLS channel.
-This binding of the proof-of-identity of the TLS client, which is supposed to
-be the certificate requester, to the proof-of-possession for the private key is
-conceptually non-trivial and requires specific support by TLS implementations.</t>
-
-<t>The registrar terminates the security association with the pledge at TLS level
-and thus the binding between the certification request and the authentication
-of the pledge.
-The EST server uses the authenticated pledge identity provided by the IDevID
-for checking the authorization of the pledge for the given certification request
-before issuing to the pledge a domain-specific certificate (LDevID certificate).
-This approach typically requires online or on-site availability of the RA
-for performing the final authorization decision for the certification request.</t>
-
-<t>Using EST for BRSKI has the advantage that the mutually authenticated TLS
-connection established between the pledge and the registrar can be reused
+<t>Using BRSKI-EST has the advantage that the mutually authenticated TLS
+channel established between the pledge and the registrar can be reused
 for protecting the message exchange needed for enrolling the LDevID certificate.
 This strongly simplifies the implementation of the enrollment message exchange.</t>
 
 <t>Yet the use of TLS has the limitation that this cannot provide auditability
-nor end-to-end security for the certificate enrollment request
+nor end-to-end authentication of the CSR by the pledge at a remote PKI RA/CA
 because the TLS session is transient and terminates at the registrar.
 This is a problem in particular if the enrollment is done via multiple hops,
 part of which may not even be network-based.</t>
 
+<t>With enrollment protocols that use for CSRs self-contained signed objects,
+logs of CSRs can be audited because CSRs can be third-party authenticated
+in retrospect, whereas TLS connections can not.</t>
+
+<t>Furthermore, the BRSKI registrars in each site have to be hardened so that they
+can be trusted to be the TLS initiator of the EST connection to the PKI RA/CA,
+and in result, their keying material needs to be managed with more security
+care than that of pledges because of trust requirements,
+for example they need to have the id-kp-cmcRA extended key usage attribute
+according to <xref target="RFC7030"/>, see <xref target="RFC6402"/>.
+Impairment to a BRSKI registrar can result in arbitrarily
+many fake certificate registrations because real authentication and
+authorization checks can then be circumvented.</t>
+
+<t>Relying on TLS authentication of the TLS client, which is supposed to
+be the certificate requester, for a strong proof of origin for the CSR
+is conceptually non-trivial and can have implementation challenges.
+EST has the option to include in the certification request, which is a PKCS#10
+CSR, the so-called tls-unique value <xref target="RFC5929"/> of the underlying TLS channel.
+This binding of the proof of identity of the TLS client to the proof of
+possession for the private key requires specific support by TLS implementations.</t>
+
+<t>The registrar terminates the security association with the pledge at
+TLS level and thus the binding between the certification request and
+the authentication of the pledge. In BRSKI <xref target="RFC8995"/>, the registrar
+typically doubles as the PKI RA and thus also authenticates the CSR
+and filters/denies requests from non-authorized pledges.
+If the registrar cannot do the final authorization checks on the CSR and needs
+to forward it to the PKI RA, there is no end-to-end proof of identity and thus
+the decision of the PKI RA must trust on the pledge authentication performed
+by the registrar.  If successfully authorized, the CSR is passed to the PKI CA,
+which will issue the domain-specific certificate (LDevID).
+If in this setup the protocol between the on-site registrar and the remote PKI
+RA is also EST, this approach requires online or at least intermittent
+connectivity between registrar and PKI RA, as well as availability of the PKI RA
+for performing the final authorization decision on the certification request.</t>
+
 <t>A further limitation of using EST as the certificate enrollment protocol is that
 due to using PKCS#10 structures in enrollment requests,
 the only possible proof-of-possession method is a self-signature, which
-excludes requesting certificates for key types that do not support signing.</t>
+excludes requesting certificates for key types that do not support signing.
+CMP, for instance, has special proof-of-possession options for key agreement
+and KEM keys, see <xref section="5.2.8" sectionFormat="comma" target="RFC4210"/>.</t>
 
 </section>
 <section anchor="app-examples"><name>Application Examples</name>
@@ -1752,8 +1959,9 @@ processing, once the railroad car is connected to the operator backend.
 The authorization of the certification request is then done based on
 the operator's asset/inventory information in the backend.</t>
 
-<t>UNISIG has included a CMP profile for enrollment of TLS certificates of
-on-board and track-side components in the Subset-137 specifying the ETRAM/ETCS
+<t>UNISIG has included a CMP profile for enrollment of TLS client and
+server X.509 certificates of on-board and track-side components
+in the Subset-137 specifying the ETRAM/ETCS
 on-line key management for train control systems <xref target="UNISIG-Subset-137"/>.</t>
 
 </section>
@@ -1810,7 +2018,7 @@ as well as between the charging point and the charging point operator
 (e.g. OCPP <xref target="OCPP"/>). Depending on the authentication
 model, unilateral or mutual authentication is required. In both cases
 the charging point uses an X.509 certificate to authenticate itself
-in TLS connections between the electric vehicle and
+in TLS channels between the electric vehicle and
 the charging point. The management of this certificate depends,
 among others, on the selected backend connectivity protocol.
 In the case of OCPP, this protocol is meant to be the only communication
@@ -1824,7 +2032,7 @@ allowing the transport without a separate enrollment protocol,
 binding the messages to the identity of the communicating endpoints.</t>
 
 </section>
-<section anchor="infrastructure-isolation-policy"><name>Infrastructure Isolation Policy</name>
+<section anchor="infrastructure-isolation"><name>Infrastructure Isolation Policy</name>
 
 <t>This refers to any case in which network infrastructure is normally
 isolated from the Internet as a matter of policy, most likely for
@@ -1836,16 +2044,19 @@ forbidden or prevented at other times.</t>
 </section>
 <section anchor="sites-with-insufficient-level-of-operational-security"><name>Sites with Insufficient Level of Operational Security</name>
 
-<t>The registration authority performing (at least part of) the authorization of a
+<t>The RA performing (at least part of) the authorization of a
 certification request is a critical PKI component and therefore requires higher
 operational security than components utilizing the issued
 certificates for their security features. CAs may also demand higher
-security in the registration procedures. Especially the CA/Browser
-forum currently increases the security requirements in the certificate
-issuance procedures for publicly trusted certificates.
+security in the registration procedures from RAs, which domain registrars
+with co-located RAs may not be able to fulfill.
+Especially the CA/Browser forum currently increases the security requirements
+in the certificate issuance procedures for publicly trusted certificates,
+i.e., those placed in trust stores of browsers,
+which may be used to connect with devices in the domain.
 In case the on-site components of the target domain cannot be operated securely
-enough for the needs of a registration authority, this service should be
-transferred to an off-site backend component that has a sufficient level of security.</t>
+enough for the needs of an RA, this service should be transferred to
+an off-site backend component that has a sufficient level of security.</t>
 
 </section>
 </section>
@@ -1854,14 +2065,28 @@ transferred to an off-site backend component that has a sufficient level of secu
 <t>List of reviewers (besides the authors):</t>
 
 <t><list style="symbols">
-  <t>Toerless Eckert - TODO</t>
+  <t>Toerless Eckert (document shepherd)</t>
   <t>Michael Richardson</t>
   <t>Rajeev Ranjan</t>
 </list></t>
 
+<!-- TBD check https://www.rfc-editor.org/materials/abbrev.expansion.txt -->
+
 <t>From IETF draft ae-02 -&gt; IETF draft ae-03:</t>
 
 <t><list style="symbols">
+  <t>In response to review by Toerless Eckert,
+  <list style="symbols">
+      <t>many editorial improvements and clarifications as suggested, such as
+the comparison to plain BRSI, the description of offline vs. synchronous
+message transfer and enrollment, and better differentiation of RA flavors.</t>
+      <t>clarifiation that for transporting certificate enrollment messages between
+the pledge and the registrar, the TLS channel established between them
+via the join proxy is used and the enrollment protocol <bcp14>MUST</bcp14> support this.</t>
+      <t>clarification that the generalized enrollment protocol chosen between the
+pledge and registar <bcp14>MUST</bcp14> also be used for the upstream traffic to the PKI.</t>
+    </list></t>
+  <t>Change "The registrar <bcp14>MAY</bcp14>-&gt;<bcp14>SHOULD</bcp14> offer different enrollment protocols"</t>
   <t>In response to review by Michael Richardson,
   <list style="symbols">
       <t>slightly improve the structuring of the Message Exchange <xref target="message_ex"/> and
@@ -1870,9 +2095,9 @@ add some detail on the request/resonse exchanges for the enrollment phase</t>
 with the subsequent one:
 'Domain Registrar Support of Alternative Enrollment Protocols'</t>
       <t>add reference to SZTP (RFC 8572)</t>
-      <t>Extend venue information</t>
-      <t>Convert output of ASCII-art figures to SVG format</t>
-      <t>Various small other text improvements as suggested/provided</t>
+      <t>extend venue information</t>
+      <t>convert output of ASCII-art figures to SVG format</t>
+      <t>various small other text improvements as suggested/provided</t>
     </list></t>
   <t>Remove the tentative informative instantiation to EST-fullCMC</t>
   <t>Move Eliot Lear from co-author to contributor, add him to the acknowledgments</t>
@@ -1996,8 +2221,8 @@ accommodate distribution of CA certificates.</t>
 Lightweight CMP instead of CMP, as the draft already provides
 the necessary /.well-known endpoints.</t>
   <t>Requirements discussion moved to separate section in
-<xref target="req-sol"/>. Shortened description of proof
-of identity binding and mapping to existing protocols.</t>
+<xref target="req-sol"/>. Shortened description of proof-of-identity binding
+and mapping to existing protocols.</t>
   <t>Removal of copied call flows for voucher exchange and registrar
 discovery flow from <xref target="RFC8995"/> in <xref target="uc1"/> to avoid doubling or text or
 inconsistencies.</t>
@@ -2097,420 +2322,494 @@ LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo
   </back>
 
 <!-- ##markdown-source:
-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
-JRWQ+X/+y+ddhe4AAA==
+H4sIAAAAAAAAA82963bbVpYu+h9PgW3/sJSQlCXbia1OZ7Qiy4m67NhbcpJd
+XSPbBZKQiDJIcAOgZLWT8yznWc6TnfnNy7oAoCynqna3RlUskcC6zDXXvF/G
+43GStEVb5ofpg+/Ozv90Oj46OUyPyjavV1lbXOXpyaquynKZr9r0TV211awq
+m7RYpfz0gySbTuv86jC1l5N5NVtlSxpvXmcX7bjI24txtiqW2XhaN++LcZaP
+Hz5KmjZbzd9lZbWiJ9t6kyfFuubfmvbg4cNnDw+SZjNdFk1TVKu3N2t66vTk
+7Yskq/PsMH29zmtaXbVqUhomfZWtssscS0yuL2n1P56+Okp/+T55f01vrbCV
+vB0/x3KSWdYepk07T2b0cr5qNo1OP89amuPg4cFBsi4OkzSlnRJMbvLmAf0x
+q5brbNb6D5qbZZ1fNMEHVd3Gn9CGVlVbXBT5nD5cVfxUWxd+mGzTLqr6MBkT
+POnF55P0qlqlrxd5sZzSwwLG59lVMY+/oAOhL/J50VY1/VnVtOnzAgBo0qPv
+6RM7FP1QJs5zmvh121bjH7LFanxWrC7Tr7C3or05TF9tVsVswVudAxme7n/9
+6JlsfbNqa3ri+7xeZqsb+ihfZkVJB4yVTWhlk4pX9m+NTDchaNFTm7o4TBdt
+u24O9/aur68nwdd7tufzSfqiLvLGbfe8zS8u8pX79L9qc42sY3KBdfyRnf0w
+Sb+rq9n7Rbbxu/shX83r4n30zX/VDheylsnU1vJZu6T7Q7g83bRAYNveSVlU
+bfoyzxxaHhfNrErPbwicy3AjZ7TatqC/sqbJ06/dPn7JyrJo8rLMV24zxz+M
+nz56+DjczPl10f5nXpd0++nj9YLJyL0vH++njx+nT79+mj4jInLP77WkJf3b
+DGvhzV3lq02OZV/W1WZ9mDJ9AuDxbyqvfOQ//g30a0Jb+R1PF+1iM9XHx9eX
+ezFdS1YVgRhEE0OfvTh+fLD/UH99+uirr+zXZ8+e4NfT8fMJU8cyW66b8Wy5
+Hm/WIEPNwLdlcblor3P8l59c19VFUebRk9ksx3dXB+NZla3HBNtVsyayFD/E
+Swb1o++LVT4fX1Wb2SLnUzw9OTmZPH368GCyf3T27uDh/uPDpFhddLZ18Ozp
+V36H+/rrk4OvD+zXr564X58dPNNfv3r80D79+uEjB5gn7rWnT5899jCyX5/t
+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
+LhorIQNpnf0ME2LBNoR1xZX8/n9RfCE2+xgBAA==
 
 -->
 
