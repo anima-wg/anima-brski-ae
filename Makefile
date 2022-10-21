@@ -69,6 +69,8 @@ upload: default
 	cp -a  ${FILES} /tmp
 	git checkout -- ${FILES}
 	git checkout main
+	git fetch upstream
+	git rebase upstream/main
 	cp -a /tmp/${FILES} .
 	git add ${DRAFT}-${VERSION}.txt
 	git commit -m "${DRAFT}-${VERSION}" ${FILES}
