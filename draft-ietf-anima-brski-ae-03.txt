@@ -744,17 +744,18 @@ Internet-Draft                  BRSKI-AE                    October 2022
           addressing the endpoint at the registrar is generalized (see
           Section 4.3).
 
-      To support the end-to-end proof of identity of the pledge, the
-      registrar MUST use for the upstream certificate enrollment message
-      exchange with backend PKI components the same enrollment protocol
-      as used by the pledge.  Between the pledge and the registrar the
-      enrollment request messages are tunneled over the TLS channel
-      already established between these entities.  The registrar
-      optionally checks the requests and then passes them to the PKI.
-      On the way back, responses by the PKI are forwarded by the
-      registrar to the pledge on the existing TLS channel.
+          To support the end-to-end proof of identity of the pledge, the
+          registrar MUST use for the upstream certificate enrollment
+          message exchange with backend PKI components the same
+          enrollment protocol as used by the pledge.  Between the pledge
+          and the registrar the enrollment request messages are tunneled
+          over the TLS channel already established between these
+          entities.  The registrar optionally checks the requests and
+          then passes them on to the PKI.  On the way back, it forwards
+          responses by the PKI to the pledge on the existing TLS
+          channel.
 
-      1.  The registrar MAY also delegate (part of) its certificate
+      2.  The registrar MAY also delegate all or part of its certificate
           enrollment support to a separate system.  That is,
           alternatively to having full RA functionality, the registrar
           may act as a local registration authority (LRA) or just as an
@@ -767,15 +768,14 @@ Internet-Draft                  BRSKI-AE                    October 2022
           requests to off-site PKI components upon re-established
           connectivity.
 
-      Still all certificate enrollment traffic goes via the registrar,
-      such that from the pledge perspective there is no difference in
-      connectivity and the registrar is involved in all steps.  The
-      final step of BRSKI, namely the enrollment status telemetry, is
-      also kept.
+          Still all certificate enrollment traffic goes via the
+          registrar, such that from the pledge perspective there is no
+          difference in connectivity and the registrar is involved in
+          all steps.  The final step of BRSKI, namely the enrollment
+          status telemetry, is also kept.
 
    The following list describes the components provided by the vendor or
    manufacturer outside the target domain.
-
 
 
 
