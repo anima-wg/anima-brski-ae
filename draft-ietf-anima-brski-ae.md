@@ -145,7 +145,7 @@ and provides flexibility where to authenticate and authorize certification reque
 
 BRSKI, as defined in {{RFC8995}}, specifies a solution for
 secure automated zero-touch bootstrapping of new devices,
-which are given the name _pledges_, in the domain they should inoperate with.
+which are given the name _pledges_, in the domain they should operate with.
 This includes the discovery of the registrar representing the target domain,
 time synchronization or validation, and the exchange of security information
 necessary to establish mutual trust between pledges and the target domain.
@@ -167,9 +167,9 @@ So the pledge can accept the voucher contents, which indicate to the pledge
 that it can trust the domain identified by the given certificate.
 
 While RFC 8995 only specifies a single, online set of protocol option to
-communicate the voucher between MASA, registar, and pledge
+communicate the voucher between MASA, registrar, and pledge
 (BRSKI-EST and BRSKI-MASA, see {{RFC8995, Section 2}}),
-it also desribes the architecture for how the voucher
+it also describes the architecture for how the voucher
 may be provided in online mode (synchronously) or offline mode (asynchronously).
 So for the voucher exchange offline mode is basically supported
 because the vouchers are self-contained signed objects,
@@ -209,7 +209,7 @@ by the examples in {{list-examples}}. Therefore deployments may require
 different transport, see Constrained Voucher Artifacts for Bootstrapping
 Protocols {{I-D.ietf-anima-constrained-voucher}} and EST-coaps {{RFC9148}}.
 
-Since EST does not support offline enrolment, it may be preferable
+Since EST does not support offline enrollment, it may be preferable
 for the reasons given in this section and depending on
 application scenarios as outlined in {{list-examples}} and {{app-examples}}
 to use alternative enrollment protocols such as
@@ -318,7 +318,7 @@ This is achieved by
 
 This specification can be applied to both synchronous and asynchronous enrollment.
 
-As an improvment over BRSKI,
+As an improvement over BRSKI,
 this specification supports offering multiple enrollment protocols
 on the infrastructure side, which enables pledges and their developers
 to pick the preferred one.
@@ -395,8 +395,8 @@ BRSKI-AE:
 : Variation of BRSKI {{RFC8995}} in which BRSKI-EST, the enrollment protocol
   between pledge and the registrar including the RA, is replaced by
   alternative enrollment protocols such as Lightweight CMP.
-  To this end a new URI scheme used for performing the certificate enrolment.
-  BRSKI-AE enables the use of other enrolment protocols between pledge and
+  To this end a new URI scheme used for performing the certificate enrollment.
+  BRSKI-AE enables the use of other enrollment protocols between pledge and
   registrar and to any backend RA components with end-to-end security.
 
 CA:
@@ -421,7 +421,7 @@ local RA (LRA):
 
 on-site:
 : locality of a component or service or functionality
-  in the local target deployment site of the registar.
+  in the local target deployment site of the registrar.
 
 off-site:
 : locality of component or service or functionality
@@ -457,7 +457,7 @@ target domain:
 
 # Requirements and Mapping to Solutions {#req-sol}
 
-## Basic Requirements
+## Basic Requirements {#basic-reqs}
 
 There are two main drivers for the definition of BRSKI-AE:
 
@@ -669,18 +669,18 @@ of the pledge shown in {{uc1figure}}.
   to facilitate the communication of the pledge with the MASA and the PKI.
   Yet there are two generalizations:
 
-  1. The registrar SHOULD offer to the pledge certificate enrollment protocols
-  other than EST. For supporting this,
-  the URI scheme for addressing the domain registrar is generalized
-  (see {{addressing}}).
+  1. The registrar MUST support at least one certificate enrollment protocol
+  that uses for certificate requests authenticated self-contained objects.
+  To this end, the URI scheme for addressing the endpoint at the registrar
+  is generalized (see {{addressing}}).
 
-  For the upstream enrollment message exchange with backend PKI components,
-  in order to support the end-to-end proof of identity of the pledge, the same
-  enrollment protocol MUST be used as between the pledge and the registrar.
+  To support the end-to-end proof of identity of the pledge, the registrar MUST
+  use for the upstream certificate enrollment message exchange with backend PKI
+  components the same enrollment protocol as used by the pledge.
   Between the pledge and the registrar the enrollment request messages
   are tunneled over the TLS channel already established between these entities.
-  The registrar optionally checks the requests and passes them to the PKI.
-  On the way back, responses by the PKI are forwared by the registrar to the
+  The registrar optionally checks the requests and then passes them to the PKI.
+  On the way back, responses by the PKI are forwarded by the registrar to the
   pledge on the existing TLS channel.
 
   2. The registrar MAY also delegate (part of) its certificate enrollment support
@@ -732,7 +732,7 @@ and differences to the original approach as follows.
 
 * Voucher exchange phase: same as in BRSKI steps (3) and (4).
 
-* Certifiate enrollment phase: the use of EST in step (5) is changed
+* Certificate enrollment phase: the use of EST in step (5) is changed
   to employing a certificate enrollment protocol that uses
   an authenticated self-contained object for requesting the LDevID certificate.
 
@@ -791,7 +791,7 @@ The last OPTIONAL one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.
 
 The only generally MANDATORY message exchange is for the actual certificate
-request and response.  As stated in {{req-sol}}, the ertificate equest
+request and response.  As stated in {{req-sol}}, the certificate request
 MUST be performed using an authenticated self-contained object providing
 not only proof of possession but also proof of identity (source authentication).
 
@@ -846,14 +846,15 @@ with it, the registrar MAY answer the request itself.
 For CA certificates request/response this would require for example
 explicit provisioning of the certificates at the registrar.
 
-Unless providing the answer directly, the registrar MUST forward the request to
+Unless providing the response itself, the registrar MUST forward the request to
 a backend PKI component and forward any resulting response back to the pledge.
-The registrar MAY cache responses containg CA certificates or attributes
+The registrar MAY cache responses containing CA certificates or attributes
 and use them later for responding directly, as far as suitable.
-Typically all certificate requests will be forwarded to the backend PKI,
-but even for these the registrar MAY answer them if adequate,
-for instance returning an error response in case the registrar determines
-that the request is not acceptable.
+
+Note: Typically, certificate requests will be forwarded to the backend PKI,
+but even for these the registrar may answer part of them if adequate,
+such as returning an error response in case the registrar determines
+that the request is not properly authenticated or not authorized.
 
 The following list provides an abstract description of the flow
 depicted in {{enrollfigure}}.
@@ -877,7 +878,7 @@ depicted in {{enrollfigure}}.
 
   For example, {{RFC8994, Section 6.11.7.2}} specifies
   how the attribute request is used to signal to the pledge
-  the acp-node-name field required for enrolment into an ACP domain.
+  the acp-node-name field required for enrollment into an ACP domain.
 
 * Attribute Response (4): This MUST contain the attributes to be included
   in the subsequent certification request.
@@ -903,7 +904,7 @@ enrollment protocol that supports authenticated self-contained objects for the
 certificate request as described in {{req-sol}} and tunneling over TLS.
 Examples are available in {{exist_prot}}.
 
-Note that the optional certficate confirmation by the pledge to the PKI
+Note that the optional certificate confirmation by the pledge to the PKI
 described above is independent of the mandatory enrollment status telemetry
 done between the pledge and the registrar in the final phase of BRSKI-AE,
 described next.
@@ -925,7 +926,7 @@ BRSKI {{RFC8995, Section 5}} to accommodate alternative enrollment protocols
 that use authenticated self-contained objects for certification requests.
 As this is supported by various existing enrollment protocols,
 they can be employed without modifications to existing PKI RAs/CAs
-supporting the respective enrolment protocol (see also {{exist_prot}}).
+supporting the respective enrollment protocol (see also {{exist_prot}}).
 
 The addressing scheme in BRSKI for certification requests and
 the related CA certificates and CSR attributes retrieval functions
@@ -941,7 +942,7 @@ The following conventions are used to provide maximal compatibility with BRSKI:
 * `<enrollment-protocol>`: MUST reference the protocol being used.
   Existing values include EST [RFC7030] as in BRSKI and CMP as in
   [I-D.ietf-lamps-lightweight-cmp-profile] and {{brski-cmp-instance}} below.
-  Values for other existing protocols such as CMC or SCP or CMC,
+  Values for other existing protocols such as CMC or SCEP or CMC,
   or for newly defined protocols, require their own specifications
   for their use of the `<enrollment-protocol>` and `<request>` URI components
   and are outside the scope of this document.
@@ -1049,7 +1050,7 @@ When using CMP, the following specific implementation requirements apply
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.1.2}}.
 
  * Due to the use of self-contained signed request messages providing
-   end-to-end security and the general indepencene of CMP of message transfer,
+   end-to-end security and the general independence of CMP of message transfer,
    the way in which messages are exchanged by the registrar with backend PKI
    (RA/CA) components is out of scope of this document. It can be freely chosen
    according to the needs of the application scenario (e.g., using HTTP).
@@ -1342,17 +1343,21 @@ From IETF draft ae-02 -> IETF draft ae-03:
 
 * In response to review by Toerless Eckert,
   - many editorial improvements and clarifications as suggested, such as
-    the comparison to plain BRSI, the description of offline vs. synchronous
+    the comparison to plain BRSKI, the description of offline vs. synchronous
     message transfer and enrollment, and better differentiation of RA flavors.
-  - clarifiation that for transporting certificate enrollment messages between
-    the pledge and the registrar, the TLS channel established between them
+  - clarify that for transporting certificate enrollment messages between
+    pledge and registrar, the TLS channel established between these two
     via the join proxy is used and the enrollment protocol MUST support this.
-  - clarification that the generalized enrollment protocol chosen between the
-    pledge and registar MUST also be used for the upstream traffic to the PKI.
-* Change "The registrar MAY->SHOULD offer different enrollment protocols"
+  - clarify that the enrollment protocol chosen between pledge and registrar
+    MUST also be used for the upstream enrollment exchange with the PKI.
+  - extend the description and requirements on how during the certificate
+    enrollment phase the registrar MAY handle requests by the pledge itself and
+    otherwise MUST forward them to the PKI and forward responses to the pledge.
+* Change "The registrar MAY offer different enrollment protocols." to
+  "The registrar MUST support at least one certificate enrollment protocol ..."
 * In response to review by Michael Richardson,
   - slightly improve the structuring of the Message Exchange {{message_ex}} and
-    add some detail on the request/resonse exchanges for the enrollment phase
+    add some detail on the request/response exchanges for the enrollment phase
   - merge the 'Enhancements to the Addressing Scheme' {{addressing}}
     with the subsequent one:
     'Domain Registrar Support of Alternative Enrollment Protocols'
@@ -1587,4 +1592,5 @@ LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap br
 LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo IDevID
 LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo
+LocalWords: IDentifier coaps aasvg acp cms json pkixcmp kp
 -->
