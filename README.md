@@ -1,9 +1,9 @@
-# BRSKI Asynchronous Enrollment
+# BRSKI Alternative Enrollment
 
 This is the working area for the WG Internet-Draft, "BRSKI-AE: Alternative Enrollment Protocols in BRSKI"
 
-* [Current WG Draft](https://tools.ietf.org/html/draft-ietf-anima-brski-async-enroll)
-* [Datatracker page](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/)
+* [Current WG Draft](https://tools.ietf.org/html/draft-ietf-anima-brski-ae)
+* [Datatracker page](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-ae/)
 
 
 Links not working yet:
