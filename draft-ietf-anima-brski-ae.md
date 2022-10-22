@@ -72,7 +72,7 @@ normative:
   I-D.ietf-lamps-lightweight-cmp-profile:
   I-D.ietf-ace-cmpv2-coap-transport:
   I-D.ietf-anima-constrained-voucher:
-  IEEE.8802.1AR_2014:
+  IEEE.802.1AR_2018:
 informative:
   RFC2986:
   RFC4211:
@@ -675,8 +675,7 @@ of the pledge shown in {{uc1figure}}.
      is generalized (see {{addressing}}).
 
      To support the end-to-end proof of identity of the pledge, the registrar
-     MUST use for the upstream certificate enrollment message exchange with
-     backend PKI components the same enrollment protocol as used by the pledge.
+     MUST use the same enrollment protocol as used by the pledge for the upstream certificate enrollment message exchange with backend PKI components.
      Between the pledge and the registrar the enrollment request messages are
      tunneled over the TLS channel already established between these entities.
      The registrar optionally checks the requests and then passes them on to
@@ -839,10 +838,9 @@ of the operator (RA/CA) may be intermittent or off-line.
 Messages are to be sent as soon as sufficient transfer capacity is available.
 
 The label "[OPTIONAL forwarding]" means that on receiving from a pledge
-a request of the given type (or certificate confirmation),
-depending on the application scenario, the enrollment protocol being used,
+a request of the given type (or a certificate confirmation), the registrar MAY answer the request itself. This depends on the application scenario, the enrollment protocol being used,
 and the capabilities of the registrar and the local RA possibly co-located
-with it, the registrar MAY answer the request itself.
+with it.
 For CA certificates request/response this would require for example
 explicit provisioning of the certificates at the registrar.
 
