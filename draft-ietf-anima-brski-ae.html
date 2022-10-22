@@ -1824,7 +1824,7 @@ independent of where the entities are deployed.<a href="#section-2-3.34.1" class
       <h2 id="name-requirements-and-mapping-to">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-requirements-and-mapping-to" class="section-name selfRef">Requirements and Mapping to Solutions</a>
       </h2>
-<div id="basic-requirements">
+<div id="basic-reqs">
 <section id="section-3.1">
         <h3 id="name-basic-requirements">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-basic-requirements" class="section-name selfRef">Basic Requirements</a>
@@ -2160,39 +2160,39 @@ the domain registrar has mostly the same functionality as in BRSKI, namely
 to facilitate the communication of the pledge with the MASA and the PKI.
 Yet there are two generalizations:<a href="#section-4.1-6.2.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.1-6.2.2">
-<li id="section-4.1-6.2.2.1">The registrar <span class="bcp14">SHOULD</span> offer to the pledge certificate enrollment protocols
-other than EST. For supporting this,
-the URI scheme for addressing the domain registrar is generalized
-(see <a href="#addressing" class="xref">Section 4.3</a>).<a href="#section-4.1-6.2.2.1" class="pilcrow">¶</a>
+<li id="section-4.1-6.2.2.1">
+                <p id="section-4.1-6.2.2.1.1">The registrar <span class="bcp14">MUST</span> support at least one certificate enrollment protocol
+that uses for certificate requests authenticated self-contained objects.
+To this end, the URI scheme for addressing the endpoint at the registrar
+is generalized (see <a href="#addressing" class="xref">Section 4.3</a>).<a href="#section-4.1-6.2.2.1.1" class="pilcrow">¶</a></p>
+<p id="section-4.1-6.2.2.1.2">
+To support the end-to-end proof of identity of the pledge, the registrar
+<span class="bcp14">MUST</span> use for the upstream certificate enrollment message exchange with
+backend PKI components the same enrollment protocol as used by the pledge.
+Between the pledge and the registrar the enrollment request messages are
+tunneled over the TLS channel already established between these entities.
+The registrar optionally checks the requests and then passes them on to
+the PKI. On the way back, it forwards responses by the PKI to the pledge
+on the existing TLS channel.<a href="#section-4.1-6.2.2.1.2" class="pilcrow">¶</a></p>
 </li>
-            </ol>
-<p id="section-4.1-6.2.3">
-To support the end-to-end proof of identity of the pledge, the registrar <span class="bcp14">MUST</span>
-use for the upstream certificate enrollment message exchange with backend PKI
-components the same enrollment protocol as it uses with the pledge.
-Between the pledge and the registrar the enrollment request messages
-are tunneled over the TLS channel already established between these entities.
-The registrar optionally checks the requests and then passes them to the PKI.
-On the way back, responses by the PKI are forwarded by the registrar to the
-pledge on the existing TLS channel.<a href="#section-4.1-6.2.3" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-4.1-6.2.4">
-<li id="section-4.1-6.2.4.1">The registrar <span class="bcp14">MAY</span> also delegate (part of) its certificate enrollment support
-to a separate system. That is, alternatively to having full RA functionality,
-the registrar may act as a local registration authority (LRA)
-or just as an enrollment proxy.
-In such cases, the domain registrar may forward the certification request to
-some off-site RA component, also called PKI RA here, that performs
+              <li id="section-4.1-6.2.2.2">
+                <p id="section-4.1-6.2.2.2.1">The registrar <span class="bcp14">MAY</span> also delegate all or part of its certificate enrollment
+support to a separate system. That is, alternatively to having full RA
+functionality, the registrar may act as a local registration authority
+(LRA) or just as an enrollment proxy.
+In such cases, the domain registrar may forward the certification request
+to some off-site RA component, also called PKI RA here, that performs
 the remaining parts of the enrollment request validation and authorization.
-This also covers the case that the registrar has only intermittent connection
-and forwards certification requests to off-site PKI components
-upon re-established connectivity.<br><a href="#section-4.1-6.2.4.1" class="pilcrow">¶</a>
-</li>
-            </ol>
-<p id="section-4.1-6.2.5">
+This also covers the case that the registrar has only intermittent
+connection and forwards certification requests to off-site PKI components
+upon re-established connectivity.<a href="#section-4.1-6.2.2.2.1" class="pilcrow">¶</a></p>
+<p id="section-4.1-6.2.2.2.2">
 Still all certificate enrollment traffic goes via the registrar, such that
 from the pledge perspective there is no difference in connectivity and
-the registrar is involved in all steps.
-The final step of BRSKI, namely the enrollment status telemetry, is also kept.<a href="#section-4.1-6.2.5" class="pilcrow">¶</a></p>
+the registrar is involved in all steps.  The final step of BRSKI,
+namely the enrollment status telemetry, is also kept.<a href="#section-4.1-6.2.2.2.2" class="pilcrow">¶</a></p>
+</li>
+            </ol>
 </li>
         </ul>
 <p id="section-4.1-7">The following list describes the components provided by the vendor or manufacturer
@@ -3128,7 +3128,8 @@ otherwise <span class="bcp14">MUST</span> forward them to the PKI and forward re
 </li>
           </ul>
 </li>
-        <li class="normal" id="appendix-C-4.2">Change "The registrar <span class="bcp14">MAY</span>-&gt;<span class="bcp14">SHOULD</span> offer different enrollment protocols"<a href="#appendix-C-4.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-4.2">Change "The registrar <span class="bcp14">MAY</span> offer different enrollment protocols." to
+"The registrar <span class="bcp14">MUST</span> support at least one certificate enrollment protocol ..."<a href="#appendix-C-4.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-C-4.3">
           <p id="appendix-C-4.3.1">In response to review by Michael Richardson,<a href="#appendix-C-4.3.1" class="pilcrow">¶</a></p>

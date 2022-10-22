@@ -457,7 +457,7 @@ target domain:
 
 # Requirements and Mapping to Solutions {#req-sol}
 
-## Basic Requirements
+## Basic Requirements {#basic-reqs}
 
 There are two main drivers for the definition of BRSKI-AE:
 
@@ -669,35 +669,35 @@ of the pledge shown in {{uc1figure}}.
   to facilitate the communication of the pledge with the MASA and the PKI.
   Yet there are two generalizations:
 
-  1. The registrar SHOULD offer to the pledge certificate enrollment protocols
-  other than EST. For supporting this,
-  the URI scheme for addressing the domain registrar is generalized
-  (see {{addressing}}).
+  1. The registrar MUST support at least one certificate enrollment protocol
+     that uses for certificate requests authenticated self-contained objects.
+     To this end, the URI scheme for addressing the endpoint at the registrar
+     is generalized (see {{addressing}}).
 
-  To support the end-to-end proof of identity of the pledge, the registrar MUST
-  use for the upstream certificate enrollment message exchange with backend PKI
-  components the same enrollment protocol as it uses with the pledge.
-  Between the pledge and the registrar the enrollment request messages
-  are tunneled over the TLS channel already established between these entities.
-  The registrar optionally checks the requests and then passes them to the PKI.
-  On the way back, responses by the PKI are forwarded by the registrar to the
-  pledge on the existing TLS channel.
+     To support the end-to-end proof of identity of the pledge, the registrar
+     MUST use for the upstream certificate enrollment message exchange with
+     backend PKI components the same enrollment protocol as used by the pledge.
+     Between the pledge and the registrar the enrollment request messages are
+     tunneled over the TLS channel already established between these entities.
+     The registrar optionally checks the requests and then passes them on to
+     the PKI. On the way back, it forwards responses by the PKI to the pledge
+     on the existing TLS channel.
 
-  2. The registrar MAY also delegate (part of) its certificate enrollment support
-  to a separate system. That is, alternatively to having full RA functionality,
-  the registrar may act as a local registration authority (LRA)
-  or just as an enrollment proxy.
-  In such cases, the domain registrar may forward the certification request to
-  some off-site RA component, also called PKI RA here, that performs
-  the remaining parts of the enrollment request validation and authorization.
-  This also covers the case that the registrar has only intermittent connection
-  and forwards certification requests to off-site PKI components
-  upon re-established connectivity.<br>
+  2. The registrar MAY also delegate all or part of its certificate enrollment
+     support to a separate system. That is, alternatively to having full RA
+     functionality, the registrar may act as a local registration authority
+     (LRA) or just as an enrollment proxy.
+     In such cases, the domain registrar may forward the certification request
+     to some off-site RA component, also called PKI RA here, that performs
+     the remaining parts of the enrollment request validation and authorization.
+     This also covers the case that the registrar has only intermittent
+     connection and forwards certification requests to off-site PKI components
+     upon re-established connectivity.
 
-  Still all certificate enrollment traffic goes via the registrar, such that
-  from the pledge perspective there is no difference in connectivity and
-  the registrar is involved in all steps.
-  The final step of BRSKI, namely the enrollment status telemetry, is also kept.
+     Still all certificate enrollment traffic goes via the registrar, such that
+     from the pledge perspective there is no difference in connectivity and
+     the registrar is involved in all steps.  The final step of BRSKI,
+     namely the enrollment status telemetry, is also kept.
 
 The following list describes the components provided by the vendor or manufacturer
 outside the target domain.
@@ -1353,7 +1353,8 @@ From IETF draft ae-02 -> IETF draft ae-03:
   - extend the description and requirements on how during the certificate
     enrollment phase the registrar MAY handle requests by the pledge itself and
     otherwise MUST forward them to the PKI and forward responses to the pledge.
-* Change "The registrar MAY->SHOULD offer different enrollment protocols"
+* Change "The registrar MAY offer different enrollment protocols." to
+  "The registrar MUST support at least one certificate enrollment protocol ..."
 * In response to review by Michael Richardson,
   - slightly improve the structuring of the Message Exchange {{message_ex}} and
     add some detail on the request/response exchanges for the enrollment phase
