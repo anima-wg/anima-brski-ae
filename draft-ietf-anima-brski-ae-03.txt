@@ -798,10 +798,10 @@ Internet-Draft                  BRSKI-AE                    October 2022
           Section 4.3).
 
           To support the end-to-end proof of identity of the pledge, the
-          registrar MUST use for the upstream certificate enrollment
-          message exchange with backend PKI components the same
-          enrollment protocol as used by the pledge.  Between the pledge
-          and the registrar the enrollment request messages are tunneled
+          enrollment protocol used by the pledge MUST also be used by
+          the registrar for its upstream certificate enrollment message
+          exchange with backend PKI components.  Between the pledge and
+          the registrar the enrollment request messages are tunneled
           over the TLS channel already established between these
           entities.  The registrar optionally checks the requests and
           then passes them on to the PKI.  On the way back, it forwards
@@ -996,11 +996,11 @@ Internet-Draft                  BRSKI-AE                    October 2022
    Messages are to be sent as soon as sufficient transfer capacity is
    available.
 
-
-
-
-
-
+   The label "[OPTIONAL forwarding]" means that on receiving from a
+   pledge a request of the given type (or a certificate confirmation),
+   the registrar MAY answer the request itself.  For CA certificates
+   request/response this would require for example explicit provisioning
+   of the certificates at the registrar.
 
 
 
@@ -1010,25 +1010,21 @@ von Oheimb, et al.        Expires 26 April 2023                [Page 18]
 Internet-Draft                  BRSKI-AE                    October 2022
 
 
-   The label "[OPTIONAL forwarding]" means that on receiving from a
-   pledge a request of the given type (or certificate confirmation),
-   depending on the application scenario, the enrollment protocol being
-   used, and the capabilities of the registrar and the local RA possibly
-   co-located with it, the registrar MAY answer the request itself.  For
-   CA certificates request/response this would require for example
-   explicit provisioning of the certificates at the registrar.
-
    Unless providing the response itself, the registrar MUST forward the
    request to a backend PKI component and forward any resulting response
    back to the pledge.  The registrar MAY cache responses containing CA
    certificates or attributes and use them later for responding
    directly, as far as suitable.
 
-   Note: Typically, certificate requests will be forwarded to the
-   backend PKI, but even for these the registrar may answer part of them
-   if adequate, such as returning an error response in case the
-   registrar determines that the request is not properly authenticated
-   or not authorized.
+   Note: The decision whether to forward a request or to answer it
+   directly can depend on many factors, such as the application
+   scenario, the capabilities of the registrar and of the local RA
+   possibly co-located with the registrar, the enrollment protocol being
+   used, and the specific contents of the request.  Typically,
+   certificate requests will be forwarded to the backend PKI, but even
+   for these the registrar may answer part of them if adequate, such as
+   returning an error response in case the registrar determines that the
+   request is not properly authenticated or not authorized.
 
    The following list provides an abstract description of the flow
    depicted in Figure 3.
@@ -1058,6 +1054,10 @@ Internet-Draft                  BRSKI-AE                    October 2022
    *  Attribute Response (4): This MUST contain the attributes to be
       included in the subsequent certification request.
 
+   *  Certificate Request (5): This MUST contain the authenticated self-
+      contained object ensuring both proof of possession of the
+      corresponding private key and proof of identity of the requester.
+
 
 
 
@@ -1065,10 +1065,6 @@ von Oheimb, et al.        Expires 26 April 2023                [Page 19]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
-
-   *  Certificate Request (5): This MUST contain the authenticated self-
-      contained object ensuring both proof of possession of the
-      corresponding private key and proof of identity of the requester.
 
    *  Certificate Response (6): This MUST contain on success the
       requested certificate and MAY include further information, like
@@ -1113,7 +1109,11 @@ Internet-Draft                  BRSKI-AE                    October 2022
    existing PKI RAs/CAs supporting the respective enrollment protocol
    (see also Section 5).
 
-
+   The addressing scheme in BRSKI for certification requests and the
+   related CA certificates and CSR attributes retrieval functions uses
+   the definition from EST [RFC7030], here on the example of simple
+   enrollment: "/.well-known/est/simpleenroll".  This approach is
+   generalized to the following notation: "/.well-known/<enrollment-
 
 
 
@@ -1122,11 +1122,6 @@ von Oheimb, et al.        Expires 26 April 2023                [Page 20]
 Internet-Draft                  BRSKI-AE                    October 2022
 
 
-   The addressing scheme in BRSKI for certification requests and the
-   related CA certificates and CSR attributes retrieval functions uses
-   the definition from EST [RFC7030], here on the example of simple
-   enrollment: "/.well-known/est/simpleenroll".  This approach is
-   generalized to the following notation: "/.well-known/<enrollment-
    protocol>/<request>" in which <enrollment-protocol> refers to a
    certificate enrollment protocol.  Note that enrollment is considered
    here a message sequence that contains at least a certification
@@ -1167,6 +1162,11 @@ Internet-Draft                  BRSKI-AE                    October 2022
    The CMP-related enrollment endpoints are defined as well-known URIs
    in CMP Updates [I-D.ietf-lamps-cmp-updates] and the Lightweight CMP
    Profile [I-D.ietf-lamps-lightweight-cmp-profile].
+
+
+
+
+
 
 
 
