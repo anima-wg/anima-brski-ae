@@ -157,7 +157,7 @@ is defined as the set of entities that share a common local trust anchor.
 Initially, a pledge has a trust anchor only of its manufacturer, not yet
 of any target domain.  In order for the pledge to automatically and securely
 obtain trust in a suitable target domain represented by its registrar,
-BRSKI uses vouchers defined in [RFC8366].
+BRSKI uses vouchers as defined in [RFC8366].
 A voucher is a cryptographic object issued by
 the Manufacturer Authorized Signing Authority (MASA) of the pledge manufacturer
 to the specific pledge identified by the included device serial number.
@@ -175,7 +175,7 @@ So for the voucher exchange offline mode is basically supported
 because the vouchers are self-contained signed objects,
 such that their security does not rely on protection by the underlying transfer.
 
-SZTP {{RFC8572}} is an example of another mode where vouchers may be
+SZTP {{RFC8572}} is an example of another protocol where vouchers may be
 delivered asynchronously by tools such as portable USB "thumb" drives.
 However, SZTP does not do signed voucher requests,
 so it does not allow the domain to verify the identity of the device
@@ -183,7 +183,8 @@ in the same way, nor does it deploy LDevIDs to the device in the same way.
 
 ### Enrollment of LDevID Certificate
 
-Trust by the target domain in a pledge is established by enrolling the pledge
+Trust in a pledge by other devices in the target domain is enabled
+by enrolling the pledge
 with a domain-specific Locally significant Device IDentity (LDevID) certificate.
 
 Recall that for certificate enrollment it is crucial to authenticate the
@@ -251,8 +252,9 @@ Application scenarios may also involve network segmentation, which is utilized
 in industrial systems to separate domains with different security needs --
 see also {{infrastructure-isolation}}.
 Such scenarios lead to similar requirements if the TLS channel
-carrying the requester authentication is terminated
-and thus request messages need to be forwarded on further channels
+that carries the requester authentication is terminated
+before the actual requester authorization is performed.
+Thus request messages need to be forwarded on further channels
 before the registrar or RA can authorize the certification request.
 In order to preserve the requester authentication, authentication information
 needs to be retained and ideally bound directly to the certification request.
@@ -300,7 +302,7 @@ for authenticating the domain registrar and other target domain components
 as well as a domain-specific X.509 device certificate (the LDevID certificate)
 along with the corresponding private key (the LDevID secret) and certificate chain.
 
-The goals are to provide an interpretation of BRSKI
+The goals are to provide an enhancement of BRSKI
 using enrollment protocols alternatively to EST that
 
 * support end-to-end security for LDevID certificate enrollment and
@@ -320,16 +322,16 @@ This specification can be applied to both synchronous and asynchronous enrollmen
 
 As an improvement over BRSKI,
 this specification supports offering multiple enrollment protocols
-on the infrastructure side, which enables pledges and their developers
-to pick the preferred one.
+which enables pledges and their developers to pick the preferred one.
 
 ## Supported Environments {#sup-env}
 
-BRSKI-AE is intended to be used in <!-- domains that may have limited support of
-on-site PKI services and comprises application scenarios --> like the following.
+BRSKI-AE is intended to be used in domains that may have limited support of
+on-site PKI services and comprises application scenarios like the following.
 
 * Scenarios indirectly excluding the use of EST for certificate enrollment,
-  such as the requirement for end-to-end authentication of the requester.
+  such as the requirement for end-to-end authentication of the requester
+  while the RA is not co-located with the registrar.
 
 * Scenarios having implementation restrictions
   that speak against using EST for certificate enrollment,
@@ -375,7 +377,7 @@ based on the following examples of operational environments:
 {::boilerplate bcp14-tagged}
 
 This document relies on the terminology defined in {{RFC8995}}
-and {{IEEE.8802.1AR_2014}}.
+and {{IEEE.8802.1AR_2014}}. <!-- TBD better use 2018 when entry available -->
 The following terms are defined partly in addition.
 
 asynchronous communication:
@@ -474,7 +476,7 @@ the application examples described in {{app-examples}}, the following
 requirements are derived to support authenticated self-contained objects
 as containers carrying certification requests.
 
-At least the following properties are required:
+At least the following properties are required for a certification request:
 
 * _Proof of possession_: demonstrates access to the private
   key corresponding to the public key contained in a certification request.
@@ -490,7 +492,7 @@ At least the following properties are required:
 The rest of this section gives an non-exhaustive list of solution examples,
 based on existing technology described in IETF documents:
 
-## Solution Options for proof of Possession
+## Solution Options for Proof of Possession
 
   Certification request objects: Certification requests are
   data structures protecting only the integrity of the contained data
@@ -498,7 +500,7 @@ based on existing technology described in IETF documents:
   Examples for certification request data structures are:
 
   * PKCS#10 {{RFC2986}}. This certification request structure is self-signed to
-    protect its integrity and prove possession of the private key
+    protect its integrity and to prove possession of the private key
     that corresponds to the public key included in the request.
 
   * CRMF {{RFC4211}}. This certificate request message format also supports
@@ -519,7 +521,7 @@ based on existing technology described in IETF documents:
   origin authentication to the certification request may be
   delegated to the protocol used for certificate management.
 
-## Solution Options for proof of Identity
+## Solution Options for Proof of Identity
 
   The certification request should be bound to an existing authenticated
   credential (here, the IDevID certificate) to enable a proof of identity
@@ -564,7 +566,7 @@ based on existing technology described in IETF documents:
     certification requests via the PKIProtection structure in a PKIMessage.
     The certification request is typically encoded utilizing CRMF,
     while PKCS#10 is supported as an alternative.
-    Thus CMP does not rely on the security of the underlying message transfer.
+    Thus, CMP does not rely on the security of the underlying message transfer.
 
   * CMC {{RFC5272}} also supports utilizing a shared secret (passphrase) or
     an existing certificate to protect certification requests,
@@ -597,7 +599,7 @@ already defined architecture elements and interactions.
 In general, the communication follows the BRSKI model and utilizes the existing
 BRSKI architecture elements.
 In particular, the pledge initiates communication with the domain registrar
-and interacts with the MASA as usual.
+and interacts with the MASA as usual for voucher request and response processing.
 
 
 ##  Architecture {#architecture}
@@ -674,9 +676,10 @@ of the pledge shown in {{uc1figure}}.
      To this end, the URI scheme for addressing the endpoint at the registrar
      is generalized (see {{addressing}}).
 
-     To support the end-to-end proof of identity of the pledge, the registrar
-     MUST use for the upstream certificate enrollment message exchange with
-     backend PKI components the same enrollment protocol as used by the pledge.
+     To support the end-to-end proof of identity of the pledge,
+     the enrollment protocol used by the pledge
+     MUST also be used by the registrar for its upstream certificate enrollment
+     message exchange with backend PKI components.
      Between the pledge and the registrar the enrollment request messages are
      tunneled over the TLS channel already established between these entities.
      The registrar optionally checks the requests and then passes them on to
@@ -839,10 +842,8 @@ of the operator (RA/CA) may be intermittent or off-line.
 Messages are to be sent as soon as sufficient transfer capacity is available.
 
 The label "[OPTIONAL forwarding]" means that on receiving from a pledge
-a request of the given type (or certificate confirmation),
-depending on the application scenario, the enrollment protocol being used,
-and the capabilities of the registrar and the local RA possibly co-located
-with it, the registrar MAY answer the request itself.
+a request of the given type (or a certificate confirmation),
+the registrar MAY answer the request itself.
 For CA certificates request/response this would require for example
 explicit provisioning of the certificates at the registrar.
 
@@ -851,7 +852,13 @@ a backend PKI component and forward any resulting response back to the pledge.
 The registrar MAY cache responses containing CA certificates or attributes
 and use them later for responding directly, as far as suitable.
 
-Note: Typically, certificate requests will be forwarded to the backend PKI,
+Note:
+The decision whether to forward a request or to answer it directly
+can depend on many factors, such as the application scenario,
+the capabilities of the registrar and of the local RA possibly co-located
+with the registrar, the enrollment protocol being used, and the specific
+contents of the request.
+Typically, certificate requests will be forwarded to the backend PKI,
 but even for these the registrar may answer part of them if adequate,
 such as returning an error response in case the registrar determines
 that the request is not properly authenticated or not authorized.
@@ -942,7 +949,7 @@ The following conventions are used to provide maximal compatibility with BRSKI:
 * `<enrollment-protocol>`: MUST reference the protocol being used.
   Existing values include EST [RFC7030] as in BRSKI and CMP as in
   [I-D.ietf-lamps-lightweight-cmp-profile] and {{brski-cmp-instance}} below.
-  Values for other existing protocols such as CMC or SCEP or CMC,
+  Values for other existing protocols such as CMC and SCEP,
   or for newly defined protocols, require their own specifications
   for their use of the `<enrollment-protocol>` and `<request>` URI components
   and are outside the scope of this document.
@@ -1000,7 +1007,7 @@ and provides further aspects of instantiating them in BRSKI-AE.
 
 ## BRSKI-CMP: Instantiation to CMP {#brski-cmp-instance}
 
-Note: Instead of referring to CMP
+Instead of referring to CMP
 as specified in {{RFC4210}} and {{I-D.ietf-lamps-cmp-updates}},
 this document refers to the Lightweight CMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}} because
@@ -1138,7 +1145,7 @@ The security considerations as laid out in the Lightweight CMP Profile
 # Acknowledgments
 
 We thank Eliot Lear
-or his contributions as a co-author at an earlier draft stage.
+for his contributions as a co-author at an earlier draft stage.
 
 We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
