@@ -72,7 +72,7 @@ normative:
   I-D.ietf-lamps-lightweight-cmp-profile:
   I-D.ietf-ace-cmpv2-coap-transport:
   I-D.ietf-anima-constrained-voucher:
-  IEEE.802.1AR_2018:
+  IEEE.8802.1AR_2014:
 informative:
   RFC2986:
   RFC4211:
@@ -377,7 +377,7 @@ based on the following examples of operational environments:
 {::boilerplate bcp14-tagged}
 
 This document relies on the terminology defined in {{RFC8995}}
-and {{IEEE.8802.1AR_2014}}.
+and {{IEEE.8802.1AR_2014}}. <!-- TBD better use 2018 when entry available -->
 The following terms are defined partly in addition.
 
 asynchronous communication:
@@ -676,8 +676,10 @@ of the pledge shown in {{uc1figure}}.
      To this end, the URI scheme for addressing the endpoint at the registrar
      is generalized (see {{addressing}}).
 
-     To support the end-to-end proof of identity of the pledge, the registrar
-     MUST use the same enrollment protocol as used by the pledge for the upstream certificate enrollment message exchange with backend PKI components.
+     To support the end-to-end proof of identity of the pledge,
+     the enrollment protocol used by the pledge
+     MUST also be used by the registrar for its upstream certificate enrollment
+     message exchange with backend PKI components.
      Between the pledge and the registrar the enrollment request messages are
      tunneled over the TLS channel already established between these entities.
      The registrar optionally checks the requests and then passes them on to
@@ -840,9 +842,8 @@ of the operator (RA/CA) may be intermittent or off-line.
 Messages are to be sent as soon as sufficient transfer capacity is available.
 
 The label "[OPTIONAL forwarding]" means that on receiving from a pledge
-a request of the given type (or a certificate confirmation), the registrar MAY answer the request itself. This depends on the application scenario, the enrollment protocol being used,
-and the capabilities of the registrar and the local RA possibly co-located
-with it.
+a request of the given type (or a certificate confirmation),
+the registrar MAY answer the request itself.
 For CA certificates request/response this would require for example
 explicit provisioning of the certificates at the registrar.
 
@@ -851,7 +852,13 @@ a backend PKI component and forward any resulting response back to the pledge.
 The registrar MAY cache responses containing CA certificates or attributes
 and use them later for responding directly, as far as suitable.
 
-Note: Typically, certificate requests will be forwarded to the backend PKI,
+Note:
+The decision whether to forward a request or to answer it directly
+can depend on many factors, such as the application scenario,
+the capabilities of the registrar and of the local RA possibly co-located
+with the registrar, the enrollment protocol being used, and the specific
+contents of the request.
+Typically, certificate requests will be forwarded to the backend PKI,
 but even for these the registrar may answer part of them if adequate,
 such as returning an error response in case the registrar determines
 that the request is not properly authenticated or not authorized.
