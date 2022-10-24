@@ -72,7 +72,15 @@ normative:
   I-D.ietf-lamps-lightweight-cmp-profile:
   I-D.ietf-ace-cmpv2-coap-transport:
   I-D.ietf-anima-constrained-voucher:
-  IEEE.8802.1AR_2014:
+  IEEE.802.1AR-2018:
+    title: IEEE Standard for Local and metropolitan area networks - Secure Device Identity
+    author:
+    - org: IEEE
+    date: 2018-08
+    seriesinfo:
+      IEEE: 802.1AR-2018
+      DOI: 10.1109/IEEESTD.2018.8423794
+    uri: https://ieeexplore.ieee.org/document/8423794
 informative:
   RFC2986:
   RFC4211:
@@ -377,7 +385,7 @@ based on the following examples of operational environments:
 {::boilerplate bcp14-tagged}
 
 This document relies on the terminology defined in {{RFC8995}}
-and {{IEEE.8802.1AR_2014}}. <!-- TBD better use 2018 when entry available -->
+and {{IEEE.802.1AR-2018}}.
 The following terms are defined partly in addition.
 
 asynchronous communication:
