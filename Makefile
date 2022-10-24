@@ -59,7 +59,7 @@ log:
 	git log -p ${DRAFT}.md
 
 commit: generate
-	git commit ${DRAFT}.{xml,txt,html,pdf} \
+	git commit ${DRAFT}{.{xml,txt,html,pdf},-${VERSION}.txt} \
 	   -m "CI - ietf-draft-files (xml, txt, html, pdf) updated" \
 	   || echo "No changes to commit"
 	git push origin
@@ -68,8 +68,9 @@ FILES=${DRAFT}{.{md,xml,txt,html,pdf},-${VERSION}.txt}
 upload: default
 	cp -a  ${FILES} /tmp
 	git checkout main
+	git checkout -- ${DRAFT}-${VERSION}.txt
 	git fetch upstream
-	git rebase upstream/main
+	git rebase upstream/main # assumes that working set is clean
 	cp -a /tmp/${FILES} .
 	git add ${DRAFT}-${VERSION}.txt
 	git commit -m "${DRAFT}-${VERSION}" ${FILES}
