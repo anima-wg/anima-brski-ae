@@ -5,8 +5,8 @@
 ANIMA WG                                              D. von Oheimb, Ed.
 Internet-Draft                                                  S. Fries
 Intended status: Standards Track                            H. Brockhaus
-Expires: 26 April 2023                                           Siemens
-                                                         23 October 2022
+Expires: 27 April 2023                                           Siemens
+                                                         24 October 2022
 
 
           BRSKI-AE: Alternative Enrollment Protocols in BRSKI
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 April 2023.
+   This Internet-Draft will expire on 27 April 2023.
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 1]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 1]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 2]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 2]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 3]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 3]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 4]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 4]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 5]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 5]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 6]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 6]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 7]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 7]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -424,7 +424,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
    capitals, as shown here.
 
    This document relies on the terminology defined in [RFC8995] and
-   [IEEE.8802.1AR_2014].  The following terms are defined partly in
+   [IEEE.802.1AR-2018].  The following terms are defined partly in
    addition.
 
    asynchronous communication:  time-wise interrupted communication
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 8]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 8]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                 [Page 9]
+von Oheimb, et al.        Expires 27 April 2023                 [Page 9]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -521,9 +521,9 @@ Internet-Draft                  BRSKI-AE                    October 2022
       protocol should be usable for requesting LDevID certificates.
 
    *  The domain registrar may not be the (final) point that
-      authenticates and authorizes certification requests and the pledge
-      may not have a direct connection to it.  Therefore, certification
-      requests should be self-contained signed objects.
+      authenticates and authorizes certification requests, and the
+      pledge may not have a direct connection to it.  Therefore,
+      certification requests should be self-contained signed objects.
 
    Based on the intended target environment described in Section 1.2 and
    the application examples described in Appendix B, the following
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 10]
+von Oheimb, et al.        Expires 27 April 2023                [Page 10]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 11]
+von Oheimb, et al.        Expires 27 April 2023                [Page 11]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -669,7 +669,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 12]
+von Oheimb, et al.        Expires 27 April 2023                [Page 12]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -725,7 +725,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 13]
+von Oheimb, et al.        Expires 27 April 2023                [Page 13]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 14]
+von Oheimb, et al.        Expires 27 April 2023                [Page 14]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 15]
+von Oheimb, et al.        Expires 27 April 2023                [Page 15]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 16]
+von Oheimb, et al.        Expires 27 April 2023                [Page 16]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 17]
+von Oheimb, et al.        Expires 27 April 2023                [Page 17]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -991,40 +991,46 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
                       Figure 3: Certificate Enrollment
 
-   Note that the various connections between the registrar and the PKI
-   components of the operator (RA/CA) may be intermittent or off-line.
-   Messages are to be sent as soon as sufficient transfer capacity is
-   available.
+   The various connections between the registrar and the PKI components
+   of the operator (RA/CA) may be intermittent or off-line.  Messages
+   are to be sent as soon as sufficient transfer capacity is available.
 
-   The label "[OPTIONAL forwarding]" means that on receiving from a
-   pledge a request of the given type (or a certificate confirmation),
-   the registrar MAY answer the request itself.  For CA certificates
-   request/response this would require for example explicit provisioning
-   of the certificates at the registrar.
-
+   The label [OPTIONAL forwarding] means that on receiving from a pledge
+   a request of the given type (or a certificate confirmation), the
+   registrar MAY answer the request directly itself.  Otherwise the
+   registrar MUST forward the request to a backend PKI component and
+   forward any resulting response back to the pledge.
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 18]
+
+
+von Oheimb, et al.        Expires 27 April 2023                [Page 18]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
 
-   Unless providing the response itself, the registrar MUST forward the
-   request to a backend PKI component and forward any resulting response
-   back to the pledge.  The registrar MAY cache responses containing CA
-   certificates or attributes and use them later for responding
-   directly, as far as suitable.
+   Notes: The decision whether to forward a request or to answer it
+   directly can depend on various static and dynamic factors, such as
+   the application scenario, the capabilities of the registrar and of
+   the local RA possibly co-located with the registrar, the enrollment
+   protocol being used, and the specific contents of the request.
 
-   Note: The decision whether to forward a request or to answer it
-   directly can depend on many factors, such as the application
-   scenario, the capabilities of the registrar and of the local RA
-   possibly co-located with the registrar, the enrollment protocol being
-   used, and the specific contents of the request.  Typically,
-   certificate requests will be forwarded to the backend PKI, but even
-   for these the registrar may answer part of them if adequate, such as
+   There are several options how the registrar could be able to directly
+   answer requests for CA certificates or for certificate request
+   attributes.  It could cache responses obtained from the backend PKI
+   and later use their contents for responding to requests asking for
+   the same data.  The contents could also be explicit provisioned at
+   the registrar.
+
+   Certificate requests typically need to be handled by the backend PKI,
+   but the registrar can answer part of them if adequate, such as
    returning an error response in case the registrar determines that the
    request is not properly authenticated or not authorized.
+
+   Also certificate confirmation messages will usually be forwarded to
+   the backend PKI, but if the registrar knows that they are not needed
+   or wanted there it can acknowledge such messages directly.
 
    The following list provides an abstract description of the flow
    depicted in Figure 3.
@@ -1051,20 +1057,21 @@ Internet-Draft                  BRSKI-AE                    October 2022
       attribute request is used to signal to the pledge the acp-node-
       name field required for enrollment into an ACP domain.
 
+
+
+
+
+von Oheimb, et al.        Expires 27 April 2023                [Page 19]
+
+Internet-Draft                  BRSKI-AE                    October 2022
+
+
    *  Attribute Response (4): This MUST contain the attributes to be
       included in the subsequent certification request.
 
    *  Certificate Request (5): This MUST contain the authenticated self-
       contained object ensuring both proof of possession of the
       corresponding private key and proof of identity of the requester.
-
-
-
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 19]
-
-Internet-Draft                  BRSKI-AE                    October 2022
-
 
    *  Certificate Response (6): This MUST contain on success the
       requested certificate and MAY include further information, like
@@ -1107,6 +1114,14 @@ Internet-Draft                  BRSKI-AE                    October 2022
    certification requests.  As this is supported by various existing
    enrollment protocols, they can be employed without modifications to
    existing PKI RAs/CAs supporting the respective enrollment protocol
+
+
+
+von Oheimb, et al.        Expires 27 April 2023                [Page 20]
+
+Internet-Draft                  BRSKI-AE                    October 2022
+
+
    (see also Section 5).
 
    The addressing scheme in BRSKI for certification requests and the
@@ -1114,14 +1129,6 @@ Internet-Draft                  BRSKI-AE                    October 2022
    the definition from EST [RFC7030], here on the example of simple
    enrollment: "/.well-known/est/simpleenroll".  This approach is
    generalized to the following notation: "/.well-known/<enrollment-
-
-
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 20]
-
-Internet-Draft                  BRSKI-AE                    October 2022
-
-
    protocol>/<request>" in which <enrollment-protocol> refers to a
    certificate enrollment protocol.  Note that enrollment is considered
    here a message sequence that contains at least a certification
@@ -1166,14 +1173,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-
-
-
-
-
-
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 21]
+von Oheimb, et al.        Expires 27 April 2023                [Page 21]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 22]
+von Oheimb, et al.        Expires 27 April 2023                [Page 22]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 23]
+von Oheimb, et al.        Expires 27 April 2023                [Page 23]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 24]
+von Oheimb, et al.        Expires 27 April 2023                [Page 24]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1366,14 +1366,11 @@ Internet-Draft                  BRSKI-AE                    October 2022
               <https://www.ietf.org/archive/id/draft-ietf-lamps-
               lightweight-cmp-profile-14.txt>.
 
-   [IEEE.8802.1AR_2014]
-              IEEE, "ISO/IEC/IEEE International Standard for Information
-              technology -- Telecommunications and information exchange
-              between systems -- Local and metropolitan area networks --
-              Part 1AR: Secure device identity", IEEE 8802.1AR-2014,
-              DOI 10.1109/ieeestd.2014.6739984, 13 February 2014,
-              <http://ieeexplore.ieee.org/servlet/
-              opac?punumber=6739982>.
+   [IEEE.802.1AR-2018]
+              IEEE, "IEEE Standard for Local and metropolitan area
+              networks - Secure Device Identity", IEEE 802.1AR-2018,
+              DOI 10.1109/IEEESTD.2018.8423794, August 2018,
+              <https://doi.org/10.1109/IEEESTD.2018.8423794>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1397,7 +1394,10 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 25]
+
+
+
+von Oheimb, et al.        Expires 27 April 2023                [Page 25]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 26]
+von Oheimb, et al.        Expires 27 April 2023                [Page 26]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1509,7 +1509,7 @@ Appendix A.  Using EST for Certificate Enrollment
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 27]
+von Oheimb, et al.        Expires 27 April 2023                [Page 27]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 28]
+von Oheimb, et al.        Expires 27 April 2023                [Page 28]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1621,7 +1621,7 @@ B.2.  Building Automation
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 29]
+von Oheimb, et al.        Expires 27 April 2023                [Page 29]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -1644,17 +1644,18 @@ B.3.  Substation Automation
 
    In electrical substation automation scenarios, a control center
    typically hosts PKI services to issue certificates for Intelligent
-   Electronic Devices (IEDs) operated in a substation.  Communication
-   between the substation and control center is performed through a
+   Electronic Devices operated in a substation.  Communication between
+   the substation and control center is performed through a
    proxy/gateway/DMZ, which terminates protocol flows.  Note that
    [NERC-CIP-005-5] requires inspection of protocols at the boundary of
    a security perimeter (the substation in this case).  In addition,
    security management in substation automation assumes central support
    of several enrollment protocols in order to support the various
    capabilities of IEDs from different vendors.  The IEC standard
-   IEC62351-9 [IEC-62351-9] specifies mandatory support of two
-   enrollment protocols: SCEP [RFC8894] and EST [RFC7030] for the
-   infrastructure side, while the IED must only support one of the two.
+   IEC62351-9 [IEC-62351-9] specifies for the infrastructure side
+   mandatory support of two enrollment protocols: SCEP [RFC8894] and EST
+   [RFC7030], while an Intelligent Electronic Device may support only
+   one of them.
 
 B.4.  Electric Vehicle Charging Infrastructure
 
@@ -1673,15 +1674,15 @@ B.4.  Electric Vehicle Charging Infrastructure
    operations and maintain the charging point itself.  This means that
    the certificate management needs to be handled in-band of OCPP.  This
    requires the ability to encapsulate the certificate management
-   messages in a transport-independent way.  Authenticated self-
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 30]
+von Oheimb, et al.        Expires 27 April 2023                [Page 30]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
 
+   messages in a transport-independent way.  Authenticated self-
    containment will support this by allowing the transport without a
    separate enrollment protocol, binding the messages to the identity of
    the communicating endpoints.
@@ -1726,22 +1727,26 @@ Appendix C.  History of Changes TBD RFC Editor: please delete
 
    *  In response to review by Toerless Eckert,
 
+
+
+
+
+
+
+von Oheimb, et al.        Expires 27 April 2023                [Page 31]
+
+Internet-Draft                  BRSKI-AE                    October 2022
+
+
       -  many editorial improvements and clarifications as suggested,
          such as the comparison to plain BRSKI, the description of
          offline vs. synchronous message transfer and enrollment, and
          better differentiation of RA flavors.
 
-
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 31]
-
-Internet-Draft                  BRSKI-AE                    October 2022
-
-
       -  clarify that for transporting certificate enrollment messages
          between pledge and registrar, the TLS channel established
-         between these two via the join proxy is used and the enrollment
-         protocol MUST support this.
+         between these two (via the join proxy) is used and the
+         enrollment protocol MUST support this.
 
       -  clarify that the enrollment protocol chosen between pledge and
          registrar MUST also be used for the upstream enrollment
@@ -1752,8 +1757,8 @@ Internet-Draft                  BRSKI-AE                    October 2022
          by the pledge itself and otherwise MUST forward them to the PKI
          and forward responses to the pledge.
 
-   *  Change "The registrar MAY offer different enrollment protocols."
-      to "The registrar MUST support at least one certificate enrollment
+   *  Change "The registrar MAY offer different enrollment protocols" to
+      "The registrar MUST support at least one certificate enrollment
       protocol ..."
 
    *  In response to review by Michael Richardson,
@@ -1781,18 +1786,17 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
    *  Add explanations for terms such as 'target domain' and 'caPubs'
 
-   *  Fix minor editorial issues
-
-   From IETF draft ae-01 -> IETF draft ae-02:
 
 
 
-
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 32]
+von Oheimb, et al.        Expires 27 April 2023                [Page 32]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
+
+   *  Fix minor editorial issues and update some external references
+
+   From IETF draft ae-01 -> IETF draft ae-02:
 
    *  Architecture: clarify registrar role including RA/LRA/enrollment
       proxy
@@ -1839,16 +1843,16 @@ Internet-Draft                  BRSKI-AE                    October 2022
       subsection for UC2 as well as the removal of the YANG model
       related text as it is not applicable in UC1.
 
-   *  Updated references to the Lightweight CMP Profile.
-
-   *  Added David von Oheimb as co-author.
 
 
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 33]
+von Oheimb, et al.        Expires 27 April 2023                [Page 33]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
+
+   *  Updated references to the Lightweight CMP Profile.
+
+   *  Added David von Oheimb as co-author.
 
    From IETF draft 02 -> IETF draft 03:
 
@@ -1895,16 +1899,16 @@ Internet-Draft                  BRSKI-AE                    October 2022
    *  Details on trust relationship between registrar-agent and pledge
       (issue #5) included in UC2.
 
-   *  Split of use case 2 call flow into sub sections in UC2.
-
-   From IETF draft 00 -> IETF draft 01:
 
 
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 34]
+von Oheimb, et al.        Expires 27 April 2023                [Page 34]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
+
+   *  Split of use case 2 call flow into sub sections in UC2.
+
+   From IETF draft 00 -> IETF draft 01:
 
    *  Update of scope in Section 1.2 to include in which the pledge acts
       as a server.  This is one main motivation for use case 2.
@@ -1953,11 +1957,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-
-
-
-
-von Oheimb, et al.        Expires 26 April 2023                [Page 35]
+von Oheimb, et al.        Expires 27 April 2023                [Page 35]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -2013,7 +2013,7 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 36]
+von Oheimb, et al.        Expires 27 April 2023                [Page 36]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -2069,7 +2069,7 @@ Authors' Addresses
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 37]
+von Oheimb, et al.        Expires 27 April 2023                [Page 37]
 
 Internet-Draft                  BRSKI-AE                    October 2022
 
@@ -2125,4 +2125,4 @@ Internet-Draft                  BRSKI-AE                    October 2022
 
 
 
-von Oheimb, et al.        Expires 26 April 2023                [Page 38]
+von Oheimb, et al.        Expires 27 April 2023                [Page 38]
