@@ -83,6 +83,11 @@ normative:
       DOI: 10.1109/IEEESTD.2018.8423794
     uri: https://ieeexplore.ieee.org/document/8423794
 informative:
+  BRSKI-AE-overview:
+    title: 'BRSKI-AE Protocol Overview'
+    date: April 2022
+    format:
+      PNG: https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/BRSKI-AE_overview.png
   RFC2986:
   RFC4211:
   RFC5272:
@@ -783,15 +788,8 @@ is not visible / verifiable to authorization points outside the registrar.-->
 {{exist_prot}} discusses selected suitable enrollment protocols
 and options applicable.
 
-<figure title="BRSKI-AE Abstract Protocol Overview">
-    <artwork>
-[
- Cannot render SVG graphics - please view
- https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/o.png
-]
-    </artwork>
-</figure>
-
+An abstract overview of the BRSKI-AE protocol
+can be found in {{BRSKI-AE-overview}}.
 
 ### Pledge - Registrar Discovery
 
@@ -863,15 +861,14 @@ The various connections between the registrar and the PKI components
 of the operator (RA/CA) may be intermittent or off-line.
 Messages are to be sent as soon as sufficient transfer capacity is available.
 
-The label `[OPTIONAL forwarding]` means that on receiving from a pledge
-a request of the given type (or a certificate confirmation),
-the registrar MAY answer the request directly itself.
+The label `[OPTIONAL forwarding]` means that on receiving from a pledge a
+request of the given type, the registrar MAY answer the request directly itself.
 Otherwise the registrar MUST forward the request to a backend PKI component
 and forward any resulting response back to the pledge.
 
 Notes:
 The decision whether to forward a request or to answer it directly can depend
-on various static and dynamic factors, such as the application scenario,
+on various static and dynamic factors. They include the application scenario,
 the capabilities of the registrar and of the local RA possibly co-located
 with the registrar, the enrollment protocol being used, and the specific
 contents of the request.
@@ -883,9 +880,9 @@ later use their contents for responding to requests asking for the same data.
 The contents could also be explicit provisioned at the registrar.
 
 Certificate requests typically need to be handled by the backend PKI,
-but the registrar can answer part of them if adequate,
-such as returning an error response in case the registrar determines
-that the request is not properly authenticated or not authorized.
+but the registrar can answer them directly with an error response
+in case it determines that such a request should be rejected,
+for instance because is not properly authenticated or not authorized.
 
 Also certificate confirmation messages
 will usually be forwarded to the backend PKI,
