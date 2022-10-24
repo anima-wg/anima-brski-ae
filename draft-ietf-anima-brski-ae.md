@@ -83,6 +83,11 @@ normative:
       DOI: 10.1109/IEEESTD.2018.8423794
     uri: https://ieeexplore.ieee.org/document/8423794
 informative:
+  BRSKI-AE-overview:
+    title: 'BRSKI-AE Protocol Overview'
+    date: April 2022
+    format:
+      PNG: https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/BRSKI-AE_overview.png
   RFC2986:
   RFC4211:
   RFC5272:
@@ -783,15 +788,8 @@ is not visible / verifiable to authorization points outside the registrar.-->
 {{exist_prot}} discusses selected suitable enrollment protocols
 and options applicable.
 
-<figure title="BRSKI-AE Abstract Protocol Overview">
-    <artwork>
-[
- Cannot render SVG graphics - please view
- https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/o.png
-]
-    </artwork>
-</figure>
-
+An abstract overview of the BRSKI-AE protocol
+can be found in {{BRSKI-AE-overview}}.
 
 ### Pledge - Registrar Discovery
 
