@@ -2488,14 +2488,13 @@ not only proof of possession but also proof of identity (source authentication).
 <p id="section-4.2.3-5">The various connections between the registrar and the PKI components
 of the operator (RA/CA) may be intermittent or off-line.
 Messages are to be sent as soon as sufficient transfer capacity is available.<a href="#section-4.2.3-5" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-6">The label <code>[OPTIONAL forwarding]</code> means that on receiving from a pledge
-a request of the given type (or a certificate confirmation),
-the registrar <span class="bcp14">MAY</span> answer the request directly itself.
+<p id="section-4.2.3-6">The label <code>[OPTIONAL forwarding]</code> means that on receiving from a pledge a
+request of the given type, the registrar <span class="bcp14">MAY</span> answer the request directly itself.
 Otherwise the registrar <span class="bcp14">MUST</span> forward the request to a backend PKI component
 and forward any resulting response back to the pledge.<a href="#section-4.2.3-6" class="pilcrow">¶</a></p>
 <p id="section-4.2.3-7">Notes:
 The decision whether to forward a request or to answer it directly can depend
-on various static and dynamic factors, such as the application scenario,
+on various static and dynamic factors. They include the application scenario,
 the capabilities of the registrar and of the local RA possibly co-located
 with the registrar, the enrollment protocol being used, and the specific
 contents of the request.<a href="#section-4.2.3-7" class="pilcrow">¶</a></p>
@@ -2505,9 +2504,9 @@ It could cache responses obtained from the backend PKI and
 later use their contents for responding to requests asking for the same data.
 The contents could also be explicit provisioned at the registrar.<a href="#section-4.2.3-8" class="pilcrow">¶</a></p>
 <p id="section-4.2.3-9">Certificate requests typically need to be handled by the backend PKI,
-but the registrar can answer part of them if adequate,
-such as returning an error response in case the registrar determines
-that the request is not properly authenticated or not authorized.<a href="#section-4.2.3-9" class="pilcrow">¶</a></p>
+but the registrar can answer them directly with an error response
+in case it determines that such a request should be rejected,
+for instance because is not properly authenticated or not authorized.<a href="#section-4.2.3-9" class="pilcrow">¶</a></p>
 <p id="section-4.2.3-10">Also certificate confirmation messages
 will usually be forwarded to the backend PKI,
 but if the registrar knows that they are not needed or wanted there
