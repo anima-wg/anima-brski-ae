@@ -52,7 +52,7 @@ author:
   email: hendrik.brockhaus@siemens.com
   uri: https://www.siemens.com/
 contributor:
-  name: Eliot Lear
+- name: Eliot Lear
   org: Cisco Systems
   street: Richtistrasse 7
   city: Wallisellen
@@ -60,6 +60,14 @@ contributor:
   country: Switzerland
   phone: "+41 44 878 9200"
   email: lear@cisco.com
+- name: Rufus J.W. Buschart
+  org: Siemens AG
+  street: Freyeslebenstr. 1
+  city: Erlangen
+  code: 91058
+  country: Germany
+  email: rufus.buschart@siemens.com
+  uri: https://www.siemens.com/
 venue:
   group: anima
   anima mail: {anima@ietf.org}
@@ -1020,6 +1028,7 @@ and the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
   </cmp/getcertreqtemplate>;ct=pkixcmp
   </cmp/initialization>;ct=pkixcmp
   </cmp/p10>;ct=pkixcmp
+  </acme/directory>,ct=json
 
 ~~~~
 {: artwork-align="left"}
@@ -1099,6 +1108,11 @@ CoAP Transport for CMPV2 {{I-D.ietf-ace-cmpv2-coap-transport}}.
 In this scenario, of course the EST-specific parts
 of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
+## BRSKI-ACME: Instantiation to ACME {#brski-acme-instance}
+
+When using ACME, the directory object according {{RFC855, Section 7.1.1}} endpoint
+MUST be exposed under </acme/directory>,ct=json . The directory object can refer
+either to ACME endpoint on the domain registrar or on a dedicated server.
 
 ## Other Instantiations of BRSKI-AE
 
