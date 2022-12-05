@@ -711,7 +711,7 @@ of the pledge shown in {{uc1figure}}.
      the enrollment protocol used by the pledge
      MUST also be used by the registrar for its upstream certificate enrollment
      message exchange with backend PKI components.
-     Between the pledge and the registrar the enrollment request messages are
+     Between the pledge and the registrar the enrollment messages are typically
      tunneled over the TLS channel already established between these entities.
      The registrar optionally checks the requests and then passes them on to
      the PKI. On the way back, it forwards responses by the PKI to the pledge
@@ -771,13 +771,15 @@ showing commonalities and differences to the original approach as follows.
   to employing a certificate enrollment protocol that uses
   an authenticated self-contained object for requesting the LDevID certificate.
 
-  Still for transporting certificate enrollment request and response
-  messages between the pledge and the registrar, the TLS channel established
-  between them via the join proxy is used.
-  So the enrollment protocol MUST support this.
-  Due to this architecture, the pledge does not need to establish
-  an additional connection for certificate enrollment and
+  For transporting the certificate enrollment request and response messages, the
+  TLS channel established between pledge and registrar is RECOMMENDED to use.
+  To this end, the enrollment protocol, the pledge, and the registrar
+  need to support using the TLS channel for certificate enrollment.
+  Due to this recommended architecture, typically the pledge does not need
+  to establish additional connections for certificate enrollment and
   the registrar retains control over the certificate enrollment traffic.
+  The registrar MAY forward such messages, and it MAY also redirect the pledge
+  to use other connections for (part of) certificate enrollment.
 
 - Enrollment status telemetry phase: the final exchange of BRSKI step (5).
 
@@ -809,22 +811,38 @@ The voucher exchange is performed as specified in {{RFC8995}}.
 
 ### Pledge - Registrar - RA/CA Certificate Enrollment
 
-The certificate enrollment phase may involve several exchanges of requests
-and responses.
+The certificate enrollment phase may involve several exchanges
+of requests and response messages.
+Details can depend on the application scenario,
+the employed enrollment protocol, and other factors.
+
+The only message exchange required in any case is for the actual certificate
+request and response message.  As stated in {{req-sol}}, the certificate request
+MUST be performed using an authenticated self-contained object providing
+not only proof of possession but also proof of identity (source authentication).
+This message exchange, as well as any others, is RECOMMENDED to be routed
+via the existing TLS channel between the pledge and the registrar.
+
 Which of the message exchanges marked OPTIONAL in the below {{enrollfigure}}
 are potentially used, or are actually required or prohibited to be used,
-depends on the application scenario and on the employed enrollment protocol.
+as well as which other other exchanges may occur within the TLS channel
+or outside of it, depends on the enrollment protocol.
 
-These OPTIONAL exchanges cover all those supported by the use of EST in BRSKI.
-The last OPTIONAL one, namely certificate confirmation,
+Note:
+The mentioned OPTIONAL exchanges cover all those supported by the use of EST
+in BRSKI. The last OPTIONAL one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.
 
+<<<<<<< HEAD
 The only generally MANDATORY message exchange is for the actual certificate
 request and response.  As stated in {{req-sol}}, the certificate request
 MUST be performed using an authenticated self-contained object providing
 not only proof of possession but also proof of identity (source authentication).
 
 /* [stf] Der Zurueckpfeil |--> ist in der Zeichnung irritierend. Brauchen wir den? */
+=======
+
+>>>>>>> 6dba4ac7dc247f86e501f11e867f842b315d2d27
 ~~~~ aasvg
 +--------+                        +------------+       +------------+
 | Pledge |                        | Domain     |       | Operator   |
@@ -847,7 +865,7 @@ not only proof of possession but also proof of identity (source authentication).
  |                                         |<-- Attribute Resp. ---|
  |<--------- Attribute Response (4)--------|                       |
  |-->                                      |                       |
- |  [MANDATORY certificate request]        |                       |
+ |  [RECOMMENDED certificate request]      |                       |
  |---------- Certificate Request (5)------>|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |--- Certificate Req.-->|
@@ -864,7 +882,7 @@ not only proof of possession but also proof of identity (source authentication).
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
 The various connections between the registrar and the PKI components
-of the operator (RA/CA) may be intermittent or off-line.
+of the operator (RA, CA, etc.) may be intermittent or off-line.
 Messages are to be sent as soon as sufficient transfer capacity is available.
 
 The label `[OPTIONAL forwarding]` means that on receiving from a pledge a
@@ -940,7 +958,7 @@ depicted in {{enrollfigure}}.
 
 The generic messages described above may be implemented using any certificate
 enrollment protocol that supports authenticated self-contained objects for the
-certificate request as described in {{req-sol}} and tunneling over TLS.
+certificate request as described in {{req-sol}}.
 Examples are available in {{exist_prot}}.
 
 Note that the optional certificate confirmation by the pledge to the PKI
