@@ -174,13 +174,13 @@ is defined as the set of entities that share a common local trust anchor.
 
 Initially, a pledge has a trust anchor only of its manufacturer, not yet
 of any target domain.  In order for the pledge to automatically and securely
-obtain trust in a suitable target domain represented by its registrar,
+obtain trust into a target domain represented by its registrar,
 BRSKI uses vouchers as defined in [RFC8366].
 A voucher is a cryptographic object issued by
 the Manufacturer Authorized Signing Authority (MASA) of the pledge manufacturer
 to the specific pledge identified by the included device serial number.
 It is signed with the credentials of the MASA and
-can be validated by the manufacturer trust anchor imprinted with the pledge.
+can be validated by the manufacturer trust anchor imprinted within the pledge.
 So the pledge can accept the voucher contents, which indicate to the pledge
 that it can trust the domain identified by the given certificate.
 
@@ -189,13 +189,13 @@ communicate the voucher between MASA, registrar, and pledge
 (BRSKI-EST and BRSKI-MASA, see {{RFC8995, Section 2}}),
 it also describes the architecture for how the voucher
 may be provided in online mode (synchronously) or offline mode (asynchronously).
-So for the voucher exchange offline mode is basically supported
+For the voucher exchange offline mode is basically supported,
 because the vouchers are self-contained signed objects,
 such that their security does not rely on protection by the underlying transfer.
 
 SZTP {{RFC8572}} is an example of another protocol where vouchers may be
 delivered asynchronously by tools such as portable USB "thumb" drives.
-However, SZTP does not do signed voucher requests,
+However, SZTP does not apply signed voucher requests,
 so it does not allow the domain to verify the identity of the device
 in the same way, nor does it deploy LDevIDs to the device in the same way.
 
@@ -207,13 +207,12 @@ with a domain-specific Locally significant Device IDentity (LDevID) certificate.
 
 Recall that for certificate enrollment it is crucial to authenticate the
 entity requesting the certificate.  Checking both the identity and the
-authorization of the requester is the job of a registration authority (RA).
-With BRSKI-EST, there is only one RA instance, co-located with the registrar.
+authorization of the requester is the responsibility of a registration authority (RA).
 
-The certification request of the pledge is signed using its IDevID secret.
+In BRSKI-AE the certification request of the pledge is additionally signed using its IDevID secret.
 It can be validated by the target domain (e.g., by the domain registrar)
 using the trust anchor of the pledge manufacturer,
-which needs to pre-installed in the domain.
+which needs to pre-installed in the domain. This validation can be done independent of the transport used.
 
 For enrolling devices with LDevID certificates, BRSKI specifies
 how Enrollment over Secure Transport (EST) {{RFC7030}} can be used.
@@ -222,6 +221,8 @@ In particular, it requires online on-site availability of the RA
 for performing the data origin authentication
 and final authorization decision on the certification request.
 This type of enrollment can be called 'synchronous enrollment'.
+
+/* [stf] Den naechsten Absatz wuerde ich weglassen. Der Hauptpunkt wird darunter angesprochen (offline) und Transport Independence habe ich in Paragraph 3 mit aufgenommen. Daneben betreffen BRSKI-EST und BRSKI-MASA zwei verschiedenen Ecken der Architektur und sind auch unterschiedliche betroffen (BRSKI-MASA nicht wirklich) */
 EST, BRSKI-EST, and BRSKI-MASA as used in RFC 8995 are tied to a specific
 transport, TLS, which may not be suitable for the target use case outlined
 by the examples in {{list-examples}}. Therefore deployments may require
@@ -235,9 +236,9 @@ to use alternative enrollment protocols such as
 the Certificate Management Protocol (CMP) {{RFC4210}}
 profiled in {{I-D.ietf-lamps-lightweight-cmp-profile}}
 or Certificate Management over CMS (CMC) {{RFC5272}}.
-These protocols are more flexible, and by representing the certification
-request messages as authenticated self-contained objects,
-they are designed to be independent of the transfer mechanism.
+These protocols allow to represent the certification
+request messages as authenticated self-contained object,
+and are therefore designed to be independent of the transfer mechanism.
 
 Depending on the application scenario, the required components of an RA
 may not be part of the BRSKI registrar. They even may not be available on-site
@@ -262,6 +263,7 @@ Messages need to be stored,
 along with the information needed for authenticating their origin,
 in front of an unavailable segment for potentially long time (e.g., days)
 before they can be forwarded.
+/* [stf] Den naechsten Absatz wuerde ich weglassen. Ich glaube es verwirrt hier BRSKI-EST und BRSKI-MASA zu nennen, da es sich auf zwei verschiedenen Ecken im Architekturbild bezieht.*/
 This implies that end-to-end security between the parties involved
 can not be provided by an authenticated (and often confidential)
 communications channel such as TLS used in EST/BRSKI-EST/BRSKI-MASA.
@@ -290,7 +292,7 @@ along with requester authentication information:
   When connectivity is available, the trusted component
   forwards the certification request together with the requester information
   (authentication and proof of possession) for further processing.
-  This approach offers hop-by-hop security, but not end-to-end security.
+  This approach offers hop-by-hop security, but not end-to-end security in terms of enabling the CA to check the identity of the requestor.
 
   In BRSKI, the EST server, being co-located with the registrar in the domain,
   is such a component that needs to be trusted by the backend PKI components.
@@ -309,6 +311,8 @@ along with requester authentication information:
   Note that with this approach the way in which enrollment requests are
   forwarded by the registrar to the backend PKI components does not contribute
   to their security and therefore does not need to be addressed here.
+  Note also that in case of BRSKI the domain registrar is responsible for his 
+  domain and is still involved in the pledge enrollment.
 
 Focus of this document is the support of alternative enrollment protocols that
 allow the second approach, i.e.,
@@ -325,7 +329,7 @@ and certificate chain.
 The goals are to provide an enhancement of BRSKI
 using enrollment protocols alternatively to EST that
 
-* support end-to-end security for LDevID certificate enrollment and
+* support end-to-end security for LDevID certificate enrollment independent of the transport and
 
 * make it applicable to scenarios involving asynchronous enrollment.
 
@@ -341,9 +345,9 @@ This is achieved by
 This specification can be applied to
 both synchronous and asynchronous enrollment.
 
-As an improvement over BRSKI,
+Based on the definition of the overall approach and specific endpoints, 
 this specification supports offering multiple enrollment protocols
-which enables pledges and their developers to pick the preferred one.
+which enables pledges and their developers to pick the mot suitable one.
 
 ## Supported Environments {#sup-env}
 
@@ -354,13 +358,14 @@ on-site PKI services and comprises application scenarios like the following.
   such as the requirement for end-to-end authentication of the requester
   while the RA is not co-located with the registrar.
 
+/* [stf] Den naechsten Punkt wuerde ich weglassen der Dritte ist eigentlich der wichtige.*/
 * Scenarios having implementation restrictions
   that speak against using EST for certificate enrollment,
   such as the use of a library that does not support EST but CMP.
 
 * Pledges and/or the target domain already having an established
   certificate management approach different from EST that shall be reused
-  (e.g., in brownfield installations where CMP is used).
+  (e.g., in brownfield installations where, e.g., CMP is already used).
 
 * No RA being available on site in the target domain.
   Connectivity to an off-site PKI RA is intermittent or entirely offline.
@@ -547,8 +552,8 @@ based on existing technology described in IETF documents:
 
 ## Solution Options for Proof of Identity
 
-  The certification request should be bound to an existing authenticated
-  credential (here, the IDevID certificate) to enable a proof of identity
+  The binding of the certification request to an existing authenticated
+  credential (here, the IDevID certificate) enables proof of identity
   and, based on it, an authorization of the certification request.
   The binding may be achieved through security options in an
   underlying transport protocol such as TLS if the authorization of the
@@ -568,8 +573,7 @@ based on existing technology described in IETF documents:
     authentication and the pledge utilizes its IDevID for it,
     the proof of identity is provided by such a binding to the TLS session.
     This can be supported using the EST /simpleenroll endpoint.
-    Note that the binding of the TLS handshake to the CSR is optional in EST.
-
+    
     {{RFC7030, Section 2.5}} sketches wrapping the CSR with a Full PKI Request
     message sent to the /fullcmc endpoint.
     This would allow for source authentication
@@ -702,6 +706,7 @@ of the pledge shown in {{uc1figure}}.
      To this end, the URI scheme for addressing the endpoint at the registrar
      is generalized (see {{addressing}}).
 
+/* [stf] Inwieweit ist das eine Einschraenkung? Wir schreiben an der Stelle schon das Enrollment fuer das Backend vor. Waere es nicht besser z usagen der self-contained CSR must be transported to the backend PKI components? Wenn wir den Turnschuhbetrieb nach vorn raus haben, wollen wir den doc nicht im Backend? */
      To support the end-to-end proof of identity of the pledge,
      the enrollment protocol used by the pledge
      MUST also be used by the registrar for its upstream certificate enrollment
@@ -711,9 +716,10 @@ of the pledge shown in {{uc1figure}}.
      The registrar optionally checks the requests and then passes them on to
      the PKI. On the way back, it forwards responses by the PKI to the pledge
      on the existing TLS channel.
+/* [stf] Der letzte Satz ist eigentlich nicht konsistent, da wir ja auch von asynchron ausgehen und damit der TLS Kanal nicht mehr existiert, daher vielleicht besser "... on an exisiting TLS channel" */
 
   2. The registrar MAY also delegate all or part of its certificate enrollment
-     support to a separate system. That is, alternatively to having full RA
+     support to a separate system. Alternatively to having full RA
      functionality, the registrar may act as a local registration authority
      (LRA) or just as an enrollment proxy.
      In such cases, the domain registrar may forward the certification request
@@ -779,7 +785,7 @@ showing commonalities and differences to the original approach as follows.
 
 The behavior of a pledge described in BRSKI {{RFC8995, Section 2.1}}
 is kept with one exception.
-After finishing the Imprint step (4), the Enroll step (5) MUST be performed
+After finishing the Trust Establishment step (4), the Enroll step (5) MUST be performed
 with an enrollment protocol utilizing authenticated self-contained objects.
 <!-- Note that EST with simple-enroll cannot be applied here because
 it binds the pledge authentication to the transport channel (TLS) rather than
@@ -818,7 +824,7 @@ request and response.  As stated in {{req-sol}}, the certificate request
 MUST be performed using an authenticated self-contained object providing
 not only proof of possession but also proof of identity (source authentication).
 
-
+/* [stf] Der Zurueckpfeil |--> ist in der Zeichnung irritierend. Brauchen wir den? */
 ~~~~ aasvg
 +--------+                        +------------+       +------------+
 | Pledge |                        | Domain     |       | Operator   |
@@ -907,7 +913,7 @@ depicted in {{enrollfigure}}.
   Nevertheless, there are cases in which the pledge may also
   include additional attributes specific to the target domain
   into the certification request. To get these attributes in
-  advance, the attribute request can be used.
+  advance, the attribute request can be optionally used.
 
   For example, {{RFC8994, Section 6.11.7.2}} specifies
   how the attribute request is used to signal to the pledge
@@ -1007,7 +1013,6 @@ includes the voucher handling as well as the enrollment endpoints.
 The CMP-related enrollment endpoints are defined as well-known URIs
 in CMP Updates {{I-D.ietf-lamps-cmp-updates}}
 and the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
-
 
 ~~~~
   </brski/voucherrequest>,ct=voucher-cms+json
@@ -1182,6 +1187,7 @@ Moreover, we thank Michael Richardson and Rajeev Ranjan for their reviews.
 
 --- back
 
+/* [stf] Brauchen wir die folgende Section? Das ist doch eigentlich schon Teil von RFC 8995. */
 
 # Using EST for Certificate Enrollment {#using-est}
 
