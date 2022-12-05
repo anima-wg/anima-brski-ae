@@ -1197,11 +1197,11 @@ li > p:last-of-type {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">BRSKI-AE</td>
-<td class="right">October 2022</td>
+<td class="right">December 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">von Oheimb, et al.</td>
-<td class="center">Expires 27 April 2023</td>
+<td class="center">Expires 8 June 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1214,12 +1214,12 @@ li > p:last-of-type {
 <dd class="internet-draft">draft-ietf-anima-brski-ae-03</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-10-24" class="published">24 October 2022</time>
+<time datetime="2022-12-05" class="published">5 December 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-04-27">27 April 2023</time></dd>
+<dd class="expires"><time datetime="2023-06-08">8 June 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1280,7 +1280,7 @@ where to authenticate and authorize certification requests.<a href="#section-abs
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 April 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 June 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2184,7 +2184,7 @@ To support the end-to-end proof of identity of the pledge,
 the enrollment protocol used by the pledge
 <span class="bcp14">MUST</span> also be used by the registrar for its upstream certificate enrollment
 message exchange with backend PKI components.
-Between the pledge and the registrar the enrollment request messages are
+Between the pledge and the registrar the enrollment messages are typically
 tunneled over the TLS channel already established between these entities.
 The registrar optionally checks the requests and then passes them on to
 the PKI. On the way back, it forwards responses by the PKI to the pledge
@@ -2251,13 +2251,15 @@ showing commonalities and differences to the original approach as follows.<a hre
 to employing a certificate enrollment protocol that uses
 an authenticated self-contained object for requesting the LDevID certificate.<a href="#section-4.1-12.3.1" class="pilcrow">¶</a></p>
 <p id="section-4.1-12.3.2">
-Still for transporting certificate enrollment request and response
-messages between the pledge and the registrar, the TLS channel established
-between them via the join proxy is used.
-So the enrollment protocol <span class="bcp14">MUST</span> support this.
-Due to this architecture, the pledge does not need to establish
-an additional connection for certificate enrollment and
-the registrar retains control over the certificate enrollment traffic.<a href="#section-4.1-12.3.2" class="pilcrow">¶</a></p>
+For transporting the certificate enrollment request and response messages, the
+TLS channel established between pledge and registrar is <span class="bcp14">RECOMMENDED</span> to use.
+To this end, the enrollment protocol, the pledge, and the registrar
+need to support using the TLS channel for certificate enrollment.
+Due to this recommended architecture, typically the pledge does not need
+to establish additional connections for certificate enrollment and
+the registrar retains control over the certificate enrollment traffic.
+The registrar <span class="bcp14">MAY</span> forward such messages, and it <span class="bcp14">MAY</span> also redirect the pledge
+to use other connections for (part of) certificate enrollment.<a href="#section-4.1-12.3.2" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-12.4">Enrollment status telemetry phase: the final exchange of BRSKI step (5).<a href="#section-4.1-12.4" class="pilcrow">¶</a>
 </li>
@@ -2298,22 +2300,28 @@ can be found in <span>[<a href="#BRSKI-AE-overview" class="xref">BRSKI-AE-overvi
           <h4 id="name-pledge-registrar-ra-ca-cert">
 <a href="#section-4.2.3" class="section-number selfRef">4.2.3. </a><a href="#name-pledge-registrar-ra-ca-cert" class="section-name selfRef">Pledge - Registrar - RA/CA Certificate Enrollment</a>
           </h4>
-<p id="section-4.2.3-1">The certificate enrollment phase may involve several exchanges of requests
-and responses.
-Which of the message exchanges marked <span class="bcp14">OPTIONAL</span> in the below <a href="#enrollfigure" class="xref">Figure 2</a>
-are potentially used, or are actually required or prohibited to be used,
-depends on the application scenario and on the employed enrollment protocol.<a href="#section-4.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-2">These <span class="bcp14">OPTIONAL</span> exchanges cover all those supported by the use of EST in BRSKI.
-The last <span class="bcp14">OPTIONAL</span> one, namely certificate confirmation,
-is not supported by EST, but by CMP and other enrollment protocols.<a href="#section-4.2.3-2" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-3">The only generally MANDATORY message exchange is for the actual certificate
-request and response.  As stated in <a href="#req-sol" class="xref">Section 3</a>, the certificate request
+<p id="section-4.2.3-1">The certificate enrollment phase may involve several exchanges
+of requests and response messages.
+Details can depend on the application scenario,
+the employed enrollment protocol, and other factors.<a href="#section-4.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-2">The only message exchange required in any case is for the actual certificate
+request and response message.  As stated in <a href="#req-sol" class="xref">Section 3</a>, the certificate request
 <span class="bcp14">MUST</span> be performed using an authenticated self-contained object providing
-not only proof of possession but also proof of identity (source authentication).<a href="#section-4.2.3-3" class="pilcrow">¶</a></p>
+not only proof of possession but also proof of identity (source authentication).
+This message exchange, as well as any others, is <span class="bcp14">RECOMMENDED</span> to be routed
+via the existing TLS channel between the pledge and the registrar.<a href="#section-4.2.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-3">Which of the message exchanges marked <span class="bcp14">OPTIONAL</span> in the below <a href="#enrollfigure" class="xref">Figure 2</a>
+are potentially used, or are actually required or prohibited to be used,
+as well as which other other exchanges may occur within the TLS channel
+or outside of it, depends on the enrollment protocol.<a href="#section-4.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-4">Note:
+The mentioned <span class="bcp14">OPTIONAL</span> exchanges cover all those supported by the use of EST
+in BRSKI. The last <span class="bcp14">OPTIONAL</span> one, namely certificate confirmation,
+is not supported by EST, but by CMP and other enrollment protocols.<a href="#section-4.2.3-4" class="pilcrow">¶</a></p>
 <span id="name-certificate-enrollment"></span><div id="enrollfigure">
 <figure id="figure-2">
-            <div id="section-4.2.3-4.1">
-              <div class="alignLeft art-svg artwork" id="section-4.2.3-4.1.1">
+            <div id="section-4.2.3-5.1">
+              <div class="alignLeft art-svg artwork" id="section-4.2.3-5.1.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="576" width="560" viewBox="0 0 560 576" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px">
                   <path d="M 8,32 L 8,96" fill="none" stroke="black"></path>
                   <path d="M 16,128 L 16,560" fill="none" stroke="black"></path>
@@ -2437,9 +2445,9 @@ not only proof of possession but also proof of identity (source authentication).
                     <text x="144" y="340">Attribute</text>
                     <text x="220" y="340">Response</text>
                     <text x="268" y="340">(4</text>
-                    <text x="76" y="372">[MANDATORY</text>
-                    <text x="168" y="372">certificate</text>
-                    <text x="252" y="372">request]</text>
+                    <text x="84" y="372">[RECOMMENDED</text>
+                    <text x="184" y="372">certificate</text>
+                    <text x="268" y="372">request]</text>
                     <text x="152" y="388">Certificate</text>
                     <text x="232" y="388">Request</text>
                     <text x="276" y="388">(5</text>
@@ -2468,92 +2476,92 @@ not only proof of possession but also proof of identity (source authentication).
                     <text x="248" y="564">Confirm</text>
                     <text x="292" y="564">(8</text>
                   </g>
-                </svg><a href="#section-4.2.3-4.1.1" class="pilcrow">¶</a>
+                </svg><a href="#section-4.2.3-5.1.1" class="pilcrow">¶</a>
 </div>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-certificate-enrollment" class="selfRef">Certificate Enrollment</a>
             </figcaption></figure>
 </div>
-<p id="section-4.2.3-5">The various connections between the registrar and the PKI components
-of the operator (RA/CA) may be intermittent or off-line.
-Messages are to be sent as soon as sufficient transfer capacity is available.<a href="#section-4.2.3-5" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-6">The label <code>[OPTIONAL forwarding]</code> means that on receiving from a pledge a
+<p id="section-4.2.3-6">The various connections between the registrar and the PKI components
+of the operator (RA, CA, etc.) may be intermittent or off-line.
+Messages are to be sent as soon as sufficient transfer capacity is available.<a href="#section-4.2.3-6" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-7">The label <code>[OPTIONAL forwarding]</code> means that on receiving from a pledge a
 request of the given type, the registrar <span class="bcp14">MAY</span> answer the request directly itself.
 Otherwise the registrar <span class="bcp14">MUST</span> forward the request to a backend PKI component
-and forward any resulting response back to the pledge.<a href="#section-4.2.3-6" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-7">Notes:
+and forward any resulting response back to the pledge.<a href="#section-4.2.3-7" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-8">Notes:
 The decision whether to forward a request or to answer it directly can depend
 on various static and dynamic factors. They include the application scenario,
 the capabilities of the registrar and of the local RA possibly co-located
 with the registrar, the enrollment protocol being used, and the specific
-contents of the request.<a href="#section-4.2.3-7" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-8">There are several options how the registrar could be able to directly answer
+contents of the request.<a href="#section-4.2.3-8" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-9">There are several options how the registrar could be able to directly answer
 requests for CA certificates or for certificate request attributes.
 It could cache responses obtained from the backend PKI and
 later use their contents for responding to requests asking for the same data.
-The contents could also be explicit provisioned at the registrar.<a href="#section-4.2.3-8" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-9">Certificate requests typically need to be handled by the backend PKI,
+The contents could also be explicit provisioned at the registrar.<a href="#section-4.2.3-9" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-10">Certificate requests typically need to be handled by the backend PKI,
 but the registrar can answer them directly with an error response
 in case it determines that such a request should be rejected,
-for instance because is not properly authenticated or not authorized.<a href="#section-4.2.3-9" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-10">Also certificate confirmation messages
+for instance because is not properly authenticated or not authorized.<a href="#section-4.2.3-10" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-11">Also certificate confirmation messages
 will usually be forwarded to the backend PKI,
 but if the registrar knows that they are not needed or wanted there
-it can acknowledge such messages directly.<a href="#section-4.2.3-10" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-11">The following list provides an abstract description of the flow
-depicted in <a href="#enrollfigure" class="xref">Figure 2</a>.<a href="#section-4.2.3-11" class="pilcrow">¶</a></p>
+it can acknowledge such messages directly.<a href="#section-4.2.3-11" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-12">The following list provides an abstract description of the flow
+depicted in <a href="#enrollfigure" class="xref">Figure 2</a>.<a href="#section-4.2.3-12" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.2.3-12.1">CA Certs Request (1): The pledge optionally requests the latest relevant
+<li class="normal" id="section-4.2.3-13.1">CA Certs Request (1): The pledge optionally requests the latest relevant
 CA certificates. This ensures that the pledge has the
 complete set of current CA certificates beyond the
 pinned-domain-cert (which is contained in the voucher
-and may be just the domain registrar certificate).<a href="#section-4.2.3-12.1" class="pilcrow">¶</a>
+and may be just the domain registrar certificate).<a href="#section-4.2.3-13.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.2.3-12.2">CA Certs Response (2): This <span class="bcp14">MUST</span> contain the current root CA certificate,
+            <li class="normal" id="section-4.2.3-13.2">CA Certs Response (2): This <span class="bcp14">MUST</span> contain the current root CA certificate,
 which typically is the LDevID trust anchor, and any additional certificates
-that the pledge may need to validate certificates.<a href="#section-4.2.3-12.2" class="pilcrow">¶</a>
+that the pledge may need to validate certificates.<a href="#section-4.2.3-13.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.2.3-12.3">
-              <p id="section-4.2.3-12.3.1">Attribute Request (3): Typically, the automated bootstrapping occurs
+            <li class="normal" id="section-4.2.3-13.3">
+              <p id="section-4.2.3-13.3.1">Attribute Request (3): Typically, the automated bootstrapping occurs
 without local administrative configuration of the pledge.
 Nevertheless, there are cases in which the pledge may also
 include additional attributes specific to the target domain
 into the certification request. To get these attributes in
-advance, the attribute request can be used.<a href="#section-4.2.3-12.3.1" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-12.3.2">
+advance, the attribute request can be used.<a href="#section-4.2.3-13.3.1" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-13.3.2">
 For example, <span>[<a href="#RFC8994" class="xref">RFC8994</a>], <a href="https://rfc-editor.org/rfc/rfc8994#section-6.11.7.2" class="relref">Section 6.11.7.2</a></span> specifies
 how the attribute request is used to signal to the pledge
-the acp-node-name field required for enrollment into an ACP domain.<a href="#section-4.2.3-12.3.2" class="pilcrow">¶</a></p>
+the acp-node-name field required for enrollment into an ACP domain.<a href="#section-4.2.3-13.3.2" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.2.3-12.4">Attribute Response (4): This <span class="bcp14">MUST</span> contain the attributes to be included
-in the subsequent certification request.<a href="#section-4.2.3-12.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-13.4">Attribute Response (4): This <span class="bcp14">MUST</span> contain the attributes to be included
+in the subsequent certification request.<a href="#section-4.2.3-13.4" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.2.3-12.5">Certificate Request (5): This <span class="bcp14">MUST</span> contain the
+            <li class="normal" id="section-4.2.3-13.5">Certificate Request (5): This <span class="bcp14">MUST</span> contain the
 authenticated self-contained object ensuring both proof of possession of the
-corresponding private key and proof of identity of the requester.<a href="#section-4.2.3-12.5" class="pilcrow">¶</a>
+corresponding private key and proof of identity of the requester.<a href="#section-4.2.3-13.5" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.2.3-12.6">Certificate Response (6): This <span class="bcp14">MUST</span> contain on success
+            <li class="normal" id="section-4.2.3-13.6">Certificate Response (6): This <span class="bcp14">MUST</span> contain on success
 the requested certificate and <span class="bcp14">MAY</span> include further information,
-like certificates of intermediate CAs.<a href="#section-4.2.3-12.6" class="pilcrow">¶</a>
+like certificates of intermediate CAs.<a href="#section-4.2.3-13.6" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.2.3-12.7">Certificate Confirm (7): An optional confirmation sent
+            <li class="normal" id="section-4.2.3-13.7">Certificate Confirm (7): An optional confirmation sent
 after the requested certificate has been received and validated.
 It contains a positive or negative confirmation by the pledge to the PKI
-whether the certificate was successfully enrolled and fits its needs.<a href="#section-4.2.3-12.7" class="pilcrow">¶</a>
+whether the certificate was successfully enrolled and fits its needs.<a href="#section-4.2.3-13.7" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.2.3-12.8">PKI/Registrar Confirm (8): An acknowledgment by the PKI
-that <span class="bcp14">MUST</span> be sent on reception of the Cert Confirm.<a href="#section-4.2.3-12.8" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.2.3-13.8">PKI/Registrar Confirm (8): An acknowledgment by the PKI
+that <span class="bcp14">MUST</span> be sent on reception of the Cert Confirm.<a href="#section-4.2.3-13.8" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-4.2.3-13">The generic messages described above may be implemented using any certificate
+<p id="section-4.2.3-14">The generic messages described above may be implemented using any certificate
 enrollment protocol that supports authenticated self-contained objects for the
-certificate request as described in <a href="#req-sol" class="xref">Section 3</a> and tunneling over TLS.
-Examples are available in <a href="#exist_prot" class="xref">Section 5</a>.<a href="#section-4.2.3-13" class="pilcrow">¶</a></p>
-<p id="section-4.2.3-14">Note that the optional certificate confirmation by the pledge to the PKI
+certificate request as described in <a href="#req-sol" class="xref">Section 3</a>.
+Examples are available in <a href="#exist_prot" class="xref">Section 5</a>.<a href="#section-4.2.3-14" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-15">Note that the optional certificate confirmation by the pledge to the PKI
 described above is independent of the mandatory enrollment status telemetry
 done between the pledge and the registrar in the final phase of BRSKI-AE,
-described next.<a href="#section-4.2.3-14" class="pilcrow">¶</a></p>
+described next.<a href="#section-4.2.3-15" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="pledge-registrar-enrollment-status-telemetry">
@@ -2669,7 +2677,7 @@ the subset of CMP defined there is sufficient for the functionality needed here.
 <ul class="normal">
 <li class="normal" id="section-5.1-3.1.2.1">Requesting CA certificates over CMP is <span class="bcp14">OPTIONAL</span>.<br>
 If supported, it <span class="bcp14">SHALL</span> be implemented as specified in
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-4.3.1" class="relref">Section 4.3.1</a></span>.<a href="#section-5.1-3.1.2.1" class="pilcrow">¶</a>
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-4.3.1" class="relref">Section 4.3.1</a></span>.<a href="#section-5.1-3.1.2.1" class="pilcrow">¶</a>
 </li>
             </ul>
 </li>
@@ -2678,10 +2686,10 @@ If supported, it <span class="bcp14">SHALL</span> be implemented as specified in
 <ul class="normal">
 <li class="normal" id="section-5.1-3.2.2.1">Requesting certificate request attributes over CMP is <span class="bcp14">OPTIONAL</span>.<br>
 If supported, it <span class="bcp14">SHALL</span> be implemented as specified in
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-4.3.3" class="relref">Section 4.3.3</a></span>.<br>
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-4.3.3" class="relref">Section 4.3.3</a></span>.<br>
 Note that alternatively the registrar <span class="bcp14">MAY</span> modify
 the contents of requested certificate contents
-as specified in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-5.2.3.2" class="relref">Section 5.2.3.2</a></span>.<a href="#section-5.1-3.2.2.1" class="pilcrow">¶</a>
+as specified in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-5.2.3.2" class="relref">Section 5.2.3.2</a></span>.<a href="#section-5.1-3.2.2.1" class="pilcrow">¶</a>
 </li>
             </ul>
 </li>
@@ -2690,15 +2698,15 @@ as specified in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="
 <ul class="normal">
 <li class="normal" id="section-5.1-3.3.2.1">Proof of possession <span class="bcp14">SHALL</span> be provided as defined in
 the Lightweight CMP Profile
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-4.1.1" class="relref">Section 4.1.1</a></span> (based on CRMF) or
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-4.1.4" class="relref">Section 4.1.4</a></span> (based on PKCS#10).
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-4.1.1" class="relref">Section 4.1.1</a></span> (based on CRMF) or
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-4.1.4" class="relref">Section 4.1.4</a></span> (based on PKCS#10).
 <br>
 In certificate response messages the <code>caPubs</code> field, which generally in CMP
 may convey CA certificates to the requester, <span class="bcp14">SHOULD NOT</span> be used.<a href="#section-5.1-3.3.2.1" class="pilcrow">¶</a>
 </li>
               <li class="normal" id="section-5.1-3.3.2.2">Proof of identity <span class="bcp14">SHALL</span> be provided by using signature-based
 protection of the certification request message
-as outlined in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-3.2" class="relref">Section 3.2</a></span>
+as outlined in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-3.2" class="relref">Section 3.2</a></span>
 using the IDevID secret.<a href="#section-5.1-3.3.2.2" class="pilcrow">¶</a>
 </li>
             </ul>
@@ -2708,7 +2716,7 @@ using the IDevID secret.<a href="#section-5.1-3.3.2.2" class="pilcrow">¶</a>
 <ul class="normal">
 <li class="normal" id="section-5.1-3.4.2.1">Explicit confirmation of new certificates to the RA/CA
 <span class="bcp14">MAY</span> be used as specified in the Lightweight CMP Profile
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-4.1.1" class="relref">Section 4.1.1</a></span>.<br>
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-4.1.1" class="relref">Section 4.1.1</a></span>.<br>
 Note that independently of certificate confirmation within CMP,
 enrollment status telemetry with the registrar will be performed
 as described in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-5.9.4" class="relref">Section 5.9.4</a></span>.<a href="#section-5.1-3.4.2.1" class="pilcrow">¶</a>
@@ -2718,8 +2726,8 @@ as described in BRSKI <span>[<a href="#RFC8995" class="xref">RFC8995</a>], <a hr
           <li class="normal" id="section-5.1-3.5">If delayed delivery of responses
 (for instance, to support asynchronous enrollment) within CMP is needed,
 it <span class="bcp14">SHALL</span> be performed as specified in the Lightweight CMP Profile
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-4.4" class="relref">Section 4.4</a></span> and
-<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-14#section-5.1.2" class="relref">Section 5.1.2</a></span>.<a href="#section-5.1-3.5" class="pilcrow">¶</a>
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-4.4" class="relref">Section 4.4</a></span> and
+<span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-17#section-5.1.2" class="relref">Section 5.1.2</a></span>.<a href="#section-5.1-3.5" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-5.1-3.6">Due to the use of self-contained signed request messages providing
 end-to-end security and the general independence of CMP of message transfer,
@@ -2807,7 +2815,7 @@ for their input and discussion on use cases and call flows.<a href="#section-8-2
 <dd class="break"></dd>
 <dt id="I-D.ietf-lamps-lightweight-cmp-profile">[I-D.ietf-lamps-lightweight-cmp-profile]</dt>
         <dd>
-<span class="refAuthor">Brockhaus, H.</span>, <span class="refAuthor">von Oheimb, D.</span>, and <span class="refAuthor">S. Fries</span>, <span class="refTitle">"Lightweight Certificate Management Protocol (CMP) Profile"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-lightweight-cmp-profile-14</span>, <time datetime="2022-10-05" class="refDate">5 October 2022</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-14.txt">https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-14.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Brockhaus, H.</span>, <span class="refAuthor">von Oheimb, D.</span>, and <span class="refAuthor">S. Fries</span>, <span class="refTitle">"Lightweight Certificate Management Protocol (CMP) Profile"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-lightweight-cmp-profile-17</span>, <time datetime="2022-12-01" class="refDate">1 December 2022</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-17.txt">https://www.ietf.org/archive/id/draft-ietf-lamps-lightweight-cmp-profile-17.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IEEE.802.1AR-2018">[IEEE.802.1AR-2018]</dt>
         <dd>
