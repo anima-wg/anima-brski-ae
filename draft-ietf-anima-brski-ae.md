@@ -856,6 +856,7 @@ is not supported by EST, but by CMP and other enrollment protocols.
 commit 18557f2540d5c273a6773f08344b638d151b45d6
 Author: Thomas Werner <thomas-werner@siemens.com>
 Date:   Tue Jul 6 09:51:30 2021 +0200
+DvO: Hab diese komischen Pfeile/Haken nun rausgenommen.
 -->
 ~~~~ aasvg
 +--------+                        +------------+       +------------+
@@ -863,14 +864,14 @@ Date:   Tue Jul 6 09:51:30 2021 +0200
 |        |                        | Registrar  |       | RA/CA      |
 |        |                        |  (JRC)     |       | (PKI)      |
 +--------+                        +------------+       +------------+
- /-->                                      |                       |
+ |                                         |                       |
  |  [OPTIONAL request of CA certificates]  |                       |
  |---------- CA Certs Request (1)--------->|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |---CA Certs Request -->|
  |                                         |<--CA Certs Response---|
  |<--------- CA Certs Response (2)---------|                       |
- |-->                                      |                       |
+ |                                         |                       |
  |  [OPTIONAL request of attributes        |                       |
  |   to include in Certificate Request]    |                       |
  |---------- Attribute Request (3)-------->|                       |
@@ -878,14 +879,14 @@ Date:   Tue Jul 6 09:51:30 2021 +0200
  |                                         |--- Attribute Req. --->|
  |                                         |<-- Attribute Resp. ---|
  |<--------- Attribute Response (4)--------|                       |
- |-->                                      |                       |
+ |                                         |                       |
  |  [RECOMMENDED certificate request]      |                       |
  |---------- Certificate Request (5)------>|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |--- Certificate Req.-->|
  |                                         |<--Certificate Resp.---|
  |<--------- Certificate Response (6)------|                       |
- |-->                                      |                       |
+ |                                         |                       |
  |  [OPTIONAL certificate confirmation]    |                       |
  |---------- Certificate Confirm (7)------>|                       |
  |                                         | [OPTIONAL forwarding] |
