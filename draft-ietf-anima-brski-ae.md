@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-03
+docname: draft-ietf-anima-brski-ae-04
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -342,13 +342,12 @@ using enrollment protocols alternatively to EST that
 * make it applicable to scenarios involving asynchronous enrollment.
 
 This is achieved by
-
-* extending the well-known URI approach of BRSKI and EST message
-  with an additional path element
-  indicating the enrollment protocol being used, and
-
+extending the well-known URI approach of BRSKI and EST message
+with an additional path element indicating the enrollment protocol being used.
+<!--- not really: and
 * defining a certificate waiting indication and handling, for the case that the
   certifying component is (temporarily) not available.
+-->
 
 This specification can be applied to
 both synchronous and asynchronous enrollment.
