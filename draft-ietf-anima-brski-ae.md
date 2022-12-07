@@ -225,6 +225,7 @@ This type of enrollment can be called 'synchronous enrollment'.
 <!--
 [stf] Den naechsten Absatz wuerde ich weglassen. Der Hauptpunkt wird darunter angesprochen (offline) und Transport Independence habe ich in Paragraph 3 mit aufgenommen. Daneben betreffen BRSKI-EST und BRSKI-MASA zwei verschiedenen Ecken der Architektur und sind auch unterschiedliche betroffen (BRSKI-MASA nicht wirklich)
 [DvO] Ich finde den Absatz schon sinnvoll, denn wenn ich ihn richtig verstehe, geht es darum, dass TLS zu schwergewichtig sein kann für constrained systems.
+[stf] Ich haette ihn rausgenommen, da wir weder constriant voucher noch RFC 9158 nutzen bzw. darauf eingehen.
 -->
 EST, BRSKI-EST, and BRSKI-MASA as used in RFC 8995 are tied to a specific
 transport, TLS, which may not be suitable for the target use case outlined
@@ -269,6 +270,7 @@ before they can be forwarded.
 <!---
 [stf] Den naechsten Absatz wuerde ich weglassen. Ich glaube es verwirrt hier BRSKI-EST und BRSKI-MASA zu nennen, da es sich auf zwei verschiedenen Ecken im Architekturbild bezieht.
 [DvO] Das Ganze kam von Toerless. Ich würde einfach BRSKI-MASA weglassen.
+[stf] "between the parties involved" beinhaltet auch den Registrar. Ich finde auch nicht, das der Satz nicht wirklich hilft, zumal es weiter unten auch umfassender erklaert wird. 
 -->
 This implies that end-to-end security between the parties involved
 can not be provided by an authenticated (and often confidential)
@@ -372,6 +374,7 @@ on-site PKI services and comprises application scenarios like the following.
 <!---
 [stf] Den naechsten Punkt wuerde ich weglassen der Dritte ist eigentlich der wichtige.
 [DvO] Ja, der Punkt mit brownfield installations ist vermutlich wichtiger. Daher hab ich ihn einfach an die erste Stelle gezogen. Aber den nächsten Punkt würde ich nicht einfach weglassen.
+[stf] Gibt es dafuer eine Begruendung ihn drin zu lassen? Hintergrund der Frage ist, da es so klingt als ob CMP sich besser implementieren laesst als EST. So ein Statement wuerde ich hier nicht aufnehmen. Fuer micht ist da der jetzt erste Punkt der Wichtige.  
 -->
 * Scenarios having implementation restrictions
   that speak against using EST for certificate enrollment,
@@ -583,7 +586,10 @@ based on existing technology described in IETF documents:
     authentication and the pledge utilizes its IDevID for it,
     the proof of identity is provided by such a binding to the TLS session.
     This can be supported using the EST /simpleenroll endpoint.
-<!--- [DVO] Steffen, den folgenden Satz, den du einfach ohne Kommentar rausgenommen hast, hab ich wieder reingenommen. -->
+<!--- 
+[DVO] Steffen, den folgenden Satz, den du einfach ohne Kommentar rausgenommen hast, hab ich wieder reingenommen. 
+[stf] Hatte ueberlegt ob es hier reinpasst. BRSKI hatte es mal gefrdert, aber im RFC 8995 steht das nicht mehr drin. Hatte nochmal gecheckt ...  
+-->
     Note that the binding of the TLS handshake to the CSR is optional in EST.
 
     {{RFC7030, Section 2.5}} sketches wrapping the CSR with a Full PKI Request
@@ -719,6 +725,11 @@ of the pledge shown in {{uc1figure}}.
      is generalized (see {{addressing}}).<!---
 [stf] Inwieweit ist das eine Einschraenkung? Wir schreiben an der Stelle schon das Enrollment fuer das Backend vor. Waere es nicht besser zu usagen der self-contained CSR must be transported to the backend PKI components? Wenn wir den Turnschuhbetrieb nach vorn raus haben, wollen wir den doch nicht im Backend?
 [DvO] Der Transport darf natürlich auf den verschiedenen Hops durchaus anders sein. Aber verschiedene Enrollment-Protokolle wäre doch abenteuerlich. Ich wüsste auch keines, das einen self-contained CSR eines anderen Enrollment-Protokolls weiterschicken kann.
+[stf] Vorschlag:
+    To support the end-to-end proof of identity of the pledge across the domain registrar,
+     the certification request structure signed by the pledge
+     MUST be retained by the registrar for its upstream certificate enrollment
+     message exchange with backend PKI components.
 -->
      To support the end-to-end proof of identity of the pledge,
      the enrollment protocol used by the pledge
@@ -732,6 +743,7 @@ of the pledge shown in {{uc1figure}}.
 <!---
 [stf] Der letzte Satz ist eigentlich nicht konsistent, da wir ja auch von asynchron ausgehen und damit der TLS Kanal nicht mehr existiert, daher vielleicht besser "... on an exisiting TLS channel"
 [DvO] Das sehe ich anders. Zwischen Pledige und Registrar bleibt es derselbe synchrone TLS-Kanal (auch wenn er vieleicht re-keyed wird oder so). Nur in Richtung Backend kann der Transport asynchron sein.
+[stf] okay, hast Du recht, da war ich mit meinen Gedanken glaube ich bei PRM ;-)
 -->
 
   2. The registrar MAY also delegate all or part of its certificate enrollment
@@ -803,7 +815,10 @@ showing commonalities and differences to the original approach as follows.
 
 The behavior of a pledge described in BRSKI {{RFC8995, Section 2.1}}
 is kept with one exception.
-<!-- [DvO], Steffen, in Figure 2: "Pledge State Diagram" von BRSKI heißt das nicht "Trust Establishment", sondern "Imprint", daher hab ich es wieder zurück geändert. -->
+<!-- 
+[DvO], Steffen, in Figure 2: "Pledge State Diagram" von BRSKI heißt das nicht "Trust Establishment", sondern "Imprint", daher hab ich es wieder zurück geändert. 
+[stf] Hm, Du hast recht, aber das hilft bei der Terminology leider nicht. Aber gut, es passt mit RFC 8995 zusammen 
+-->
 After finishing the Imprint step (4), the Enroll step (5) MUST be performed
 with an enrollment protocol utilizing authenticated self-contained objects.
 <!-- Note that EST with simple-enroll cannot be applied here because
@@ -857,6 +872,7 @@ commit 18557f2540d5c273a6773f08344b638d151b45d6
 Author: Thomas Werner <thomas-werner@siemens.com>
 Date:   Tue Jul 6 09:51:30 2021 +0200
 DvO: Hab diese komischen Pfeile/Haken nun rausgenommen.
+[stf] danke, viel besser
 -->
 ~~~~ aasvg
 +--------+                        +------------+       +------------+
@@ -1223,6 +1239,7 @@ Moreover, we thank Michael Richardson and Rajeev Ranjan for their reviews.
 <!---
 [stf] Brauchen wir die folgende Section? Das ist doch eigentlich schon Teil von RFC 8995.
 [DvO] Das sind die aus dem Haupttext ausgelagerten Kommentare zu den Nachteilen der Nutzung von EST.
+[stf] Aus technischer Sicht brauchen wir es aus meiner Sicht nicht, da ja im Hauptteil schon motiviert wird, wofuer man self-containment benoetigt. Im Annex nochmal die Erklaerung nachzuschieben ist aus meiner Sicht nicht notwendig. Wir haben ja auch die application examples  
 -->
 
 # Using EST for Certificate Enrollment {#using-est}
