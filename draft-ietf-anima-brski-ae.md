@@ -226,13 +226,13 @@ This type of enrollment can be called 'synchronous enrollment'.
 [stf] Den naechsten Absatz wuerde ich weglassen. Der Hauptpunkt wird darunter angesprochen (offline) und Transport Independence habe ich in Paragraph 3 mit aufgenommen. Daneben betreffen BRSKI-EST und BRSKI-MASA zwei verschiedenen Ecken der Architektur und sind auch unterschiedliche betroffen (BRSKI-MASA nicht wirklich)
 [DvO] Ich finde den Absatz schon sinnvoll, denn wenn ich ihn richtig verstehe, geht es darum, dass TLS zu schwergewichtig sein kann für constrained systems.
 [stf] Ich haette ihn rausgenommen, da wir weder constriant voucher noch RFC 9158 nutzen bzw. darauf eingehen.
--->
+
 EST, BRSKI-EST, and BRSKI-MASA as used in RFC 8995 are tied to a specific
 transport, TLS, which may not be suitable for the target use case outlined
 by the examples in {{list-examples}}. Therefore deployments may require
 different transport, see Constrained Voucher Artifacts for Bootstrapping
 Protocols {{I-D.ietf-anima-constrained-voucher}} and EST-coaps {{RFC9148}}.
-
+-->
 Since EST does not support offline enrollment, it may be preferable
 for the reasons given in this section and depending on
 application scenarios as outlined in {{list-examples}} and {{app-examples}}
@@ -271,10 +271,11 @@ before they can be forwarded.
 [stf] Den naechsten Absatz wuerde ich weglassen. Ich glaube es verwirrt hier BRSKI-EST und BRSKI-MASA zu nennen, da es sich auf zwei verschiedenen Ecken im Architekturbild bezieht.
 [DvO] Das Ganze kam von Toerless. Ich würde einfach BRSKI-MASA weglassen.
 [stf] "between the parties involved" beinhaltet auch den Registrar. Ich finde auch nicht, das der Satz nicht wirklich hilft, zumal es weiter unten auch umfassender erklaert wird. 
--->
+
 This implies that end-to-end security between the parties involved
 can not be provided by an authenticated (and often confidential)
 communications channel such as TLS used in EST/BRSKI-EST/BRSKI-MASA.
+-->
 
 Application scenarios may also involve network segmentation, which is utilized
 in industrial systems to separate domains with different security needs --
@@ -375,10 +376,11 @@ on-site PKI services and comprises application scenarios like the following.
 [stf] Den naechsten Punkt wuerde ich weglassen der Dritte ist eigentlich der wichtige.
 [DvO] Ja, der Punkt mit brownfield installations ist vermutlich wichtiger. Daher hab ich ihn einfach an die erste Stelle gezogen. Aber den nächsten Punkt würde ich nicht einfach weglassen.
 [stf] Gibt es dafuer eine Begruendung ihn drin zu lassen? Hintergrund der Frage ist, da es so klingt als ob CMP sich besser implementieren laesst als EST. So ein Statement wuerde ich hier nicht aufnehmen. Fuer micht ist da der jetzt erste Punkt der Wichtige.  
--->
+
 * Scenarios having implementation restrictions
   that speak against using EST for certificate enrollment,
   such as the use of a library that does not support EST but CMP.
+-->
 
 * No RA being available on site in the target domain.
   Connectivity to an off-site PKI RA is intermittent or entirely offline.
@@ -586,10 +588,6 @@ based on existing technology described in IETF documents:
     authentication and the pledge utilizes its IDevID for it,
     the proof of identity is provided by such a binding to the TLS session.
     This can be supported using the EST /simpleenroll endpoint.
-<!--- 
-[DVO] Steffen, den folgenden Satz, den du einfach ohne Kommentar rausgenommen hast, hab ich wieder reingenommen. 
-[stf] Hatte ueberlegt ob es hier reinpasst. BRSKI hatte es mal gefrdert, aber im RFC 8995 steht das nicht mehr drin. Hatte nochmal gecheckt ...  
--->
     Note that the binding of the TLS handshake to the CSR is optional in EST.
 
     {{RFC7030, Section 2.5}} sketches wrapping the CSR with a Full PKI Request
@@ -731,9 +729,9 @@ of the pledge shown in {{uc1figure}}.
      MUST be retained by the registrar for its upstream certificate enrollment
      message exchange with backend PKI components.
 -->
-     To support the end-to-end proof of identity of the pledge,
+     Note: To support the end-to-end proof of identity of the pledge,
      the enrollment protocol used by the pledge
-     MUST also be used by the registrar for its upstream certificate enrollment
+     must also be used by the registrar for its upstream certificate enrollment
      message exchange with backend PKI components.
      Between the pledge and the registrar the enrollment messages are typically
      tunneled over the TLS channel already established between these entities.
@@ -1240,7 +1238,8 @@ Moreover, we thank Michael Richardson and Rajeev Ranjan for their reviews.
 [stf] Brauchen wir die folgende Section? Das ist doch eigentlich schon Teil von RFC 8995.
 [DvO] Das sind die aus dem Haupttext ausgelagerten Kommentare zu den Nachteilen der Nutzung von EST.
 [stf] Aus technischer Sicht brauchen wir es aus meiner Sicht nicht, da ja im Hauptteil schon motiviert wird, wofuer man self-containment benoetigt. Im Annex nochmal die Erklaerung nachzuschieben ist aus meiner Sicht nicht notwendig. Wir haben ja auch die application examples  
--->
+
+check if contained in motivation:
 
 # Using EST for Certificate Enrollment {#using-est}
 
@@ -1303,6 +1302,7 @@ the only possible proof-of-possession method is a self-signature, which
 excludes requesting certificates for key types that do not support signing.
 CMP, for instance, has special proof-of-possession options for key agreement
 and KEM keys, see {{RFC4210, Section 5.2.8}}.
+-->
 
 # Application Examples {#app-examples}
 
