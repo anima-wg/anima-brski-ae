@@ -328,6 +328,7 @@ along with requester authentication information:
 [DvO] Ich hab den folgenden neuen Satz wieder auskommentiert, weil wir m.E. nich ausschließen sollten, dass zumindest ein Teil der cert enrollment Nachrichten am Registrar vorbei laufen:
   Note also that in case of BRSKI the domain registrar is responsible for its
   domain and is still involved in the pledge enrollment.
+[stf] wuerde 
 -->
 
 Focus of this document is the support of alternative enrollment protocols that
@@ -381,7 +382,7 @@ on-site PKI services and comprises application scenarios like the following.
   such as:
   - the requirement for end-to-end authentication of the requester
   while the RA is not co-located with the registrar, or
-  - the requirement that the proof of origin of CSRs shall be auditable, which
+  - the requirement that the proof of origin of CSRs shall be auditable at the receiving end, which
   is not possible with the transient source authentication provided via (D)TLS.
   - Requesting certificates for types of keys that do not support signing,
   such as key agreement and KEM keys, is not supported by EST, because
@@ -617,7 +618,7 @@ based on existing technology described in IETF documents:
     established with the registrar acting as the EST server and typically also
     as an RA.  So even such a cryptographic binding of the authenticated
     pledge identity to the CSR is not visible nor verifiable to
-    authorization points outside the registrar, such as a PKI RA in the backend.
+    authorization points outside the registrar, such as a PKI RA in the backend. Instead, the PKI RA in the backend can be made aware, that the registrar has done the authorization of the pledge h, by using a certificate with the extension "id-kp-cmcRA", when the registrar authenticates towards the PKI RA.
 
     {{RFC7030, Section 2.5}} sketches wrapping PKCS#10-formatted CSRs
     with a Full PKI Request message sent to the `"/fullcmc"` endpoint.
@@ -968,7 +969,7 @@ Notes:
 
 The decision whether to forward a request or to answer it directly can depend
 on various static and dynamic factors. They include the application scenario,
-the capabilities of the registrar an of the local RA possibly co-located
+the capabilities of the registrar and of the local RA possibly co-located
 with the registrar, the enrollment protocol being used, and the specific
 contents of the request.
 
