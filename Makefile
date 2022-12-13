@@ -62,7 +62,7 @@ commit: generate
 	git commit ${DRAFT}{.{xml,txt,html,pdf},-${VERSION}.txt} \
 	   -m "CI - ietf-draft-files (xml, txt, html, pdf) updated" \
 	   || echo "No changes to commit"
-	git push origin
+	# git push origin
 
 FILES=${DRAFT}{.{md,xml,txt,html,pdf},-${VERSION}.txt}
 upload: default
