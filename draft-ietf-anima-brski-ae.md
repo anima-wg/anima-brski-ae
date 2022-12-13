@@ -618,7 +618,11 @@ based on existing technology described in IETF documents:
     established with the registrar acting as the EST server and typically also
     as an RA.  So even such a cryptographic binding of the authenticated
     pledge identity to the CSR is not visible nor verifiable to
-    authorization points outside the registrar, such as a PKI RA in the backend. Instead, the PKI RA in the backend can be made aware, that the registrar has done the authorization of the pledge, by using a certificate with the extension "id-kp-cmcRA", when the registrar authenticates towards the PKI RA.
+    authorization points outside the registrar, such as a PKI RA in the backend.
+    What the registrar can do is to authenticate and pre-authorize the pledge
+    and to indicate this to the PKI RA
+    by signing the forwarded certificate request with its private key and
+    a related certificate that has the id-kp-cmcRA extended key usage attribute.
 
     {{RFC7030, Section 2.5}} sketches wrapping PKCS#10-formatted CSRs
     with a Full PKI Request message sent to the `"/fullcmc"` endpoint.
