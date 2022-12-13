@@ -5,8 +5,8 @@
 ANIMA WG                                              D. von Oheimb, Ed.
 Internet-Draft                                                  S. Fries
 Intended status: Standards Track                            H. Brockhaus
-Expires: 12 June 2023                                            Siemens
-                                                         9 December 2022
+Expires: 16 June 2023                                            Siemens
+                                                        13 December 2022
 
 
           BRSKI-AE: Alternative Enrollment Protocols in BRSKI
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 June 2023.
+   This Internet-Draft will expire on 16 June 2023.
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 1]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 1]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 2]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 2]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 3]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 3]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 4]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 4]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 5]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 5]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 6]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 6]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -361,8 +361,8 @@ Internet-Draft                  BRSKI-AE                   December 2022
          while the RA is not co-located with the registrar, or
 
       -  the requirement that the proof of origin of CSRs shall be
-         auditable, which is not possible with the transient source
-         authentication provided via (D)TLS.
+         auditable at the receiving end, which is not possible with the
+         transient source authentication provided via (D)TLS.
 
       -  Requesting certificates for types of keys that do not support
          signing, such as key agreement and KEM keys, is not supported
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 7]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 7]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 8]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 8]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                  [Page 9]
+von Oheimb, et al.        Expires 16 June 2023                  [Page 9]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 10]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 10]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 11]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 11]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -631,7 +631,11 @@ Internet-Draft                  BRSKI-AE                   December 2022
       and typically also as an RA.  So even such a cryptographic binding
       of the authenticated pledge identity to the CSR is not visible nor
       verifiable to authorization points outside the registrar, such as
-      a PKI RA in the backend.
+      a PKI RA in the backend.  What the registrar can do is to
+      authenticate and pre-authorize the pledge and to indicate this to
+      the PKI RA by signing the forwarded certificate request with its
+      private key and a related certificate that has the id-kp-cmcRA
+      extended key usage attribute.
 
       [RFC7030], Section 2.5 sketches wrapping PKCS#10-formatted CSRs
       with a Full PKI Request message sent to the "/fullcmc" endpoint.
@@ -665,11 +669,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-
-
-
-
-von Oheimb, et al.        Expires 12 June 2023                 [Page 12]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 12]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -725,7 +725,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 13]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 13]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 14]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 14]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 15]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 15]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 16]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 16]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 17]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 17]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 18]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 18]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1061,14 +1061,14 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 19]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 19]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
 
    The decision whether to forward a request or to answer it directly
    can depend on various static and dynamic factors.  They include the
-   application scenario, the capabilities of the registrar an of the
+   application scenario, the capabilities of the registrar and of the
    local RA possibly co-located with the registrar, the enrollment
    protocol being used, and the specific contents of the request.
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 20]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 20]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 21]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 21]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 22]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 22]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 23]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 23]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 24]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 24]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 25]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 25]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 26]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 26]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 27]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 27]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 28]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 28]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1621,7 +1621,7 @@ A.2.  Building Automation
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 29]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 29]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1677,7 +1677,7 @@ A.5.  Infrastructure Isolation Policy
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 30]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 30]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1733,7 +1733,7 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 31]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 31]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1789,7 +1789,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 32]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 32]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1845,7 +1845,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 33]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 33]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1901,7 +1901,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 34]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 34]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -1957,7 +1957,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 35]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 35]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -2013,7 +2013,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 36]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 36]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -2069,7 +2069,7 @@ Internet-Draft                  BRSKI-AE                   December 2022
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 37]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 37]
 
 Internet-Draft                  BRSKI-AE                   December 2022
 
@@ -2125,4 +2125,4 @@ Authors' Addresses
 
 
 
-von Oheimb, et al.        Expires 12 June 2023                 [Page 38]
+von Oheimb, et al.        Expires 16 June 2023                 [Page 38]
