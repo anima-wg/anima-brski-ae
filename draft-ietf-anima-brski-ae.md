@@ -52,7 +52,7 @@ author:
   email: hendrik.brockhaus@siemens.com
   uri: https://www.siemens.com/
 contributor:
-  name: Eliot Lear
+- name: Eliot Lear
   org: Cisco Systems
   street: Richtistrasse 7
   city: Wallisellen
@@ -60,6 +60,14 @@ contributor:
   country: Switzerland
   phone: "+41 44 878 9200"
   email: lear@cisco.com
+- name: Rufus J.W. Buschart
+  org: Siemens AG
+  street: Freyeslebenstr. 1
+  city: Erlangen
+  code: 91058
+  country: Germany
+  email: rufus.buschart@siemens.com
+  uri: https://www.siemens.com/
 venue:
   group: anima
   anima mail: {anima@ietf.org}
@@ -803,21 +811,22 @@ The voucher exchange is performed as specified in {{RFC8995}}.
 
 ### Pledge - Registrar - RA/CA Certificate Enrollment
 
-The certificate enrollment phase may involve several exchanges of requests
-and responses.
-Which of the message exchanges marked OPTIONAL in the below {{enrollfigure}}
-are potentially used, or are actually required or prohibited to be used,
-depends on the application scenario and on the employed enrollment protocol.
+The certificate enrollment phase may involve several exchanges of requests and
+responses.
 
-These OPTIONAL exchanges cover all those supported by the use of EST in BRSKI.
-The last OPTIONAL one, namely certificate confirmation,
-is not supported by EST, but by CMP and other enrollment protocols.
+Which of the message exchanges marked OPTIONAL in the below {{enrollfigure}} are
+potentially used, or are actually required or prohibited to be used, depends on
+the application scenario and on the employed enrollment protocol.
 
 The only generally MANDATORY message exchange is for the actual certificate
-request and response.  As stated in {{req-sol}}, the certificate request
-MUST be performed using an authenticated self-contained object providing
-not only proof of possession but also proof of identity (source authentication).
+request and response. As stated in {{req-sol}}, the certificate request MUST be
+performed using an authenticated self-contained object providing not only proof
+of possession but also proof of identity (source authentication).
 
+These OPTIONAL exchanges cover all those supported by the use of EST in BRSKI.
+The OPTIONAL certificate confirmation is not supported by EST but by CMP and
+other enrollment protocols. Also the OPTIONAL validation request is not
+supported by EST but by ACME and other enrollment protocols.
 
 ~~~~ aasvg
 +--------+                        +------------+       +------------+
@@ -841,19 +850,27 @@ not only proof of possession but also proof of identity (source authentication).
  |                                         |<-- Attribute Resp. ---|
  |<--------- Attribute Response (4)--------|                       |
  |-->                                      |                       |
+ |  [OPTIONAL request to validate          |                       |
+ |   proof of ownership of identifiers     |                       |
+ |   to be include in Certificate Request] |                       |
+ |--------------Validation Req (5)-------->|                       |
+ |                                         |---Validation Req.---->|
+ |                                         |<---Validation Resp.---|
+ |<-------------Validation Resp------------|                       |
+ |-->                                      |                       |
  |  [MANDATORY certificate request]        |                       |
- |---------- Certificate Request (5)------>|                       |
+ |---------- Certificate Request (6)------>|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |--- Certificate Req.-->|
  |                                         |<--Certificate Resp.---|
- |<--------- Certificate Response (6)------|                       |
+ |<--------- Certificate Response (7)------|                       |
  |-->                                      |                       |
  |  [OPTIONAL certificate confirmation]    |                       |
- |---------- Certificate Confirm (7)------>|                       |
+ |---------- Certificate Confirm (8)------>|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |---Certificate Conf.-->|
  |                                         |<---- PKI Confirm -----|
- |<--------- PKI/Registrar Confirm (8)-----|                       |
+ |<--------- PKI/Registrar Confirm (9)-----|                       |
 ~~~~
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
@@ -1020,6 +1037,7 @@ and the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
   </cmp/getcertreqtemplate>;ct=pkixcmp
   </cmp/initialization>;ct=pkixcmp
   </cmp/p10>;ct=pkixcmp
+  </acme/directory>,ct=json
 
 ~~~~
 {: artwork-align="left"}
@@ -1099,6 +1117,26 @@ CoAP Transport for CMPV2 {{I-D.ietf-ace-cmpv2-coap-transport}}.
 In this scenario, of course the EST-specific parts
 of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
+## BRSKI-ACME: Instantiation to ACME {#brski-acme-instance}
+
+When using ACME, the directory object according {{RFC855, Section 7.1.1}}
+endpoint MUST be exposed under </acme/directory>,ct=json . The directory object
+can refer either to an ACME endpoint on the domain registrar or on a dedicated
+server.
+
+The ACME endpoint within the domain network can be either
+
+1) a full ACME compliant RA/CA,
+2) can acts as a proxy, relaying unaltered messages between the the ACME server
+   and the pledge, or
+3) it can adopt a more active role and performs the validation of identifiers on
+   behalf of the pledge.
+
+In the case 1 the communication between pledge and ACME CA takes fully place
+with the domain network. In case 2 the pledge needs to be able, depending on the
+chosen challenge, to be reachable from the internet or must be able to control
+the DNS server. In case 3 only the Domain Registrar needs to be reachable from
+the internet or controlling the DNS server.
 
 ## Other Instantiations of BRSKI-AE
 
