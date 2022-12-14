@@ -907,7 +907,7 @@ the actual certificate request and response.
 Further message exchanges MAY be performed as needed.
 
 Note:
-The the message exchanges marked OPTIONAL in the below {{enrollfigure}}
+The message exchanges marked OPTIONAL in the below {{enrollfigure}}
 cover all those supported by the use of EST in BRSKI.
 The last OPTIONAL one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.
