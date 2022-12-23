@@ -78,4 +78,4 @@ upload: default
 	git checkout master
 
 clean:
-	git checkout -- ${DRAFT}.{xml,txt,html,pdf}
+	git checkout -- ${DRAFT}.{xml,txt,html,pdf} ${DRAFT}-${VERSION}.txt
