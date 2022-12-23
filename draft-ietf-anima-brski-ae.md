@@ -895,6 +895,10 @@ The voucher exchange is performed as specified in {{RFC8995}}.
 
 ### Pledge - Registrar - RA/CA Certificate Enrollment
 
+This replaces the EST integration for PKI bootstrapping described in
+{{RFC8995, Section 5.9}}
+(while {{RFC8995, Section 5.9.4}} remains as the final phase, see below).
+
 The certificate enrollment phase may involve transmission of several messages.
 Details can depend on the application scenario,
 the employed enrollment protocol, and other factors.<br>
@@ -1049,7 +1053,8 @@ described next.
 
 ### Pledge - Registrar Enrollment Status Telemetry
 
-The enrollment status telemetry is performed as specified in {{RFC8995}}.
+The enrollment status telemetry is performed as specified in
+{{RFC8995, Section 5.9.4}}.
 
 In BRSKI this is described as part of the certificate enrollment step, but
 due to the generalization on the enrollment protocol described in this document
@@ -1280,7 +1285,8 @@ for his contributions as a co-author at an earlier draft stage.
 We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
 
-Moreover, we thank Michael Richardson and Rajeev Ranjan for their reviews.
+Moreover, we thank Michael Richardson, Rajeev Ranjan, and Rufus Buschart
+for their reviews.
 
 
 --- back
@@ -1480,7 +1486,9 @@ List of reviewers (besides the authors):
 
 * Michael Richardson
 
-* Rajeev Ranjan
+* Rajeev Ranjan, Siemens
+
+* Rufus Buschart, Siemens
 
 * [YANGDOCTORS Early review of 2021-08-15](https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-enroll-03-yangdoctors-early-rahman-2021-08-15/)
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
@@ -1494,6 +1502,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
     to TLS, but in connection with constrained BRSKI may also be DTLS.
     Also move the references to Constrained BRSKI and CoAPS to better contexts.
   - clarify that the cert enrollment phase may involve additional messages
+    and that BRSKI-AE replaces {{RFC8995, Section 5.9}} (except Section 5.9.4)
   - clarify that messages of the cert enrollment phase are RECOMMENDED to be
     transmitted on the existing channel, but may be sent also in other ways.
   - the certificate enrollment protocol needs to support transport over (D)TLS
