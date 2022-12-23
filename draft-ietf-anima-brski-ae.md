@@ -72,8 +72,8 @@ normative:
   I-D.ietf-lamps-lightweight-cmp-profile:
   I-D.ietf-ace-cmpv2-coap-transport:
   I-D.ietf-anima-constrained-voucher:
-  IEEE.802.1AR-2018:
-    title: 'IEEE Standard for Local and metropolitan area networks -
+  IEEE_802.1AR-2018:
+    title: 'IEEE Standard for Local and Metropolitan Area Networks -
     Secure Device Identity'
     author:
     - org: IEEE
@@ -442,7 +442,7 @@ based on the following examples of operational environments:
 {::boilerplate bcp14-tagged}
 
 This document relies on the terminology defined in {{RFC8995}}
-and {{IEEE.802.1AR-2018}}.
+and {{IEEE_802.1AR-2018}}.
 The following terms are defined partly in addition.
 
 asynchronous communication:
