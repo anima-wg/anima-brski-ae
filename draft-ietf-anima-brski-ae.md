@@ -11,7 +11,7 @@ wg: ANIMA WG
 kw: Internet-Draft
 cat: std
 consensus: true
-date: 2022
+date: 2023
 pi:
   toc: 'yes'
   compact: 'yes'
