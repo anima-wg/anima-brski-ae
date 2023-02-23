@@ -949,33 +949,33 @@ DvO: Hab diese komischen Pfeile/Haken nun rausgenommen.
 +--------+                        +------------+       +------------+
  |                                         |                       |
  |  [OPTIONAL request of CA certificates]  |                       |
- |---------- CA Certs Request (1)--------->|                       |
+ |--------- CA Certs Request (1) --------->|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |---CA Certs Request -->|
  |                                         |<--CA Certs Response---|
- |<--------- CA Certs Response (2)---------|                       |
+ |<-------- CA Certs Response (2) ---------|                       |
  |                                         |                       |
  |  [OPTIONAL request of attributes        |                       |
  |   to include in Certificate Request]    |                       |
- |---------- Attribute Request (3)-------->|                       |
+ |--------- Attribute Request (3) -------->|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |--- Attribute Req. --->|
  |                                         |<-- Attribute Resp. ---|
- |<--------- Attribute Response (4)--------|                       |
+ |<-------- Attribute Response (4) --------|                       |
  |                                         |                       |
  |  [RECOMMENDED certificate request]      |                       |
- |---------- Certificate Request (5)------>|                       |
+ |--------- Certificate Request (5) ------>|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |--- Certificate Req.-->|
  |                                         |<--Certificate Resp.---|
- |<--------- Certificate Response (6)------|                       |
+ |<-------- Certificate Response (6) ------|                       |
  |                                         |                       |
  |  [OPTIONAL certificate confirmation]    |                       |
- |---------- Certificate Confirm (7)------>|                       |
+ |--------- Certificate Confirm (7) ------>|                       |
  |                                         | [OPTIONAL forwarding] |
  |                                         |---Certificate Conf.-->|
  |                                         |<---- PKI Confirm -----|
- |<--------- PKI/Registrar Confirm (8)-----|                       |
+ |<-------- PKI/Registrar Confirm (8) -----|                       |
 ~~~~
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
