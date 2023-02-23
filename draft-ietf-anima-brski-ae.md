@@ -331,12 +331,6 @@ along with requester authentication information:
   Note that with this approach the ways in which enrollment requests may be
   forwarded by the registrar to backend PKI components are inessential
   for their security and therefore do not need to be addressed here further.
-<!--
-[DvO] Ich hab den folgenden neuen Satz wieder auskommentiert, weil wir m.E. nich ausschließen sollten, dass zumindest ein Teil der cert enrollment Nachrichten am Registrar vorbei laufen:
-  Note also that in case of BRSKI the domain registrar is responsible for its
-  domain and is still involved in the pledge enrollment.
-[stf] wuerde 
--->
 
 Focus of this document is the support of alternative enrollment protocols that
 allow the second approach, i.e.,
