@@ -270,16 +270,6 @@ along with the information needed for authenticating their origin,
 in front of an unavailable segment for potentially long time (e.g., days)
 before they can be forwarded.
 
-<!---
-[stf] Den naechsten Absatz wuerde ich weglassen. Ich glaube es verwirrt hier BRSKI-EST und BRSKI-MASA zu nennen, da es sich auf zwei verschiedenen Ecken im Architekturbild bezieht.
-[DvO] Das Ganze kam von Toerless. Ich würde einfach BRSKI-MASA weglassen.
-[stf] "between the parties involved" beinhaltet auch den Registrar. Ich finde auch nicht, das der Satz nicht wirklich hilft, zumal es weiter unten auch umfassender erklaert wird.
-
-This implies that end-to-end security between the parties involved
-can not be provided by an authenticated (and often confidential)
-communications channel such as TLS used in EST/BRSKI-EST/BRSKI-MASA.
--->
-
 Note: BRSKI typically uses HTTP over TLS, but also other variants are possible,
 such as
 Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}} using CoAP over DTLS.
@@ -786,11 +776,6 @@ gepackt, wo er noch besser passt.
      The forwarding by the registrar may involve situations where
      the registrar has only intermittent connection and transmits
      requests to off-site PKI components upon re-established connectivity.
-<!---
-[stf] Der letzte Satz ist eigentlich nicht konsistent, da wir ja auch von asynchron ausgehen und damit der TLS Kanal nicht mehr existiert, daher vielleicht besser "... on an exisiting TLS channel"
-[DvO] Das sehe ich anders. Zwischen Pledige und Registrar bleibt es derselbe synchrone (D)TLS-Kanal (auch wenn er vielleicht re-keyed wird oder so). Nur in Richtung Backend kann der Transport asynchron sein.
-[stf] okay, hast Du recht, da war ich mit meinen Gedanken glaube ich bei PRM ;-)
--->
 
      Note: For supporting the end-to-end proof of identity of the pledge across
      the domain registrar to backend PKI components, the enrollment protocol
@@ -875,10 +860,6 @@ showing commonalities and differences to the original approach as follows.
 
 The behavior of a pledge described in BRSKI {{RFC8995, Section 2.1}}
 is kept, with one major exception.
-<!--
-[DvO], Steffen, in Figure 2: "Pledge State Diagram" von BRSKI heißt das nicht "Trust Establishment", sondern "Imprint", daher hab ich es wieder zurück geändert.
-[stf] Hm, Du hast recht, aber das hilft bei der Terminology leider nicht. Aber gut, es passt mit RFC 8995 zusammen
--->
 After finishing the Imprint step (4), the Enroll step (5) MUST be performed
 with an enrollment protocol utilizing authenticated self-contained objects,
 as explained in {{req-sol}}.
@@ -926,15 +907,6 @@ cover all those supported by the use of EST in BRSKI.
 The last OPTIONAL one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.
 
-<!---
-[stf] Der Zurueckpfeil |- -> ist in der Zeichnung irritierend. Brauchen wir den?
-[DvO] Gute Frage - von mir aus kann er auch raus. Der komische Pfeil war schon am Anfang in diesem Repo drin:
-commit 18557f2540d5c273a6773f08344b638d151b45d6
-Author: Thomas Werner <thomas-werner@siemens.com>
-Date:   Tue Jul 6 09:51:30 2021 +0200
-DvO: Hab diese komischen Pfeile/Haken nun rausgenommen.
-[stf] danke, viel besser
--->
 ~~~~ aasvg
 +--------+                        +------------+       +------------+
 | Pledge |                        | Domain     |       | Operator   |
@@ -1234,7 +1206,8 @@ and no reasons are known why it could be preferable over using BRSKI-CMP.
 
 <!--
 ## BRSKI-EST-fullCMC: Instantiation to EST
-
+-->
+<!--
 When using EST {{RFC7030}}, the following aspects and constraints
 need to be considered and the given extra requirements need to be fulfilled,
 which adapt BRSKI {{RFC8995, Section 5.9.3}}:
@@ -1329,9 +1302,11 @@ TODO check if contained in motivation:
 [DvO] Ich bin durch alle Punkte durchgegangen und habe die, die oben noch nicht
 enthalten waren, in der Aufzählung in Abschnitt {{sup-env}} ergänzt.
 
-
+-->
+<!--
 # Using EST for Certificate Enrollment {#using-est}
-
+-->
+<!--
 When using EST with BRSKI, pledges interact via TLS with the domain registrar,
 which acts both as EST server and as the PKI RA.
 The TLS channel is mutually authenticated,
