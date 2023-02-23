@@ -380,7 +380,7 @@ on-site PKI services and comprises application scenarios like the following.
 
 * Pledges and/or the target domain already having an established
   certificate management approach different from EST that shall be reused
-  (e.g., in brownfield installations where, e.g., CMP is already used).
+  (such as, brownfield installations where, e.g., CMP is already in use).
 
 <!--
 [DvO] In den folgenden Punkt sind nun die Aspekte gewandert, die durch das Herausnehmen von {{using-est}} verloren gegangen wären.
@@ -772,10 +772,11 @@ gepackt, wo er noch besser passt.
 -->
 
   2. The registrar MAY delegate part or all of its involvement
-     in certificate enrollment support to a separate system.
+     during certificate enrollment to a separate system.
 
      Rather than having full RA functionality, the registrar may act
      as a local registration authority (LRA) or as an enrollment proxy.
+
      The registrar optionally checks requests and forwards them on to the PKI.
      On the way back, it forwards responses by the PKI to the pledge
      on the same channel.  In such scenarios
