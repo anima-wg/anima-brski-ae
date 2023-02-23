@@ -326,7 +326,7 @@ along with requester authentication information:
   in a cryptographic way.  This approach supports end-to-end security,
   without the need to trust in intermediate domain components.
   Manipulation of the request and the requester identity information
-  can be detected during the validation of the self-contained signed object.
+  can be detected during the validation of the authenticated self-contained object.
 
   Note that with this approach the ways in which enrollment requests may be
   forwarded by the registrar to backend PKI components are inessential
@@ -542,7 +542,7 @@ There are two main drivers for the definition of BRSKI-AE:
 * The domain registrar may not be the (final) point
   that authenticates and authorizes certification requests,
   and the pledge may not have a direct connection to it.
-  Therefore, certification requests should be self-contained signed objects.
+  Therefore, certification requests should be authenticated self-contained objects.
 
 Based on the intended target environment described in {{sup-env}} and
 the application examples described in {{app-examples}}, the following
@@ -1198,7 +1198,7 @@ When using CMP, the following specific implementation requirements apply
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.4}} and
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.1.2}}.
 
- * Due to the use of self-contained signed request messages providing
+ * Due to the use of authenticated self-contained request messages providing
    end-to-end security and the general independence of CMP of message transfer,
    the way in which messages are exchanged by the registrar with backend PKI
    (RA/CA) components is out of scope of this document. It can be freely chosen
@@ -1325,7 +1325,7 @@ because the TLS session is transient and terminates at the registrar.
 This is a problem in particular if the enrollment is done via multiple hops,
 part of which may not even be network-based.
 
-With enrollment protocols that use for CSRs self-contained signed objects,
+With enrollment protocols that use for CSRs authenticated self-contained objects,
 logs of CSRs can be audited because CSRs can be third-party authenticated
 in retrospect, whereas TLS connections can not.
 
@@ -1522,7 +1522,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
     {{sup-env}}: "Supported Environments",
   - streamline the item on EST in
     {{solutions-PoI}}: "Solution Options for Proof of Identity",
-  - various minor editorial improvements
+  - various minor editorial improvements like making the wording more consistent
 
 From IETF draft ae-02 -> IETF draft ae-03:
 
