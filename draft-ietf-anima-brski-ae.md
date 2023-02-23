@@ -220,7 +220,7 @@ EST has its specific characteristics<!--, detailed in {{using-est}}-->.
 In particular, it requires online on-site availability of the RA
 for performing the data origin authentication
 and final authorization decision on the certification request.
-This type of enrollment can be called 'synchronous enrollment'.
+This type of enrollment can be called '_synchronous enrollment_'.
 
 <!--
 [stf] Den naechsten Absatz wuerde ich weglassen. Der Hauptpunkt wird darunter angesprochen (offline) und Transport Independence habe ich in Paragraph 3 mit aufgenommen. Daneben betreffen BRSKI-EST und BRSKI-MASA zwei verschiedenen Ecken der Architektur und sind auch unterschiedliche betroffen (BRSKI-MASA nicht wirklich)
@@ -261,7 +261,7 @@ In such scenarios, the authentication and authorization of certification
 requests will not or can not be performed on-site.
 
 In this document, enrollment that is not performed over an online connection
-is called 'asynchronous enrollment'.
+is called '_asynchronous enrollment_'.
 Asynchronous enrollment means that messages need to be forwarded through
 offline methods (e.g., Sneakernet/USB sticks) and/or at some point in time
 only part of the communication path is available.
@@ -452,20 +452,20 @@ This document relies on the terminology defined in {{RFC8995}}
 and {{IEEE_802.1AR-2018}}.
 The following terms are defined partly in addition.
 
-asynchronous communication:
+_asynchronous communication_:
 : time-wise interrupted communication
   between a pledge and a registrar or PKI component.
 
-authenticated self-contained object:
+_authenticated self-contained object_:
 : data structure
   that is cryptographically bound to the IDevID certificate of a pledge.
   The binding is assumed to be provided through a digital signature
   of the actual object using the IDevID secret.
 
-backend:
+_backend_:
 : same as off-site
 
-BRSKI-AE:
+_BRSKI-AE_:
 : Variation of BRSKI {{RFC8995}} in which BRSKI-EST, the enrollment protocol
   between pledge and the registrar including the RA, is replaced by
   alternative enrollment protocols such as Lightweight CMP.
@@ -473,58 +473,64 @@ BRSKI-AE:
   BRSKI-AE enables the use of other enrollment protocols between pledge and
   registrar and to any backend RA components with end-to-end security.
 
-CA:
+_CA_:
 : Certification Authority, which is the PKI component that issues certificates
   and provides certificate status information.
 
-domain:
+_domain_:
 : shorthand for target domain
 
-IDevID:
+_domain_CA:
+: same as PKI CA
+
+_IDevID_:
 : Initial Device IDentifier, provided by the manufacturer and comprising of
   a private key, an X.509 certificate with chain, and a related trust anchor.
 
-LDevID:
+_LDevID_:
 : Locally significant Device IDentifier, provided by the target domain
   and comprising of
   a private key, an X.509 certificate with chain, and a related trust anchor.
 
-local RA (LRA):
+_local RA (LRA)_:
 : RA that is on site with the registrar and that may be needed in addition
   to an off-site RA.
 
-on-site:
+_on-site_:
 : locality of a component or service or functionality
   in the local target deployment site of the registrar.
 
-off-site:
+_off-site_:
 : locality of component or service or functionality
   in an operator site different from
   the target deployment site. This may be a central site or a
   cloud service, to which only a temporary connection is available.
 
-PKI RA:
+_PKI CA_:
+: off-site CA in the backend of the target domain
+
+_PKI RA_:
 : off-site RA in the backend of the target domain
 
-pledge:
+_pledge_:
 : device that is to be bootstrapped to the target domain.
   It requests an LDevID using an IDevID installed by its manufacturer.
 
-RA:
+_RA_:
 : Registration Authority, which is the PKI component to which
   a CA typically delegates certificate management functions
   such as authenticating requesters and performing authorization checks
   on certification requests.
 
-site:
+_site_:
 : the locality where an entity, e.g., pledge, registrar, RA, CA, is deployed.
   Different sites can belong to the same target domain.
 
-synchronous communication:
+_synchronous communication_:
 : time-wise uninterrupted communication
   between a pledge and a registrar or PKI component.
 
-target domain:
+_target domain_:
 : the set of entities that the pledge should be able to operate with
   and that share a common local trust anchor,
   independent of where the entities are deployed.
@@ -839,14 +845,15 @@ the vendor or manufacturer outside the target domain.
 The following list describes the target domain components that can optionally be
 operated in the off-site backend of the target domain.
 
-* PKI RA: Performs certificate management functions for the domain
-  as a centralized public-key infrastructure for the domain operator.
+* _PKI RA_: performs centralized certificate management functions
+  as a public-key infrastructure for the domain operator.
   As far as not already done by the domain registrar, it performs the final
   validation and authorization of certification requests.  Otherwise,
   the RA co-located with the domain registrar directly connects to the PKI CA.
 
-* PKI CA: Performs certificate generation by signing the certificate structure
-  requested in already authenticated and authorized certification requests.
+* _PKI CA_, also called _domain CA_: generates domain-specific certificates
+  according to certification requests that have been
+  authenticated and authorized by the registrar and/or and an extra PKI RA.
 
 Based on the diagram in BRSKI {{RFC8995, Section 2.1}} and the architectural
 changes, the original protocol flow is divided into four phases
