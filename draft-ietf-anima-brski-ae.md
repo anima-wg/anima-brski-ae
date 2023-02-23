@@ -801,11 +801,10 @@ gepackt, wo er noch besser passt.
      such that from the pledge perspective there is no difference
      in connectivity and the registrar can be fully involved.
      Yet part or all of the enrollment traffic MAY also be routed differently.
-<!--
-[DvO]: Folgendes sollten wir bei Inklusion der ACME-Instance explizit machen:
-     The registrar MAY redirect the pledge to use other connections
-     for certificate enrollment.
--->
+
+     Regardless of the routing of enrollment messages, it must be made sure
+     that a pledge cannot circumvent the decision by the registrar whether it
+     is authorized to join the domain -- see {{sec-consider}}} for details.
 
      Note:
      As far as (at least part of) the certificate enrollment traffic is routed
@@ -1278,13 +1277,33 @@ which also entails that authenticated self-contained objects are used.
 This document does not require IANA actions.
 
 
-# Security Considerations
+# Security Considerations {#sec-consider}
 
-The security considerations as laid out in BRSKI {{RFC8995}} apply for the
+The security considerations  laid out in BRSKI {{RFC8995}} apply for the
 discovery and voucher exchange as well as for the status exchange information.
 
-The security considerations as laid out in the Lightweight CMP Profile
-{{I-D.ietf-lamps-lightweight-cmp-profile}} apply as far as CMP is used.
+In particular,
+even if the registrar delegates part or all of its RA role
+during certificate enrollment to a separate system,
+it still must be made sure that the registrar decides
+about accepting or declining a request to join the domain,
+as required in {{RFC8995, Section 5.3}}.
+As this pertains also to obtaining an valid domain-specific certificate,
+it must be made sure that a pledge cannot circumvent the registrar
+in the decision whether it is granted an LDevID certificate by the domain CA.\
+There are various ways how to fulfill this, including:
+* implicit consent
+* the registrar signals its consent to the backend RA or CA
+  out-of-band before or during the enrollment phase
+* the registrar provides its consent using an extra message that is transferred
+  on the same channel as the enrollment messages, possibly in a TLS tunnel.
+* the registrar states its consent by signing, in addition to the pledge,
+  the authenticated self-contained certificate enrollment request message.\
+  When using CMP, this may be done using a so-called nested message,
+  as described in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.2.2.1}}.
+
+When CMP is used, the security considerations laid out in the
+Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 
 # Acknowledgments
