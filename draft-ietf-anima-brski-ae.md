@@ -70,8 +70,6 @@ normative:
   RFC8995:
   I-D.ietf-lamps-cmp-updates:
   I-D.ietf-lamps-lightweight-cmp-profile:
-  I-D.ietf-ace-cmpv2-coap-transport:
-  I-D.ietf-anima-constrained-voucher:
   IEEE_802.1AR-2018:
     title: 'IEEE Standard for Local and Metropolitan Area Networks -
     Secure Device Identity'
@@ -83,6 +81,8 @@ normative:
       DOI: 10.1109/IEEESTD.2018.8423794
     uri: https://ieeexplore.ieee.org/document/8423794
 informative:
+  I-D.ietf-anima-constrained-voucher:
+  I-D.ietf-ace-cmpv2-coap-transport:
   BRSKI-AE-overview:
     title: 'BRSKI-AE Protocol Overview'
     date: April 2022
