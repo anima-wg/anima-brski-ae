@@ -816,8 +816,10 @@ gepackt, wo er noch besser passt.
      By default, this channel is based on HTTP over TLS,
      but it may also be based on, for instance, CoAP over DTLS
      in the context of Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}}.
+<!--
      In the latter scenario,
      the EST-specific parts of that specification do not apply.
+-->
 
 Regardless of the above generalizations to the enrollment phase, the final
 step of BRSKI, namely the enrollment status telemetry, is kept as it is.
