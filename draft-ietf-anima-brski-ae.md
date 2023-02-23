@@ -280,10 +280,17 @@ can not be provided by an authenticated (and often confidential)
 communications channel such as TLS used in EST/BRSKI-EST/BRSKI-MASA.
 -->
 
+Note: BRSKI typically uses HTTP over TLS, but also other variants are possible,
+such as
+Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}} using CoAP over DTLS.
+In the sequel, 'HTTP' and 'TLS' are just references to the most common case,
+where variants such as using CoAP and/or DTLS are meant to be subsumed --
+the differences are not relevant here.
+
 Application scenarios may also involve network segmentation, which is utilized
 in industrial systems to separate domains with different security needs --
 see also {{infrastructure-isolation}}.
-Such scenarios lead to similar requirements if the (D)TLS channel
+Such scenarios lead to similar requirements if the TLS channel
 that carries the requester authentication is terminated
 before the actual requester authorization is performed.
 Thus request messages need to be forwarded on further channels
@@ -383,12 +390,12 @@ on-site PKI services and comprises application scenarios like the following.
   - the requirement for end-to-end authentication of the requester
   while the RA is not co-located with the registrar, or
   - the requirement that the proof of origin of CSRs shall be auditable at the receiving end, which
-  is not possible with the transient source authentication provided via (D)TLS.
+  is not possible with the transient source authentication provided via TLS.
   - Requesting certificates for types of keys that do not support signing,
   such as key agreement and KEM keys, is not supported by EST, because
   EST requires proof-of-possession in the form of a CSR self-signature
   due to using PKCS#10 structures in certificate enrollment requests.
-  - A further reason for exclusion might be that the (D)TLS library used in
+  - A further reason for exclusion might be that the TLS library used in
   pledge development may not support providing the tls-unique value {{RFC5929}}
   needed by EST for strong binding of the source authentication.
 
@@ -594,7 +601,7 @@ based on existing technology described in IETF documents:
   credential (here, the IDevID certificate) enables proof of identity
   and, based on it, an authorization of the certification request.
   The binding may be achieved through security options in an
-  underlying transport protocol such as (D)TLS if the authorization of the
+  underlying transport protocol such as TLS if the authorization of the
   certification request is (completely) done at the next communication hop.
   This binding can also be done in a transport-independent way by wrapping the
   certification request with a signature employing an existing IDevID.
@@ -606,15 +613,15 @@ based on existing technology described in IETF documents:
     utilizes PKCS#10 to encode Certificate Signing Requests (CSRs).
     While such a CSR was not designed
     to include a proof of origin, there is a limited, indirect way of
-    binding it to the source authentication of the underlying (D)TLS session.
+    binding it to the source authentication of the underlying TLS session.
     This is achieved by including in the CSR the tls-unique value {{RFC5929}}
-    resulting from the (D)TLS handshake.  As this is optionally supported
+    resulting from the TLS handshake.  As this is optionally supported
     by the EST `"/simpleenroll"` endpoint used in BRSKI
-    and the (D)TLS handshake employed in BRSKI includes certificate-based client
+    and the TLS handshake employed in BRSKI includes certificate-based client
     authentication of the pledge with its IDevID,  the proof of pledge identity
-    being an authenticated (D)TLS client can be bound to the CSR.
+    being an authenticated TLS client can be bound to the CSR.
 
-    Yet this binding is only valid in the context of the (D)TLS session
+    Yet this binding is only valid in the context of the TLS session
     established with the registrar acting as the EST server and typically also
     as an RA.  So even such a cryptographic binding of the authenticated
     pledge identity to the CSR is not visible nor verifiable to
@@ -715,7 +722,7 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 |        |<------>|.......|<-------->| Enrollment   |  .
 |        |     .  |       |          | Proxy/LRA/RA |  .
 | IDevID |     .  +-------+          +--------------+  .
-|        |   BRSKI-AE over (D)TLS             ^        .
+|        |   BRSKI-AE over TLS                ^        .
 |        |     .                              |        .
 +--------+     ...............................|.........
             on-site (local) domain components |
@@ -852,7 +859,7 @@ showing commonalities and differences to the original approach as follows.
   an authenticated self-contained object for requesting the LDevID certificate.
 
   For transporting the certificate enrollment request and response messages, the
-  (D)TLS channel established between pledge and registrar is RECOMMENDED to use.
+  TLS channel established between pledge and registrar is RECOMMENDED to use.
   To this end, the enrollment protocol, the pledge, and the registrar
   need to support using the existing channel for certificate enrollment.
   Due to this recommended architecture, typically the pledge does not need
@@ -1246,7 +1253,7 @@ which adapt BRSKI {{RFC8995, Section 5.9.3}}:
   e.g, the subject of its IDevID certificate.
 
   Note:
-  In this case the binding to the underlying (D)TLS channel is not necessary.
+  In this case the binding to the underlying TLS channel is not necessary.
 
 * When the RA is temporarily not available, as per {{RFC7030, Section 4.2.3}},
   an HTTP status code 202 should be returned by the registrar,
@@ -1258,7 +1265,7 @@ which adapt BRSKI {{RFC8995, Section 5.9.3}}:
 Note that the work in the ACE WG described in
 {{I-D.selander-ace-coap-est-oscore}} may be considered
 here as well, as it also addresses the encapsulation of EST in a way to
-make it independent of the underlying (D)TLS channel using OSCORE,
+make it independent of the underlying TLS channel using OSCORE,
 which also entails that authenticated self-contained objects are used.
 -->
 
