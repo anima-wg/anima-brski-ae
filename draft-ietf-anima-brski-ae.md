@@ -1159,9 +1159,10 @@ When using CMP, the following specific implementation requirements apply
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}} (based on CRMF) or
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.4}} (based on PKCS#10).
   <br>
+<!-- removed because this requirement is not really needed:
   In certificate response messages the `caPubs` field, which generally in CMP
   may convey CA certificates to the requester, SHOULD NOT be used.
-
+-->
   * Proof of identity SHALL be provided by using signature-based
   protection of the certification request message
   as outlined in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 3.2}}
@@ -1517,6 +1518,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
   - re-phrase requirement on certificate request exchange, avoiding MANDATORY
   - mention that further protocol names need be put in Well-Known URIs registry
   - explain consequence of using non-standard endpoints, not following SHOULD
+  - remove requirement that 'caPubs' field in CMP responses SHOULD NOT be used
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
