@@ -145,14 +145,16 @@ informative:
 
 This document enhances
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995)
-to allow employing alternative enrollment protocols, such as CMP.
+to allow employing alternative certificate enrollment protocols, such as CMP.
 
-Using self-contained signed objects,
-the origin of enrollment requests and responses
+Using authenticated self-contained signed objects,
+the origin of certification requests and responses
 can be authenticated independently of message transfer.
-This supports end-to-end security and asynchronous operation of
-certificate enrollment and provides flexibility
-where to authenticate and authorize certification requests.
+This supports end-to-end authentication (proof of origin)
+and asynchronous operation of certificate enrollment.
+This in turn provides full architectural flexibility
+where to authenticate and authorize certification requests while retaining
+full-strength integrity and authenticity of certification requests.
 
 --- middle
 
@@ -301,8 +303,9 @@ along with requester authentication information:
   When connectivity is available, the trusted component
   forwards the certification request together with the requester information
   (authentication and proof of possession) for further processing.
-  This approach offers hop-by-hop security, but not end-to-end security in terms
-  of enabling a backend PKI component to check the identity of the requester.
+  This approach offers hop-by-hop authentication,
+  but not end-to-end authentication in terms
+  of enabling a backend PKI component to verify the identity of the requester.
 
   In BRSKI, the EST server, being co-located with the registrar in the domain,
   is such a component that needs to be trusted by the backend PKI components.
@@ -313,7 +316,7 @@ along with requester authentication information:
 * A trusted intermediate domain component is not needed when involved
   components use authenticated self-contained objects for the enrollment,
   directly binding the certification request and the requester authentication
-  in a cryptographic way.  This approach supports end-to-end security,
+  in a cryptographic way.  This approach supports end-to-end authentication,
   without the need to trust in intermediate domain components.
   Manipulation of the request and the requester identity information
   can be detected during the validation of the authenticated self-contained object.
@@ -337,7 +340,7 @@ and certificate chain.
 The goals are to provide an enhancement of BRSKI
 using enrollment protocols alternatively to EST that
 
-* support end-to-end security even over multiple hops
+* support end-to-end authentication even over multiple hops
   for LDevID certificate enrollment and
 
 * make it applicable to scenarios involving asynchronous enrollment.
@@ -455,7 +458,7 @@ _BRSKI-AE_:
   alternative enrollment protocols such as Lightweight CMP.
   To this end a new URI scheme used for performing the certificate enrollment.
   BRSKI-AE enables the use of other enrollment protocols between pledge and
-  registrar and to any backend RA components with end-to-end security.
+  registrar and to any backend RA components with end-to-end authentication.
 
 _CA_:
 : Certification Authority, which is the PKI component that issues certificates
@@ -1174,7 +1177,7 @@ When using CMP, the following specific implementation requirements apply
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.1.2}}.
 
  * Due to the use of authenticated self-contained request messages providing
-   end-to-end security and the general independence of CMP of message transfer,
+   end-to-end authentication and the general independence of CMP of message transfer,
    the way in which messages are exchanged by the registrar with backend PKI
    (RA/CA) components is out of scope of this document. It can be freely chosen
    according to the needs of the application scenario (e.g., using HTTP).
@@ -1502,6 +1505,9 @@ List of reviewers (besides the authors):
 
 From IETF draft ae-03 -> IETF draft ae-04:
 
+* In response to SECDIR Early Review of ae-03 by Barry Lea,
+  - replace 'end-to-end security' by the more clear 'end-to-end authentication'
+
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
@@ -1514,7 +1520,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
     only as far as its messages are transported between pledge and registrar.
   - the certificate enrollment protocol chosen between pledge and registrar
     needs to be used also for the upstream enrollment exchange with the PKI only
-    if end-to-end security shall be achieved across the registrar to the PKI.
+    if end-to-end authentication shall be achieved across the registrar to the PKI.
   - remove the former Appendix A: "Using EST for Certificate Enrollment",
     moving relevant points to the list of scenarios in
     {{sup-env}}: "Supported Environments",
