@@ -1510,6 +1510,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
   - replace 'end-to-end security' by the more clear 'end-to-end authentication'
   - restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'
   - replace 'MAY' by 'may' in requirement on delegated registrar actions
+  - re-phrase requirement on certificate request exchange, avoiding MANDATORY
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
