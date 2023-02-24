@@ -1089,11 +1089,14 @@ already defined as part of the base BRSKI specification or indirectly by EST.
 In addition, alternative enrollment endpoints MAY be supported at the registrar.
 
 A pledge SHOULD use the endpoints defined for the enrollment protocol(s)
-that it is capable of.
+that it is capable of and is willing to use.
 It will recognize whether its preferred protocol or the request that it tries
-to perform is supported by the domain registrar
+to perform is understood and supported by the domain registrar
 by sending a request to its preferred enrollment endpoint according to the above
 addressing scheme and evaluating the HTTP status code in the response.
+If the pledge uses endpoints that are not standardized,
+it risks that the registrar does not recognize and accept them
+even if supporting the intended protocol and operation.
 
 The following list of endpoints provides an illustrative example for
 a domain registrar supporting several options for EST as well as for
@@ -1513,6 +1516,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
   - replace 'MAY' by 'may' in requirement on delegated registrar actions
   - re-phrase requirement on certificate request exchange, avoiding MANDATORY
   - mention that further protocol names need be put in Well-Known URIs registry
+  - explain consequence of using non-standard endpoints, not following SHOULD
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
