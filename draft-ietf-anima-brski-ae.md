@@ -1068,12 +1068,13 @@ that contains at least a certification request and a certification response.
 The following conventions are used to provide maximal compatibility with BRSKI:
 
 * `<enrollment-protocol>`: MUST reference the protocol being used.
-  Existing values include EST {{RFC7030}} as in BRSKI and CMP as in
+  Existing values include '`est`' {{RFC7030}} as in BRSKI and '`cmp`' as in
   {{I-D.ietf-lamps-lightweight-cmp-profile}} and {{brski-cmp-instance}} below.
   Values for other existing protocols such as CMC and SCEP,
-  or for newly defined protocols, require their own specifications
-  for their use of the `<enrollment-protocol>` and `<request>` URI components
-  and are outside the scope of this document.
+  or for newly defined protocols are outside the scope of this document.
+  For use of the `<enrollment-protocol>` and `<request>` URI components,
+  they would need to specified in a suitable RFC and
+  placed into the Well-Known URIs registry, like done for EST in {{RFC7030}}.
 
 * `<request>`: if present, this path component MUST describe,
   depending on the enrollment protocol being used, the operation requested.
@@ -1511,6 +1512,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
   - restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'
   - replace 'MAY' by 'may' in requirement on delegated registrar actions
   - re-phrase requirement on certificate request exchange, avoiding MANDATORY
+  - mention that further protocol names need be put in Well-Known URIs registry
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
