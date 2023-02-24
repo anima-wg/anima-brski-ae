@@ -472,12 +472,12 @@ _domain_CA:
 : same as PKI CA
 
 _IDevID_:
-: Initial Device IDentifier, provided by the manufacturer and comprising of
+: Initial Device IDentifier, provided by the manufacturer and comprising
   a private key, an X.509 certificate with chain, and a related trust anchor.
 
 _LDevID_:
 : Locally significant Device IDentifier, provided by the target domain
-  and comprising of
+  and comprising
   a private key, an X.509 certificate with chain, and a related trust anchor.
 
 _local RA (LRA)_:
@@ -1794,3 +1794,7 @@ LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae pkcs
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
 LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI
 -->
+<!--  LocalWords:  PoP PoI anufacturer uthorized igning uthority
+ -->
+<!--  LocalWords:  SECDIR
+ -->
