@@ -329,7 +329,8 @@ Focus of this document is the support of alternative enrollment protocols that
 allow the second approach, i.e.,
 using authenticated self-contained objects for device certificate enrollment.
 This enhancement of BRSKI is named BRSKI-AE, where AE stands for
-**A**lternative **E**nrollment and for **A**synchronous **E**nrollment.
+**A**lternative **E**nrollment
+(while originally it was used to abbreviate **A**synchronous **E**nrollment).
 This specification carries over the main characteristics of BRSKI,
 namely that the pledge obtains trust anchor information
 for authenticating the domain registrar and other target domain components
@@ -1507,7 +1508,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
 
 * In response to SECDIR Early Review of ae-03 by Barry Lea,
   - replace 'end-to-end security' by the more clear 'end-to-end authentication'
-
+  - restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
