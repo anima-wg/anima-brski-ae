@@ -1288,6 +1288,14 @@ There are various ways how to fulfill this, including:
 When CMP is used, the security considerations laid out in the
 Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
+Note that when using CMP, the certificate enrollment messages are not encrypted.
+This may give eavesdroppers insight on which devices are bootstrapped in the
+domain, and this in turn might also be used to selectively block the enrollment
+of certain devices.
+To prevent this, the underlying message transport channel can be encrypted,
+for instance by employing TLS.
+On the link between the pledge and the registrar this is easily achieved by
+reusing the existing TLS channel between them, as will typically be done anyway.
 
 # Acknowledgments
 
@@ -1519,6 +1527,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
   - mention that further protocol names need be put in Well-Known URIs registry
   - explain consequence of using non-standard endpoints, not following SHOULD
   - remove requirement that 'caPubs' field in CMP responses SHOULD NOT be used
+  - add paragraph in security considerations on additional use of TLS for CMP
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
