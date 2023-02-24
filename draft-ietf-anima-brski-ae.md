@@ -686,7 +686,7 @@ MUST be performed based on an authenticated self-contained object.
 The certification request is bound in a self-contained way
 to a proof of origin based on the IDevID.
 Consequently, the authentication and authorization of the certification request
-MAY be done by the domain registrar and/or by other domain components.
+may be done by the domain registrar and/or by other domain components.
 These components may be offline or
 reside in some central backend of the domain operator (off-site)
 as described in {{sup-env}}. The registrar and other on-site domain components
@@ -1509,6 +1509,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
 * In response to SECDIR Early Review of ae-03 by Barry Lea,
   - replace 'end-to-end security' by the more clear 'end-to-end authentication'
   - restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'
+  - replace 'MAY' by 'may' in requirement on delegated registrar actions
 * In response to further internal reviews and suggestions for generalization,
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
