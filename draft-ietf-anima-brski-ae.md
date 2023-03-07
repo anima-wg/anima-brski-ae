@@ -186,13 +186,13 @@ can be validated by the manufacturer trust anchor imprinted within the pledge.
 So the pledge can accept the voucher contents, which indicate to the pledge
 that it can trust the domain identified by the given certificate.
 
-While RFC 8995 only specifies a single, online set of protocol option to
-communicate the voucher between MASA, registrar, and pledge
-(BRSKI-EST and BRSKI-MASA, see {{RFC8995, Section 2}}),
-it also describes the architecture for how the voucher
-may be provided in online mode (synchronously) or offline mode (asynchronously).
-For the voucher exchange offline mode is basically supported,
-because the vouchers are self-contained signed objects,
+RFC 8995 describes the voucher exchange in a way that can be used
+in online mode (synchronously) or offline mode (asynchronously).
+For online mode, it specifies a set of protocol options
+to communicate the voucher between MASA, registrar, and pledge
+(BRSKI-EST and BRSKI-MASA, see [RFC8995], Section 2).
+Offline mode is basically supported as well
+because vouchers are self-contained signed objects,
 such that their security does not rely on protection by the underlying transfer.
 
 SZTP {{RFC8572}} is an example of another protocol where vouchers may be
@@ -272,8 +272,8 @@ along with the information needed for authenticating their origin,
 in front of an unavailable segment for potentially long time (e.g., days)
 before they can be forwarded.
 
-Note: BRSKI typically uses HTTP over TLS, but also other variants are possible,
-such as
+Note: BRSKI (RFC 8995) specifies how to use HTTP over TLS, but further variants
+are known, such as
 Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}} using CoAP over DTLS.
 In the sequel, 'HTTP' and 'TLS' are just references to the most common case,
 where variants such as using CoAP and/or DTLS are meant to be subsumed --
@@ -329,8 +329,8 @@ Focus of this document is the support of alternative enrollment protocols that
 allow the second approach, i.e.,
 using authenticated self-contained objects for device certificate enrollment.
 This enhancement of BRSKI is named BRSKI-AE, where AE stands for
-**A**lternative **E**nrollment
-(while originally it was used to abbreviate **A**synchronous **E**nrollment).
+**A**lternative **E**nrollment.
+<!--(while originally it was used to abbreviate **A**synchronous **E**nrollment)-->
 This specification carries over the main characteristics of BRSKI,
 namely that the pledge obtains trust anchor information
 for authenticating the domain registrar and other target domain components
@@ -795,6 +795,7 @@ gepackt, wo er noch besser passt.
      that a pledge cannot circumvent the decision by the registrar whether it
      is authorized to join the domain -- see {{sec-consider}}} for details.
 
+<!-- is already covered by paragraph a little further below:
      Note:
      As far as (at least part of) the certificate enrollment traffic is routed
      via the registrar, BRSKI-AE re-uses during the certificate enrollment phase
@@ -804,6 +805,7 @@ gepackt, wo er noch besser passt.
      By default, this channel is based on HTTP over TLS,
      but it may also be based on, for instance, CoAP over DTLS
      in the context of Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}}.
+-->
 <!--
      In the latter scenario,
      the EST-specific parts of that specification do not apply.
@@ -851,7 +853,7 @@ showing commonalities and differences to the original approach as follows.
   an authenticated self-contained object for requesting the LDevID certificate.
 
   For transporting the certificate enrollment request and response messages, the
-  TLS channel established between pledge and registrar is RECOMMENDED to use.
+  (D)TLS channel established between pledge and registrar is RECOMMENDED to use.
   To this end, the enrollment protocol, the pledge, and the registrar
   need to support using the existing channel for certificate enrollment.
   Due to this recommended architecture, typically the pledge does not need
@@ -1271,17 +1273,21 @@ during certificate enrollment to a separate system,
 it still must be made sure that the registrar decides
 about accepting or declining a request to join the domain,
 as required in {{RFC8995, Section 5.3}}.
-As this pertains also to obtaining an valid domain-specific certificate,
+As this pertains also to obtaining a valid domain-specific certificate,
 it must be made sure that a pledge cannot circumvent the registrar
-in the decision whether it is granted an LDevID certificate by the domain CA.\
+in the decision whether it is granted an LDevID certificate by the domain CA.
 There are various ways how to fulfill this, including:
+
 * implicit consent
+
 * the registrar signals its consent to the backend RA or CA
   out-of-band before or during the enrollment phase
+
 * the registrar provides its consent using an extra message that is transferred
   on the same channel as the enrollment messages, possibly in a TLS tunnel.
+
 * the registrar states its consent by signing, in addition to the pledge,
-  the authenticated self-contained certificate enrollment request message.\
+  the authenticated self-contained certificate enrollment request message.
   When using CMP, this may be done using a so-called nested message,
   as described in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.2.2.1}}.
 
