@@ -165,11 +165,11 @@ full-strength integrity and authenticity of certification requests.
 
 BRSKI, as defined in {{RFC8995}}, specifies a solution for
 secure automated zero-touch bootstrapping of new devices,
-which are given the name _pledges_, in the domain they should operate with.
+which are called 'pledges', in the domain they should operate with.
 This includes the discovery of the registrar representing the target domain,
 time synchronization or validation, and the exchange of security information
 necessary to establish mutual trust between pledges and the target domain.
-As explained in {{terminology}}, the _target domain_, or _domain_ for short,
+As explained in {{terminology}}, the 'target domain', or 'domain' for short,
 is defined as the set of entities that share a common local trust anchor.
 
 ### Voucher Exchange for Trust Anchor Establishment
@@ -222,7 +222,7 @@ EST has its specific characteristics<!--, detailed in {{using-est}}-->.
 In particular, it requires online on-site availability of the RA
 for performing the data origin authentication
 and final authorization decision on the certification request.
-This type of enrollment can be called '_synchronous enrollment_'.
+This type of enrollment can be called 'synchronous enrollment'.
 
 <!--
 [stf] Den naechsten Absatz wuerde ich weglassen. Der Hauptpunkt wird darunter angesprochen (offline) und Transport Independence habe ich in Paragraph 3 mit aufgenommen. Daneben betreffen BRSKI-EST und BRSKI-MASA zwei verschiedenen Ecken der Architektur und sind auch unterschiedliche betroffen (BRSKI-MASA nicht wirklich)
@@ -263,7 +263,7 @@ In such scenarios, the authentication and authorization of certification
 requests will not or can not be performed on-site.
 
 In this document, enrollment that is not performed over an online connection
-is called '_asynchronous enrollment_'.
+is called 'asynchronous enrollment'.
 Asynchronous enrollment means that messages need to be forwarded through
 offline methods (e.g., Sneakernet/USB sticks) and/or at some point in time
 only part of the communication path is available.
@@ -440,20 +440,20 @@ This document relies on the terminology defined in {{RFC8995}}
 and {{IEEE_802.1AR-2018}}.
 The following terms are defined partly in addition.
 
-_asynchronous communication_:
+asynchronous communication:
 : time-wise interrupted communication
   between a pledge and a registrar or PKI component.
 
-_authenticated self-contained object_:
+authenticated self-contained object:
 : data structure
   that is cryptographically bound to the IDevID certificate of a pledge.
   The binding is assumed to be provided through a digital signature
   of the actual object using the IDevID secret.
 
-_backend_:
+backend:
 : same as off-site
 
-_BRSKI-AE_:
+BRSKI-AE:
 : Variation of BRSKI {{RFC8995}} in which BRSKI-EST, the enrollment protocol
   between pledge and the registrar including the RA, is replaced by
   alternative enrollment protocols such as Lightweight CMP.
@@ -461,64 +461,64 @@ _BRSKI-AE_:
   BRSKI-AE enables the use of other enrollment protocols between pledge and
   registrar and to any backend RA components with end-to-end authentication.
 
-_CA_:
+CA:
 : Certification Authority, which is the PKI component that issues certificates
   and provides certificate status information.
 
-_domain_:
+domain:
 : shorthand for target domain
 
-_domain_CA:
+domainCA:
 : same as PKI CA
 
-_IDevID_:
+IDevID:
 : Initial Device IDentifier, provided by the manufacturer and comprising
   a private key, an X.509 certificate with chain, and a related trust anchor.
 
-_LDevID_:
+LDevID:
 : Locally significant Device IDentifier, provided by the target domain
   and comprising
   a private key, an X.509 certificate with chain, and a related trust anchor.
 
-_local RA (LRA)_:
+local RA (LRA):
 : RA that is on site with the registrar and that may be needed in addition
   to an off-site RA.
 
-_on-site_:
+on-site:
 : locality of a component or service or functionality
   in the local target deployment site of the registrar.
 
-_off-site_:
+off-site:
 : locality of component or service or functionality
   in an operator site different from
   the target deployment site. This may be a central site or a
   cloud service, to which only a temporary connection is available.
 
-_PKI CA_:
+PKI CA:
 : off-site CA in the backend of the target domain
 
-_PKI RA_:
+PKI RA:
 : off-site RA in the backend of the target domain
 
-_pledge_:
+pledge:
 : device that is to be bootstrapped to the target domain.
   It requests an LDevID using an IDevID installed by its manufacturer.
 
-_RA_:
+RA:
 : Registration Authority, which is the PKI component to which
   a CA typically delegates certificate management functions
   such as authenticating requesters and performing authorization checks
   on certification requests.
 
-_site_:
+site:
 : the locality where an entity, e.g., pledge, registrar, RA, CA, is deployed.
   Different sites can belong to the same target domain.
 
-_synchronous communication_:
+synchronous communication:
 : time-wise uninterrupted communication
   between a pledge and a registrar or PKI component.
 
-_target domain_:
+target domain:
 : the set of entities that the pledge should be able to operate with
   and that share a common local trust anchor,
   independent of where the entities are deployed.
@@ -545,12 +545,12 @@ as containers carrying certification requests.
 
 At least the following properties are required for a certification request:
 
-* _Proof of possession_: demonstrates access to the private
+* Proof of possession: demonstrates access to the private
   key corresponding to the public key contained in a certification request.
   This is typically achieved by a self-signature
   using the corresponding private key.
 
-* _Proof of identity_, also called _proof of origin_:
+* Proof of identity, also called proof of origin:
   provides data origin authentication of the certification request.
   Typically this is achieved by a signature using the pledge IDevID secret
   over some data, which needs to include a sufficiently strong identifier
@@ -634,7 +634,7 @@ based on existing technology described in IETF documents:
     an existing certificate to protect CSRs based on
     SCEP Secure Message Objects using CMS wrapping
     ({{RFC5652}}). Note that the wrapping using
-    an existing IDevID in SCEP is referred to as _renewal_.
+    an existing IDevID in SCEP is referred to as 'renewal'.
     This way
     SCEP does not rely on the security of the underlying message transfer.
 
@@ -828,13 +828,13 @@ the vendor or manufacturer outside the target domain.
 The following list describes the target domain components that can optionally be
 operated in the off-site backend of the target domain.
 
-* _PKI RA_: performs centralized certificate management functions
+* PKI RA: performs centralized certificate management functions
   as a public-key infrastructure for the domain operator.
   As far as not already done by the domain registrar, it performs the final
   validation and authorization of certification requests.  Otherwise,
   the RA co-located with the domain registrar directly connects to the PKI CA.
 
-* _PKI CA_, also called _domain CA_: generates domain-specific certificates
+* PKI CA, also called domain CA: generates domain-specific certificates
   according to certification requests that have been
   authenticated and authorized by the registrar and/or and an extra PKI RA.
 
