@@ -167,6 +167,7 @@ full-strength integrity and authenticity of certification requests.
 [DvO] Ich finde den Absatz schon sinnvoll, denn wenn ich ihn richtig verstehe, geht es darum, dass TLS zu schwergewichtig sein kann für constrained systems.
 [stf] Ich haette ihn rausgenommen, da wir weder constrained voucher noch RFC 9148 nutzen bzw. darauf eingehen.
 [DVO] Wir haben dann besprochen, es hier rauszulassen. Aber für zumindest für BRSKI-CMP kann ein CoAP-Transport durchaus relevant sein, und so haben wir weiter unten doch schon eine Referenz auf I-D.ietf-anima-constrained-voucher. Und in der Tat könnte es auch für andere Instanzen relevant sein. Daher bin ich nun der Ansicht, dass wir es doch kurz erwähnen sollten. Ich habe die Referenzen nun da eingefügt, wo wir auf den TLS-Tunnel bzw. auf BRSKI-EST eingehen, denn da könnte es durchaus ein DTLS-Tunnel sein. Passt das so?
+[stf] 08.03.2023, okay, erledigt. Auch mit der Kuerzung
 
 EST, BRSKI-EST, and BRSKI-MASA as used in RFC 8995 are tied to a specific
 transport, TLS, which may not be suitable for the target use case outlined
@@ -262,6 +263,8 @@ BRSKI-AE is intended to be used situations like the following.
 * Scenarios having implementation restrictions
   that speak against using EST for certificate enrollment,
   such as the use of a library that does not support EST but CMP.
+
+[stf] 08.03.2023, Ich finde den Punkt immernoch nicht ueberzeugend fuer den Draft und wuerde ihn rauslassen. Die Motivation fuer BRSKI-AE ist ja eher der funktionale Aspekt. 
 -->
 
 * No RA being available on site in the target domain.
@@ -631,7 +634,9 @@ of the pledge shown in {{uc1figure}}.
      message exchange with backend PKI components.
 [DvO]: Ich hab den Satz noch weiter verbessert und etwas weiter nach unten
 gepackt, wo er noch besser passt.
+[stf] 08.03.2023, ich glaube das ist durch den Review heute nochmal abgeaendert worder. 
 -->
+
 
   2. The registrar MAY delegate part or all of its involvement
      during certificate enrollment to a separate system.
@@ -1192,6 +1197,7 @@ for their reviews.
 TODO check if contained in motivation:
 [DvO] Ich bin durch alle Punkte durchgegangen und habe die, die oben noch nicht
 enthalten waren, in der Aufzählung in Abschnitt {{sup-env}} ergänzt.
+[stf] 08.03.2023, okay, passt fuer mich.
 
 -->
 <!--
