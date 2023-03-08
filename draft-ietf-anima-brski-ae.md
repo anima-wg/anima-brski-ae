@@ -284,17 +284,17 @@ various industrial control system environments and operational setups.
 They motivate the support of alternative enrollment protocols,
 based on the following examples of operational environments:
 
-* Rolling stock
+* rolling stock
 
-* Building automation
+* building automation
 
-* Electrical substation automation
+* electrical substation automation
 
-* Electric vehicle charging infrastructures
+* electric vehicle charging infrastructures
 
-* Infrastructure isolation policy
+* infrastructure isolation policy
 
-* Sites with insufficient level of operational security
+* sites with insufficient level of operational security
 
 
 # Terminology {#terminology}
@@ -307,7 +307,7 @@ The following terms are defined partly in addition.
 
 asynchronous communication:
 : time-wise interrupted communication
-  between a pledge and a registrar or PKI component.
+  between a pledge and a registrar or PKI component
 
 authenticated self-contained object:
 : data structure
@@ -328,7 +328,7 @@ BRSKI-AE:
 
 CA:
 : Certification Authority, which is the PKI component that issues certificates
-  and provides certificate status information.
+  and provides certificate status information
 
 domain:
 : shorthand for target domain
@@ -338,20 +338,20 @@ domainCA:
 
 IDevID:
 : Initial Device IDentifier, provided by the manufacturer and comprising
-  a private key, an X.509 certificate with chain, and a related trust anchor.
+  a private key, an X.509 certificate with chain, and a related trust anchor
 
 LDevID:
 : Locally significant Device IDentifier, provided by the target domain
   and comprising
-  a private key, an X.509 certificate with chain, and a related trust anchor.
+  a private key, an X.509 certificate with chain, and a related trust anchor
 
 local RA (LRA):
 : RA that is on site with the registrar and that may be needed in addition
-  to an off-site RA.
+  to an off-site RA
 
 on-site:
 : locality of a component or service or functionality
-  in the local target deployment site of the registrar.
+  in the local target deployment site of the registrar
 
 off-site:
 : locality of component or service or functionality
@@ -373,7 +373,7 @@ RA:
 : Registration Authority, which is the PKI component to which
   a CA typically delegates certificate management functions
   such as authenticating requesters and performing authorization checks
-  on certification requests.
+  on certification requests
 
 site:
 : the locality where an entity, e.g., pledge, registrar, RA, CA, is deployed.
@@ -381,12 +381,12 @@ site:
 
 synchronous communication:
 : time-wise uninterrupted communication
-  between a pledge and a registrar or PKI component.
+  between a pledge and a registrar or PKI component
 
 target domain:
 : the set of entities that the pledge should be able to operate with
   and that share a common local trust anchor,
-  independent of where the entities are deployed.
+  independent of where the entities are deployed
 
 # Basic Requirements and Mapping to Solutions {#req-sol}
 
