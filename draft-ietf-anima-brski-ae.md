@@ -66,6 +66,7 @@ venue:
   github: anima-wg/anima-brski-ae
 normative:
   RFC4210:
+  RFC5280:
   RFC8366:
   RFC8995:
   I-D.ietf-lamps-cmp-updates:
@@ -301,7 +302,7 @@ based on the following examples of operational environments:
 
 {::boilerplate bcp14-tagged}
 
-This document relies on the terminology defined in {{RFC8995}}
+This document relies on the terminology defined in {{RFC8995}}, {{RFC5280}},
 and {{IEEE_802.1AR-2018}}.
 The following terms are defined partly in addition.
 
@@ -722,7 +723,7 @@ showing commonalities and differences to the original approach as follows.
   For transporting the certificate enrollment request and response messages, the
   (D)TLS channel established between pledge and registrar is RECOMMENDED to use.
   To this end, the enrollment protocol, the pledge, and the registrar
-  need to support using the existing channel for certificate enrollment.
+  need to support the usage of the existing channel for certificate enrollment.
   Due to this recommended architecture, typically the pledge does not need
   to establish additional connections for certificate enrollment and
   the registrar retains full control over the certificate enrollment traffic.
