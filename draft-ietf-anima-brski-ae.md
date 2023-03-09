@@ -162,20 +162,6 @@ full-strength integrity and authenticity of certification requests.
 
 # Introduction
 
-<!--
-[stf] Den naechsten Absatz wuerde ich weglassen. Der Hauptpunkt wird darunter angesprochen (offline) und Transport Independence habe ich in Paragraph 3 mit aufgenommen. Daneben betreffen BRSKI-EST und BRSKI-MASA zwei verschiedenen Ecken der Architektur und sind auch unterschiedliche betroffen (BRSKI-MASA nicht wirklich)
-[DvO] Ich finde den Absatz schon sinnvoll, denn wenn ich ihn richtig verstehe, geht es darum, dass TLS zu schwergewichtig sein kann für constrained systems.
-[stf] Ich haette ihn rausgenommen, da wir weder constrained voucher noch RFC 9148 nutzen bzw. darauf eingehen.
-[DVO] Wir haben dann besprochen, es hier rauszulassen. Aber für zumindest für BRSKI-CMP kann ein CoAP-Transport durchaus relevant sein, und so haben wir weiter unten doch schon eine Referenz auf I-D.ietf-anima-constrained-voucher. Und in der Tat könnte es auch für andere Instanzen relevant sein. Daher bin ich nun der Ansicht, dass wir es doch kurz erwähnen sollten. Ich habe die Referenzen nun da eingefügt, wo wir auf den TLS-Tunnel bzw. auf BRSKI-EST eingehen, denn da könnte es durchaus ein DTLS-Tunnel sein. Passt das so?
-[stf] 08.03.2023, okay, erledigt. Auch mit der Kuerzung
-
-EST, BRSKI-EST, and BRSKI-MASA as used in RFC 8995 are tied to a specific
-transport, TLS, which may not be suitable for the target use case outlined
-by the examples in {{list-examples}}. Therefore deployments may require
-different transport, see Constrained Voucher Artifacts for Bootstrapping
-Protocols {{I-D.ietf-anima-constrained-voucher}} and EST-coaps {{RFC9148}}.
--->
-
 BRSKI {{RFC8995}} is typically used with EST as the enrollment protocol
 for device certificates emplyoing HTTP over TLS for its message transfer.
 BRSKI-AE is a variant using alternative enrollment protocols with
@@ -237,9 +223,6 @@ BRSKI-AE is intended to be used situations like the following.
   certificate management approach different from EST that shall be reused
   (such as, brownfield installations where, e.g., CMP is already in use).
 
-<!--
-[DvO] In den folgenden Punkt sind nun die Aspekte gewandert, die durch das Herausnehmen von {{using-est}} verloren gegangen wären.
--->
 * Scenarios indirectly excluding the use of EST for certificate enrollment,
   such as:
   - the requirement for end-to-end authentication of the requester
@@ -250,22 +233,9 @@ BRSKI-AE is intended to be used situations like the following.
   such as key agreement and KEM keys, is not supported by EST, because
   EST requires proof-of-possession in the form of a CSR self-signature
   due to using PKCS#10 structures in certificate enrollment requests.
-  - A further reason for exclusion might be that the TLS library used in
-  pledge development may not support providing the tls-unique value {{RFC5929}}
-  needed by EST for strong binding of the source authentication.
-
-<!---
-[stf] Den naechsten Punkt wuerde ich weglassen der Dritte ist eigentlich der wichtige.
-[DvO] Ja, der Punkt mit brownfield installations ist vermutlich wichtiger. Daher hab ich ihn einfach an die erste Stelle gezogen. Aber den nächsten Punkt würde ich nicht einfach weglassen.
-[stf] Gibt es dafuer eine Begruendung ihn drin zu lassen? Hintergrund der Frage ist, da es so klingt als ob CMP sich besser implementieren laesst als EST. So ein Statement wuerde ich hier nicht aufnehmen. Fuer micht ist da der jetzt erste Punkt der Wichtige.
-[DvO] Ich hab den Punkt nun umformuliert, damit klarer rauskommt, was gemeint war, und an den Punkt davor angehängt.
-
-* Scenarios having implementation restrictions
-  that speak against using EST for certificate enrollment,
-  such as the use of a library that does not support EST but CMP.
-
-[stf] 08.03.2023, Ich finde den Punkt immernoch nicht ueberzeugend fuer den Draft und wuerde ihn rauslassen. Die Motivation fuer BRSKI-AE ist ja eher der funktionale Aspekt. 
--->
+  - pledge implementations using security libraries not providing EST support
+  or a TLS library that does not support providing the tls-unique value
+  {{RFC5929}} needed by EST for strong binding of the source authentication
 
 * No RA being available on site in the target domain.
   Connectivity to an off-site PKI RA may be intermittent or entirely offline.
@@ -395,7 +365,7 @@ target domain:
 # Basic Requirements and Mapping to Solutions {#req-sol}
 
 <!-- redundant with {{sup-env}}:
-## Basic Requirements {#basic-reqs}
+ ## Basic Requirements {#basic-reqs}
 
 There are two main drivers for the definition of BRSKI-AE:
 
@@ -624,19 +594,7 @@ of the pledge shown in {{uc1figure}}.
   1. The registrar MUST support at least one certificate enrollment protocol
      that uses for certificate requests authenticated self-contained objects.
      To this end, the URI scheme for addressing the endpoint at the registrar
-     is generalized (see {{addressing}}).<!---
-[stf] Inwieweit ist das eine Einschraenkung? Wir schreiben an der Stelle schon das Enrollment fuer das Backend vor. Waere es nicht besser zu usagen der self-contained CSR must be transported to the backend PKI components? Wenn wir den Turnschuhbetrieb nach vorn raus haben, wollen wir den doch nicht im Backend?
-[DvO] Der Transport darf natürlich auf den verschiedenen hops durchaus anders sein. Aber verschiedene Enrollment-Protokolle wäre doch abenteuerlich. Ich wüsste auch keines, das einen self-contained CSR eines anderen Enrollment-Protokolls weiterschicken kann.
-[stf] Vorschlag:
-    To support the end-to-end proof of identity of the pledge across the domain registrar,
-     the certification request structure signed by the pledge
-     MUST be retained by the registrar for its upstream certificate enrollment
-     message exchange with backend PKI components.
-[DvO]: Ich hab den Satz noch weiter verbessert und etwas weiter nach unten
-gepackt, wo er noch besser passt.
-[stf] 08.03.2023, ich glaube das ist durch den Review heute nochmal abgeaendert worder. 
--->
-
+     is generalized (see {{addressing}}).
 
   2. The registrar MAY delegate part or all of its involvement
      during certificate enrollment to a separate system.
@@ -653,6 +611,11 @@ gepackt, wo er noch besser passt.
      The forwarding by the registrar may involve situations where
      the registrar has only intermittent connection and transmits
      requests to off-site PKI components upon re-established connectivity.
+
+     To support the end-to-end proof of identity of the pledge across the
+     domain registrar, the certification request structure signed by the pledge
+     MUST be retained by the registrar for its upstream certificate enrollment
+     message exchange with backend PKI components.
 
      Note: For supporting the end-to-end proof of identity of the pledge across
      the domain registrar to backend PKI components, the enrollment protocol
@@ -1190,20 +1153,9 @@ for their reviews.
 
 --- back
 
-<!---
-[stf] Brauchen wir die folgende Section? Das ist doch eigentlich schon Teil von RFC 8995.
-[DvO] Das sind die aus dem Haupttext ausgelagerten Kommentare zu den Nachteilen der Nutzung von EST.
-[stf] Aus technischer Sicht brauchen wir es aus meiner Sicht nicht, da ja im Hauptteil schon motiviert wird, wofuer man self-containment benoetigt. Im Annex nochmal die Erklaerung nachzuschieben ist aus meiner Sicht nicht notwendig. Wir haben ja auch die application examples.
-TODO check if contained in motivation:
-[DvO] Ich bin durch alle Punkte durchgegangen und habe die, die oben noch nicht
-enthalten waren, in der Aufzählung in Abschnitt {{sup-env}} ergänzt.
-[stf] 08.03.2023, okay, passt fuer mich.
-
--->
 <!--
 # Using EST for Certificate Enrollment {#using-est}
--->
-<!--
+
 When using EST with BRSKI, pledges interact via TLS with the domain registrar,
 which acts both as EST server and as the PKI RA.
 The TLS channel is mutually authenticated,
