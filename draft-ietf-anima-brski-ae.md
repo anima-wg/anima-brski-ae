@@ -144,17 +144,18 @@ informative:
 
 --- abstract
 
-This document enhances
+This document defines an enhancement of
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995)
-to allow employing alternative certificate enrollment protocols, such as CMP.
+that supports alternative certificate enrollment protocols, such as CMP.
+This offers the following advantages.
 
-Using authenticated self-contained signed objects,
-the origin of certification requests and responses
-can be authenticated independently of message transfer.
-This supports end-to-end authentication (proof of origin)
-and asynchronous operation of certificate enrollment.
-This in turn provides full architectural flexibility
-where to authenticate and authorize certification requests while retaining
+Using authenticated self-contained signed objects
+for certification requests and responses,
+their origin can be authenticated independently of message transfer.
+This supports end-to-end authentication (proof of origin) also over
+multiple hops, as well as asynchronous operation of certificate enrollment.
+This in turn provides architectural flexibility where to
+ultimately authenticate and authorize certification requests while retaining
 full-strength integrity and authenticity of certification requests.
 
 --- middle
