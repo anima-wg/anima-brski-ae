@@ -175,7 +175,7 @@ This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 
 This specification carries over the main characteristics of BRSKI, namely:
 
-* The pledge is assumend to have got IDevID credentials during production,
+* The pledge is assumed to have got IDevID credentials during production,
 with which it can authenticate itself to domain components such as the registrar
 and to the MASA, the Manufacturer Authorized Signing Authority.
 
@@ -220,34 +220,31 @@ the differences are not relevant here.
 
 BRSKI-AE is intended to be used situations like the following.
 
-* Pledges and/or the target domain already having an established
-  certificate management approach different from EST that shall be reused
-  (such as, brownfield installations where, e.g., CMP is already in use).
+* pledges and/or the target domain reusing an already established
+  certificate enrollment protocol different from EST, such as CMP
 
-* Scenarios indirectly excluding the use of EST for certificate enrollment,
+* scenarios indirectly excluding the use of EST for certificate enrollment,
   such as:
-  - the requirement for end-to-end authentication of the requester
-  while the RA is not co-located with the registrar, or
-  - the requirement that the proof of origin of CSRs shall be auditable at the receiving end, which
-  is not possible with the transient source authentication provided via TLS.
-  - Requesting certificates for types of keys that do not support signing,
-  such as key agreement and KEM keys, is not supported by EST, because
-  EST requires proof-of-possession in the form of a CSR self-signature
-  due to using PKCS#10 structures in certificate enrollment requests.
+  - the RA not being co-located with the registrar while requiring end-to-end
+  authentication of requesters, which EST does not support over multiple hops
+  - the RA or CA operator requiring auditable proof of origin of CSRs, which is
+  not possible neither with the transient source authentication provided by TLS.
+  - certificate requests for types of keys that do not support signing,
+  such as KEM and key agreement keys, which is not supported by EST because
+  it uses PKCS#10 CSRs expecting proof-of-possession via a self-signature
   - pledge implementations using security libraries not providing EST support
   or a TLS library that does not support providing the tls-unique value
   {{RFC5929}} needed by EST for strong binding of the source authentication
 
-* No RA being available on site in the target domain.
-  Connectivity to an off-site PKI RA may be intermittent or entirely offline.
-  A store-and-forward mechanism is then needed
-  for communicating with the off-site services.
+* no full RA functionality being available on-site in the target domain, while
+  connectivity to an off-site PKI RA may be intermittent or entirely offline.
+  <!-- in the latter case a message store-and-forward mechanism is needed. -->
 
-* Authoritative actions of a local RA at the registrar being not sufficient
-  for fully and reliably authorizing certification requests by pledges.  This
+* authoritative actions of a local RA at the registrar being not sufficient
+  for fully and reliably authorizing pledge certification requests, which
   may be due to missing data access or due to an insufficient level of security,
-  for instance regarding the trustworthy storage of local RA private keys.
-  Final authorization then is done by a PKI RA residing in the backend.
+  for instance regarding the local storage of private keys
+  <!-- Final authorization then is done by a PKI RA residing in the backend. -->
 
 
 ## List of Application Examples {#list-examples}
@@ -281,55 +278,63 @@ and {{IEEE_802.1AR-2018}}.
 The following terms are defined partly in addition.
 
 asynchronous communication:
-: time-wise interrupted communication
-  between a pledge and a registrar or PKI component
+: time-wise interrupted delivery of messages,
+  here between a pledge and a registrar or PKI component
 
 authenticated self-contained object:
-: data structure
-  that is cryptographically bound to the IDevID certificate of a pledge.
-  The binding is assumed to be provided through a digital signature
-  of the actual object using the IDevID secret.
+: data structure that is cryptographically bound to the identity of
+  its originator by an attached digital signature on the actual object,
+  using a private key of the originator such as the IDevID secret.
 
 backend:
-: not co-located with the domain registrar
+: placement of a domain component separately from the domain registrar;
+  may be on-site or off-site
 
 BRSKI-AE:
-: Variation of BRSKI {{RFC8995}} in which BRSKI-EST, the enrollment protocol
-  between pledge and the registrar including the RA, is replaced by
-  alternative enrollment protocols such as Lightweight CMP.
-  To this end a new URI scheme used for performing the certificate enrollment.
-  BRSKI-AE enables the use of other enrollment protocols between pledge and
-  registrar and supports end-to-end authentication to the RA.
+: BRSKI with **A**lternative **E**nrollment, a variation of BRSKI {{RFC8995}}
+  in which BRSKI-EST, the enrollment protocol between pledge and the registrar,
+  is replaced by enrollment protocols that support end-to-end authentication
+  of the pledge to the RA, such as Lightweight CMP.
 
 CA:
 : Certification Authority, which is the PKI component that issues certificates
   and provides certificate status information
 
 domain:
-: shorthand for target domain
+: the set of all entities that have a trust anchor in common,
+  independent of where the entities are deployed.
+  This term is often used here as a shorthand for the target domain of a pledge.
+
+domain registrar:
+  the access point of the target domain for onboarding new devices, the pledges.
+  It decides whether pledges acceptable in the domain and
+  facilitate their communication with their MASA and with the domain PKI.
 
 IDevID:
-: Initial Device IDentifier, provided by the manufacturer and comprising
-  a private key, an X.509 certificate with chain, and a related trust anchor
+: Initial Device IDentifier of a pledge, provided by the manufacturer
+  and comprising a private key and the related X.509 certificate with its chain
 
 LDevID:
-: Locally significant Device IDentifier, provided by the target domain
-  and comprising
-  a private key, an X.509 certificate with chain, and a related trust anchor
+: Locally significant Device IDentifier of a pledge, provided by its target domain
+  and comprising a private key and the related X.509 certificate with its chain
 
 local RA (LRA):
-: a type of RA that is co-located with the registrar,
-  which is needed in case a backend PKI RA is used
+: a subordinate RA that is close to entities being enrolled and separate from
+  a subsequent RA.  In BRSKI-AE it is needed if a backend PKI RA is used,
+  and in this case the LRA is co-located with the registrar.
+
+MASA: Manufacturer Authorized Signing Authority, providing to pledges via the
+registrar a voucher containing a trust anchor for the target domain
 
 on-site:
 : locality of a component or service or functionality
-  in the local target deployment site of the registrar
+  at the site of the registrar
 
 off-site:
-: locality of component or service or functionality
-  in an operator site different from
-  the target deployment site. This may be a central site or a
-  cloud service, to which only a temporary connection is available.
+: locality of component or service or functionality, such as RA or CA,
+  not at the site of the registrar.
+  This may be a central site or a cloud service,
+  to which connection may be intermittent.
 
 PKI CA:
 : a CA in the backend of the target domain
@@ -338,27 +343,28 @@ PKI RA:
 : an RA in the backend of the target domain
 
 pledge:
-: device that is to be bootstrapped to the target domain.
+: device that is to be bootstrapped to a target domain.
   It requests an LDevID using an IDevID installed by its manufacturer.
 
 RA:
 : Registration Authority, the PKI component to which
   a CA typically delegates certificate management functions
-  such as authenticating requesters and performing authorization checks
+  such as authenticating pledges and performing authorization checks
   on certification requests
 
+registrar:
+  short for domain registrar
+
 site:
-: the locality where an entity, e.g., pledge, registrar, RA, CA, is deployed.
-  Different sites can belong to the same target domain.
+: the locality where an entity, such as a pledge, registrar, or PKI component
+  is deployed.  The target domain may have multiple sites.
 
 synchronous communication:
-: time-wise uninterrupted communication
-  between a pledge and a registrar or PKI component
+: time-wise uninterrupted delivery of messages,
+  here between a pledge and a registrar or PKI component
 
 target domain:
-: the set of entities that the pledge should be able to operate with
-  and that share a common local trust anchor,
-  independent of where the entities are deployed
+: the domain that a pledge is going to be bootstrapped to
 
 # Basic Requirements and Mapping to Solutions {#req-sol}
 
@@ -503,8 +509,8 @@ may be considered as a further variant.
 
 # Adaptations to BRSKI {#uc1}
 
-In order to support alternative certificate enrollment protocols,
-asynchronous enrollment, and more general system architectures,
+To enable using alternative certificate enrollment protocols supporting end-to-end
+authentication, asynchronous enrollment, and more general system architectures,
 BRSKI-AE provides some generalizations on BRSKI {{RFC8995}}.
 This way, authenticated self-contained objects such as those described in
 {{req-sol}} above can be used for certificate enrollment,
@@ -524,11 +530,10 @@ The key element of BRSKI-AE is that the authorization of a certification request
 MUST be performed based on an authenticated self-contained object.
 The certification request is bound in a self-contained way
 to a proof of origin based on the IDevID.
-Consequently, the authentication and authorization of the certification request
-may be done by the domain registrar and/or by other domain components.
-These components may be offline or
-reside in some central backend of the domain operator (off-site)
-as described in {{sup-env}}. The registrar and other on-site domain components
+Consequently, authentication and authorization of the certification request
+can be done by the domain registrar and/or by backend domain components.
+As mentioned in {{sup-env}}, these components may be offline or off-site.
+The registrar and other on-site domain components
 may have no or only temporary (intermittent) connectivity to them.
 The certification request MAY also be piggybacked on another protocol.
 
@@ -568,9 +573,9 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
  . | PKI CA  +---->| PKI RA (unless part of Domain Registrar) | .
  . +---------+     +------------------------------------------+ .
  ................................................................
-         off-site (central, backend) domain components
+         backend (central or off-site) domain components
 ~~~~
-{: #uc1figure title='Architecture Overview Using Off-site PKI Components'
+{: #uc1figure title='Architecture Overview Using Backend PKI Components'
 artwork-align="left"}
 
 The architecture overview in {{uc1figure}}
@@ -597,7 +602,7 @@ of the pledge shown in {{uc1figure}}.
 
   2. Rather than having full RA functionality, the registrar MAY act as
      a local registration authority (LRA) and delegate part of its involvement
-     in certificate enrollment to an RA in the backend of the domain, called PKI RA.
+     in certificate enrollment to a backend RA, called PKI RA.
      In such scenarios the registrar optionally checks certification requests
      it receives from pledges and forwards them to the PKI RA. The RA performs
      the remaining parts of the enrollment request validation and authorization.
@@ -647,13 +652,13 @@ the vendor or manufacturer outside the target domain.
   is performed as described in BRSKI.
 
   Note: From the definition of the interaction with the MASA in
-  {{RFC8995, Section 5}} follows that it may be synchronous
-  (voucher request with nonce) or asynchronous (voucher request without nonce).
+  {{RFC8995, Section 5}} follows that it may be synchronous (using voucher
+  request with nonces) or asynchronous (using nonceless voucher requests).
 
 * Ownership tracker: as defined in BRSKI.
 
-The following list describes the target domain components that can optionally be
-operated in the off-site backend of the target domain.
+The following list describes backend target domain components,
+which may be located on-site or off-site in the target domain.
 
 * PKI RA: performs centralized certificate management functions
   as a public-key infrastructure for the domain operator.
@@ -1228,21 +1233,21 @@ the application examples listed in {{list-examples}}.
 
 Rolling stock or railroad cars contain a variety of sensors,
 actuators, and controllers, which communicate within the railroad car
-but also exchange information between railroad cars building a train,
+but also exchange information between railroad cars forming a train,
 with track-side equipment, and/or possibly with backend systems.
-These devices are typically unaware of backend system
-connectivity. Managing certificates may be done during maintenance
-cycles of the railroad car, but can already be prepared during
-operation. Preparation will include generating certification requests,
-which are collected and later forwarded for
-processing, once the railroad car is connected to the operator backend.
+These devices are typically unaware of backend system connectivity.
+Enrolling certificates may be done during maintenance cycles
+of the railroad car, but can already be prepared during operation.
+Such asynchronous enrollment will include generating certification requests,
+which are collected and later forwarded for processing whenever
+the railroad car gets connectivity with the backend PKI of the operator.
 The authorization of the certification request is then done based on
 the operator's asset/inventory information in the backend.
 
 UNISIG has included a CMP profile for enrollment of TLS client and
 server X.509 certificates of on-board and track-side components
 in the Subset-137 specifying the ETRAM/ETCS
-on-line key management for train control systems {{UNISIG-Subset-137}}.
+online key management for train control systems {{UNISIG-Subset-137}}.
 
 ## Building Automation
 
@@ -1365,11 +1370,12 @@ From IETF draft ae-03 -> IETF draft ae-04:
 * In response to further internal reviews and suggestions for generalization,
   - significantly cut down the introduction because the original motivations and
     most explanations are no more needed and would just make it lengthy to read
+  - sort out asynchronous vs. offline transfer, offsite  vs. backend components
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
     Also move the references to Constrained BRSKI and CoAPS to better contexts.
-  - clarify that the registar must not be circumvented in the decision to grant
-    and LDevID, and give hints and recommentations how to make sure this
+  - clarify that the registrar must not be circumvented in the decision to grant
+    and LDevID, and give hints and recommendations how to make sure this
   - clarify that the cert enrollment phase may involve additional messages
     and that BRSKI-AE replaces {{RFC8995, Section 5.9}} (except Section 5.9.4)
 <!--
