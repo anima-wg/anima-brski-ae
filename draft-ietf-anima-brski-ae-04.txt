@@ -116,12 +116,12 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
    Appendix A.  Application Examples . . . . . . . . . . . . . . . .  26
      A.1.  Rolling Stock . . . . . . . . . . . . . . . . . . . . . .  26
-     A.2.  Building Automation . . . . . . . . . . . . . . . . . . .  26
+     A.2.  Building Automation . . . . . . . . . . . . . . . . . . .  27
      A.3.  Substation Automation . . . . . . . . . . . . . . . . . .  27
-     A.4.  Electric Vehicle Charging Infrastructure  . . . . . . . .  27
+     A.4.  Electric Vehicle Charging Infrastructure  . . . . . . . .  28
      A.5.  Infrastructure Isolation Policy . . . . . . . . . . . . .  28
      A.6.  Sites with Insufficient Level of Operational Security . .  28
-   Appendix B.  History of Changes TBD RFC Editor: please delete . .  28
+   Appendix B.  History of Changes TBD RFC Editor: please delete . .  29
    Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  36
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  36
 
@@ -1290,6 +1290,11 @@ von Oheimb, et al.      Expires 14 September 2023              [Page 23]
 Internet-Draft                  BRSKI-AE                      March 2023
 
 
+   [RFC8366]  Watsen, K., Richardson, M., Pritikin, M., and T. Eckert,
+              "A Voucher Artifact for Bootstrapping Protocols",
+              RFC 8366, DOI 10.17487/RFC8366, May 2018,
+              <https://www.rfc-editor.org/info/rfc8366>.
+
    [RFC8995]  Pritikin, M., Richardson, M., Eckert, T., Behringer, M.,
               and K. Watsen, "Bootstrapping Remote Secure Key
               Infrastructure (BRSKI)", RFC 8995, DOI 10.17487/RFC8995,
@@ -1331,12 +1336,7 @@ Internet-Draft                  BRSKI-AE                      March 2023
               2: Network and application protocol requirements", ISO/
               IEC 15118-2, April 2014.
 
-   [NERC-CIP-005-5]
-              North American Reliability Council, "Cyber Security -
-              Electronic Security Perimeter", CIP 005-5, December 2013.
 
-   [OCPP]     Open Charge Alliance, "Open Charge Point Protocol 2.0.1
-              (Draft)", December 2019.
 
 
 
@@ -1345,6 +1345,13 @@ von Oheimb, et al.      Expires 14 September 2023              [Page 24]
 
 Internet-Draft                  BRSKI-AE                      March 2023
 
+
+   [NERC-CIP-005-5]
+              North American Reliability Council, "Cyber Security -
+              Electronic Security Perimeter", CIP 005-5, December 2013.
+
+   [OCPP]     Open Charge Alliance, "Open Charge Point Protocol 2.0.1
+              (Draft)", December 2019.
 
    [RFC2986]  Nystrom, M. and B. Kaliski, "PKCS #10: Certification
               Request Syntax Specification Version 1.7", RFC 2986,
@@ -1368,14 +1375,32 @@ Internet-Draft                  BRSKI-AE                      March 2023
               for TLS", RFC 5929, DOI 10.17487/RFC5929, July 2010,
               <https://www.rfc-editor.org/info/rfc5929>.
 
+   [RFC6402]  Schaad, J., "Certificate Management over CMS (CMC)
+              Updates", RFC 6402, DOI 10.17487/RFC6402, November 2011,
+              <https://www.rfc-editor.org/info/rfc6402>.
+
    [RFC7030]  Pritikin, M., Ed., Yee, P., Ed., and D. Harkins, Ed.,
               "Enrollment over Secure Transport", RFC 7030,
               DOI 10.17487/RFC7030, October 2013,
               <https://www.rfc-editor.org/info/rfc7030>.
 
+   [RFC8572]  Watsen, K., Farrer, I., and M. Abrahamsson, "Secure Zero
+              Touch Provisioning (SZTP)", RFC 8572,
+              DOI 10.17487/RFC8572, April 2019,
+              <https://www.rfc-editor.org/info/rfc8572>.
+
    [RFC8894]  Gutmann, P., "Simple Certificate Enrolment Protocol",
               RFC 8894, DOI 10.17487/RFC8894, September 2020,
               <https://www.rfc-editor.org/info/rfc8894>.
+
+
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 25]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
 
    [RFC8994]  Eckert, T., Ed., Behringer, M., Ed., and S. Bjarnason, "An
               Autonomic Control Plane (ACP)", RFC 8994,
@@ -1387,20 +1412,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
               the Secure Constrained Application Protocol", RFC 9148,
               DOI 10.17487/RFC9148, April 2022,
               <https://www.rfc-editor.org/info/rfc9148>.
-
-
-
-
-
-
-
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 25]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
    [UNISIG-Subset-137]
               UNISIG, "Subset-137; ERTMS/ETCS On-line Key Management
@@ -1437,6 +1448,16 @@ A.1.  Rolling Stock
    the Subset-137 specifying the ETRAM/ETCS online key management for
    train control systems [UNISIG-Subset-137].
 
+
+
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 26]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
 A.2.  Building Automation
 
    In building automation scenarios, a detached building or the basement
@@ -1450,14 +1471,6 @@ A.2.  Building Automation
    phone.  This data may comprise parameters and settings required in
    the operational phase of the sensors/actuators, like a component
    certificate issued by the operator to authenticate against other
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 26]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
-
    components and services.
 
    The collected data may be provided by a domain registrar already
@@ -1486,6 +1499,21 @@ A.3.  Substation Automation
    [RFC7030], while an Intelligent Electronic Device may support only
    one of them.
 
+
+
+
+
+
+
+
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 27]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
 A.4.  Electric Vehicle Charging Infrastructure
 
    For electric vehicle charging infrastructure, protocols have been
@@ -1506,14 +1534,6 @@ A.4.  Electric Vehicle Charging Infrastructure
    messages in a transport-independent way.  Authenticated self-
    containment will support this by allowing the transport without a
    separate enrollment protocol, binding the messages to the identity of
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 27]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
-
    the communicating endpoints.
 
 A.5.  Infrastructure Isolation Policy
@@ -1542,6 +1562,14 @@ A.6.  Sites with Insufficient Level of Operational Security
    an off-site backend component that has a sufficient level of
    security.
 
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 28]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
 Appendix B.  History of Changes TBD RFC Editor: please delete
 
    List of reviewers:
@@ -1555,20 +1583,6 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
    *  Rajeev Ranjan, Siemens
 
    *  Rufus Buschart, Siemens
-
-
-
-
-
-
-
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 28]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
    *  YANGDOCTORS Early review of 2021-08-15
       (https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-
@@ -1603,6 +1617,15 @@ Internet-Draft                  BRSKI-AE                      March 2023
       -  remove requirement that 'caPubs' field in CMP responses SHOULD
          NOT be used
 
+
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 29]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
       -  add paragraph in security considerations on additional use of
          TLS for CMP
 
@@ -1618,13 +1641,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
       -  improve description of CSRs and proof of possession vs. proof
          of origin
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 29]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
       -  clarify that the channel between pledge and registrar is not
          restricted to TLS, but in connection with constrained BRSKI may
@@ -1658,6 +1674,14 @@ Internet-Draft                  BRSKI-AE                      March 2023
       -  streamline the item on EST in Section 3.2: "Solution Options
          for Proof of Identity",
 
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 30]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
       -  various minor editorial improvements like making the wording
          more consistent
 
@@ -1674,13 +1698,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
          between pledge and registrar, the TLS channel established
          between these two (via the join proxy) is used and the
          enrollment protocol MUST support this.
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 30]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
       -  clarify that the enrollment protocol chosen between pledge and
          registrar MUST also be used for the upstream enrollment
@@ -1713,6 +1730,14 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
       -  various small other text improvements as suggested/provided
 
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 31]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
    *  Remove the tentative informative instantiation to EST-fullCMC
 
    *  Move Eliot Lear from co-author to contributor, add him to the
@@ -1729,14 +1754,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
    *  CMP: add reference to CoAP Transport for CMPV2 and Constrained
       BRSKI
-
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 31]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
    *  Include venue information
 
@@ -1769,6 +1786,14 @@ Internet-Draft                  BRSKI-AE                      March 2023
    *  Move the remaining text of section 3 as two new sub-sections of
       section 1.
 
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 32]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
    From IETF draft 03 -> IETF draft 04:
 
    *  Moved UC2-related parts defining the pledge in responder mode to a
@@ -1785,14 +1810,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
    *  Housekeeping, deleted open issue regarding YANG voucher-request in
       UC2 as voucher-request was enhanced with additional leaf.
-
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 32]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
    *  Included open issues in YANG model in UC2 regarding assertion
       value agent-proximity and CSR encapsulation using SZTP sub
@@ -1824,6 +1841,15 @@ Internet-Draft                  BRSKI-AE                      March 2023
       agent authentication towards registrar (issue #7) in the security
       considerations.
 
+
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 33]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
    *  Introduction of reference to agent signing certificate using SKID
       in agent signed data (issue #11).
 
@@ -1840,15 +1866,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
    *  Update of scope in Section 1.1 to include in which the pledge acts
       as a server.  This is one main motivation for use case 2.
-
-
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 33]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
    *  Rework of use case 2 to consider the transport between the pledge
       and the pledge-agent.  Addressed is the TLS channel establishment
@@ -1880,6 +1897,15 @@ Internet-Draft                  BRSKI-AE                      March 2023
       pledge-agent use case UC2, e.g. to accommodate distribution of CA
       certificates.
 
+
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 34]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
    *  Updated CMP example in Section 5 to use Lightweight CMP instead of
       CMP, as the draft already provides the necessary /.well-known
       endpoints.
@@ -1897,14 +1923,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
       have a better distinction between requirements, use case
       description, and solution description as separate sections.
       History moved to appendix.
-
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 34]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
    From individual version 02 -> 03:
 
@@ -1936,6 +1954,14 @@ Internet-Draft                  BRSKI-AE                      March 2023
    *  Definition of the addressing approach used in BRSKI to allow for
       support of multiple enrollment protocols in Section 4.3.  This
       section also contains a first discussion of an optional discovery
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 35]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
       mechanism to address situations in which the registrar supports
       more than one enrollment approach.  Discovery should avoid that
       the pledge performs a trial and error of enrollment protocols.
@@ -1951,16 +1977,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
    *  Update of examples, specifically for building automation as well
       as two new application use cases in Appendix A.
-
-
-
-
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 35]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
 
    *  Deletion of asynchronous interaction with MASA to not complicate
       the use case.  Note that the voucher exchange can already be
@@ -1994,6 +2010,14 @@ Authors' Addresses
    David von Oheimb (editor)
    Siemens AG
    Otto-Hahn-Ring 6
+
+
+
+von Oheimb, et al.      Expires 14 September 2023              [Page 36]
+
+Internet-Draft                  BRSKI-AE                      March 2023
+
+
    81739 Munich
    Germany
 
@@ -2011,13 +2035,6 @@ Authors' Addresses
    URI:   https://www.siemens.com/
 
 
-
-
-von Oheimb, et al.      Expires 14 September 2023              [Page 36]
-
-Internet-Draft                  BRSKI-AE                      March 2023
-
-
    Hendrik Brockhaus
    Siemens AG
    Otto-Hahn-Ring 6
@@ -2026,23 +2043,6 @@ Internet-Draft                  BRSKI-AE                      March 2023
 
    Email: hendrik.brockhaus@siemens.com
    URI:   https://www.siemens.com/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
