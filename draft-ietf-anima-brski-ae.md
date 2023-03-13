@@ -519,12 +519,12 @@ The key element of BRSKI-AE is that the authorization of a certification request
 MUST be performed based on an authenticated self-contained object.
 The certification request is bound in a self-contained way
 to a proof of origin based on the IDevID.
-Consequently, authentication and authorization of the certification request
+Consequently, the certification request may be transferred using any mechanism
+or protocol. Authentication and authorization of the certification request
 can be done by the domain registrar and/or by backend domain components.
 As mentioned in {{sup-env}}, these components may be offline or off-site.
 The registrar and other on-site domain components
 may have no or only temporary (intermittent) connectivity to them.
-The certification request MAY also be piggybacked on another protocol.
 
 This leads to generalizations in the
 placement and enhancements of the logical elements as shown in {{uc1figure}}.
@@ -545,16 +545,16 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 |        |     .                                       .  | BRSKI-
 |        |     .  +-------+          +--------------+  .  | MASA
 | Pledge |     .  | Join  |          | Domain       |<----+
-|        |     .  | Proxy |          | Registrar    |  .
-|        |<------>|.......|<-------->| with         |  .
-|        |     .  |       |          | LRA or RA    |  .
+|        |<------>| Proxy |<-------->| Registrar w/ |  .
+|        |     .  |.......|          | LRA or RA    |  .
 | IDevID |     .  +-------+          +--------------+  .
 |        |   BRSKI-AE over TLS                ^        .
-|        |     .                              |        .
-+--------+     ...............................|.........
++--------+   using, e.g., [LwCMP]             |        .
+               .                              |        .
+               ...............................|.........
             on-site (local) domain components |
-                                              | e.g., RFC 4210,
-                                              |       RFC 7030, ...
+                                              | e.g., [LwCMP]
+                                              |
  .............................................|..................
  . Public-Key Infrastructure                  v                 .
  . +---------+     +------------------------------------------+ .
@@ -779,6 +779,8 @@ Messages should be sent as soon as sufficient transfer capacity is available.
 The label `[OPTIONAL forwarding]` in {{enrollfigure}}
 means that on receiving from a pledge a request message of the given type,
 the registrar MAY answer the request directly itself.
+In this case, it MUST authenticate its responses with the same credentials
+as used for authenticating itself at TLS level for the voucher exchange.
 Otherwise the registrar MUST forward the request to the PKI RA
 and forward any resulting response back to the pledge.
 
@@ -815,9 +817,9 @@ depicted in {{enrollfigure}}.
   pinned-domain-cert (which is contained in the voucher
   and may be just the domain registrar certificate).
 
-* CA Certs Response (2): This MUST contain the current root CA certificate,
-  which typically is the LDevID trust anchor, and any additional certificates
-  that the pledge may need to validate certificates.
+* CA Certs Response (2): This MUST contain any intermediate CA certificates
+  that the pledge may need to validate certificates
+  and MAY contain the LDevID trust anchor.
 
 * Attribute Request (3): Typically, the automated bootstrapping occurs
   without local administrative configuration of the pledge.
@@ -839,12 +841,12 @@ depicted in {{enrollfigure}}.
 
 * Certificate Response (6): This MUST contain on success
   the requested certificate and MAY include further information,
-  like certificates of intermediate CAs.
+  like certificates of intermediate CAs and any additional trust anchors.
 
 * Certificate Confirm (7): An optional confirmation sent
   after the requested certificate has been received and validated.
-  It MUST contain a positive or negative confirmation by the pledge to the PKI
-  whether the certificate was successfully enrolled and fits its needs.
+  If sent, it MUST contain a positive or negative confirmation by the pledge to
+  the PKI whether the certificate was successfully enrolled and fits its needs.
 
 * PKI/Registrar Confirm (8): An acknowledgment by the PKI
   that MUST be sent on reception of the Cert Confirm.
@@ -963,30 +965,28 @@ the subset of CMP defined there is sufficient for the functionality needed here.
 When using CMP, the following specific implementation requirements apply
 (cf. {{enrollfigure}}).
 
-* CA Certs Request
-  * Requesting CA certificates over CMP is OPTIONAL.<br>
+* CA Certs Request (1) and Response (2):<br>
+  Requesting CA certificates over CMP is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.3.1}}.
 
-* Attribute Request
-  * Requesting certificate request attributes over CMP is OPTIONAL.<br>
+* Attribute Request (3) and Response (4):<br>
+  Requesting certificate request attributes over CMP is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.3.3}}.<br>
-  Note that alternatively the registrar MAY modify
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.3.3}}.
+
+  Alternatively, the registrar MAY modify
   the contents of requested certificate contents
   as specified in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.2.3.2}}.
 
-* Certificate Request
-  * Proof of possession SHALL be provided as defined in
-  the Lightweight CMP Profile
+* Certificate Request (5) and Response (6):<br>
+  Certificates SHALL be requested and provided
+  as specified in the Lightweight CMP Profile
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}} (based on CRMF) or
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.4}} (based on PKCS#10).
-  <br>
-<!-- removed because this requirement is not really needed:
-  In certificate response messages the `caPubs` field, which generally in CMP
-  may convey CA certificates to the requester, SHOULD NOT be used.
--->
-  * Proof of identity SHALL be provided by using signature-based
+
+  Proof of possession SHALL be provided in a way suitable for the key type.
+  Proof of identity SHALL be provided by signature-based
   protection of the certification request message
   as outlined in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 3.2}}
   using the IDevID secret.
@@ -999,39 +999,47 @@ When using CMP, the following specific implementation requirements apply
   while retaining the certification request
   with its proof of origin provided by the pledge signature.
 
-* Certificate Confirm
-  * Explicit confirmation of new certificates to the RA/CA
-  MAY be used as specified in the Lightweight CMP Profile
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}}.<br>
-  Note that independently of certificate confirmation within CMP,
+  In case additional trust anchors (besides the pinned-domain-cert)
+  need to be conveyed to the pledge,
+  this SHOULD be done in the `caPubs` field of the certificate response message
+  rather than in a CA Certs Response.
+
+* Certificate Confirm (7) and PKI/Registrar Confirm (8):<br>
+  Explicit confirmation of new certificates to the RA/CA
+  MAY be used as specified in
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}}.
+
+  Note: Independently of certificate confirmation within CMP,
   enrollment status telemetry with the registrar will be performed
   as described in BRSKI {{RFC8995, Section 5.9.4}}.
 
 * If delayed delivery of responses
   (for instance, to support asynchronous enrollment) within CMP is needed,
-  it SHALL be performed as specified in the Lightweight CMP Profile
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.4}} and
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.1.2}}.
+  it SHALL be performed as specified in
+  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.4 and Section 5.1.2}}.
 
 Note:
 The way in which messages are exchanged between the registrar and backend PKI
 components (i.e., PKI RA or PKI CA) is out of scope of this document.
 Due to the general independence of CMP of message transfer, it can be freely
 chosen according to the needs of the application scenario (e.g., using HTTP),
-while security considerations apply, see {{sec-consider}}.
+while security considerations apply, see {{sec-consider}}, and
+guidance can be found in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 6}}.
 
+<!--
 CMP Updates {{I-D.ietf-lamps-cmp-updates}} and
 the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}
 provide requirements for interoperability.
+-->
 
 BRSKI-AE with CMP can also be combined with
 Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}},
 using CoAP for enrollment message transport as described by
-CoAP Transport for CMPV2 {{I-D.ietf-ace-cmpv2-coap-transport}}.
+CoAP Transport for CMP {{I-D.ietf-ace-cmpv2-coap-transport}}.
 In this scenario, of course the EST-specific parts
 of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
-## Other Instantiations of BRSKI-AE
+## Support of Other Enrollment Protocols
 
 Further instantiations of BRSKI-AE can be done.  They are left for future work.
 
@@ -1099,8 +1107,8 @@ discovery and voucher exchange as well as for the status exchange information.
 In particular,
 even if the registrar delegates part or all of its RA role
 during certificate enrollment to a separate system,
-it still must be made sure that the registrar decides
-about accepting or declining a request to join the domain,
+it still must be made sure that the registrar takes part in the decision
+on accepting or declining a request to join the domain,
 as required in {{RFC8995, Section 5.3}}.
 As this pertains also to obtaining a valid domain-specific certificate,
 it must be made sure that a pledge cannot circumvent the registrar
@@ -1123,7 +1131,7 @@ certification request by forwarding the request to a PKI entity using a
 connection authenticated with a certificate containing an id-kp-cmcRA extension.
 
 When CMP is used, the security considerations laid out in the
-Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
 
 Note that CMP messages are not encrypted.
 This may give eavesdroppers insight on which devices are bootstrapped in the
@@ -1312,6 +1320,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
   - the certificate enrollment protocol chosen between pledge and registrar
     needs to be used also for the upstream enrollment exchange with the PKI only
     if end-to-end authentication shall be achieved across the registrar to the PKI.
+  - add that with CMP, further trust anchors SHOULD be transported via `caPubs`
   - remove the former Appendix A: "Using EST for Certificate Enrollment",
     moving relevant points to the list of scenarios in
     {{sup-env}}: "Supported Scenarios",
