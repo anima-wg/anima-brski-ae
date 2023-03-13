@@ -1150,9 +1150,8 @@ for his contributions as a co-author at an earlier draft stage.
 We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
 
-Moreover, we thank Michael Richardson, Rajeev Ranjan, and Rufus Buschart
-for their reviews.
-
+Moreover, we thank Toerless Eckert, Barry Lea, Michael Richardson, Rajeev
+Ranjan, and Rufus Buschart for their reviews with suggestions for improvements.
 
 --- back
 
@@ -1273,9 +1272,11 @@ an off-site backend component that has a sufficient level of security.
 
 # History of Changes TBD RFC Editor: please delete {#app_history}
 
-List of reviewers (besides the authors):
+List of reviewers:
 
 * Toerless Eckert (document shepherd)
+
+* Barry Lea (SECDIR Early Review)
 
 * Michael Richardson
 
@@ -1583,7 +1584,7 @@ LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae pkcs
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
 LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI
 LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR
-LocalWords:
-LocalWords:
-LocalWords:
+LocalWords: 
+LocalWords: 
+LocalWords: 
 -->
