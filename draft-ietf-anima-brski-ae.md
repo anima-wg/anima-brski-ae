@@ -232,8 +232,8 @@ BRSKI-AE is intended to be used situations like the following.
   - certificate requests for types of keys that do not support signing,
   such as KEM and key agreement keys, which is not supported by EST because
   it uses PKCS#10 CSRs expecting proof-of-possession via a self-signature
-  - pledge implementations using security libraries not providing EST support
-  or a TLS library that does not support providing the tls-unique value
+  - pledge implementations using security libraries not providing EST support or
+  a TLS library that does not support providing the so-called tls-unique value
   {{RFC5929}} needed by EST for strong binding of the source authentication
 
 * no full RA functionality being available on-site in the target domain, while
@@ -368,21 +368,6 @@ target domain:
 
 # Basic Requirements and Mapping to Solutions {#req-sol}
 
-<!-- redundant with {{sup-env}}:
- ## Basic Requirements {#basic-reqs}
-
-There are two main drivers for the definition of BRSKI-AE:
-
-* The solution architecture may already use or require using
-  a certificate management protocol other than EST.  Therefore,
-  this other protocol should be usable for requesting LDevID certificates.
-
-* The domain registrar may not be the (final) point
-  that authenticates and authorizes certification requests,
-  and the pledge may not have a direct connection to it.
-  Therefore, certification requests should be authenticated self-contained objects.
--->
-
 Based on the intended target scenarios described in {{sup-env}} and
 the application examples described in {{app-examples}}, the following
 requirements are derived to support authenticated self-contained objects
@@ -474,6 +459,16 @@ based on existing technology described in IETF documents:
     with a Full PKI Request message sent to the `"/fullcmc"` endpoint.
     This would allow for source authentication at message level, such that
     the registrar could forward it to external RAs in a meaningful way.
+    This approach is so far not sufficiently described
+    and likely has not been implemented.
+
+<!--
+Note that, besides the existing enrollment protocols, there is
+ongoing work in the ACE WG to define an encapsulation of EST messages
+in OSCORE, which will result in a TLS-independent way of protecting EST.
+This approach {{draft.selander-ace-coap-est-oscore}}
+may be considered as a further variant.
+-->
 
   * SCEP {{RFC8894}} supports using a shared secret (passphrase) or
     an existing certificate to protect CSRs based on
@@ -497,15 +492,6 @@ based on existing technology described in IETF documents:
     based on CMS {{RFC5652}} and signed with an existing IDevID secret.
     Thus
     also CMC does not rely on the security of the underlying message transfer.
-
-<!--
-Note that, besides the existing enrollment protocols, there is
-ongoing work in the ACE WG to define an encapsulation of EST messages in
-OSCORE, which will result in a TLS-independent way of protecting EST.
-This approach {{I-D.selander-ace-coap-est-oscore}}
-may be considered as a further variant.
--->
-
 
 # Adaptations to BRSKI {#uc1}
 
@@ -1088,12 +1074,11 @@ which adapt BRSKI {{RFC8995, Section 5.9.3}}:
   and the pledge will repeat the initial Full PKI Request later.
 -->
 
-
 <!--
 Note that the work in the ACE WG described in
-{{I-D.selander-ace-coap-est-oscore}} may be considered
-here as well, as it also addresses the encapsulation of EST in a way to
-make it independent of the underlying TLS channel using OSCORE,
+{{draft-selander-ace-coap-est-oscore}} may be considered here as well,
+as it also addresses the encapsulation of EST in a way that
+makes it independent of the underlying TLS channel using OSCORE,
 which also entails that authenticated self-contained objects are used.
 -->
 
@@ -1159,70 +1144,6 @@ for their reviews.
 
 
 --- back
-
-<!--
- # Using EST for Certificate Enrollment {#using-est}
-
-When using EST with BRSKI, pledges interact via TLS with the domain registrar,
-which acts both as EST server and as the PKI RA.
-The TLS channel is mutually authenticated,
-where the pledge uses its IDevID certificate issued by its manufacturer.
-
-Using BRSKI-EST has the advantage that the mutually authenticated TLS
-channel established between the pledge and the registrar can be reused
-for protecting the message exchange needed for enrolling the LDevID certificate.
-This strongly simplifies the implementation of the enrollment message exchange.
-
-Yet the use of TLS has the limitation that this cannot provide auditability
-nor end-to-end authentication of the CSR by the pledge at a remote PKI RA/CA
-because the TLS session is transient and terminates at the registrar.
-This is a problem in particular if the enrollment is done via multiple hops,
-part of which may not even be network-based.
-
-With enrollment protocols that use for CSRs authenticated self-contained objects,
-logs of CSRs can be audited because CSRs can be third-party authenticated
-in retrospect, whereas TLS connections can not.
-
-Furthermore, the BRSKI registrars in each site have to be hardened so that they
-can be trusted to be the TLS initiator of the EST connection to the PKI RA/CA,
-and in result, their keying material needs to be managed with more security
-care than that of pledges because of trust requirements,
-for example they need to have the id-kp-cmcRA extended key usage attribute
-according to {{RFC7030}}, see {{RFC6402}}.
-Impairment to a BRSKI registrar can result in arbitrarily
-many fake certificate registrations because real authentication and
-authorization checks can then be circumvented.
-
-Relying on TLS authentication of the TLS client, which is supposed to
-be the certificate requester, for a strong proof of origin for the CSR
-is conceptually non-trivial and can have implementation challenges.
-EST has the option to include in the certification request, which is a PKCS#10
-CSR, the so-called tls-unique value {{RFC5929}} of the underlying TLS channel.
-This binding of the proof of identity of the TLS client to the proof of
-possession for the private key requires specific support by TLS implementations.
-
-The registrar terminates the security association with the pledge at
-TLS level and thus the binding between the certification request and
-the authentication of the pledge. In BRSKI {{RFC8995}}, the registrar
-typically doubles as the PKI RA and thus also authenticates the CSR
-and filters/denies requests from non-authorized pledges.
-If the registrar cannot do the final authorization checks on the CSR and needs
-to forward it to the PKI RA, there is no end-to-end proof of identity and thus
-the decision of the PKI RA must trust on the pledge authentication performed
-by the registrar.  If successfully authorized, the CSR is passed to the PKI CA,
-which will issue the domain-specific certificate (LDevID).
-If in this setup the protocol between the on-site registrar and the remote PKI
-RA is also EST, this approach requires online or at least intermittent
-connectivity between registrar and PKI RA, as well as availability of the PKI RA
-for performing the final authorization decision on the certification request.
-
-A further limitation of using EST as the certificate enrollment protocol is that
-due to using PKCS#10 structures in enrollment requests,
-the only possible proof-of-possession method is a self-signature, which
-excludes requesting certificates for key types that do not support signing.
-CMP, for instance, has special proof-of-possession options for key agreement
-and KEM keys, see {{RFC4210, Section 5.2.8}}.
--->
 
 # Application Examples {#app-examples}
 
@@ -1648,8 +1569,8 @@ LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo IDevID
 LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae pkcs
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
 LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI
+LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR
+LocalWords:
+LocalWords:
+LocalWords:
 -->
-<!--  LocalWords:  PoP PoI anufacturer uthorized igning uthority
- -->
-<!--  LocalWords:  SECDIR
- -->
