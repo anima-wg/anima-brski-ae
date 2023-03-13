@@ -377,8 +377,8 @@ At least the following properties are required for a certification request:
 
 * Proof of possession: demonstrates access to the private
   key corresponding to the public key contained in a certification request.
-  This is typically achieved by a self-signature
-  using the corresponding private key.
+  This is typically achieved by a self-signature using the corresponding
+  private key but can also be achieved indirectly, see {{RFC4210, Section 4.3}}.
 
 * Proof of identity, also called proof of origin:
   provides data origin authentication of the certification request.
@@ -392,44 +392,47 @@ based on existing technology described in IETF documents:
 
 ## Solution Options for Proof of Possession {#solutions-PoP}
 
-  Certification request objects: Certification requests are
+  Certificate signing request (CSR) objects: CSRs are
   data structures protecting only the integrity of the contained data
   and providing proof of possession for a (locally generated) private key.
-  Examples for certification request data structures are:
+  Important types of CSR data structures are:
 
-  * PKCS#10 {{RFC2986}}. This certification request structure is self-signed to
-    protect its integrity and to prove possession of the private key
-    that corresponds to the public key included in the request.
+  * PKCS#10 {{RFC2986}}. This very common form of CSR is
+    self-signed to protect its integrity and to prove possession of
+    the private key that corresponds to the public key included in the request.
 
-  * CRMF {{RFC4211}}. This certificate request message format also supports
-    integrity protection and proof of possession,
-    typically by a self-signature generated over (part of) the structure
+  * CRMF {{RFC4211}}. This less common but more general CSR format
+    supports several ways of integrity protection and proof of possession-
+    Typically a self-signature is used generated over (part of) the structure
     with the private key corresponding to the included public key.
-    CRMF also supports further proof-of-possession methods
-    for types of keys that do not support any signature algorithm.
+    CRMF also supports further proof-of-possession methods for types of keys
+    that do not have signing capability. For details see {{RFC4211, Section 4}}.
 
-  The integrity protection of certification request fields includes the public
-  key because it is part of the data signed by the corresponding private key.
-  Yet note that for the above examples this is not sufficient to provide data
-  origin authentication, i.e., proof of identity. This extra property can be
+  Note: The integrity protection of CSRs includes the public key
+  because it is part of the data signed by the corresponding private key.
+  Yet this signature does not provide data origin authentication, i.e.,
+  proof of identity of the requester because the key pair involved is fresh.
+  <!-- already covered by the next paragraph:
+  This extra property can be
   achieved by an additional binding to the IDevID of the pledge.
   This binding to the source authentication supports the
   authorization decision of the certification request.
-  The binding of data
-  origin authentication to the certification request may be
-  delegated to the protocol used for certificate management.
+  -->
 
 ## Solution Options for Proof of Identity {#solutions-PoI}
 
-  Binding the certification request to an existing authenticated
-  credential (here, the IDevID certificate) enables proof of identity
-  and, based on it, an authorization of the certification request.
-  The binding may be achieved through security options in an
+  Binding a certificate signing request (CSR) to an existing authenticated
+  credential (the BRSKI context, the IDevID certificate) enables
+  proof of origin, which in turn supports an authorization decision on the CSR.
+
+  The binding of data origin authentication to the CSR
+  is typically delegated to the protocol used for certificate management.
+  This binding may be achieved through security options in an
   underlying transport protocol such as TLS if the authorization of the
-  certification request is (completely) done at the next communication hop.
-  This binding can also be done in a transport-independent way by wrapping the
-  certification request with a signature employing an existing IDevID.
-  In the BRSKI context, this will be the IDevID.
+  certification request is (sufficiently) done at the next communication hop.
+  Depending on the key type, the binding can also be done in a stronger,
+  transport-independent way by wrapping the CSR with a signature.
+
   This requirement is addressed by existing enrollment protocols
   in various ways, such as:
 
@@ -1292,6 +1295,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
   - significantly cut down the introduction because the original motivations and
     most explanations are no more needed and would just make it lengthy to read
   - sort out asynchronous vs. offline transfer, offsite  vs. backend components
+  - improve description of CSRs and proof of possession vs. proof of origin
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
     Also move the references to Constrained BRSKI and CoAPS to better contexts.
