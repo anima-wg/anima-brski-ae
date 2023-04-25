@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-04
+docname: draft-ietf-anima-brski-ae-05
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -20,8 +20,8 @@ pi:
   iprnotified: 'no'
   strict: 'yes'
 author:
-- ins: D. von Oheimb
-  name: David von Oheimb
+- ins: D. von&nbsp;Oheimb
+  name: David von&nbsp;Oheimb
   role: editor
   org: Siemens AG
   abbrev: Siemens
@@ -85,9 +85,13 @@ informative:
   I-D.ietf-ace-cmpv2-coap-transport:
   BRSKI-AE-overview:
     title: 'BRSKI-AE Protocol Overview'
-    date: April 2022
+    author:
+    - name: S.&nbsp;Fries
+    - ins: D. von&nbsp;Oheimb
+    date: March 2023
     format:
-      PNG: https://raw.githubusercontent.com/anima-wg/anima-brski-ae/main/BRSKI-AE_overview.png
+      PDF: https://datatracker.ietf.org/meeting/116/materials/slides-116-anima-update-on-brski-ae-alternative-enrollment-protocols-in-brski-00
+    ann: Graphics on slide 4 of the BRSKI-AE draft 04 status update at IETF 116.
   RFC2986:
   RFC4211:
   RFC5272:
@@ -172,23 +176,24 @@ This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 
 This specification carries over the main characteristics of BRSKI, namely:
 
-* The pledge is assumed to have got IDevID credentials during production,
-with which it can authenticate itself to domain components such as the registrar
-and to the MASA, the Manufacturer Authorized Signing Authority.
+* The pledge is assumed to have got IDevID credentials during its production.
+It uses them to authenticate itself to the MASA, the Manufacturer Authorized
+Signing Authority, and to the registrar, the access point of the target domain,
+and to possibly further components of the domain where it will be operated.
 
-* The pledge first obtains via the voucher exchange a trust anchor for
-authenticating the domain registrar and other entities in the target domain.
+* The pledge first obtains via the voucher exchange a trust anchor
+for authenticating entities in the domain such as the domain registrar.
 
-* The pledge then obtains for a device private key, called the LDevID secret,
-a domain-specific device certificate, called the LDevID certificate,
+* The pledge then generates a device private key, called the LDevID secret,
+and obtains a domain-specific device certificate, called the LDevID certificate,
 along with its certificate chain.
 
 The goals of BRSKI-AE are to provide an enhancement of BRSKI for
 LDevID certificate enrollment using, alternatively to EST, a protocol that
 
-* support end-to-end authentication over multiple hops
+* supports end-to-end authentication over multiple hops
 
-* enable secure message exchange with any kind of transfer,
+* enables secure message exchange over any kind of transfer,
   including asynchronous delivery.
 
 Note: The BRSKI voucher exchange of the pledge with the registrar and MASA
@@ -234,14 +239,14 @@ BRSKI-AE is intended to be used situations like the following.
   {{RFC5929}} needed by EST for strong binding of the source authentication
 
 * no full RA functionality being available on-site in the target domain, while
-  connectivity to an off-site PKI RA may be intermittent or entirely offline.
+  connectivity to an off-site RA may be intermittent or entirely offline.
   <!-- in the latter case a message store-and-forward mechanism is needed. -->
 
 * authoritative actions of a local RA at the registrar being not sufficient
   for fully and reliably authorizing pledge certification requests, which
   may be due to missing data access or due to an insufficient level of security,
   for instance regarding the local storage of private keys
-  <!-- Final authorization then is done by a PKI RA residing in the backend. -->
+  <!-- Final authorization then is done by a RA residing in the backend. -->
 
 
 ## List of Application Examples {#list-examples}
@@ -272,11 +277,11 @@ based on the following examples of operational environments:
 
 This document relies on the terminology defined in {{RFC8995}}, {{RFC5280}},
 and {{IEEE_802.1AR-2018}}.
-The following terms are defined partly in addition.
+The following terms are described partly in addition.
 
 asynchronous communication:
 : time-wise interrupted delivery of messages,
-  here between a pledge and a registrar or PKI component
+  here between a pledge and the registrar or an RA
 
 authenticated self-contained object:
 : data structure that is cryptographically bound to the identity of
@@ -293,35 +298,14 @@ BRSKI-AE:
   is replaced by enrollment protocols that support end-to-end authentication
   of the pledge to the RA, such as Lightweight CMP.
 
-CA:
-: Certification Authority, which is the PKI component that issues certificates
-  and provides certificate status information
-
-domain:
-: the set of all entities that have a trust anchor in common,
-  independent of where the entities are deployed.
-  This term is often used here as a shorthand for the target domain of a pledge.
-
-domain registrar:
-  the access point of the target domain for onboarding new devices, the pledges.
-  It decides whether pledges acceptable in the domain and
-  facilitate their communication with their MASA and with the domain PKI.
-
-IDevID:
-: Initial Device IDentifier of a pledge, provided by the manufacturer
-  and comprising a private key and the related X.509 certificate with its chain
-
-LDevID:
-: Locally significant Device IDentifier of a pledge, provided by its target domain
-  and comprising a private key and the related X.509 certificate with its chain
-
 local RA (LRA):
 : a subordinate RA that is close to entities being enrolled and separate from
-  a subsequent RA.  In BRSKI-AE it is needed if a backend PKI RA is used,
+  a subsequent RA.  In BRSKI-AE it is needed if a backend RA is used,
   and in this case the LRA is co-located with the registrar.
 
-MASA: Manufacturer Authorized Signing Authority, providing to pledges via the
-registrar a voucher containing a trust anchor for the target domain
+LwCMP:
+: Lightweight Certificate Management Protocol (CMP)
+  as specified in {{I-D.ietf-lamps-lightweight-cmp-profile}}
 
 on-site:
 : locality of a component or service or functionality
@@ -333,15 +317,10 @@ off-site:
   This may be a central site or a cloud service,
   to which connection may be intermittent.
 
-PKI CA:
-: a CA in the backend of the target domain
-
-PKI RA:
-: an RA in the backend of the target domain
-
 pledge:
 : device that is to be bootstrapped to a target domain.
-  It requests an LDevID using an IDevID installed by its manufacturer.
+  It requests an LDevID, a Locally significant Device IDentifier,
+  using IDevID credentials installed by its manufacturer.
 
 RA:
 : Registration Authority, the PKI component to which
@@ -350,7 +329,7 @@ RA:
   on certification requests
 
 registrar:
-  short for domain registrar
+: short for domain registrar
 
 site:
 : the locality where an entity, such as a pledge, registrar, or PKI component
@@ -442,16 +421,16 @@ based on existing technology described in IETF documents:
     resulting from the TLS handshake.  As this is optionally supported
     by the EST `"/simpleenroll"` endpoint used in BRSKI
     and the TLS handshake employed in BRSKI includes certificate-based client
-    authentication of the pledge with its IDevID,  the proof of pledge identity
-    being an authenticated TLS client can be bound to the CSR.
+    authentication of the pledge with its IDevID credentials, the proof of
+    pledge identity being an authenticated TLS client can be bound to the CSR.
 
     Yet this binding is only valid in the context of the TLS session
     established with the registrar acting as the EST server and typically also
     as an RA.  So even such a cryptographic binding of the authenticated
     pledge identity to the CSR is not visible nor verifiable to
-    authorization points outside the registrar, such as a PKI RA in the backend.
+    authorization points outside the registrar, such as a RA in the backend.
     What the registrar must do is to authenticate and pre-authorize the pledge
-    and to indicate this to the PKI RA
+    and to indicate this to the RA
     by signing the forwarded certificate request with its private key and
     a related certificate that has the id-kp-cmcRA extended key usage attribute.
 
@@ -515,7 +494,7 @@ interacts with the MASA as usual for voucher request and response processing.
 The key element of BRSKI-AE is that the authorization of a certification request
 MUST be performed based on an authenticated self-contained object.
 The certification request is bound in a self-contained way
-to a proof of origin based on the IDevID.
+to a proof of origin based on the IDevID credentials.
 Consequently, the certification request may be transferred using any mechanism
 or protocol. Authentication and authorization of the certification request
 can be done by the domain registrar and/or by backend domain components.
@@ -555,8 +534,8 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
  .............................................|..................
  . Public-Key Infrastructure                  v                 .
  . +---------+     +------------------------------------------+ .
- . |         |<----+ Registration Authority                   | .
- . | PKI CA  +---->| PKI RA (unless part of Domain Registrar) | .
+ . |         |<----+   Registration Authority                 | .
+ . |    CA   +---->|   RA (unless part of Domain Registrar)   | .
  . +---------+     +------------------------------------------+ .
  ................................................................
          backend (central or off-site) domain components
@@ -588,16 +567,16 @@ of the pledge shown in {{uc1figure}}.
 
   2. Rather than having full RA functionality, the registrar MAY act as
      a local registration authority (LRA) and delegate part of its involvement
-     in certificate enrollment to a backend RA, called PKI RA.
+     in certificate enrollment to a backend RA, called RA.
      In such scenarios the registrar optionally checks certification requests
-     it receives from pledges and forwards them to the PKI RA. The RA performs
+     it receives from pledges and forwards them to the RA. The RA performs
      the remaining parts of the enrollment request validation and authorization.
      On the way back, the registrar forwards responses by the PKI
      to the pledge on the same channel.
 
      Note:
      In order to support end-to-end authentication of the pledge across the
-     registrar to the PKI RA, the certification request structure signed by
+     registrar to the RA, the certification request structure signed by
      the pledge needs to be retained by the registrar,
      and the registrar cannot use for its communication with
      the PKI a enrollment protocol different to the one used by the pledge.
@@ -609,7 +588,7 @@ of the pledge shown in {{uc1figure}}.
      also in case that the RA is not part of the registrar
      it MUST be guaranteed, like in BRSKI, that the RA accepts
      certification requests for LDevIDs only with the consent of the registrar.
-     See {{sec-consider}}} for details how this can be achieved.
+     See {{sec-consider}} for details how this can be achieved.
 
 <!-- is already covered by paragraph a little further below:
      Note:
@@ -646,15 +625,15 @@ the vendor or manufacturer outside the target domain.
 The following list describes backend target domain components,
 which may be located on-site or off-site in the target domain.
 
-* PKI RA: performs centralized certificate management functions
+* RA: performs centralized certificate management functions
   as a public-key infrastructure for the domain operator.
   As far as not already done by the domain registrar, it performs the final
   validation and authorization of certification requests.  Otherwise,
-  the RA co-located with the domain registrar directly connects to the PKI CA.
+  the RA co-located with the domain registrar directly connects to the CA.
 
-* PKI CA, also called domain CA: generates domain-specific certificates
+* CA, also called domain CA: generates domain-specific certificates
   according to certification requests that have been
-  authenticated and authorized by the registrar and/or and an extra PKI RA.
+  authenticated and authorized by the registrar and/or and an extra RA.
 
 Based on the diagram in BRSKI {{RFC8995, Section 2.1}} and the architectural
 changes, the original protocol flow is divided into four phases
@@ -778,7 +757,7 @@ means that on receiving from a pledge a request message of the given type,
 the registrar MAY answer the request directly itself.
 In this case, it MUST authenticate its responses with the same credentials
 as used for authenticating itself at TLS level for the voucher exchange.
-Otherwise the registrar MUST forward the request to the PKI RA
+Otherwise the registrar MUST forward the request to the RA
 and forward any resulting response back to the pledge.
 
 Note:
@@ -875,7 +854,7 @@ BRSKI-AE provides generalizations to the addressing scheme defined in
 BRSKI {{RFC8995, Section 5}} to accommodate alternative enrollment protocols
 that use authenticated self-contained objects for certification requests.
 As this is supported by various existing enrollment protocols,
-they can be employed without modifications to existing PKI RAs/CAs
+they can be employed without modifications to existing RAs/CAs
 supporting the respective enrollment protocol (see also {{exist_prot}}).
 
 The addressing scheme in BRSKI for certification requests and
@@ -947,20 +926,21 @@ and the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
 
 # Instantiation to Existing Enrollment Protocols {#exist_prot}
 
-This section maps the requirements to support proof of possession and
-proof of identity to selected existing enrollment protocols
-and provides further aspects of instantiating them in BRSKI-AE.
+This section maps the generic requirements to support proof of possession
+and proof of identity to selected existing certificate enrollment protocols
+and specifies further aspects of using such enrollment protocols in BRSKI-AE.
 
 ## BRSKI-CMP: Instantiation to CMP {#brski-cmp-instance}
 
 Instead of referring to CMP
 as specified in {{RFC4210}} and {{I-D.ietf-lamps-cmp-updates}},
-this document refers to the Lightweight CMP Profile
+this document refers to the LwCMP Profile
 {{I-D.ietf-lamps-lightweight-cmp-profile}} because
 the subset of CMP defined there is sufficient for the functionality needed here.
 
-When using CMP, the following specific implementation requirements apply
-(cf. {{enrollfigure}}).
+When using CMP, adherence to
+the LwCMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}} is mandatory.
+In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
 * CA Certs Request (1) and Response (2):<br>
   Requesting CA certificates over CMP is OPTIONAL.<br>
@@ -978,7 +958,7 @@ When using CMP, the following specific implementation requirements apply
 
 * Certificate Request (5) and Response (6):<br>
   Certificates SHALL be requested and provided
-  as specified in the Lightweight CMP Profile
+  as specified in the LwCMP Profile
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}} (based on CRMF) or
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.4}} (based on PKCS#10).
 
@@ -989,10 +969,10 @@ When using CMP, the following specific implementation requirements apply
   using the IDevID secret.
 
   Note: When the registrar forwards a certification request by the pledge to
-  a backend PKI RA, the registrar is recommended to wrap the original
+  a backend RA, the registrar is recommended to wrap the original
   certification request in a nested message signed with its own credentials
   as described in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.2.2.1}}.
-  This explicitly conveys the consent by the registrar to the PKI RA
+  This explicitly conveys the consent by the registrar to the RA
   while retaining the certification request
   with its proof of origin provided by the pledge signature.
 
@@ -1017,7 +997,7 @@ When using CMP, the following specific implementation requirements apply
 
 Note:
 The way in which messages are exchanged between the registrar and backend PKI
-components (i.e., PKI RA or PKI CA) is out of scope of this document.
+components (i.e., RA or CA) is out of scope of this document.
 Due to the general independence of CMP of message transfer, it can be freely
 chosen according to the needs of the application scenario (e.g., using HTTP),
 while security considerations apply, see {{sec-consider}}, and
@@ -1025,7 +1005,7 @@ guidance can be found in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 6}}.
 
 <!--
 CMP Updates {{I-D.ietf-lamps-cmp-updates}} and
-the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}
+the LwCMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}
 provide requirements for interoperability.
 -->
 
@@ -1109,12 +1089,12 @@ on accepting or declining a request to join the domain,
 as required in {{RFC8995, Section 5.3}}.
 As this pertains also to obtaining a valid domain-specific certificate,
 it must be made sure that a pledge cannot circumvent the registrar
-in the decision whether it is granted an LDevID certificate by the PKI CA.
+in the decision whether it is granted an LDevID certificate by the CA.
 There are various ways how to fulfill this, including:
 
 * implicit consent
 
-* the registrar signals its consent to the PKI RA out-of-band before or during
+* the registrar signals its consent to the RA out-of-band before or during
   the enrollment phase, for instance by entering the pledge identity in a database.
 
 * the registrar provides its consent using an extra message that is transferred
@@ -1128,7 +1108,7 @@ certification request by forwarding the request to a PKI entity using a
 connection authenticated with a certificate containing an id-kp-cmcRA extension.
 
 When CMP is used, the security considerations laid out in the
-Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
+LwCMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
 
 Note that CMP messages are not encrypted.
 This may give eavesdroppers insight on which devices are bootstrapped in the
@@ -1286,6 +1266,14 @@ List of reviewers:
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
 
+From IETF draft ae-04 -> IETF draft ae-05:
+
+* Remove entries from the terminology section that should be clear from BRSKI
+* Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by RA/CA
+* Add the abbreviation 'LwCMP' for Lightweight CMP to the terminology section
+* State clearly in {{brski-cmp-instance}} that LwCMP is mandatory when using CMP
+* Change URL of BRSKI-AE-overview graphics to slide on IETF 116 meeting material
+
 From IETF draft ae-03 -> IETF draft ae-04:
 
 * In response to SECDIR Early Review of ae-03 by Barry Lea,
@@ -1399,7 +1387,7 @@ From IETF draft 03 -> IETF draft 04:
   as well as the removal of the YANG model related text as it is not
   applicable in UC1.
 
-* Updated references to the Lightweight CMP Profile.
+* Updated references to the Lightweight CMP Profile (LwCMP).
 
 * Added David von Oheimb as co-author.
 
@@ -1580,7 +1568,7 @@ LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo IDevID
 LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae pkcs
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
 LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI
-LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR
+LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp
 LocalWords: 
 LocalWords: 
 LocalWords: 
