@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-05
+docname: draft-ietf-anima-brski-ae-06
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -81,6 +81,7 @@ normative:
       DOI: 10.1109/IEEESTD.2018.8423794
     uri: https://ieeexplore.ieee.org/document/8423794
 informative:
+  I-D.eckert-anima-services-dns-autoconfig:
   I-D.ietf-anima-constrained-voucher:
   I-D.ietf-ace-cmpv2-coap-transport:
   BRSKI-AE-overview:
@@ -147,7 +148,7 @@ informative:
 
 This document defines an enhancement of
 Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995)
-that supports alternative certificate enrollment protocols, such as CMP.
+that supports alternative certificate enrollment protocols to Enrollment over Secure Transport (EST, RFC7030), such as CMP.
 This offers the following advantages.
 
 Using authenticated self-contained signed objects
@@ -517,12 +518,14 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
    |                                                      |
    V                                                      |
 +--------+     .........................................  |
-|        |     .                                       .  | BRSKI-
-|        |     .  +-------+          +--------------+  .  | MASA
-| Pledge |     .  | Join  |          | Domain       |<----+
-|        |<------>| Proxy |<-------->| Registrar w/ |  .
-|        |     .  |.......|          | LRA or RA    |  .
-| IDevID |     .  +-------+          +--------------+  .
+|        |     .                                       .  | 
+|        |     .   .......(possible co-located)......  .  | BRSKI-
+|        |     .   . +-------+      +--------------+.  .  | MASA
+| Pledge |     .   . | Join  |      | Domain       |<-----+
+|        |<--------->| Proxy |<---->| Registrar w/ |.  .
+|        |     .   . |.......|      | LRA or RA    |.  .
+| IDevID |     .   . +-------+      +--------------+.  .
+|        |     .   ..........................  ......  .
 |        |   BRSKI-AE over TLS                ^        .
 +--------+   using, e.g., [LCMPP]             |        .
                .                              |        .
@@ -546,7 +549,10 @@ The architecture overview in {{uc1figure}}
 has the same logical elements as BRSKI, but with more flexible placement
 of the authentication and authorization checks on certification requests.
 Depending on the application scenario, the registrar MAY still do all of these
-checks (as is the case in BRSKI), or part of them.
+checks (as is the case in BRSKI), or part of them. 
+
+For discussion about co-location of Join Proxy and Domain Registrar as
+indicated by the dotted box around them, see {{colo}}.
 
 The following list describes the on-site components in the target domain
 of the pledge shown in {{uc1figure}}.
@@ -1069,11 +1075,244 @@ makes it independent of the underlying TLS channel using OSCORE,
 which also entails that authenticated self-contained objects are used.
 -->
 
+# Discovery for protocol variations
+
+As soon as different variations of BRSKI are available, co-existance of
+registrars, proxies, pledges supporting different (subsets) of variations
+becomes a challenge. When there are for example two registars supporting
+different protocol variations, how do proxies select the right one for
+a particular pledge ? This chapter describes extensions to BRSKI discovery
+mechanisms in support of this.
+
+## Registry for BRSKI protocol variations  {#registry-rules}
+
+This document defines an IANA registry for parameters that specifiy 
+particular protocol variations which SHOULD be used to specify the variation(s)
+of BRSKI supported by a particular instance of a role such as registar, proxy (or other)
+in discovery mechanisms for BRSKI variations.
+
+These parameters are meant to be consistent across any
+discovery protocol used, but for any protocol to be supported, an encoding of these
+parameters needs to be defined. This document does this for DNS-SD ({{RFC6763}}) and
+GRASP {{RFC8990}}.
+
+Parameters of the registry may be used beyond discovery protocols, such as for
+specifying them as part of feature support in implementation descriptions.
+
+### Initial registry {#initial-params}
+
+~~~~
+    +---------+---------+-------+-----------+---------------------------------------+
+    | Context | Key     | Value | Reference | Note(s)                               |
+    +=========+=========+=======+===========+=======================================+
+    |         | mode    | rrm   | [RFC8995] | Default: Registrar Responder Mode     |
+    |         |         |       | [ThisRFC] | the mode specified in RFC8995         | 
+    +---------+---------+-------+-----------+---------------------------------------+
+    |         |         | prm   | [ThisRFC] | Reserved: Pledge Responder Mode       |
+    |         |         |       |           | draft-ietf-anima-brski-prm            |
+    +---------+---------+-------+-----------+---------------------------------------+
+    |         | enroll  | est   | [RFC8995] | Default: Enrol via RFC7030 EPs        |
+    |         |         |       |           | as specified in RFC8995               |
+    +---------+---------+-------+-----------+---------------------------------------+
+    |         |         | cmp   | [ThisRFC] | I-D.ietf-lamps-lightweight-cmp-profile|
+    |         |         |       |           | Lightweight CMP profile               |
+    +---------+---------+-------+-----------+---------------------------------------+
+    |         |         | scep  | [ThisRFC] | Reserved: RFC8994                     |
+    +---------+---------+-------+-----------+---------------------------------------+
+    |         | vformat | cms   | [RFC8368] | Default: CMS signed JSON Voucher      |
+    |         |         |       | [ThisRFC] |                                       | 
+    +---------+---------+-------+-----------+---------------------------------------+
+    |         |         | jose  | [ThisRFC] | Reserved: JOSE signed JSON            |
+    |         |         |       |           | I-D.ietf-anima-jws-voucher            |
+    +---------+---------+-------+-----------+---------------------------------------+
+    |         |         | cose  | [ThisRFC] | Reserved: CBOR with COSE signature    |
+    |         |         |       |           | I-D.ietf-anima-constrained-voucher    |
+    +---------+---------+-------+-----------+---------------------------------------+
+    | CoAP    |         |       | [ThisRFC] | Default: When using CoAP              |
+    +---------+---------+-------+-----------+---------------------------------------+
+~~~~
+{: #registry title='IANA registry BRSKI protocol variation parameters" artwork-align="left"}
+
+### Registry specification
+
+The "Context" of a parameter is normally left empty, which indicates that the parameter
+Key and Value are applicable in any context, such as for any BRSKI related DNS-SD service-name,
+or GRASP objective-name. If for some specific context a parameter Key and/or Value
+needs to be different, or their semantic needs to be different, or the default are
+different, then the context will contain some free form value such as the name of
+a particular discovery protocol, service-name, transport protocol (such as CoAP
+for constrained instances of BRSKI) or other constraining context and the Note(s)
+field SHOULD then contain an explanation.
+
+The "Key" of a parameter is the type of the variation. "Value" is the actual variation.
+The semantic and formatting of Key and Value are specified further below.
+
+When the Key column, it is assumed to have the same content as the last line where it was not
+empty. When Key and Value are empty, Context MUST be set and
+the line amends or overrides the prior line where the Value was specified with the
+specific rules for this context, such as defining the Key/Value combination as
+default for the context (as shown in {{registry}} for the CoAP context of the "cose" value
+of the vocher format (vformat) parameter Key.
+
+Reference is the set of documents specifying the behavior of the line.
+
+Note(s) is an explanation of the line, which is free form, except for the keywords "Default:"
+and "Reserved:".
+
+"Default" indicates that the combination of Key and Value MUST be supported when an
+instance is discoverable via some mechanism which may not include the Key/Value
+combination. For example, any discovery of a BRSKI registrar or proxy complying
+only to {{RFC8995}}, but not this specification will not includeany Key/Value elements,
+in its discovery mechanism. In this instance, the discovery assumes that "mode=rrm", "enrol=est"
+and "vformat=cms" apply.
+
+"Reserved:" indicates that the Key and Value combination is reserved by the registry experts
+for the explained purpose in the Note(s). This purpose may be an existing or planned specification
+in or outside the IETF that is in progress of defining BRSKI behavior that is intended to
+be characterized by this Key/Value combination. It may also be simply tracking of a possible
+variation even when no specification work for it has started, just to inform the registry
+observer of even the possibility of further protocol variations. When "Reserved:" is used,
+and even when Note(s) refers to a specification, it is not safe to use the behavior indicated
+by the line, because it is not finalized.
+
+### Encoding rules for registry Key and Values
+
+Any Key and Value names SHOULD be simple strings consisting only
+of alphanumeric characters ("A".."Z", "a".."z", "0".."9) and
+"-" or "_".  "-" SHOULD be preferred over "_". Using any other characters
+may result in more problems when encoding these key/values into arbitrary
+discovery protocols.
+
+### Protocol variation semantics
+
+The semantics described here are only for the initial registry as specified in {{registry}}.
+Future specifications can amend the registry without having to update this specification
+unless they change the encoding of the registry or the semantics of the following.
+
+"mode" specifies one out of multiple variations of the overall flow of interactions
+directly or indirectly between pledge and registrar. This SHOULD NOT include any
+variations to aspects covered better by other parameters, such as "enroll" or "vformat".
+
+"enroll" specifies one out of multiple variations of the mechanism used for enrollment
+of keying material. This SHOULD NOT include any variations to the BRSKI process
+before mutual trust between pledge and registrar is established.
+
+"vformat" specifies one out of multiple variations how to encode and sign a voucher.
+
+## Encoding rules for discovery mechanisms
+
+### mechanism agnostic considerations
+
+### DNS-SD
+
+Key and Value are encoded as TXT-DATA strings according to DNS-SD {{RFC6763}} with the following
+additional rules. This is indepenendent of whether mDNS or (unicast) DNS is used.
+
+When an instance of a BRSKI role (registrar, proxy,...) supports more than one value of a key
+across a particular socket, the value of the TXT-DATA string MUST be concatenated
+with ",". For example "mode=rrm,prm" indicates that both "rrm" and "prm" are supported,
+"mode=prm" indicates not only that "prm" is supported, but also that "rrm" is not supported.
+This is necessary to support DNS-SD encoding of multiple values within just on TXT RR ({{RFC6763}}, Section 6.8).
+
+### GRASP
+
+To announce protocol variations with GRASP {{RFC8990}}, this document defines in {{grasp-encoding} a simple
+encoding of the key/value pairs into the objective-value of a GRASP objective as a
+list of strings, mimicking the encoding of TXT-DATA in {{RFC6763}}, Section 6.1 as
+a sequence of strings, each one containing one key=value string.
+
+~~~~
+    objective-value  /= { 1*kvpairstring }
+    kvpairstring = key "="  valuelist
+    valuelist = value / value "," valuelist
+    key = simplestr
+    value = simplestr
+    simplestr = "A" .. "Z" / "a" .. "z" / "0" .. "9" / "-" / "_"
+~~~~
+{: #grasp-encoding title='GRASP (CDDL) encoding of BRSKI protocol variation parameters'}
+
+An example of an encoding of this into an "AN_proxy" objective 
+(taken from {{RFC8995}} Figure 11 and modified) is shown in {{grasp-example}}.
+
+~~~~
+[M_FLOOD, 12340815, h'fe800000000000000000000000000001', 180000,
+    [["AN_Proxy", 4, 1, ["mode=rrm", "enroll=cmp,est", "vformat="cms" ],
+    [O_IPv6_LOCATOR,
+    h'fe800000000000000000000000000001', IPPROTO_TCP, 4443]]]
+~~~~
+{: #grasp-example title='GRASP example for a BRSKI registrar supporting CMP and EST'}
+
+In this example, the proxy (and hence also the registrar) supports both the {{RFC8995}}
+variation of BRSKI, but also the use of CMP as specified in this document. If it was only supporting
+the CMP specification, it would have to announce "enroll=cmp". Both the "mode=rrm" and
+"vformat=cms" fields are optional, because both parameters are defaults according to
+the registry.
+
+Note that this encoding does not permit the same flexibility to select an objective (service)
+instance (by weight, priority or distance) as the more comprensive encoding of DNS-SD service information
+into GRASP objective-values as proposed in {{I-D.eckert-anima-services-dns-autoconfig}}. If adopted, that
+specification would be preferred for that reason over the encoding described here and would be fully
+compatible with the BRSKI protocol variation parameters specified in this document by simply using the
+"kvpair" parameters of that encoding.
+
+## BRSKI entity considerations (Registrar, Proxy, ...)
+
+When a BRSKI entity (such as registrar or proxy) announces BRSKI for not only a single protocol variation,
+but for multiple, it means that it MUST support all combinations. For example, in {{grasp-example}},
+the proxy announces "mode=rrm", "enroll=cmp,est" and "vformat="cms". This means that it must
+support both ("mode=rrm", "enroll=cmp and "vformat="cms") and ("mode=rrm", "enroll=est and "vformat="cms").
+
+Now assume a registrar was announcing "mode=rrm", "enroll=cmp,est" and "vformat="cms,jose".
+This would mean the registrar supports any combination of cmp,est and cms,jose. If instead
+the registrar intended to support cmp only with cms but est only with jose, then this announcement
+would not be appropriate. Instead, the registrar would need to create separate announcements
+for the supported combinations, for example by separating them onto different locators (aka:
+TCP ports) in GRASP or different service-instance names that also map to different TCP ports
+in DNS-SD.
+
+If a particular combination of socket type and protocol variation option has not (yet) been defined,
+that does not mean it is appropriate to create a service announcment that looks like this
+combination is supported - and expecting it not to be used, because it is not defined. For
+example, "vformat=cose" is (and may in the future) only be specified in conjunction with
+CoAP over UDP. But when it is announced by a registrar or proxy for a TCP socket without implementing
+it, this would be an error - because it could be implemented later and a discovering pledge would
+then incorrectly choose a wrong registrar/proxy.
+
+BRSKI proxies as specified in {{RFC8995}} will select one out of potentially multiple registrars
+based on service discovery. If those registrar announce different subsets of supported BRSKI
+protocol variations, then the proxy can not proxy all combinations across the same socket
+to the pleges. Instead, it needs to determine all different subsets and announce and offer
+them across different sockets, so that pledges are guaranteed to be able to get a working
+combination of parameters when they connect to a particular socket of the proxy based
+on service discovery.
+
+## Co-location of Proxy and Registrar {#colo}
+
+Like in {{RFC8995}}, the Join Proxy may be co-located with the Domain Registrar.
+
+In networks using {{RFC8995}} and {{RFC8994}}, registrars must have a co-located
+proxy, because pledges can only use single-hop discovery (DULL-GRASP) and will only discover
+proxies. Such a co-located proxy does not constitute additional processing/code, it simply
+implies that the Registrar BRSKI services(s) are announced with a proxy service name
+(such as "AN_Proxy" in addition to "AN_join_registrar").
+
+This announcement of the same sockets under different names is always beneficial when
+a type of BRSKI deployment potentially has proxies, so that pledges only need to discover
+proxies, even if the proxy actually is a registrar, but do not need to discover and
+select between registrars and proxies; whereas proxies always only need to discover registrar.
+
+## Required discovery mechanisms
+
+TBD: Should we refine requirements for to-be-supported discovery mechanisms, such as unicast-DNS etc..
+- to go further than what we did with RFC8995 ?
 
 # IANA Considerations
 
-This document does not require IANA actions.
+IANA is asked to create a new table in the "Bootstrapping Remote Secure Key Infrastructures (BRSKI) Parameters"
+registry and call it "BRSKI protocol variation parameters". The rules for the registry are specified in
+{{registry-rules}}. The intial content of the registry is specified in {{registry}}.
 
+Entries to this registry are subject to expert review and SHOULD have a public specification unless they are marked "Reserved:".
 
 # Security Considerations {#sec-consider}
 
