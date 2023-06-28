@@ -303,9 +303,8 @@ local RA (LRA):
   a subsequent RA.  In BRSKI-AE it is needed if a backend RA is used,
   and in this case the LRA is co-located with the registrar.
 
-LwCMP:
-: Lightweight Certificate Management Protocol (CMP)
-  as specified in {{I-D.ietf-lamps-lightweight-cmp-profile}}
+LCMPP:
+: Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}
 
 on-site:
 : locality of a component or service or functionality
@@ -525,11 +524,11 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 |        |     .  |.......|          | LRA or RA    |  .
 | IDevID |     .  +-------+          +--------------+  .
 |        |   BRSKI-AE over TLS                ^        .
-+--------+   using, e.g., [LwCMP]             |        .
++--------+   using, e.g., [LCMPP]             |        .
                .                              |        .
                ...............................|.........
             on-site (local) domain components |
-                                              | e.g., [LwCMP]
+                                              | e.g., [LCMPP]
                                               |
  .............................................|..................
  . Public-Key Infrastructure                  v                 .
@@ -934,12 +933,12 @@ and specifies further aspects of using such enrollment protocols in BRSKI-AE.
 
 Instead of referring to CMP
 as specified in {{RFC4210}} and {{I-D.ietf-lamps-cmp-updates}},
-this document refers to the LwCMP Profile
+this document refers to the Lightweight CMP Profile (LCMPP)
 {{I-D.ietf-lamps-lightweight-cmp-profile}} because
 the subset of CMP defined there is sufficient for the functionality needed here.
 
 When using CMP, adherence to
-the LwCMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}} is mandatory.
+the LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}} is mandatory.
 In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
 * CA Certs Request (1) and Response (2):<br>
@@ -958,7 +957,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
 * Certificate Request (5) and Response (6):<br>
   Certificates SHALL be requested and provided
-  as specified in the LwCMP Profile
+  as specified in the LCMPP
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}} (based on CRMF) or
   {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.4}} (based on PKCS#10).
 
@@ -1005,7 +1004,7 @@ guidance can be found in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 6}}.
 
 <!--
 CMP Updates {{I-D.ietf-lamps-cmp-updates}} and
-the LwCMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}
+the LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}}
 provide requirements for interoperability.
 -->
 
@@ -1108,7 +1107,7 @@ certification request by forwarding the request to a PKI entity using a
 connection authenticated with a certificate containing an id-kp-cmcRA extension.
 
 When CMP is used, the security considerations laid out in the
-LwCMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
+LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
 
 Note that CMP messages are not encrypted.
 This may give eavesdroppers insight on which devices are bootstrapped in the
@@ -1270,8 +1269,8 @@ From IETF draft ae-04 -> IETF draft ae-05:
 
 * Remove entries from the terminology section that should be clear from BRSKI
 * Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by RA/CA
-* Add the abbreviation 'LwCMP' for Lightweight CMP to the terminology section
-* State clearly in {{brski-cmp-instance}} that LwCMP is mandatory when using CMP
+* Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the terminology section
+* State clearly in {{brski-cmp-instance}} that LCMPP is mandatory when using CMP
 * Change URL of BRSKI-AE-overview graphics to slide on IETF 116 meeting material
 
 From IETF draft ae-03 -> IETF draft ae-04:
@@ -1387,7 +1386,7 @@ From IETF draft 03 -> IETF draft 04:
   as well as the removal of the YANG model related text as it is not
   applicable in UC1.
 
-* Updated references to the Lightweight CMP Profile (LwCMP).
+* Updated references to the Lightweight CMP Profile (LCMPP).
 
 * Added David von Oheimb as co-author.
 

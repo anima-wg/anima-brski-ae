@@ -5,8 +5,8 @@
 ANIMA WG                                              D. von Oheimb, Ed.
 Internet-Draft                                                  S. Fries
 Intended status: Standards Track                            H. Brockhaus
-Expires: 27 October 2023                                         Siemens
-                                                           25 April 2023
+Expires: 30 December 2023                                        Siemens
+                                                            28 June 2023
 
 
           BRSKI-AE: Alternative Enrollment Protocols in BRSKI
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 1]
+von Oheimb, et al.      Expires 30 December 2023                [Page 1]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,7 +63,7 @@ Internet-Draft                  BRSKI-AE                      April 2023
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 October 2023.
+   This Internet-Draft will expire on 30 December 2023.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 2]
+von Oheimb, et al.      Expires 30 December 2023                [Page 2]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    Appendix A.  Application Examples . . . . . . . . . . . . . . . .  26
@@ -165,9 +165,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 3]
+von Oheimb, et al.      Expires 30 December 2023                [Page 3]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    The well-known URI approach of BRSKI and EST messages is extended
@@ -221,9 +221,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 4]
+von Oheimb, et al.      Expires 30 December 2023                [Page 4]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  authoritative actions of a local RA at the registrar being not
@@ -277,9 +277,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 5]
+von Oheimb, et al.      Expires 30 December 2023                [Page 5]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
       registrar; may be on-site or off-site
@@ -295,8 +295,8 @@ Internet-Draft                  BRSKI-AE                      April 2023
       needed if a backend RA is used, and in this case the LRA is co-
       located with the registrar.
 
-   LwCMP:  Lightweight Certificate Management Protocol (CMP) as
-      specified in [I-D.ietf-lamps-lightweight-cmp-profile]
+   LCMPP:  Lightweight CMP Profile
+      [I-D.ietf-lamps-lightweight-cmp-profile]
 
    on-site:  locality of a component or service or functionality at the
       site of the registrar
@@ -333,9 +333,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 6]
+von Oheimb, et al.      Expires 30 December 2023                [Page 6]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
 3.  Basic Requirements and Mapping to Solutions
@@ -389,9 +389,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 7]
+von Oheimb, et al.      Expires 30 December 2023                [Page 7]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    Note: The integrity protection of CSRs includes the public key
@@ -445,9 +445,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 8]
+von Oheimb, et al.      Expires 30 December 2023                [Page 8]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
       [RFC7030], Section 2.5 sketches wrapping PKCS#10-formatted CSRs
@@ -501,9 +501,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023                [Page 9]
+von Oheimb, et al.      Expires 30 December 2023                [Page 9]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
 4.1.  Architecture
@@ -557,9 +557,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 10]
+von Oheimb, et al.      Expires 30 December 2023               [Page 10]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
                                             +------------------------+
@@ -581,11 +581,11 @@ Internet-Draft                  BRSKI-AE                      April 2023
    |        |     .  |.......|          | LRA or RA    |  .
    | IDevID |     .  +-------+          +--------------+  .
    |        |   BRSKI-AE over TLS                ^        .
-   +--------+   using, e.g., [LwCMP]             |        .
+   +--------+   using, e.g., [LCMPP]             |        .
                   .                              |        .
                   ...............................|.........
                on-site (local) domain components |
-                                                 | e.g., [LwCMP]
+                                                 | e.g., [LCMPP]
                                                  |
     .............................................|..................
     . Public-Key Infrastructure                  v                 .
@@ -613,9 +613,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 11]
+von Oheimb, et al.      Expires 30 December 2023               [Page 11]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  Domain Registrar including LRA or RA functionality: in BRSKI-AE,
@@ -669,9 +669,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 12]
+von Oheimb, et al.      Expires 30 December 2023               [Page 12]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  MASA: functionality as described in BRSKI [RFC8995].  The voucher
@@ -725,9 +725,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 13]
+von Oheimb, et al.      Expires 30 December 2023               [Page 13]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  Enrollment status telemetry phase: the final exchange of BRSKI
@@ -781,9 +781,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 14]
+von Oheimb, et al.      Expires 30 December 2023               [Page 14]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    +--------+                        +------------+       +------------+
@@ -837,9 +837,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 15]
+von Oheimb, et al.      Expires 30 December 2023               [Page 15]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    Note: The decision whether to forward a request or to answer it
@@ -893,9 +893,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 16]
+von Oheimb, et al.      Expires 30 December 2023               [Page 16]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  Attribute Response (4): This MUST contain the attributes to be
@@ -949,9 +949,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 17]
+von Oheimb, et al.      Expires 30 December 2023               [Page 17]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    The addressing scheme in BRSKI for certification requests and the
@@ -1005,9 +1005,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 18]
+von Oheimb, et al.      Expires 30 December 2023               [Page 18]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    The following list of endpoints provides an illustrative example for
@@ -1040,11 +1040,12 @@ Internet-Draft                  BRSKI-AE                      April 2023
 5.1.  BRSKI-CMP: Instantiation to CMP
 
    Instead of referring to CMP as specified in [RFC4210] and
-   [I-D.ietf-lamps-cmp-updates], this document refers to the LwCMP
-   Profile [I-D.ietf-lamps-lightweight-cmp-profile] because the subset
-   of CMP defined there is sufficient for the functionality needed here.
+   [I-D.ietf-lamps-cmp-updates], this document refers to the Lightweight
+   CMP Profile (LCMPP) [I-D.ietf-lamps-lightweight-cmp-profile] because
+   the subset of CMP defined there is sufficient for the functionality
+   needed here.
 
-   When using CMP, adherence to the LwCMP Profile
+   When using CMP, adherence to the LCMPP
    [I-D.ietf-lamps-lightweight-cmp-profile] is mandatory.  In
    particular, the following specific requirements apply (cf.
    Figure 2).
@@ -1054,17 +1055,21 @@ Internet-Draft                  BRSKI-AE                      April 2023
       If supported, it SHALL be implemented as specified in
       [I-D.ietf-lamps-lightweight-cmp-profile], Section 4.3.1.
 
+
+
+
+
+
+
+von Oheimb, et al.      Expires 30 December 2023               [Page 19]
+
+Internet-Draft                  BRSKI-AE                       June 2023
+
+
    *  Attribute Request (3) and Response (4):
       Requesting certificate request attributes over CMP is OPTIONAL.
       If supported, it SHALL be implemented as specified in
       [I-D.ietf-lamps-lightweight-cmp-profile], Section 4.3.3.
-
-
-
-von Oheimb, et al.       Expires 27 October 2023               [Page 19]
-
-Internet-Draft                  BRSKI-AE                      April 2023
-
 
       Alternatively, the registrar MAY modify the contents of requested
       certificate contents as specified in
@@ -1072,10 +1077,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
    *  Certificate Request (5) and Response (6):
       Certificates SHALL be requested and provided as specified in the
-      LwCMP Profile [I-D.ietf-lamps-lightweight-cmp-profile],
-      Section 4.1.1 (based on CRMF) or
-      [I-D.ietf-lamps-lightweight-cmp-profile], Section 4.1.4 (based on
-      PKCS#10).
+      LCMPP [I-D.ietf-lamps-lightweight-cmp-profile], Section 4.1.1
+      (based on CRMF) or [I-D.ietf-lamps-lightweight-cmp-profile],
+      Section 4.1.4 (based on PKCS#10).
 
       Proof of possession SHALL be provided in a way suitable for the
       key type.  Proof of identity SHALL be provided by signature-based
@@ -1111,17 +1115,16 @@ Internet-Draft                  BRSKI-AE                      April 2023
       performed as specified in Section 4.4 and Section 5.1.2 of
       [I-D.ietf-lamps-lightweight-cmp-profile].
 
+
+
+von Oheimb, et al.      Expires 30 December 2023               [Page 20]
+
+Internet-Draft                  BRSKI-AE                       June 2023
+
+
    Note: The way in which messages are exchanged between the registrar
    and backend PKI components (i.e., RA or CA) is out of scope of this
    document.  Due to the general independence of CMP of message
-
-
-
-von Oheimb, et al.       Expires 27 October 2023               [Page 20]
-
-Internet-Draft                  BRSKI-AE                      April 2023
-
-
    transfer, it can be freely chosen according to the needs of the
    application scenario (e.g., using HTTP), while security
    considerations apply, see Section 7, and guidance can be found in
@@ -1167,16 +1170,15 @@ Internet-Draft                  BRSKI-AE                      April 2023
    an LDevID certificate by the CA.  There are various ways how to
    fulfill this, including:
 
-   *  implicit consent
 
 
 
-
-
-von Oheimb, et al.       Expires 27 October 2023               [Page 21]
+von Oheimb, et al.      Expires 30 December 2023               [Page 21]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
+
+   *  implicit consent
 
    *  the registrar signals its consent to the RA out-of-band before or
       during the enrollment phase, for instance by entering the pledge
@@ -1195,8 +1197,8 @@ Internet-Draft                  BRSKI-AE                      April 2023
    a connection authenticated with a certificate containing an id-kp-
    cmcRA extension.
 
-   When CMP is used, the security considerations laid out in the LwCMP
-   Profile [I-D.ietf-lamps-lightweight-cmp-profile] apply.
+   When CMP is used, the security considerations laid out in the LCMPP
+   [I-D.ietf-lamps-lightweight-cmp-profile] apply.
 
    Note that CMP messages are not encrypted.  This may give
    eavesdroppers insight on which devices are bootstrapped in the
@@ -1223,17 +1225,18 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 9.1.  Normative References
 
+
+
+
+
+von Oheimb, et al.      Expires 30 December 2023               [Page 22]
+
+Internet-Draft                  BRSKI-AE                       June 2023
+
+
    [I-D.ietf-lamps-cmp-updates]
               Brockhaus, H., von Oheimb, D., and J. Gray, "Certificate
               Management Protocol (CMP) Updates", Work in Progress,
-
-
-
-von Oheimb, et al.       Expires 27 October 2023               [Page 22]
-
-Internet-Draft                  BRSKI-AE                      April 2023
-
-
               Internet-Draft, draft-ietf-lamps-cmp-updates-23, 29 June
               2022, <https://datatracker.ietf.org/doc/html/draft-ietf-
               lamps-cmp-updates-23>.
@@ -1282,12 +1285,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-
-
-
-von Oheimb, et al.       Expires 27 October 2023               [Page 23]
+von Oheimb, et al.      Expires 30 December 2023               [Page 23]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    [BRSKI-AE-overview]
@@ -1301,9 +1301,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
    [I-D.ietf-ace-cmpv2-coap-transport]
               Sahni, M. and S. Tripathi, "CoAP Transfer for the
               Certificate Management Protocol", Work in Progress,
-              Internet-Draft, draft-ietf-ace-cmpv2-coap-transport-09, 14
-              April 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-ace-cmpv2-coap-transport-09>.
+              Internet-Draft, draft-ietf-ace-cmpv2-coap-transport-10, 15
+              May 2023, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-ace-cmpv2-coap-transport-10>.
 
    [I-D.ietf-anima-constrained-voucher]
               Richardson, M., Van der Stok, P., Kampanakis, P., and E.
@@ -1341,9 +1341,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 24]
+von Oheimb, et al.      Expires 30 December 2023               [Page 24]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    [RFC4211]  Schaad, J., "Internet X.509 Public Key Infrastructure
@@ -1397,9 +1397,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 25]
+von Oheimb, et al.      Expires 30 December 2023               [Page 25]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
 Appendix A.  Application Examples
@@ -1453,9 +1453,9 @@ A.2.  Building Automation
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 26]
+von Oheimb, et al.      Expires 30 December 2023               [Page 26]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    The collected data may be provided by a domain registrar already
@@ -1509,9 +1509,9 @@ A.4.  Electric Vehicle Charging Infrastructure
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 27]
+von Oheimb, et al.      Expires 30 December 2023               [Page 27]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
 A.5.  Infrastructure Isolation Policy
@@ -1565,9 +1565,9 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 28]
+von Oheimb, et al.      Expires 30 December 2023               [Page 28]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    From IETF draft ae-04 -> IETF draft ae-05:
@@ -1578,10 +1578,10 @@ Internet-Draft                  BRSKI-AE                      April 2023
    *  Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by
       RA/CA
 
-   *  Add the abbreviation 'LwCMP' for Lightweight CMP to the
+   *  Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the
       terminology section
 
-   *  State clearly in Section 5.1 that LwCMP is mandatory when using
+   *  State clearly in Section 5.1 that LCMPP is mandatory when using
       CMP
 
    *  Change URL of BRSKI-AE-overview graphics to slide on IETF 116
@@ -1621,9 +1621,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 29]
+von Oheimb, et al.      Expires 30 December 2023               [Page 29]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
       -  significantly cut down the introduction because the original
@@ -1677,9 +1677,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 30]
+von Oheimb, et al.      Expires 30 December 2023               [Page 30]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
       -  many editorial improvements and clarifications as suggested,
@@ -1733,9 +1733,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 31]
+von Oheimb, et al.      Expires 30 December 2023               [Page 31]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  Fix minor editorial issues and update some external references
@@ -1789,12 +1789,12 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 32]
+von Oheimb, et al.      Expires 30 December 2023               [Page 32]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
-   *  Updated references to the Lightweight CMP Profile (LwCMP).
+   *  Updated references to the Lightweight CMP Profile (LCMPP).
 
    *  Added David von Oheimb as co-author.
 
@@ -1845,9 +1845,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 33]
+von Oheimb, et al.      Expires 30 December 2023               [Page 33]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  Split of use case 2 call flow into sub sections in UC2.
@@ -1901,9 +1901,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 34]
+von Oheimb, et al.      Expires 30 December 2023               [Page 34]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  Reworked abstract and introduction to be more crisp regarding the
@@ -1957,9 +1957,9 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 35]
+von Oheimb, et al.      Expires 30 December 2023               [Page 35]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    *  Update of examples, specifically for building automation as well
@@ -2013,9 +2013,9 @@ Authors' Addresses
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 36]
+von Oheimb, et al.      Expires 30 December 2023               [Page 36]
 
-Internet-Draft                  BRSKI-AE                      April 2023
+Internet-Draft                  BRSKI-AE                       June 2023
 
 
    Email: steffen.fries@siemens.com
@@ -2069,4 +2069,4 @@ Internet-Draft                  BRSKI-AE                      April 2023
 
 
 
-von Oheimb, et al.       Expires 27 October 2023               [Page 37]
+von Oheimb, et al.      Expires 30 December 2023               [Page 37]

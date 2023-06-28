@@ -1200,11 +1200,11 @@ li > p:last-of-type {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">BRSKI-AE</td>
-<td class="right">April 2023</td>
+<td class="right">June 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">von Oheimb, et al.</td>
-<td class="center">Expires 27 October 2023</td>
+<td class="center">Expires 30 December 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1217,12 +1217,12 @@ li > p:last-of-type {
 <dd class="internet-draft">draft-ietf-anima-brski-ae-05</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-04-25" class="published">25 April 2023</time>
+<time datetime="2023-06-28" class="published">28 June 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-10-27">27 October 2023</time></dd>
+<dd class="expires"><time datetime="2023-12-30">30 December 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1286,7 +1286,7 @@ full-strength integrity and authenticity of certification requests.<a href="#sec
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 October 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1599,10 +1599,9 @@ a subsequent RA.  In BRSKI-AE it is needed if a backend RA is used,
 and in this case the LRA is co-located with the registrar.<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.11">LwCMP:</dt>
+<dt id="section-2-3.11">LCMPP:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.12">
-          <p id="section-2-3.12.1">Lightweight Certificate Management Protocol (CMP)
-as specified in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span><a href="#section-2-3.12.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.12.1">Lightweight CMP Profile <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span><a href="#section-2-3.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-3.13">on-site:</dt>
@@ -1921,7 +1920,7 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
                   <text x="448" y="324">.</text>
                   <text x="132" y="340">using,</text>
                   <text x="184" y="340">e.g.,</text>
-                  <text x="240" y="340">[LwCMP]</text>
+                  <text x="240" y="340">[LCMPP]</text>
                   <text x="448" y="340">.</text>
                   <text x="128" y="356">.</text>
                   <text x="448" y="356">.</text>
@@ -1932,7 +1931,7 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
                   <text x="252" y="388">domain</text>
                   <text x="324" y="388">components</text>
                   <text x="408" y="404">e.g.,</text>
-                  <text x="464" y="404">[LwCMP]</text>
+                  <text x="464" y="404">[LCMPP]</text>
                   <text x="192" y="436">.............................................</text>
                   <text x="452" y="436">..................</text>
                   <text x="16" y="452">.</text>
@@ -2477,11 +2476,11 @@ and specifies further aspects of using such enrollment protocols in BRSKI-AE.<a 
         </h3>
 <p id="section-5.1-1">Instead of referring to CMP
 as specified in <span>[<a href="#RFC4210" class="xref">RFC4210</a>]</span> and <span>[<a href="#I-D.ietf-lamps-cmp-updates" class="xref">I-D.ietf-lamps-cmp-updates</a>]</span>,
-this document refers to the LwCMP Profile
+this document refers to the Lightweight CMP Profile (LCMPP)
 <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> because
 the subset of CMP defined there is sufficient for the functionality needed here.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">When using CMP, adherence to
-the LwCMP Profile <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> is mandatory.
+the LCMPP <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> is mandatory.
 In particular, the following specific requirements apply (cf. <a href="#enrollfigure" class="xref">Figure 2</a>).<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-3.1">CA Certs Request (1) and Response (2):<br>
@@ -2502,7 +2501,7 @@ as specified in <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="
           <li class="normal" id="section-5.1-3.3">
             <p id="section-5.1-3.3.1">Certificate Request (5) and Response (6):<br>
 Certificates <span class="bcp14">SHALL</span> be requested and provided
-as specified in the LwCMP Profile
+as specified in the LCMPP
 <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-21#section-4.1.1" class="relref">Section 4.1.1</a></span> (based on CRMF) or
 <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-lightweight-cmp-profile-21#section-4.1.4" class="relref">Section 4.1.4</a></span> (based on PKCS#10).<a href="#section-5.1-3.3.1" class="pilcrow">¶</a></p>
 <p id="section-5.1-3.3.2">
@@ -2612,7 +2611,7 @@ the authenticated self-contained certificate enrollment request message.<a href=
 certification request by forwarding the request to a PKI entity using a
 connection authenticated with a certificate containing an id-kp-cmcRA extension.<a href="#section-7-4" class="pilcrow">¶</a></p>
 <p id="section-7-5">When CMP is used, the security considerations laid out in the
-LwCMP Profile <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> apply.<a href="#section-7-5" class="pilcrow">¶</a></p>
+LCMPP <span>[<a href="#I-D.ietf-lamps-lightweight-cmp-profile" class="xref">I-D.ietf-lamps-lightweight-cmp-profile</a>]</span> apply.<a href="#section-7-5" class="pilcrow">¶</a></p>
 <p id="section-7-6">Note that CMP messages are not encrypted.
 This may give eavesdroppers insight on which devices are bootstrapped in the
 domain, and this in turn might also be used to selectively block the enrollment
@@ -2691,7 +2690,7 @@ Ranjan, and Rufus Buschart for their reviews with suggestions for improvements.<
 <dd class="break"></dd>
 <dt id="I-D.ietf-ace-cmpv2-coap-transport">[I-D.ietf-ace-cmpv2-coap-transport]</dt>
         <dd>
-<span class="refAuthor">Sahni, M.</span> and <span class="refAuthor">S. Tripathi</span>, <span class="refTitle">"CoAP Transfer for the Certificate Management Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-cmpv2-coap-transport-09</span>, <time datetime="2023-04-14" class="refDate">14 April 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ace-cmpv2-coap-transport-09">https://datatracker.ietf.org/doc/html/draft-ietf-ace-cmpv2-coap-transport-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Sahni, M.</span> and <span class="refAuthor">S. Tripathi</span>, <span class="refTitle">"CoAP Transfer for the Certificate Management Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-cmpv2-coap-transport-10</span>, <time datetime="2023-05-15" class="refDate">15 May 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ace-cmpv2-coap-transport-10">https://datatracker.ietf.org/doc/html/draft-ietf-ace-cmpv2-coap-transport-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-anima-constrained-voucher">[I-D.ietf-anima-constrained-voucher]</dt>
         <dd>
@@ -2926,9 +2925,9 @@ applicable here.<a href="#appendix-B-2.6" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-B-4.2">Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by RA/CA<a href="#appendix-B-4.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-B-4.3">Add the abbreviation 'LwCMP' for Lightweight CMP to the terminology section<a href="#appendix-B-4.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-B-4.3">Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the terminology section<a href="#appendix-B-4.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-B-4.4">State clearly in <a href="#brski-cmp-instance" class="xref">Section 5.1</a> that LwCMP is mandatory when using CMP<a href="#appendix-B-4.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-B-4.4">State clearly in <a href="#brski-cmp-instance" class="xref">Section 5.1</a> that LCMPP is mandatory when using CMP<a href="#appendix-B-4.4" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-B-4.5">Change URL of BRSKI-AE-overview graphics to slide on IETF 116 meeting material<a href="#appendix-B-4.5" class="pilcrow">¶</a>
 </li>
@@ -3094,7 +3093,7 @@ sections. Main changes concerned the removal of the subsection for UC2
 as well as the removal of the YANG model related text as it is not
 applicable in UC1.<a href="#appendix-B-16.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-B-16.2">Updated references to the Lightweight CMP Profile (LwCMP).<a href="#appendix-B-16.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-B-16.2">Updated references to the Lightweight CMP Profile (LCMPP).<a href="#appendix-B-16.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="appendix-B-16.3">Added David von Oheimb as co-author.<a href="#appendix-B-16.3" class="pilcrow">¶</a>
 </li>
