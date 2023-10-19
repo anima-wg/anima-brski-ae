@@ -570,6 +570,8 @@ of the pledge shown in {{uc1figure}}.
      In such scenarios the registrar optionally checks certification requests
      it receives from pledges and forwards them to the RA. The RA performs
      the remaining parts of the enrollment request validation and authorization.
+     Note that to this end the RA may need information regarding
+     the authorization of pledges from the registrar or from other sources.
      On the way back, the registrar forwards responses by the PKI
      to the pledge on the same channel.
 
@@ -1273,6 +1275,7 @@ List of reviewers:
 From IETF draft ae-05 to ae-06:
 
 * Make explicit that MASA voucher status telemetry is as in BRSKI
+* Add note that on delegation, RA may need info on pledge authorization
 
 From IETF draft ae-04 -> IETF draft ae-05:
 
