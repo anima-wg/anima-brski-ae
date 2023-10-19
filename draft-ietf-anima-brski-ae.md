@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-05
+docname: draft-ietf-anima-brski-ae-06
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -635,12 +635,14 @@ which may be located on-site or off-site in the target domain.
   authenticated and authorized by the registrar and/or and an extra RA.
 
 Based on the diagram in BRSKI {{RFC8995, Section 2.1}} and the architectural
-changes, the original protocol flow is divided into four phases
+changes, the original protocol flow is divided into several phases
 showing commonalities and differences to the original approach as follows.
 
 * Discovery phase: same as in BRSKI steps (1) and (2).
 
 * Voucher exchange phase: same as in BRSKI steps (3) and (4).
+
+* Voucher status telemetry: same as in BRSKI directly after step (4).
 
 * Certificate enrollment phase: the use of EST in step (5) is changed
   to employing a certificate enrollment protocol that uses
@@ -654,7 +656,7 @@ showing commonalities and differences to the original approach as follows.
   to establish additional connections for certificate enrollment and
   the registrar retains full control over the certificate enrollment traffic.
 
-- Enrollment status telemetry phase: the final exchange of BRSKI step (5).
+* Enrollment status telemetry: the final exchange of BRSKI step (5).
 
 ## Message Exchange {#message_ex}
 
@@ -678,11 +680,14 @@ can be found at {{BRSKI-AE-overview}}.
 
 The discovery is done as specified in {{RFC8995}}.
 
-
 ### Pledge - Registrar - MASA Voucher Exchange
 
 The voucher exchange is performed as specified in {{RFC8995}}.
 
+### Pledge - Registrar - MASA Voucher Status Telemetry
+
+The voucher status telemetry is performed
+as specified in {{RFC8995, Section 5.7}}.
 
 ### Pledge - Registrar - RA/CA Certificate Enrollment
 
@@ -839,8 +844,8 @@ described next.
 
 ### Pledge - Registrar Enrollment Status Telemetry
 
-The enrollment status telemetry is performed as specified in
-{{RFC8995, Section 5.9.4}}.
+The enrollment status telemetry is performed
+as specified in {{RFC8995, Section 5.9.4}}.
 
 In BRSKI this is described as part of the certificate enrollment step, but
 due to the generalization on the enrollment protocol described in this document
@@ -1265,6 +1270,10 @@ List of reviewers:
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
 
+From IETF draft ae-05 to ae-06:
+
+* Make explicit that MASA voucher status telemetry is as in BRSKI
+
 From IETF draft ae-04 -> IETF draft ae-05:
 
 * Remove entries from the terminology section that should be clear from BRSKI
@@ -1273,7 +1282,7 @@ From IETF draft ae-04 -> IETF draft ae-05:
 * State clearly in {{brski-cmp-instance}} that LCMPP is mandatory when using CMP
 * Change URL of BRSKI-AE-overview graphics to slide on IETF 116 meeting material
 
-From IETF draft ae-03 -> IETF draft ae-04:
+From IETF draft ae-03 to ae-04:
 
 * In response to SECDIR Early Review of ae-03 by Barry Lea,
   - replace 'end-to-end security' by the more clear 'end-to-end authentication'
@@ -1313,7 +1322,7 @@ From IETF draft ae-03 -> IETF draft ae-04:
     {{solutions-PoI}}: "Solution Options for Proof of Identity",
   - various minor editorial improvements like making the wording more consistent
 
-From IETF draft ae-02 -> IETF draft ae-03:
+From IETF draft ae-02 to ae-03:
 
 * In response to review by Toerless Eckert,
   - many editorial improvements and clarifications as suggested, such as
@@ -1344,7 +1353,7 @@ From IETF draft ae-02 -> IETF draft ae-03:
 * Add explanations for terms such as 'target domain' and 'caPubs'
 * Fix minor editorial issues and update some external references
 
-From IETF draft ae-01 -> IETF draft ae-02:
+From IETF draft ae-01 to ae-02:
 
 * Architecture: clarify registrar role including RA/LRA/enrollment proxy
 
