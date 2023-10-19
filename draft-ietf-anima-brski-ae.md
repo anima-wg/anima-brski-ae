@@ -680,7 +680,37 @@ can be found at {{BRSKI-AE-overview}}.
 
 ### Pledge - Registrar Discovery
 
-The discovery is done as specified in {{RFC8995}}.
+Pledges may discover registrars using the basic mechanism specified in {{RFC8995}},
+which does not provide information on specific capabilities of registrars.
+This optimistic approach is sufficient in engineered environments
+where a pledge can simply assume that all registrars discovered this way support
+the variant of BRSKI-AE with the certificate enrollment protocol it wants to use.
+
+As a more general solution, the BRSKI discovery mechanism can be extended
+to provide beforehand to the pledge explicit information on the capabilities
+of a registrar, such as the certificate enrollment protocol(s) it supports.
+Defining such an extension is out of scope of this document.
+Future work such as [TDB informative reference to [BRSKI-discovery](https://github.com/anima-wg/brski-discovery/blob/main/draft-ietf-anima-brski-discovery.md)]
+may provide this.
+This may be specifically helpful in non-engineered environments
+where pledges cannot presume that all registrars have the capabilities they need.
+
+In the absence of better discovery mechanisms,
+BRSKI-AE registrars supporting only CMP but not EST
+SHOULD be configured to allow for RFC 8995 discovery
+only in engineered environments where only pledges requiring CMP are deployed.
+This prevents them from being discovered by pledges that assume the use of EST.
+
+In case a pledge that uses RFC 8995 discovery and supports BRSKI-AE with only CMP
+gets deployed in a non-engineered environment,
+it might at first discover registrars that do not support CMP (but only EST).
+A possible strategy for the pledge in this case is to
+cycle through the registrars it discovered until it has found
+a registrar that it was able to use successfully for CMP-based enrollment.<br>
+To support such a search strategy, CMP capable BRSKI-AE registrars that are
+configured to allow for RFC 8995 discovery MUST NOT reject a pledge
+just because the log from the MASA indicates prior vouchers for this pledge
+from registrars that are not CMP capable.
 
 ### Pledge - Registrar - MASA Voucher Exchange
 
@@ -1274,6 +1304,7 @@ List of reviewers:
 
 From IETF draft ae-05 to ae-06:
 
+* Extend section on discovery according to discussion in the design team
 * Make explicit that MASA voucher status telemetry is as in BRSKI
 * Add note that on delegation, RA may need info on pledge authorization
 
@@ -1580,7 +1611,7 @@ LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae pkcs
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
 LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI
 LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp
-LocalWords: 
+LocalWords: abbrev ietf
 LocalWords: 
 LocalWords: 
 -->
