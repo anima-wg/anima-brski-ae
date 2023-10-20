@@ -141,6 +141,7 @@ informative:
     author:
     - org: Open Charge Alliance
     date: 2019-12
+  I-D.eckert-anima-brski-discovery:
 
 
 --- abstract
@@ -690,8 +691,7 @@ As a more general solution, the BRSKI discovery mechanism can be extended
 to provide beforehand to the pledge explicit information on the capabilities
 of a registrar, such as the certificate enrollment protocol(s) it supports.
 Defining such an extension is out of scope of this document.
-Future work such as [TDB informative reference to [BRSKI-discovery](https://github.com/anima-wg/brski-discovery/blob/main/draft-ietf-anima-brski-discovery.md)]
-may provide this.
+Future work such as {{I-D.eckert-anima-brski-discovery}} may provide this.
 This may be specifically helpful in non-engineered environments
 where pledges cannot presume that all registrars have the capabilities they need.
 
