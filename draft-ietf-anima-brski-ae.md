@@ -1302,13 +1302,13 @@ List of reviewers:
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
 
-From IETF draft ae-05 to ae-06:
+IETF draft ae-05 -> ae-06:
 
 * Extend section on discovery according to discussion in the design team
 * Make explicit that MASA voucher status telemetry is as in BRSKI
 * Add note that on delegation, RA may need info on pledge authorization
 
-From IETF draft ae-04 -> IETF draft ae-05:
+IETF draft ae-04 -> ae-05:
 
 * Remove entries from the terminology section that should be clear from BRSKI
 * Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by RA/CA
@@ -1316,7 +1316,7 @@ From IETF draft ae-04 -> IETF draft ae-05:
 * State clearly in {{brski-cmp-instance}} that LCMPP is mandatory when using CMP
 * Change URL of BRSKI-AE-overview graphics to slide on IETF 116 meeting material
 
-From IETF draft ae-03 to ae-04:
+IETF draft ae-03 -> ae-04:
 
 * In response to SECDIR Early Review of ae-03 by Barry Lea,
   - replace 'end-to-end security' by the more clear 'end-to-end authentication'
@@ -1356,7 +1356,7 @@ From IETF draft ae-03 to ae-04:
     {{solutions-PoI}}: "Solution Options for Proof of Identity",
   - various minor editorial improvements like making the wording more consistent
 
-From IETF draft ae-02 to ae-03:
+IETF draft ae-02 -> ae-03:
 
 * In response to review by Toerless Eckert,
   - many editorial improvements and clarifications as suggested, such as
@@ -1387,7 +1387,7 @@ From IETF draft ae-02 to ae-03:
 * Add explanations for terms such as 'target domain' and 'caPubs'
 * Fix minor editorial issues and update some external references
 
-From IETF draft ae-01 to ae-02:
+IETF draft ae-01 -> ae-02:
 
 * Architecture: clarify registrar role including RA/LRA/enrollment proxy
 
