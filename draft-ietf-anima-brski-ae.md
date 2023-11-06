@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-06
+docname: draft-ietf-anima-brski-ae-07
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -975,7 +975,7 @@ this document refers to the Lightweight CMP Profile (LCMPP)
 the subset of CMP defined there is sufficient for the functionality needed here.
 
 When using CMP, adherence to
-the LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}} is mandatory.
+the LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}} is REQUIRED.
 In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
 * CA Certs Request (1) and Response (2):<br>
@@ -1163,7 +1163,7 @@ for his contributions as a co-author at an earlier draft stage.
 We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
 
-Moreover, we thank Toerless Eckert, Barry Lea, Michael Richardson, Rajeev
+Moreover, we thank Toerless Eckert, Barry Leiba, Michael Richardson, Rajeev
 Ranjan, and Rufus Buschart for their reviews with suggestions for improvements.
 
 --- back
@@ -1289,7 +1289,7 @@ List of reviewers:
 
 * Toerless Eckert (document shepherd)
 
-* Barry Lea (SECDIR Early Review)
+* Barry Leiba (SECDIR)
 
 * Michael Richardson
 
@@ -1301,6 +1301,12 @@ List of reviewers:
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
+
+IETF draft ae-06 -> ae-07:
+
+* In {{brski-cmp-instance}},
+  replace 'mandatory' by 'REQUIRED' regarding adherence to LCMPP,<br>
+  in response to SECDIR Last Call Review of ae-06 by Barry Leiba
 
 IETF draft ae-05 -> ae-06:
 
@@ -1318,7 +1324,7 @@ IETF draft ae-04 -> ae-05:
 
 IETF draft ae-03 -> ae-04:
 
-* In response to SECDIR Early Review of ae-03 by Barry Lea,
+* In response to SECDIR Early Review of ae-03 by Barry Leiba,
   - replace 'end-to-end security' by the more clear 'end-to-end authentication'
   - restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'
   - replace 'MAY' by 'may' in requirement on delegated registrar actions
