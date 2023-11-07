@@ -679,38 +679,21 @@ and options applicable.
 An abstract overview of the BRSKI-AE protocol
 can be found at {{BRSKI-AE-overview}}.
 
-### Pledge - Registrar Discovery
+### Pledge - Registrar Discovery {#discovery}
 
-Pledges may discover registrars using the basic mechanism specified in {{RFC8995}},
-which does not provide information on specific capabilities of registrars.
-This optimistic approach is sufficient in engineered environments
-where a pledge can simply assume that all registrars discovered this way support
-the variant of BRSKI-AE with the certificate enrollment protocol it wants to use.
+Discovery as specified in BRSKI {{RFC8995, Section 4}} does not support
+discovery of registrars with specific enhanced feature sets, such as BRSKI-AE
+with a certain certificate enrollment protocol needed by certain pledges.
 
-As a more general solution, the BRSKI discovery mechanism can be extended
-to provide beforehand to the pledge explicit information on the capabilities
-of a registrar, such as the certificate enrollment protocol(s) it supports.
+The BRSKI discovery mechanism can be extended
+to enable a pledge to specify which sort of registrars it needs to discover or
+to provide explicit information on the capabilities of discovered registrars.
 Defining such an extension is out of scope of this document.
 Future work such as {{I-D.eckert-anima-brski-discovery}} may provide this.
-This may be specifically helpful in non-engineered environments
-where pledges cannot presume that all registrars have the capabilities they need.
 
-In the absence of better discovery mechanisms,
-BRSKI-AE registrars supporting only CMP but not EST
-SHOULD be configured to allow for RFC 8995 discovery
-only in engineered environments where only pledges requiring CMP are deployed.
-This prevents them from being discovered by pledges that assume the use of EST.
-
-In case a pledge that uses RFC 8995 discovery and supports BRSKI-AE with only CMP
-gets deployed in a non-engineered environment,
-it might at first discover registrars that do not support CMP (but only EST).
-A possible strategy for the pledge in this case is to
-cycle through the registrars it discovered until it has found
-a registrar that it was able to use successfully for CMP-based enrollment.<br>
-To support such a search strategy, CMP capable BRSKI-AE registrars that are
-configured to allow for RFC 8995 discovery MUST NOT reject a pledge
-just because the log from the MASA indicates prior vouchers for this pledge
-from registrars that are not CMP capable.
+In the absence of such a generally applicable solution,
+BRSKI-AE deployments may use their particular way of doing discovery.
+{{brski-cmp-instance}} defines a minimalist approach that can be used for CMP.
 
 ### Pledge - Registrar - MASA Voucher Exchange
 
@@ -1050,6 +1033,14 @@ CoAP Transport for CMP {{I-D.ietf-ace-cmpv2-coap-transport}}.
 In this scenario, of course the EST-specific parts
 of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
+For BRSKI-AE scenarios where a general solution (cf. {{discovery}})
+for discovering registrars with CMP support is not available,
+the following minimalist approach may be used:
+discovery as defined in BRSKI {{RFC8995, Section 4}}, but using the
+service name `"brski-registrar-cmp"` instead of `"brski-registrar"`.
+Note that this approach does not support join proxies.
+
+
 ## Support of Other Enrollment Protocols
 
 Further instantiations of BRSKI-AE can be done.  They are left for future work.
@@ -1107,7 +1098,14 @@ which also entails that authenticated self-contained objects are used.
 
 # IANA Considerations
 
-This document does not require IANA actions.
+This document requires one IANA action.
+
+**Service Name:** brski-registrar-cmp<br>
+**Transport Protocol(s):** tcp<br>
+**Assignee:** IESG <iesg@ietf.org><br>
+**Contact:** IESG <iesg@ietf.org><br>
+**Description:** Bootstrapping Remote Secure Key Infrastructure registrar with CMP capabilities<br>
+**Reference:** [THISRFC]
 
 
 # Security Considerations {#sec-consider}
@@ -1302,6 +1300,7 @@ List of reviewers:
 
 IETF draft ae-06 -> ae-07:
 
+* Update subsections on discovery according to discussion in the design team
 * In {{brski-cmp-instance}},
   replace 'mandatory' by 'REQUIRED' regarding adherence to LCMPP,<br>
   in response to SECDIR Last Call Review of ae-06 by Barry Leiba
