@@ -1,10 +1,19 @@
-# software needed (on Linux):
+# installation hints for needed software components:
+#
+# for Linux:
 # pip install xml2rfc
 # sudo gem install kramdown-rfc2629
 # sudo apt install weasyprint # for PDF output
 # npm install -g aasv         # for aasvg support
 # sudo apt install python3-venv
 # sudo gem install enscript
+#
+# for MacOS:
+# brew install node
+# npm install -g aasvg
+# pip install xml2rfc
+# sudo gem install kramdown-rfc
+# pip install 'weasyprint>=53.0,!=57.0,!=60.0'  # for PDF output
 
 SHELL=bash # This is for supporting extended file name globbing
 
