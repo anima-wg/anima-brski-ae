@@ -944,9 +944,9 @@ The CMP-related enrollment endpoints are defined as well-known URIs
 in CMP Updates {{RFC9480}} and the Lightweight CMP Profile {{RFC9483}}.
 
 ~~~~
-  </brski/voucherrequest>,ct=voucher-cms+json
-  </brski/voucher_status>,ct=json
-  </brski/enrollstatus>,ct=json
+  </brski/voucherrequest>;ct=voucher-cms+json
+  </brski/voucher_status>;ct=json
+  </brski/enrollstatus>;ct=json
   </est/cacerts>;ct=pkcs7-mime
   </est/csrattrs>;ct=pkcs7-mime
   </est/fullcmc>;ct=pkcs7-mime
