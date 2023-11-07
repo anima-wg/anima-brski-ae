@@ -68,8 +68,8 @@ normative:
   RFC4210:
   RFC5280:
   RFC8995:
-  I-D.ietf-lamps-cmp-updates:
-  I-D.ietf-lamps-lightweight-cmp-profile:
+  RFC9480:
+  RFC9483:
   IEEE_802.1AR-2018:
     title: 'IEEE Standard for Local and Metropolitan Area Networks -
     Secure Device Identity'
@@ -305,7 +305,7 @@ local RA (LRA):
   and in this case the LRA is co-located with the registrar.
 
 LCMPP:
-: Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}
+: Lightweight CMP Profile {{RFC9483}}
 
 on-site:
 : locality of a component or service or functionality
@@ -906,7 +906,7 @@ The following conventions are used to provide maximal compatibility with BRSKI:
 
 * `<enrollment-protocol>`: MUST reference the protocol being used.
   Existing values include '`est`' {{RFC7030}} as in BRSKI and '`cmp`' as in
-  {{I-D.ietf-lamps-lightweight-cmp-profile}} and {{brski-cmp-instance}} below.
+  {{RFC9483}} and {{brski-cmp-instance}} below.
   Values for other existing protocols such as CMC and SCEP,
   or for newly defined protocols are outside the scope of this document.
   For use of the `<enrollment-protocol>` and `<request>` URI components,
@@ -941,8 +941,7 @@ CMP to be used in BRSKI-AE. The listing contains the supported
 endpoints to which the pledge may connect for bootstrapping. This
 includes the voucher handling as well as the enrollment endpoints.
 The CMP-related enrollment endpoints are defined as well-known URIs
-in CMP Updates {{I-D.ietf-lamps-cmp-updates}}
-and the Lightweight CMP Profile {{I-D.ietf-lamps-lightweight-cmp-profile}}.
+in CMP Updates {{RFC9480}} and the Lightweight CMP Profile {{RFC9483}}.
 
 ~~~~
   </brski/voucherrequest>,ct=voucher-cms+json
@@ -969,45 +968,45 @@ and specifies further aspects of using such enrollment protocols in BRSKI-AE.
 ## BRSKI-CMP: Instantiation to CMP {#brski-cmp-instance}
 
 Instead of referring to CMP
-as specified in {{RFC4210}} and {{I-D.ietf-lamps-cmp-updates}},
+as specified in {{RFC4210}} and {{RFC9480}},
 this document refers to the Lightweight CMP Profile (LCMPP)
-{{I-D.ietf-lamps-lightweight-cmp-profile}} because
+{{RFC9483}} because
 the subset of CMP defined there is sufficient for the functionality needed here.
 
 When using CMP, adherence to
-the LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}} is REQUIRED.
+the LCMPP {{RFC9483}} is REQUIRED.
 In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
 * CA Certs Request (1) and Response (2):<br>
   Requesting CA certificates over CMP is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.3.1}}.
+  {{RFC9483, Section 4.3.1}}.
 
 * Attribute Request (3) and Response (4):<br>
   Requesting certificate request attributes over CMP is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.3.3}}.
+  {{RFC9483, Section 4.3.3}}.
 
   Alternatively, the registrar MAY modify
   the contents of requested certificate contents
-  as specified in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.2.3.2}}.
+  as specified in {{RFC9483, Section 5.2.3.2}}.
 
 * Certificate Request (5) and Response (6):<br>
   Certificates SHALL be requested and provided
   as specified in the LCMPP
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}} (based on CRMF) or
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.4}} (based on PKCS#10).
+  {{RFC9483, Section 4.1.1}} (based on CRMF) or
+  {{RFC9483, Section 4.1.4}} (based on PKCS#10).
 
   Proof of possession SHALL be provided in a way suitable for the key type.
   Proof of identity SHALL be provided by signature-based
   protection of the certification request message
-  as outlined in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 3.2}}
+  as outlined in {{RFC9483, Section 3.2}}
   using the IDevID secret.
 
   Note: When the registrar forwards a certification request by the pledge to
   a backend RA, the registrar is recommended to wrap the original
   certification request in a nested message signed with its own credentials
-  as described in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 5.2.2.1}}.
+  as described in {{RFC9483, Section 5.2.2.1}}.
   This explicitly conveys the consent by the registrar to the RA
   while retaining the certification request
   with its proof of origin provided by the pledge signature.
@@ -1020,7 +1019,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 * Certificate Confirm (7) and PKI/Registrar Confirm (8):<br>
   Explicit confirmation of new certificates to the RA/CA
   MAY be used as specified in
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.1.1}}.
+  {{RFC9483, Section 4.1.1}}.
 
   Note: Independently of certificate confirmation within CMP,
   enrollment status telemetry with the registrar will be performed
@@ -1029,7 +1028,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 * If delayed delivery of responses
   (for instance, to support asynchronous enrollment) within CMP is needed,
   it SHALL be performed as specified in
-  {{I-D.ietf-lamps-lightweight-cmp-profile, Section 4.4 and Section 5.1.2}}.
+  {{RFC9483, Section 4.4 and Section 5.1.2}}.
 
 Note:
 The way in which messages are exchanged between the registrar and backend PKI
@@ -1037,11 +1036,11 @@ components (i.e., RA or CA) is out of scope of this document.
 Due to the general independence of CMP of message transfer, it can be freely
 chosen according to the needs of the application scenario (e.g., using HTTP),
 while security considerations apply, see {{sec-consider}}, and
-guidance can be found in {{I-D.ietf-lamps-lightweight-cmp-profile, Section 6}}.
+guidance can be found in {{RFC9483, Section 6}}.
 
 <!--
-CMP Updates {{I-D.ietf-lamps-cmp-updates}} and
-the LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}}
+CMP Updates {{RFC9480}} and
+the LCMPP {{RFC9483}}
 provide requirements for interoperability.
 -->
 
@@ -1144,7 +1143,7 @@ certification request by forwarding the request to a PKI entity using a
 connection authenticated with a certificate containing an id-kp-cmcRA extension.
 
 When CMP is used, the security considerations laid out in the
-LCMPP {{I-D.ietf-lamps-lightweight-cmp-profile}} apply.
+LCMPP {{RFC9483}} apply.
 
 Note that CMP messages are not encrypted.
 This may give eavesdroppers insight on which devices are bootstrapped in the
