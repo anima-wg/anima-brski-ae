@@ -944,17 +944,16 @@ The CMP-related enrollment endpoints are defined as well-known URIs
 in CMP Updates {{RFC9480}} and the Lightweight CMP Profile {{RFC9483}}.
 
 ~~~~
-  </brski/voucherrequest>;ct=voucher-cms+json
-  </brski/voucher_status>;ct=json
-  </brski/enrollstatus>;ct=json
-  </est/cacerts>;ct=pkcs7-mime
-  </est/csrattrs>;ct=pkcs7-mime
-  </est/fullcmc>;ct=pkcs7-mime
-  </cmp/getcacerts>;ct=pkixcmp
-  </cmp/getcertreqtemplate>;ct=pkixcmp
-  </cmp/initialization>;ct=pkixcmp
-  </cmp/p10>;ct=pkixcmp
-
+  /.well-known/brski/voucherrequest
+  /.well-known/brski/voucher_status
+  /.well-known/brski/enrollstatus
+  /.well-known/est/cacerts
+  /.well-known/est/csrattrs
+  /.well-known/est/fullcmc
+  /.well-known/cmp/getcacerts
+  /.well-known/cmp/getcertreqtemplate
+  /.well-known/cmp/initialization
+  /.well-known/cmp/p10
 ~~~~
 {: artwork-align="left"}
 
