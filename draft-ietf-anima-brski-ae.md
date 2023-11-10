@@ -681,19 +681,27 @@ can be found at {{BRSKI-AE-overview}}.
 
 ### Pledge - Registrar Discovery {#discovery}
 
-Discovery as specified in BRSKI {{RFC8995, Section 4}} does not support
-discovery of registrars with specific enhanced feature sets, such as BRSKI-AE
-with a certain certificate enrollment protocol needed by certain pledges.
+
+When discovering registrars as specified in BRSKI {{RFC8995, Section 4}},
+a pledge cannot determine whether a registrar supports the specific variation
+of BRSKI it needs, such as, BRSKI-AE with CMP as described in this document.
 
 The BRSKI discovery mechanism can be extended
-to enable a pledge to specify which sort of registrars it needs to discover or
-to provide explicit information on the capabilities of discovered registrars.
+to enable a pledge to specify which feature set it expects from a registrar
+and/or to obtain information on the capabilities of each registrar discovered.
 Defining such an extension is out of scope of this document.
 Future work such as {{I-D.eckert-anima-brski-discovery}} may provide this.
 
 In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
 {{brski-cmp-instance}} defines a minimalist approach that can be used for CMP.
+
+Alternatively, in controlled environments where the specific BRSKI features
+required by pledges and the features supported by the registrar(s)
+are known and considered during engineering,
+a very simple optimistic minimalist approach may be followed:
+namely, to assume that all registrars involved support BRSKI-AE
+with the enrollment protocol(s) required by the pledges.
 
 ### Pledge - Registrar - MASA Voucher Exchange
 
@@ -1098,7 +1106,10 @@ which also entails that authenticated self-contained objects are used.
 
 # IANA Considerations
 
-This document requires one IANA action.
+This document requires one IANA action: register in the
+[Service Name and Transport Protocol Port Number Registry](
+https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml)
+the following service name.
 
 **Service Name:** brski-registrar-cmp<br>
 **Transport Protocol(s):** tcp<br>
