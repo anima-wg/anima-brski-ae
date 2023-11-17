@@ -641,7 +641,9 @@ Based on the diagram in BRSKI {{RFC8995, Section 2.1}} and the architectural
 changes, the original protocol flow is divided into several phases
 showing commonalities and differences to the original approach as follows.
 
-* Discovery phase: same as in BRSKI steps (1) and (2).
+* Discovery phase: mostly as in BRSKI step (1). For details see {{discovery}}.
+
+* Identification phase: same as in BRSKI step (2).
 
 * Voucher exchange phase: same as in BRSKI steps (3) and (4).
 
