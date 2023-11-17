@@ -683,24 +683,22 @@ can be found at {{BRSKI-AE-overview}}.
 
 
 Discovery as specified in BRSKI {{RFC8995, Section 4}} does not support
-discovery of registrars with specific enhanced feature sets.
-A pledge cannot find out In this way whether discovered registrars
-support BRSKI-AE with the certificate enrollment protocol it expects.
+discovery of registrars with enhanced feature sets.
+A pledge cannot find out in this way whether discovered registrars
+support the certificate enrollment protocol it expects, such as CMP.
 
-The BRSKI discovery mechanism can be extended
-to enable a pledge to specify which feature set it expects from a registrar
-and/or to obtain information on the capabilities of each registrar discovered.
-Defining such an extension is out of scope of this document.
+As a more general solution, the BRSKI discovery mechanism can be extended
+to provide upfront information on the capabilities of registrars.
 Future work such as {{I-D.eckert-anima-brski-discovery}} may provide this.
 
 In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
-{{brski-cmp-instance}} defines a minimalist approach that can be used for CMP.
+{{brski-cmp-instance}} defines a minimalist approach that MAY be used for CMP.
 
 In controlled environments where the specific BRSKI features
 required by pledges and the features supported by the registrar(s)
 are known and considered during engineering,
-also the following optimistic approach MAY be followed:
+also the following optimistic approach MAY be followed.
 Each pledge simply assumes that all registrars involved support
 BRSKI-AE with the enrollment protocol(s) that it requires.
 
@@ -1044,9 +1042,9 @@ of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
 For BRSKI-AE scenarios where a general solution (cf. {{discovery}})
 for discovering registrars with CMP support is not available,
-the following minimalist approach MAY be used:
-discovery as defined in BRSKI {{RFC8995, Section 4}}, but using the
-service name `"brski-registrar-cmp"` instead of `"brski-registrar"`.
+the following minimalist approach MAY be used.
+Perform discovery as defined in BRSKI {{RFC8995, Section 4}}, but using
+the service name `"brski-registrar-cmp"` instead of `"brski-registrar"`.
 Note that this approach does not support join proxies.
 
 
