@@ -682,9 +682,10 @@ can be found at {{BRSKI-AE-overview}}.
 ### Pledge - Registrar Discovery {#discovery}
 
 
-When discovering registrars as specified in BRSKI {{RFC8995, Section 4}},
-a pledge cannot determine whether a registrar supports the specific variation
-of BRSKI it needs, such as, BRSKI-AE with CMP as described in this document.
+Discovery as specified in BRSKI {{RFC8995, Section 4}} does not support
+discovery of registrars with specific enhanced feature sets.
+A pledge cannot find out In this way whether discovered registrars
+support BRSKI-AE with the certificate enrollment protocol it expects.
 
 The BRSKI discovery mechanism can be extended
 to enable a pledge to specify which feature set it expects from a registrar
@@ -696,12 +697,12 @@ In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
 {{brski-cmp-instance}} defines a minimalist approach that can be used for CMP.
 
-Alternatively, in controlled environments where the specific BRSKI features
+In controlled environments where the specific BRSKI features
 required by pledges and the features supported by the registrar(s)
 are known and considered during engineering,
-a very simple optimistic minimalist approach may be followed:
-namely, to assume that all registrars involved support BRSKI-AE
-with the enrollment protocol(s) required by the pledges.
+also the following optimistic approach MAY be followed:
+Each pledge simply assumes that all registrars involved support
+BRSKI-AE with the enrollment protocol(s) that it requires.
 
 ### Pledge - Registrar - MASA Voucher Exchange
 
@@ -1043,7 +1044,7 @@ of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
 For BRSKI-AE scenarios where a general solution (cf. {{discovery}})
 for discovering registrars with CMP support is not available,
-the following minimalist approach may be used:
+the following minimalist approach MAY be used:
 discovery as defined in BRSKI {{RFC8995, Section 4}}, but using the
 service name `"brski-registrar-cmp"` instead of `"brski-registrar"`.
 Note that this approach does not support join proxies.
