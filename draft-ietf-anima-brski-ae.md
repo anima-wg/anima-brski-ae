@@ -79,7 +79,7 @@ normative:
     seriesinfo:
       IEEE: 802.1AR-2018
       DOI: 10.1109/IEEESTD.2018.8423794
-    uri: https://ieeexplore.ieee.org/document/8423794
+    target: https://ieeexplore.ieee.org/document/8423794
 informative:
   I-D.ietf-anima-constrained-voucher:
   I-D.ietf-ace-cmpv2-coap-transport:
