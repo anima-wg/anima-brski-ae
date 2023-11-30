@@ -1045,8 +1045,9 @@ of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 For BRSKI-AE scenarios where a general solution (cf. {{discovery}})
 for discovering registrars with CMP support is not available,
 the following minimalist approach MAY be used.
-Perform discovery as defined in BRSKI {{RFC8995, Section 4}}, but using
-the service name `"brski-registrar-cmp"` instead of `"brski-registrar"`.
+Perform discovery as defined in BRSKI {{RFC8995, Appendix B}} but using
+the service name `"brski-registrar-cmp"` instead of `"brski-registrar"` 
+(originally defined in {{RFC8995, Section 8.6}}).
 Note that this approach does not support join proxies.
 
 
@@ -1316,6 +1317,7 @@ IETF draft ae-06 -> ae-07:
 * In {{brski-cmp-instance}},
   replace 'mandatory' by 'REQUIRED' regarding adherence to LCMPP,<br>
   in response to SECDIR Last Call Review of ae-06 by Barry Leiba
+* Updated references to service names in  {{brski-cmp-instance}}
 
 IETF draft ae-05 -> ae-06:
 
