@@ -1046,8 +1046,8 @@ For BRSKI-AE scenarios where a general solution (cf. {{discovery}})
 for discovering registrars with CMP support is not available,
 the following minimalist approach MAY be used.
 Perform discovery as defined in BRSKI {{RFC8995, Appendix B}} but using
-the service name `"brski-registrar-cmp"` instead of `"brski-registrar"` 
-(originally defined in {{RFC8995, Section 8.6}}).
+the service name `"brski-registrar-cmp"` (defined in {{iana-consider}})
+instead of `"brski-registrar"` (defined in {{RFC8995, Section 8.6}}).
 Note that this approach does not support join proxies.
 
 
@@ -1106,7 +1106,7 @@ which also entails that authenticated self-contained objects are used.
 -->
 
 
-# IANA Considerations
+# IANA Considerations {#iana-consider}
 
 This document requires one IANA action: register in the
 [Service Name and Transport Protocol Port Number Registry](
