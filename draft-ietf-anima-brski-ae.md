@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-07
+docname: draft-ietf-anima-brski-ae-08
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -1311,13 +1311,16 @@ List of reviewers:
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
 
+IETF draft ae-07 -> ae-08:
+
+* Update references to service names in {{brski-cmp-instance}}
+
 IETF draft ae-06 -> ae-07:
 
 * Update subsections on discovery according to discussion in the design team
 * In {{brski-cmp-instance}},
   replace 'mandatory' by 'REQUIRED' regarding adherence to LCMPP,<br>
   in response to SECDIR Last Call Review of ae-06 by Barry Leiba
-* Updated references to service names in  {{brski-cmp-instance}}
 
 IETF draft ae-05 -> ae-06:
 
