@@ -98,6 +98,7 @@ informative:
   RFC5652:
   RFC5929:
   RFC7030:
+  RFC8366:
   RFC8894:
   RFC8994:
   RFC9148:
@@ -147,16 +148,16 @@ informative:
 --- abstract
 
 This document defines an enhancement of
-Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995)
-that supports alternative certificate enrollment protocols, such as CMP.
-This offers the following advantages.
+Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995).
+It supports alternative certificate enrollment protocols, such as CMP, that
+use authenticated self-contained signed objects for certification messages.
 
-Using authenticated self-contained signed objects
-for certification requests and responses,
-their origin can be authenticated independently of message transfer.
+This offers the following advantages.
+The origin of requests and responses
+can be authenticated independently of message transfer.
 This supports end-to-end authentication (proof of origin) also over
 multiple hops, as well as asynchronous operation of certificate enrollment.
-This in turn provides architectural flexibility where to
+This in turn provides architectural flexibility where and when to
 ultimately authenticate and authorize certification requests while retaining
 full-strength integrity and authenticity of certification requests.
 
@@ -165,7 +166,8 @@ full-strength integrity and authenticity of certification requests.
 
 # Introduction
 
-BRSKI {{RFC8995}} is typically used with EST as the enrollment protocol
+BRSKI {{RFC8995}} is typically used with Enrollment over Secure Transport
+(EST, {{RFC7030}}) as the enrollment protocol
 for device certificates employing HTTP over TLS for its message transfer.
 BRSKI-AE is a variant using alternative enrollment protocols with
 authenticated self-contained objects for device certificate enrollment.
@@ -177,17 +179,22 @@ This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 
 This specification carries over the main characteristics of BRSKI, namely:
 
-* The pledge is assumed to have got IDevID credentials during its production.
-It uses them to authenticate itself to the MASA, the Manufacturer Authorized
-Signing Authority, and to the registrar, the access point of the target domain,
+* The pledge is assumed to have received its Initial Device IDentifier
+(IDevID, {{IEEE_802.1AR-2018}}) credentials during its production.
+It uses them to authenticate itself to the
+Manufacturer Authorized Signing Authority (MASA, {{RFC8995}}),
+and to the registrar, which is the access point of the target domain,
 and to possibly further components of the domain where it will be operated.
 
 * The pledge first obtains via the voucher exchange a trust anchor
 for authenticating entities in the domain such as the domain registrar.
 
-* The pledge then generates a device private key, called the LDevID secret,
-and obtains a domain-specific device certificate, called the LDevID certificate,
-along with its certificate chain.
+* The pledge then obtains its
+Locally significant Device IDentifier (IDevID, {{IEEE_802.1AR-2018}}).
+To this end, the pledge generates a private key, called LDevID secret,
+and requests via the domain registar from the PKI of its new domain
+a domain-specific device certificate, called LDevID certificate.
+On success it receives the LDevID certificate along with its certificate chain.
 
 The goals of BRSKI-AE are to provide an enhancement of BRSKI for
 LDevID certificate enrollment using, alternatively to EST, a protocol that
@@ -219,22 +226,33 @@ In the sequel, 'HTTP' and 'TLS' are just references to the most common case,
 where variants such as using CoAP and/or DTLS are meant to be subsumed -
 the differences are not relevant here.
 
+This specification is sufficient together with its references to
+support BRSKI with the Certificate Management Protocol (CMP, {{RFC9480}})
+profiled in the Lightweight CMP Profile (LCMPP, {{RFC9483}}).
+Combining BRSKI with a protocol or profile other than LCMPP will require
+additional IANA registrations based on the rules specified in this document.
+It may also require additional specifications for details of the protocol or
+profile (similar to [RFC9483]), which are outside the scope of this document.
+
 ## Supported Scenarios {#sup-env}
 
 BRSKI-AE is intended to be used situations like the following.
 
 * pledges and/or the target domain reusing an already established
-  certificate enrollment protocol different from EST, such as CMP
+  certificate enrollment protocol different from EST, such as CMP.
 
 * scenarios indirectly excluding the use of EST for certificate enrollment,
   such as:
-  - the RA not being co-located with the registrar while requiring end-to-end
+  - the registration Authority (RA) not being co-located with the registrar
+  while requiring end-to-end
   authentication of requesters, which EST does not support over multiple hops
-  - the RA or CA operator requiring auditable proof of origin of CSRs, which is
+  - the RA or certification authority (CA) operator requiring
+  auditable proof of origin for Certificate Signing Requests (CSRs), which is
   not possible neither with the transient source authentication provided by TLS.
   - certificate requests for types of keys that do not support signing,
-  such as KEM and key agreement keys, which is not supported by EST because
-  it uses PKCS#10 CSRs expecting proof-of-possession via a self-signature
+  such as Key Encapsulation Mechanism (KEM) and key agreement keys,
+  which is not supported by EST because it uses CSR in PKCS #10 {{RFC2986}}
+  format expecting proof-of-possession via a self-signature
   - pledge implementations using security libraries not providing EST support or
   a TLS library that does not support providing the so-called tls-unique value
   {{RFC5929}} needed by EST for strong binding of the source authentication
@@ -272,7 +290,7 @@ based on the following examples of operational environments:
 * sites with insufficient level of operational security
 
 
-# Terminology {#terminology}
+# Terminology and abbreviations {#terminology}
 
 {::boilerplate bcp14-tagged}
 
@@ -293,11 +311,31 @@ backend:
 : placement of a domain component separately from the domain registrar;
   may be on-site or off-site
 
+BRSKI:
+: Bootstrapping Remote Secure Key Infrastructure {{RFC8995}}
+
 BRSKI-AE:
 : BRSKI with **A**lternative **E**nrollment, a variation of BRSKI {{RFC8995}}
   in which BRSKI-EST, the enrollment protocol between pledge and the registrar,
   is replaced by enrollment protocols that support end-to-end authentication
-  of the pledge to the RA, such as Lightweight CMP.
+  of the pledge to the RA, such as Lightweight CMP (see LCMPP).
+
+CMP:
+: Certificate Management Protocol {{RFC9480}}
+
+CSR:
+: Certificate Signing Request
+
+EST:
+: Enrollment over Secure Transport {{RFC7030}}
+
+IDevID:
+: Initial Device IDentifier of a pledge, provided by the manufacturer
+  and comprising a private key and the related X.509 certificate with its chain
+
+LDevID:
+: Locally significant Device IDentifier of a pledge, provided by its target domain
+  and comprising a private key and the related X.509 certificate with its chain
 
 local RA (LRA):
 : a subordinate RA that is close to entities being enrolled and separate from
@@ -306,6 +344,9 @@ local RA (LRA):
 
 LCMPP:
 : Lightweight CMP Profile {{RFC9483}}
+
+MASA:
+: Manufacturer Authorized Signing Authority
 
 on-site:
 : locality of a component or service or functionality
@@ -318,7 +359,7 @@ off-site:
   to which connection may be intermittent.
 
 pledge:
-: device that is to be bootstrapped to a target domain.
+: device that is to be bootstrapped into a target domain.
   It requests an LDevID, a Locally significant Device IDentifier,
   using IDevID credentials installed by its manufacturer.
 
@@ -340,7 +381,7 @@ synchronous communication:
   here between a pledge and a registrar or PKI component
 
 target domain:
-: the domain that a pledge is going to be bootstrapped to
+: the domain that a pledge is going to be bootstrapped into
 
 # Basic Requirements and Mapping to Solutions {#req-sol}
 
@@ -373,11 +414,12 @@ based on existing technology described in IETF documents:
   and providing proof of possession for a (locally generated) private key.
   Important types of CSR data structures are:
 
-  * PKCS#10 {{RFC2986}}. This very common form of CSR is
+  * PKCS #10 {{RFC2986}}. This very common form of CSR is
     self-signed to protect its integrity and to prove possession of
     the private key that corresponds to the public key included in the request.
 
-  * CRMF {{RFC4211}}. This less common but more general CSR format
+  * Certificate Request Message Format (CRMF, {{RFC4211}}).
+    This less common but more general CSR format
     supports several ways of integrity protection and proof of possession-
     Typically a self-signature is used generated over (part of) the structure
     with the private key corresponding to the included public key.
@@ -413,7 +455,7 @@ based on existing technology described in IETF documents:
   in various ways, such as:
 
   * EST {{RFC7030}}, also its variant EST-coaps {{RFC9148}},
-    utilizes PKCS#10 to encode Certificate Signing Requests (CSRs).
+    utilizes PKCS #10 to encode Certificate Signing Requests (CSRs).
     While such a CSR was not designed
     to include a proof of origin, there is a limited, indirect way of
     binding it to the source authentication of the underlying TLS session.
@@ -427,14 +469,14 @@ based on existing technology described in IETF documents:
     Yet this binding is only valid in the context of the TLS session
     established with the registrar acting as the EST server and typically also
     as an RA.  So even such a cryptographic binding of the authenticated
-    pledge identity to the CSR is not visible nor verifiable to
-    authorization points outside the registrar, such as a RA in the backend.
+    pledge identity to the CSR is not visible nor verifiable to authorization
+    points outside the registrar, such as a (second) RA in the backend.
     What the registrar must do is to authenticate and pre-authorize the pledge
-    and to indicate this to the RA
+    and to indicate this to the (second) RA
     by signing the forwarded certificate request with its private key and
     a related certificate that has the id-kp-cmcRA extended key usage attribute.
 
-    {{RFC7030, Section 2.5}} sketches wrapping PKCS#10-formatted CSRs
+    {{RFC7030, Section 2.5}} sketches wrapping PKCS #10-formatted CSRs
     with a Full PKI Request message sent to the `"/fullcmc"` endpoint.
     This would allow for source authentication at message level, such that
     the registrar could forward it to external RAs in a meaningful way.
@@ -457,20 +499,25 @@ may be considered as a further variant.
     This way
     SCEP does not rely on the security of the underlying message transfer.
 
-  * CMP {{RFC4210}} supports using a shared secret (passphrase) or an existing
+  * CMP {{RFC4210}} {{RFC9480}} supports using a shared secret (passphrase)
+    or an existing
     certificate, which may be an IDevID credential, to authenticate
     certification requests via the PKIProtection structure in a PKIMessage.
     The certification request is typically encoded utilizing CRMF,
-    while PKCS#10 is supported as an alternative.
+    while PKCS #10 is supported as an alternative.
     Thus, CMP does not rely on the security of the underlying message transfer.
 
   * CMC {{RFC5272}} also supports utilizing a shared secret (passphrase) or
     an existing certificate to protect certification requests,
-    which can be either in CRMF or PKCS#10 structure.
+    which can be either in CRMF or PKCS #10 structure.
     The proof of identity can be provided as part of a FullCMCRequest,
     based on CMS {{RFC5652}} and signed with an existing IDevID secret.
     Thus
     also CMC does not rely on the security of the underlying message transfer.
+
+To sum up, EST does not meet the requirements for authenticated self-contained
+objects, but SCEP, CMP, and CMC do. This document primarily focuses on CMP as
+it has more industrial relevance than CMC and SCEP has issues not detailed here.
 
 # Adaptations to BRSKI {#uc1}
 
@@ -697,13 +744,6 @@ In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
 {{brski-cmp-instance}} defines a minimalist approach that MAY be used for CMP.
 
-In controlled environments where the specific BRSKI features
-required by pledges and the features supported by the registrar(s)
-are known and considered during engineering,
-also the following optimistic approach MAY be followed.
-Each pledge simply assumes that all registrars involved support
-BRSKI-AE with the enrollment protocol(s) that it requires.
-
 ### Pledge - Registrar - MASA Voucher Exchange
 
 The voucher exchange is performed as specified in {{RFC8995}}.
@@ -902,8 +942,8 @@ The following conventions are used to provide maximal compatibility with BRSKI:
   Values for other existing protocols such as CMC and SCEP,
   or for newly defined protocols are outside the scope of this document.
   For use of the `<enrollment-protocol>` and `<request>` URI components,
-  they would need to specified in a suitable RFC and
-  placed into the Well-Known URIs registry, like done for EST in {{RFC7030}}.
+  they would need to be specified in a suitable RFC and
+  placed into the Well-Known URIs registry, as for EST in {{RFC7030}}.
 
 * `<request>`: if present, this path component MUST describe,
   depending on the enrollment protocol being used, the operation requested.
@@ -986,7 +1026,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   Certificates SHALL be requested and provided
   as specified in the LCMPP
   {{RFC9483, Section 4.1.1}} (based on CRMF) or
-  {{RFC9483, Section 4.1.4}} (based on PKCS#10).
+  {{RFC9483, Section 4.1.4}} (based on PKCS #10).
 
   Proof of possession SHALL be provided in a way suitable for the key type.
   Proof of identity SHALL be provided by signature-based
@@ -1046,7 +1086,7 @@ For BRSKI-AE scenarios where a general solution (cf. {{discovery}})
 for discovering registrars with CMP support is not available,
 the following minimalist approach MAY be used.
 Perform discovery as defined in BRSKI {{RFC8995, Appendix B}} but using
-the service name `"brski-registrar-cmp"` (defined in {{iana-consider}})
+the service name `"brski-registrar-lcmpp"` (defined in {{iana-consider}})
 instead of `"brski-registrar"` (defined in {{RFC8995, Section 8.6}}).
 Note that this approach does not support join proxies.
 
@@ -1073,7 +1113,7 @@ When using EST {{RFC7030}}, the following aspects and constraints
 need to be considered and the given extra requirements need to be fulfilled,
 which adapt BRSKI {{RFC8995, Section 5.9.3}}:
 
-* Proof of possession is provided typically by using the specified PKCS#10
+* Proof of possession is provided typically by using the specified PKCS #10
   structure in the request.
   Together with Full PKI requests, also CRMF can be used.
 
@@ -1113,11 +1153,12 @@ This document requires one IANA action: register in the
 https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml)
 the following service name.
 
-**Service Name:** brski-registrar-cmp<br>
+**Service Name:** brski-registrar-lcmpp<br>
 **Transport Protocol(s):** tcp<br>
 **Assignee:** IESG <iesg@ietf.org><br>
 **Contact:** IESG <iesg@ietf.org><br>
-**Description:** Bootstrapping Remote Secure Key Infrastructure registrar with CMP capabilities<br>
+**Description:** Bootstrapping Remote Secure Key Infrastructure registrar with
+CMP capabilities according to the Lightweight CMP Profile {{RFC9483}}<br>
 **Reference:** [THISRFC]
 
 
@@ -1156,7 +1197,7 @@ When CMP is used, the security considerations laid out in the
 LCMPP {{RFC9483}} apply.
 
 Note that CMP messages are not encrypted.
-This may give eavesdroppers insight on which devices are bootstrapped in the
+This may give eavesdroppers insight on which devices are bootstrapped into the
 domain, and this in turn might also be used to selectively block the enrollment
 of certain devices.
 To prevent this, the underlying message transport channel can be encrypted,
@@ -1172,8 +1213,12 @@ for his contributions as a co-author at an earlier draft stage.
 We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
 for their input and discussion on use cases and call flows.
 
-Moreover, we thank Toerless Eckert, Barry Leiba, Michael Richardson, Rajeev
-Ranjan, and Rufus Buschart for their reviews with suggestions for improvements.
+Moreover,
+we thank Toerless Eckert (document shepherd),
+Barry Leiba (SECdir review),
+Michael Richardson (ANIMA design team member),
+as well as Rajeev Ranjan and Rufus Buschart (Siemens colleagues)
+for their reviews with suggestions for improvements.
 
 --- back
 
@@ -1298,9 +1343,9 @@ List of reviewers:
 
 * Toerless Eckert (document shepherd)
 
-* Barry Leiba (SECDIR)
+* Barry Leiba (SECdir)
 
-* Michael Richardson
+* Michael Richardson (ANIMA design team)
 
 * Rajeev Ranjan, Siemens
 
@@ -1310,6 +1355,17 @@ List of reviewers:
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
+
+IETF draft ae-08 -> ae-09:
+
+* In response to review by Toerless,
+  - tweak abstract to make meaning of 'alternative enrollment' more clear
+  - expand on first use not "well-known" abbreviations, such as 'EST',<br>
+    adding also a references on their first use
+  - add summary and reason for choosing CMP at end of {{{solutions-PoI}}}
+  - remove paragraph on optimistic discovery in controlled environments
+  - change Service Name from "brski-registrar-cmp" to "brski-registrar-lcmpp"
+  - mention role of reviewers also in acknowlegments section
 
 IETF draft ae-07 -> ae-08:
 
