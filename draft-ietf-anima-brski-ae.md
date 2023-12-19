@@ -192,7 +192,7 @@ for authenticating entities in the domain such as the domain registrar.
 * The pledge then obtains its
 Locally significant Device IDentifier (IDevID, {{IEEE_802.1AR-2018}}).
 To this end, the pledge generates a private key, called LDevID secret,
-and requests via the domain registar from the PKI of its new domain
+and requests via the domain registrar from the PKI of its new domain
 a domain-specific device certificate, called LDevID certificate.
 On success it receives the LDevID certificate along with its certificate chain.
 
@@ -248,7 +248,7 @@ BRSKI-AE is intended to be used situations like the following.
   authentication of requesters, which EST does not support over multiple hops
   - the RA or certification authority (CA) operator requiring
   auditable proof of origin for Certificate Signing Requests (CSRs), which is
-  not possible neither with the transient source authentication provided by TLS.
+  not possible with the transient source authentication provided by TLS.
   - certificate requests for types of keys that do not support signing,
   such as Key Encapsulation Mechanism (KEM) and key agreement keys,
   which is not supported by EST because it uses CSR in PKCS #10 {{RFC2986}}
@@ -737,7 +737,7 @@ A pledge cannot find out in this way whether discovered registrars
 support the certificate enrollment protocol it expects, such as CMP.
 
 As a more general solution, the BRSKI discovery mechanism can be extended
-to provide upfront information on the capabilities of registrars.
+to provide up-front information on the capabilities of registrars.
 Future work such as {{I-D.eckert-anima-brski-discovery}} may provide this.
 
 In the absence of such a generally applicable solution,
@@ -1368,7 +1368,8 @@ IETF draft ae-08 -> ae-09:
     adding also a references on their first use
   - add summary and reason for choosing CMP at end of {{{solutions-PoI}}}
   - remove paragraph on optimistic discovery in controlled environments
-  - mention role of reviewers also in acknowlegments section
+  - mention role of reviewers also in acknowledgments section
+* A couple of grammar and spelling fixes
 
 IETF draft ae-07 -> ae-08:
 
@@ -1409,7 +1410,7 @@ IETF draft ae-03 -> ae-04:
 * In response to further internal reviews and suggestions for generalization,
   - significantly cut down the introduction because the original motivations and
     most explanations are no more needed and would just make it lengthy to read
-  - sort out asynchronous vs. offline transfer, offsite  vs. backend components
+  - sort out asynchronous vs. offline transfer, off-site vs. backend components
   - improve description of CSRs and proof of possession vs. proof of origin
   - clarify that the channel between pledge and registrar is not restricted
     to TLS, but in connection with constrained BRSKI may also be DTLS.
@@ -1626,7 +1627,7 @@ From individual version 02 -> 03:
   An alternative name may be attestation object.
 
 * Simplification of the architecture approach for the initial use
-  case having an offsite PKI.
+  case having an off-site PKI.
 
 * Introduction of a new use case utilizing authenticated
   self-contain objects to onboard a pledge using a commissioning
@@ -1684,13 +1685,13 @@ From individual version 00 -> 01:
   boundary conditions.
 
 <!--
-LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap br
-LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo IDevID
-LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae pkcs
+Local IspellDict: american
+LocalWords: bcp uc prot vexchange enrollfigure req eo selander coap br iana tcp
+LocalWords: oscore fullcmc simpleenroll tls env brski UC seriesinfo IDevID Resp
+LocalWords: Attrib lt docname ipr toc anima async wg symrefs ann ae pkcs cert
 LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
-LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI
-LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp
-LocalWords: abbrev ietf cmp lcmpp
-LocalWords: 
-LocalWords: 
+LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI abbrev
+LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp passphrase
+LocalWords: ietf cmp lcmpp submissionType kw std org uri cmpv app sol est Certs
+LocalWords: github eckert lternative nrollment sec
 -->
