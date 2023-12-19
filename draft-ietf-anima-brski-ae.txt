@@ -1715,7 +1715,7 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
          'EST',
          adding also a references on their first use
 
-      -  add summary and reason for choosing CMP at end of solutions-PoI
+      -  add summary and reason for choosing CMP at end of Section 3.2
 
       -  remove paragraph on optimistic discovery in controlled
          environments

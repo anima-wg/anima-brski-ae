@@ -1366,7 +1366,7 @@ IETF draft ae-08 -> ae-09:
   - tweak abstract to make meaning of 'alternative enrollment' more clear
   - expand on first use not "well-known" abbreviations, such as 'EST',<br>
     adding also a references on their first use
-  - add summary and reason for choosing CMP at end of {{{solutions-PoI}}}
+  - add summary and reason for choosing CMP at end of {{solutions-PoI}}
   - remove paragraph on optimistic discovery in controlled environments
   - mention role of reviewers also in acknowledgments section
 * A couple of grammar and spelling fixes
