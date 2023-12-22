@@ -186,7 +186,7 @@ Manufacturer Authorized Signing Authority (MASA, {{RFC8995}}),
 and to the registrar, which is the access point of the target domain,
 and to possibly further components of the domain where it will be operated.
 
-* The pledge first obtains via the voucher exchange a trust anchor
+* The pledge first obtains via the voucher {{RFC8366}} exchange a trust anchor
 for authenticating entities in the domain such as the domain registrar.
 
 * The pledge then obtains its
@@ -1359,6 +1359,10 @@ List of reviewers:
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
+
+IETF draft ae-09 -> ae-10:
+
+* Add reference to RFC 8633 at first occurrence of 'voucher' (fixes #37)
 
 IETF draft ae-08 -> ae-09:
 
