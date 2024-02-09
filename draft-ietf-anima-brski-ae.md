@@ -82,7 +82,6 @@ normative:
     target: https://ieeexplore.ieee.org/document/8423794
 informative:
   I-D.ietf-anima-constrained-voucher:
-  I-D.ietf-ace-cmpv2-coap-transport:
   BRSKI-AE-overview:
     title: 'BRSKI-AE Protocol Overview'
     author:
@@ -102,6 +101,7 @@ informative:
   RFC8894:
   RFC8994:
   RFC9148:
+  RFC9482:
   IEC-62351-9:
     title: 'IEC 62351 -
       Power systems management and associated information exchange -
@@ -1078,7 +1078,7 @@ provide requirements for interoperability.
 BRSKI-AE with CMP can also be combined with
 Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}},
 using CoAP for enrollment message transport as described by
-CoAP Transport for CMP {{I-D.ietf-ace-cmpv2-coap-transport}}.
+CoAP Transport for CMP {{RFC9482}}.
 In this scenario, of course the EST-specific parts
 of {{I-D.ietf-anima-constrained-voucher}} do not apply.
 
@@ -1363,6 +1363,7 @@ List of reviewers:
 IETF draft ae-09 -> ae-10:
 
 * Add reference to RFC 8633 at first occurrence of 'voucher' (fixes #37)
+* Update reference of CoAP Transfer for CMP from I-D to RFC 9482
 
 IETF draft ae-08 -> ae-09:
 
