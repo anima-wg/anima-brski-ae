@@ -65,10 +65,8 @@ venue:
   anima mail: {anima@ietf.org}
   github: anima-wg/anima-brski-ae
 normative:
-  RFC4210:
   RFC5280:
   RFC8995:
-  RFC9480:
   RFC9483:
   IEEE_802.1AR-2018:
     title: 'IEEE Standard for Local and Metropolitan Area Networks -
@@ -92,6 +90,7 @@ informative:
       PDF: https://datatracker.ietf.org/meeting/116/materials/slides-116-anima-update-on-brski-ae-alternative-enrollment-protocols-in-brski-00
     ann: Graphics on slide 4 of the BRSKI-AE draft 04 status update at IETF 116.
   RFC2986:
+  RFC4210:
   RFC4211:
   RFC5272:
   RFC5652:
@@ -101,6 +100,7 @@ informative:
   RFC8894:
   RFC8994:
   RFC9148:
+  RFC9480:
   RFC9482:
   IEC-62351-9:
     title: 'IEC 62351 -
@@ -1364,6 +1364,7 @@ IETF draft ae-09 -> ae-10:
 
 * Add reference to RFC 8633 at first occurrence of 'voucher' (fixes #37)
 * Update reference of CoAP Transfer for CMP from I-D to RFC 9482
+* Move RFC 4210 and RFC 9480 references from normative to informative
 
 IETF draft ae-08 -> ae-09:
 
