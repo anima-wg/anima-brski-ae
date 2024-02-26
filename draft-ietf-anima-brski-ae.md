@@ -360,8 +360,7 @@ off-site:
 
 pledge:
 : device that is to be bootstrapped into a target domain.
-  It requests an LDevID, a Locally significant Device IDentifier,
-  using IDevID credentials installed by its manufacturer.
+  It requests an LDevID using IDevID credentials installed by its manufacturer.
 
 RA:
 : Registration Authority, the PKI component to which
