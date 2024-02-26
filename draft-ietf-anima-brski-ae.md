@@ -984,7 +984,7 @@ in CMP Updates {{RFC9480}} and the Lightweight CMP Profile {{RFC9483}}.
   /.well-known/cmp/getcacerts
   /.well-known/cmp/getcertreqtemplate
   /.well-known/cmp/initialization
-  /.well-known/cmp/p10
+  /.well-known/cmp/pkcs10
 ~~~~
 {: artwork-align="left"}
 
@@ -1364,6 +1364,7 @@ IETF draft ae-09 -> ae-10:
 * Add reference to RFC 8633 at first occurrence of 'voucher' (fixes #37)
 * Update reference of CoAP Transfer for CMP from I-D to RFC 9482
 * Move RFC 4210 and RFC 9480 references from normative to informative
+* Fix `p10` vs. `pkcs10` entry in list of example endpoints in {{addressing}}
 
 IETF draft ae-08 -> ae-09:
 
