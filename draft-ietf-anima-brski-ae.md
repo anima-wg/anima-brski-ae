@@ -553,7 +553,7 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 
 ~~~~ aasvg
                                          +------------------------+
-   +--------------Drop-Ship------------->| Vendor Service         |
+   +--------------Drop-Ship--------------| Vendor Service         |
    |                                     +------------------------+
    |                                     | M anufacturer|         |
    |                                     | A uthorized  |Ownership|
@@ -598,7 +598,7 @@ checks (as is the case in BRSKI), or part of them.
 The following list describes the on-site components in the target domain
 of the pledge shown in {{uc1figure}}.
 
-* Join Proxy: same functionality as described in BRSKI {{RFC8995, Section 4}}
+* Join Proxy: same requirements as in BRSKI, see {{RFC8995, Section 4}}
 
 * Domain Registrar including LRA or RA functionality: in BRSKI-AE,
   the domain registrar has mostly the same functionality as in BRSKI, namely
@@ -1365,6 +1365,7 @@ IETF draft ae-09 -> ae-10:
 * Update reference of CoAP Transfer for CMP from I-D to RFC 9482
 * Move RFC 4210 and RFC 9480 references from normative to informative
 * Fix `p10` vs. `pkcs10` entry in list of example endpoints in {{addressing}}
+* Minor fix in {{uc1figure}} and few text tweaks due to Siemens-internal review
 
 IETF draft ae-08 -> ae-09:
 
