@@ -1220,7 +1220,8 @@ Moreover,
 we thank Toerless Eckert (document shepherd),
 Barry Leiba (SECdir review),
 Michael Richardson (ANIMA design team member),
-as well as Rajeev Ranjan and Rufus Buschart (Siemens colleagues)
+as well as Rajeev Ranjan, Rufus Buschart,
+Andreas Reiter, and Szofia Fazekas-Zisch (Siemens colleagues)
 for their reviews with suggestions for improvements.
 
 --- back
@@ -1350,9 +1351,7 @@ List of reviewers:
 
 * Michael Richardson (ANIMA design team)
 
-* Rajeev Ranjan, Siemens
-
-* Rufus Buschart, Siemens
+* Rajeev Ranjan, Rufus Buschart, Szofia Fazekas-Zisch, etc. (Siemens)
 
 * [YANGDOCTORS Early review of 2021-08-15](https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-enroll-03-yangdoctors-early-rahman-2021-08-15/)
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
@@ -1366,6 +1365,7 @@ IETF draft ae-09 -> ae-10:
 * Move RFC 4210 and RFC 9480 references from normative to informative
 * Fix `p10` vs. `pkcs10` entry in list of example endpoints in {{addressing}}
 * Minor fix in {{uc1figure}} and few text tweaks due to Siemens-internal review
+* Extend the list of reviewers and acknowledgments by two Siemens colleagues
 
 IETF draft ae-08 -> ae-09:
 
