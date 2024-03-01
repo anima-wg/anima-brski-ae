@@ -5,12 +5,12 @@
 ANIMA WG                                              D. von Oheimb, Ed.
 Internet-Draft                                                  S. Fries
 Intended status: Standards Track                            H. Brockhaus
-Expires: 21 June 2024                                            Siemens
-                                                        19 December 2023
+Expires: 2 September 2024                                        Siemens
+                                                            1 March 2024
 
 
           BRSKI-AE: Alternative Enrollment Protocols in BRSKI
-                      draft-ietf-anima-brski-ae-09
+                      draft-ietf-anima-brski-ae-10
 
 Abstract
 
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 1]
+von Oheimb, et al.      Expires 2 September 2024                [Page 1]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,11 +63,11 @@ Internet-Draft                  BRSKI-AE                   December 2023
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 June 2024.
+   This Internet-Draft will expire on 2 September 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,12 +109,12 @@ Table of Contents
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 2]
+von Oheimb, et al.      Expires 2 September 2024                [Page 2]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  26
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  25
    Appendix A.  Application Examples . . . . . . . . . . . . . . . .  28
      A.1.  Rolling Stock . . . . . . . . . . . . . . . . . . . . . .  28
      A.2.  Building Automation . . . . . . . . . . . . . . . . . . .  29
@@ -123,7 +123,7 @@ Internet-Draft                  BRSKI-AE                   December 2023
      A.5.  Infrastructure Isolation Policy . . . . . . . . . . . . .  30
      A.6.  Sites with Insufficient Level of Operational Security . .  30
    Appendix B.  History of Changes TBD RFC Editor: please delete . .  31
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  39
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  40
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  40
 
 1.  Introduction
@@ -146,9 +146,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
       and to possibly further components of the domain where it will be
       operated.
 
-   *  The pledge first obtains via the voucher exchange a trust anchor
-      for authenticating entities in the domain such as the domain
-      registrar.
+   *  The pledge first obtains via the voucher [RFC8366] exchange a
+      trust anchor for authenticating entities in the domain such as the
+      domain registrar.
 
    *  The pledge then obtains its Locally significant Device IDentifier
       (IDevID, [IEEE_802.1AR-2018]).  To this end, the pledge generates
@@ -165,9 +165,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 3]
+von Oheimb, et al.      Expires 2 September 2024                [Page 3]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    *  enables secure message exchange over any kind of transfer,
@@ -221,9 +221,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 4]
+von Oheimb, et al.      Expires 2 September 2024                [Page 4]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
       -  the RA or certification authority (CA) operator requiring
@@ -277,9 +277,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 5]
+von Oheimb, et al.      Expires 2 September 2024                [Page 5]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
 2.  Terminology and abbreviations
@@ -333,9 +333,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 6]
+von Oheimb, et al.      Expires 2 September 2024                [Page 6]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
       enrolled and separate from a subsequent RA.  In BRSKI-AE it is
@@ -354,8 +354,8 @@ Internet-Draft                  BRSKI-AE                   December 2023
       site or a cloud service, to which connection may be intermittent.
 
    pledge:  device that is to be bootstrapped into a target domain.  It
-      requests an LDevID, a Locally significant Device IDentifier, using
-      IDevID credentials installed by its manufacturer.
+      requests an LDevID using IDevID credentials installed by its
+      manufacturer.
 
    RA:  Registration Authority, the PKI component to which a CA
       typically delegates certificate management functions such as
@@ -389,9 +389,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 7]
+von Oheimb, et al.      Expires 2 September 2024                [Page 7]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    *  Proof of possession: demonstrates access to the private key
@@ -445,9 +445,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 8]
+von Oheimb, et al.      Expires 2 September 2024                [Page 8]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    The binding of data origin authentication to the CSR is typically
@@ -501,9 +501,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                  [Page 9]
+von Oheimb, et al.      Expires 2 September 2024                [Page 9]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    *  SCEP [RFC8894] supports using a shared secret (passphrase) or an
@@ -557,9 +557,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 10]
+von Oheimb, et al.      Expires 2 September 2024               [Page 10]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
 4.1.  Architecture
@@ -613,13 +613,13 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 11]
+von Oheimb, et al.      Expires 2 September 2024               [Page 11]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
                                             +------------------------+
-      +--------------Drop-Ship------------->| Vendor Service         |
+      +--------------Drop-Ship--------------| Vendor Service         |
       |                                     +------------------------+
       |                                     | M anufacturer|         |
       |                                     | A uthorized  |Ownership|
@@ -663,15 +663,15 @@ Internet-Draft                  BRSKI-AE                   December 2023
    The following list describes the on-site components in the target
    domain of the pledge shown in Figure 1.
 
-   *  Join Proxy: same functionality as described in BRSKI [RFC8995],
+   *  Join Proxy: same requirements as in BRSKI, see [RFC8995],
       Section 4
 
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 12]
+von Oheimb, et al.      Expires 2 September 2024               [Page 12]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    *  Domain Registrar including LRA or RA functionality: in BRSKI-AE,
@@ -725,9 +725,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 13]
+von Oheimb, et al.      Expires 2 September 2024               [Page 13]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    *  MASA: functionality as described in BRSKI [RFC8995].  The voucher
@@ -781,9 +781,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 14]
+von Oheimb, et al.      Expires 2 September 2024               [Page 14]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
       protocol, the pledge, and the registrar need to support the usage
@@ -837,9 +837,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 15]
+von Oheimb, et al.      Expires 2 September 2024               [Page 15]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
 4.2.4.  Pledge - Registrar - RA/CA Certificate Enrollment
@@ -893,9 +893,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 16]
+von Oheimb, et al.      Expires 2 September 2024               [Page 16]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    +--------+                        +------------+       +------------+
@@ -949,9 +949,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 17]
+von Oheimb, et al.      Expires 2 September 2024               [Page 17]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    Note: The decision whether to forward a request or to answer it
@@ -1005,9 +1005,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 18]
+von Oheimb, et al.      Expires 2 September 2024               [Page 18]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    *  Attribute Response (4): This MUST contain the attributes to be
@@ -1061,9 +1061,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 19]
+von Oheimb, et al.      Expires 2 September 2024               [Page 19]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    The addressing scheme in BRSKI for certification requests and the
@@ -1117,9 +1117,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 20]
+von Oheimb, et al.      Expires 2 September 2024               [Page 20]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
      /.well-known/brski/voucherrequest
@@ -1131,7 +1131,7 @@ Internet-Draft                  BRSKI-AE                   December 2023
      /.well-known/cmp/getcacerts
      /.well-known/cmp/getcertreqtemplate
      /.well-known/cmp/initialization
-     /.well-known/cmp/p10
+     /.well-known/cmp/pkcs10
 
 5.  Instantiation to Existing Enrollment Protocols
 
@@ -1173,9 +1173,9 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 21]
+von Oheimb, et al.      Expires 2 September 2024               [Page 21]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
       Proof of possession SHALL be provided in a way suitable for the
@@ -1219,24 +1219,21 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
    BRSKI-AE with CMP can also be combined with Constrained BRSKI
    [I-D.ietf-anima-constrained-voucher], using CoAP for enrollment
-   message transport as described by CoAP Transport for CMP
-   [I-D.ietf-ace-cmpv2-coap-transport].  In this scenario, of course the
-   EST-specific parts of [I-D.ietf-anima-constrained-voucher] do not
-   apply.
-
-
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 22]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
+   message transport as described by CoAP Transport for CMP [RFC9482].
+   In this scenario, of course the EST-specific parts of
+   [I-D.ietf-anima-constrained-voucher] do not apply.
 
    For BRSKI-AE scenarios where a general solution (cf.  Section 4.2.1)
    for discovering registrars with CMP support is not available, the
    following minimalist approach MAY be used.  Perform discovery as
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 22]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    defined in BRSKI [RFC8995], Appendix B but using the service name
    "brski-registrar-cmp" (defined in Section 6) instead of "brski-
    registrar" (defined in [RFC8995], Section 8.6).  Note that this
@@ -1282,17 +1279,17 @@ Internet-Draft                  BRSKI-AE                   December 2023
    discovery and voucher exchange as well as for the status exchange
    information.
 
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 23]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
-
    In particular, even if the registrar delegates part or all of its RA
    role during certificate enrollment to a separate system, it still
    must be made sure that the registrar takes part in the decision on
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 23]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    accepting or declining a request to join the domain, as required in
    [RFC8995], Section 5.3.  As this pertains also to obtaining a valid
    domain-specific certificate, it must be made sure that a pledge
@@ -1341,15 +1338,19 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 24]
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 24]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
    Moreover, we thank Toerless Eckert (document shepherd), Barry Leiba
    (SECdir review), Michael Richardson (ANIMA design team member), as
-   well as Rajeev Ranjan and Rufus Buschart (Siemens colleagues) for
-   their reviews with suggestions for improvements.
+   well as Rajeev Ranjan, Rufus Buschart, Andreas Reiter, and Szofia
+   Fazekas-Zisch (Siemens colleagues) for their reviews with suggestions
+   for improvements.
 
 9.  References
 
@@ -1366,12 +1367,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC4210]  Adams, C., Farrell, S., Kause, T., and T. Mononen,
-              "Internet X.509 Public Key Infrastructure Certificate
-              Management Protocol (CMP)", RFC 4210,
-              DOI 10.17487/RFC4210, September 2005,
-              <https://www.rfc-editor.org/rfc/rfc4210>.
-
    [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
               Housley, R., and W. Polk, "Internet X.509 Public Key
               Infrastructure Certificate and Certificate Revocation List
@@ -1387,27 +1382,25 @@ Internet-Draft                  BRSKI-AE                   December 2023
               Infrastructure (BRSKI)", RFC 8995, DOI 10.17487/RFC8995,
               May 2021, <https://www.rfc-editor.org/rfc/rfc8995>.
 
-   [RFC9480]  Brockhaus, H., von Oheimb, D., and J. Gray, "Certificate
-              Management Protocol (CMP) Updates", RFC 9480,
-              DOI 10.17487/RFC9480, November 2023,
-              <https://www.rfc-editor.org/rfc/rfc9480>.
-
-
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 25]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
-
    [RFC9483]  Brockhaus, H., von Oheimb, D., and S. Fries, "Lightweight
               Certificate Management Protocol (CMP) Profile", RFC 9483,
               DOI 10.17487/RFC9483, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9483>.
 
 9.2.  Informative References
+
+
+
+
+
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 25]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
 
    [BRSKI-AE-overview]
               S. Fries and D. von Oheimb, "BRSKI-AE Protocol Overview",
@@ -1424,21 +1417,13 @@ Internet-Draft                  BRSKI-AE                   December 2023
               <https://datatracker.ietf.org/doc/html/draft-eckert-anima-
               brski-discovery-01>.
 
-   [I-D.ietf-ace-cmpv2-coap-transport]
-              Sahni, M. and S. Tripathi, "Constrained Application
-              Protocol (CoAP) Transfer for the Certificate Management
-              Protocol", Work in Progress, Internet-Draft, draft-ietf-
-              ace-cmpv2-coap-transport-10, 15 May 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-ace-
-              cmpv2-coap-transport-10>.
-
    [I-D.ietf-anima-constrained-voucher]
               Richardson, M., Van der Stok, P., Kampanakis, P., and E.
               Dijk, "Constrained Bootstrapping Remote Secure Key
-              Infrastructure (BRSKI)", Work in Progress, Internet-Draft,
-              draft-ietf-anima-constrained-voucher-22, 21 November 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-anima-
-              constrained-voucher-22>.
+              Infrastructure (cBRSKI)", Work in Progress, Internet-
+              Draft, draft-ietf-anima-constrained-voucher-23, 10 January
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              anima-constrained-voucher-23>.
 
    [IEC-62351-9]
               International Electrotechnical Commission, "IEC 62351 -
@@ -1450,14 +1435,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
    [ISO-IEC-15118-2]
               International Standardization Organization / International
               Electrotechnical Commission, "ISO/IEC 15118-2 Road
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 26]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
-
               vehicles - Vehicle-to-Grid Communication Interface - Part
               2: Network and application protocol requirements", ISO/
               IEC 15118-2, April 2014.
@@ -1473,6 +1450,19 @@ Internet-Draft                  BRSKI-AE                   December 2023
               Request Syntax Specification Version 1.7", RFC 2986,
               DOI 10.17487/RFC2986, November 2000,
               <https://www.rfc-editor.org/rfc/rfc2986>.
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 26]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
+   [RFC4210]  Adams, C., Farrell, S., Kause, T., and T. Mononen,
+              "Internet X.509 Public Key Infrastructure Certificate
+              Management Protocol (CMP)", RFC 4210,
+              DOI 10.17487/RFC4210, September 2005,
+              <https://www.rfc-editor.org/rfc/rfc4210>.
 
    [RFC4211]  Schaad, J., "Internet X.509 Public Key Infrastructure
               Certificate Request Message Format (CRMF)", RFC 4211,
@@ -1505,15 +1495,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
               RFC 8894, DOI 10.17487/RFC8894, September 2020,
               <https://www.rfc-editor.org/rfc/rfc8894>.
 
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 27]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
-
    [RFC8994]  Eckert, T., Ed., Behringer, M., Ed., and S. Bjarnason, "An
               Autonomic Control Plane (ACP)", RFC 8994,
               DOI 10.17487/RFC8994, May 2021,
@@ -1524,6 +1505,24 @@ Internet-Draft                  BRSKI-AE                   December 2023
               the Secure Constrained Application Protocol", RFC 9148,
               DOI 10.17487/RFC9148, April 2022,
               <https://www.rfc-editor.org/rfc/rfc9148>.
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 27]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
+   [RFC9480]  Brockhaus, H., von Oheimb, D., and J. Gray, "Certificate
+              Management Protocol (CMP) Updates", RFC 9480,
+              DOI 10.17487/RFC9480, November 2023,
+              <https://www.rfc-editor.org/rfc/rfc9480>.
+
+   [RFC9482]  Sahni, M., Ed. and S. Tripathi, Ed., "Constrained
+              Application Protocol (CoAP) Transfer for the Certificate
+              Management Protocol", RFC 9482, DOI 10.17487/RFC9482,
+              November 2023, <https://www.rfc-editor.org/rfc/rfc9482>.
 
    [UNISIG-Subset-137]
               UNISIG, "Subset-137; ERTMS/ETCS On-line Key Management
@@ -1565,9 +1564,10 @@ A.1.  Rolling Stock
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 28]
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 28]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
 A.2.  Building Automation
@@ -1621,9 +1621,9 @@ A.3.  Substation Automation
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 29]
+von Oheimb, et al.      Expires 2 September 2024               [Page 29]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
 A.4.  Electric Vehicle Charging Infrastructure
@@ -1677,9 +1677,9 @@ A.6.  Sites with Insufficient Level of Operational Security
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 30]
+von Oheimb, et al.      Expires 2 September 2024               [Page 30]
 
-Internet-Draft                  BRSKI-AE                   December 2023
+Internet-Draft                  BRSKI-AE                      March 2024
 
 
 Appendix B.  History of Changes TBD RFC Editor: please delete
@@ -1692,9 +1692,8 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
 
    *  Michael Richardson (ANIMA design team)
 
-   *  Rajeev Ranjan, Siemens
-
-   *  Rufus Buschart, Siemens
+   *  Rajeev Ranjan, Rufus Buschart, Szofia Fazekas-Zisch, etc.
+      (Siemens)
 
    *  YANGDOCTORS Early review of 2021-08-15
       (https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-
@@ -1704,12 +1703,40 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
       enroll/03/).  This has been carved out of the draft to a different
       one and thus is no more applicable here.
 
+   IETF draft ae-09 -> ae-10:
+
+   *  Add reference to RFC 8633 at first occurrence of 'voucher' (fixes
+      #37)
+
+   *  Update reference of CoAP Transfer for CMP from I-D to RFC 9482
+
+   *  Move RFC 4210 and RFC 9480 references from normative to
+      informative
+
+   *  Fix p10 vs. pkcs10 entry in list of example endpoints in
+      Section 4.3
+
+   *  Minor fix in Figure 1 and few text tweaks due to Siemens-internal
+      review
+
+   *  Extend the list of reviewers and acknowledgments by two Siemens
+      colleagues
+
    IETF draft ae-08 -> ae-09:
 
    *  In response to review by Toerless,
 
       -  tweak abstract to make meaning of 'alternative enrollment' more
          clear
+
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 31]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
 
       -  expand on first use not "well-known" abbreviations, such as
          'EST',
@@ -1729,14 +1756,6 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
    *  Update references to service names in Section 5.1
 
    IETF draft ae-06 -> ae-07:
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 31]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
    *  Update subsections on discovery according to discussion in the
       design team
@@ -1766,6 +1785,15 @@ Internet-Draft                  BRSKI-AE                   December 2023
    *  Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the
       terminology section
 
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 32]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    *  State clearly in Section 5.1 that LCMPP is mandatory when using
       CMP
 
@@ -1784,15 +1812,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
       -  replace 'MAY' by 'may' in requirement on delegated registrar
          actions
-
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 32]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
       -  re-phrase requirement on certificate request exchange, avoiding
          MANDATORY
@@ -1822,6 +1841,15 @@ Internet-Draft                  BRSKI-AE                   December 2023
       -  improve description of CSRs and proof of possession vs. proof
          of origin
 
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 33]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
       -  clarify that the channel between pledge and registrar is not
          restricted to TLS, but in connection with constrained BRSKI may
          also be DTLS.  Also move the references to Constrained BRSKI
@@ -1838,17 +1866,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
       -  the certificate enrollment protocol needs to support transport
          over (D)TLS only as far as its messages are transported between
          pledge and registrar.
-
-
-
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 33]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
       -  the certificate enrollment protocol chosen between pledge and
          registrar needs to be used also for the upstream enrollment
@@ -1882,6 +1899,13 @@ Internet-Draft                  BRSKI-AE                   December 2023
          between these two (via the join proxy) is used and the
          enrollment protocol MUST support this.
 
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 34]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
       -  clarify that the enrollment protocol chosen between pledge and
          registrar MUST also be used for the upstream enrollment
          exchange with the PKI.
@@ -1896,15 +1920,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
       protocol ..."
 
    *  In response to review by Michael Richardson,
-
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 34]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
       -  slightly improve the structuring of the Message Exchange
          Section 4.2 and add some detail on the request/response
@@ -1939,6 +1954,14 @@ Internet-Draft                  BRSKI-AE                   December 2023
    *  CMP: add reference to CoAP Transport for CMPV2 and Constrained
       BRSKI
 
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 35]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    *  Include venue information
 
    From IETF draft 05 -> IETF draft ae-01:
@@ -1954,13 +1977,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
    *  Added details on CMP instance, now called BRSKI-CMP
 
    From IETF draft 04 -> IETF draft 05:
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 35]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
    *  David von Oheimb became the editor.
 
@@ -1994,6 +2010,14 @@ Internet-Draft                  BRSKI-AE                   December 2023
    *  Housekeeping, deleted open issue regarding YANG voucher-request in
       UC2 as voucher-request was enhanced with additional leaf.
 
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 36]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    *  Included open issues in YANG model in UC2 regarding assertion
       value agent-proximity and CSR encapsulation using SZTP sub
       module).
@@ -2009,14 +2033,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
 
    *  Terminology change: issue #3 PULL/PUSH -> pledge-initiator-mode
       and pledge-responder-mode to better address the pledge operation.
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 36]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
    *  Communication approach between pledge and registrar-agent changed
       by removing TLS-PSK (former section TLS establishment) and
@@ -2049,6 +2065,15 @@ Internet-Draft                  BRSKI-AE                   December 2023
    *  Update of scope in Section 1.1 to include in which the pledge acts
       as a server.  This is one main motivation for use case 2.
 
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 37]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    *  Rework of use case 2 to consider the transport between the pledge
       and the pledge-agent.  Addressed is the TLS channel establishment
       between the pledge-agent and the pledge as well as the endpoint
@@ -2066,13 +2091,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
    *  Updated references.
 
    *  Included Thomas Werner as additional author for the document.
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 37]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
    From individual version 03 -> IETF draft 00:
 
@@ -2104,6 +2122,14 @@ Internet-Draft                  BRSKI-AE                   December 2023
       description, and solution description as separate sections.
       History moved to appendix.
 
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 38]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    From individual version 02 -> 03:
 
    *  Update of terminology from self-contained to authenticated self-
@@ -2121,14 +2147,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
       the BRSKI call flow sequence and led to changes in the
       introduction, the application example,and also in the related
       BRSKI-AE call flow.
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 38]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
    *  Update of provided examples of the addressing approach used in
       BRSKI to allow for support of multiple enrollment protocols in
@@ -2158,6 +2176,16 @@ Internet-Draft                  BRSKI-AE                   December 2023
    *  Update of examples, specifically for building automation as well
       as two new application use cases in Appendix A.
 
+
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 39]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    *  Deletion of asynchronous interaction with MASA to not complicate
       the use case.  Note that the voucher exchange can already be
       handled in an asynchronous manner and is therefore not considered
@@ -2174,17 +2202,6 @@ Internet-Draft                  BRSKI-AE                   December 2023
       enrollment protocols by collecting boundary conditions.
 
 Contributors
-
-
-
-
-
-
-
-von Oheimb, et al.        Expires 21 June 2024                 [Page 39]
-
-Internet-Draft                  BRSKI-AE                   December 2023
-
 
    Eliot Lear
    Cisco Systems
@@ -2215,6 +2232,16 @@ Authors' Addresses
    URI:   https://www.siemens.com/
 
 
+
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 40]
+
+Internet-Draft                  BRSKI-AE                      March 2024
+
+
    Hendrik Brockhaus
    Siemens AG
    Otto-Hahn-Ring 6
@@ -2237,4 +2264,33 @@ Authors' Addresses
 
 
 
-von Oheimb, et al.        Expires 21 June 2024                 [Page 40]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+von Oheimb, et al.      Expires 2 September 2024               [Page 41]
