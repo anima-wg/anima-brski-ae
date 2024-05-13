@@ -152,15 +152,6 @@ Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995).
 It supports alternative certificate enrollment protocols, such as CMP, that
 use authenticated self-contained signed objects for certification messages.
 
-This offers the following advantages.
-The origin of requests and responses
-can be authenticated independent of message transfer.
-This supports end-to-end authentication (proof of origin) also over
-multiple hops, as well as asynchronous operation of certificate enrollment.
-This in turn provides architectural flexibility where and when to
-ultimately authenticate and authorize certification requests while retaining
-full-strength integrity and authenticity of certification requests.
-
 --- middle
 
 
@@ -176,6 +167,15 @@ This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 **A**lternative **E**nrollment.
 (while originally it was used to abbreviate **A**synchronous **E**nrollment)
 -->
+
+This approach provides the following advantages.
+The origin of requests and responses
+can be authenticated independent of message transfer.
+This supports end-to-end authentication (proof of origin) also over
+multiple hops, as well as asynchronous operation of certificate enrollment.
+This in turn provides architectural flexibility where and when to
+ultimately authenticate and authorize certification requests while retaining
+full-strength integrity and authenticity of certification requests.
 
 This specification carries over the main characteristics of BRSKI, namely:
 
@@ -238,33 +238,34 @@ profile (similar to [RFC9483]), which are outside the scope of this document.
 
 BRSKI-AE is intended to be used in situations like the following.
 
-* pledges and/or the target domain reusing an already established
+* Pledges and/or the target domain reuse an already established
   certificate enrollment protocol different from EST, such as CMP.
 
-* scenarios indirectly excluding the use of EST for certificate enrollment,
-  such as:
-  - the registration Authority (RA) not being co-located with the registrar
-  while requiring end-to-end
-  authentication of requesters, which EST does not support over multiple hops
-  - the RA or certification authority (CA) operator requiring
-  auditable proof of origin for Certificate Signing Requests (CSRs), which is
-  not possible with the transient source authentication provided by TLS.
-  - certificate requests for types of keys that do not support signing,
-  such as Key Encapsulation Mechanism (KEM) and key agreement keys,
-  which is not supported by EST because it uses CSR in PKCS #10 {{RFC2986}}
-  format expecting proof-of-possession via a self-signature
-  - pledge implementations using security libraries not providing EST support or
-  a TLS library that does not support providing the so-called tls-unique value
-  {{RFC5929}} needed by EST for strong binding of the source authentication
+* The application scenario indirectly excludes the use of EST
+  for certificate enrollment, for reasons like these:
+  - The Registration Authority (RA) is not co-located with the registrar
+  while it requires end-to-end authentication of requesters.
+  Yet EST does not support end-to-end authentication over multiple hops.
+  - The RA or certification authority (CA) operator requires
+  auditable proof of origin for Certificate Signing Requests (CSRs). This is not
+  possible with TLS because it provides only transient source authentication.
+  - Certificates are requested for types of keys that do not support signing,
+  such as Key Encapsulation Mechanism (KEM) and key agreement keys.
+  This is not supported by EST because it uses CSR in PKCS #10 {{RFC2986}}
+  format expecting proof-of-possession via a self-signature.
+  - The Pledge implementation uses security libraries not providing EST support
+  or uses a TLS library that does not support providing
+  the so-called tls-unique value {{RFC5929}},
+  which is needed by EST for strong binding of the source authentication.
 
-* no full RA functionality being available on-site in the target domain, while
+* No full RA functionality is available on-site in the target domain, while
   connectivity to an off-site RA may be intermittent or entirely offline.
   <!-- in the latter case a message store-and-forward mechanism is needed. -->
 
-* authoritative actions of a local RA at the registrar being not sufficient
-  for fully and reliably authorizing pledge certification requests, which
+* Authoritative actions of a local RA at the registrar is not sufficient
+  for fully and reliably authorizing pledge certification requests. This
   may be due to missing data access or due to an insufficient level of security,
-  for instance regarding the local storage of private keys
+  for instance regarding the local storage of private keys.
   <!-- Final authorization then is done by a RA residing in the backend. -->
 
 
@@ -389,7 +390,7 @@ the application examples described in {{app-examples}}, the following
 requirements are derived to support authenticated self-contained objects
 as containers carrying certification requests.
 
-At least the following properties are required for a certification request:
+The following cryptographic properties are required for a certification request:
 
 * Proof of possession: demonstrates access to the private
   key corresponding to the public key contained in a certification request.
@@ -428,7 +429,8 @@ based on existing technology described in IETF documents:
   Note: The integrity protection of CSRs includes the public key
   because it is part of the data signed by the corresponding private key.
   Yet this signature does not provide data origin authentication, i.e.,
-  proof of identity of the requester because the key pair involved is fresh.
+  proof of identity of the requester because the key pair involved is new
+  and therefore does not yet have a confirmed identity associated with it.
   <!-- already covered by the next paragraph:
   This extra property can be
   achieved by an additional binding to the IDevID of the pledge.
@@ -470,9 +472,9 @@ based on existing technology described in IETF documents:
     as an RA.  So even such a cryptographic binding of the authenticated
     pledge identity to the CSR is not visible nor verifiable to authorization
     points outside the registrar, such as a (second) RA in the backend.
-    What the registrar must do is to authenticate and pre-authorize the pledge
-    and to indicate this to the (second) RA
-    by signing the forwarded certificate request with its private key and
+    What the registrar needs to do is to authenticate and pre-authorize
+    the pledge and to indicate this to the (second) RA
+    by signing the forwarded certification request with its private key and
     a related certificate that has the id-kp-cmcRA extended key usage attribute.
 
     {{RFC7030, Section 2.5}} sketches wrapping PKCS #10-formatted CSRs
@@ -515,7 +517,7 @@ may be considered as a further variant.
 
 To sum up, EST does not meet the requirements for authenticated self-contained
 objects, but SCEP, CMP, and CMC do. This document primarily focuses on CMP as
-it has more industrial relevance than CMC and SCEP has issues not detailed here.
+it has more industry adoption than CMC and SCEP has issues not detailed here.
 
 # Adaptations to BRSKI {#uc1}
 
@@ -571,11 +573,11 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 |        |     .  |.......|          | LRA or RA    |  .
 | IDevID |     .  +-------+          +--------------+  .
 |        |   BRSKI-AE over TLS                ^        .
-+--------+   using, e.g., [LCMPP]             |        .
++--------+   using, e.g., LCMPP             |        .
                .                              |        .
                ...............................|.........
             on-site (local) domain components |
-                                              | e.g., [LCMPP]
+                                              | e.g., LCMPP
                                               |
  .............................................|..................
  . Public-Key Infrastructure                  v                 .
@@ -613,29 +615,31 @@ of the pledge shown in {{uc1figure}}.
 
   2. Rather than having full RA functionality, the registrar MAY act as
      a local registration authority (LRA) and delegate part of its involvement
-     in certificate enrollment to a backend RA, called RA.
+     in certificate enrollment to a backend RA.
      In such scenarios, the registrar optionally checks certification requests
-     it receives from pledges and forwards them to the RA. The RA performs
+     it receives from pledges and forwards them to the backend RA, which performs
      the remaining parts of the enrollment request validation and authorization.
-     Note that to this end the RA may need information regarding
+     Note that to this end the backend RA may need information regarding
      the authorization of pledges from the registrar or from other sources.
      On the way back, the registrar forwards responses by the PKI
      to the pledge on the same channel.
 
      Note:
      To support end-to-end authentication of the pledge across the
-     registrar to the RA, the certification request structure signed by
-     the pledge needs to be retained by the registrar,
-     and the registrar can not use for its communication with
-     the PKI an enrollment protocol different from the one used by the pledge.
+     registrar to the backend RA, the certification request structure signed by
+     the pledge needs to be upheld and forwarded by the registrar.
+     Moreover, the registrar can not use for its communication with the PKI
+     an enrollment protocol that is different from the enrollment protocol
+     used between the pledge and the registrar.
 
   3. The use of a certificate enrollment protocol with
      authenticated self-contained objects gives freedom how to transfer
      enrollment messages between the pledge and an RA.
-     Regardless of how this transfer is protected and how messages are routed,
-     also in case that the RA is not part of the registrar
-     it MUST be guaranteed, like in BRSKI, that the RA accepts
-     certification requests for LDevIDs only with the consent of the registrar.
+     BRSKI demands that the RA accept  certification requests for LDevIDs
+     only with the consent of the registrar. Also with BRSKI-AE this MUST be
+     guaranteed also in case that the RA is not part of the registrar,
+     regardless of whether the message transfer is protected or not,
+     and how messages are routed.
      See {{sec-consider}} for details on how this can be achieved.
 
 <!-- is already covered by paragraph a little further below:
@@ -717,7 +721,7 @@ After finishing the Imprint step (4), the Enroll step (5) MUST be performed
 with an enrollment protocol utilizing authenticated self-contained objects,
 as explained in {{req-sol}}.
 <!--
-the certificate request MUST be performed using an
+the certification request MUST be performed using an
 authenticated self-contained object providing not only proof of possession
 but also proof of identity (source authentication).
 -->
@@ -768,7 +772,7 @@ via the channel established between the pledge and the registrar.
 -->
 
 The only message exchange REQUIRED is for
-the actual certificate request and response.
+the actual certification request and response.
 Further message exchanges MAY be performed as needed.
 
 Note:
@@ -778,40 +782,40 @@ The last OPTIONAL one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.
 
 ~~~~ aasvg
-+--------+                        +------------+       +------------+
-| Pledge |                        | Domain     |       | Operator   |
-|        |                        | Registrar  |       | RA/CA      |
-|        |                        |  (JRC)     |       | (PKI)      |
-+--------+                        +------------+       +------------+
- |                                         |                       |
- |  [OPTIONAL request of CA certificates]  |                       |
- |--------- CA Certs Request (1) --------->|                       |
- |                                         | [OPTIONAL forwarding] |
- |                                         |---CA Certs Request -->|
- |                                         |<--CA Certs Response---|
- |<-------- CA Certs Response (2) ---------|                       |
- |                                         |                       |
- |  [OPTIONAL request of attributes        |                       |
- |   to include in Certificate Request]    |                       |
- |--------- Attribute Request (3) -------->|                       |
- |                                         | [OPTIONAL forwarding] |
- |                                         |--- Attribute Req. --->|
- |                                         |<-- Attribute Resp. ---|
- |<-------- Attribute Response (4) --------|                       |
- |                                         |                       |
- |  [REQUIRED certificate request]         |                       |
- |--------- Certificate Request (5) ------>|                       |
- |                                         | [OPTIONAL forwarding] |
- |                                         |--- Certificate Req.-->|
- |                                         |<--Certificate Resp.---|
- |<-------- Certificate Response (6) ------|                       |
- |                                         |                       |
- |  [OPTIONAL certificate confirmation]    |                       |
- |--------- Certificate Confirm (7) ------>|                       |
- |                                         | [OPTIONAL forwarding] |
- |                                         |---Certificate Conf.-->|
- |                                         |<---- PKI Confirm -----|
- |<-------- PKI/Registrar Confirm (8) -----|                       |
++--------+                              +------------+                 +------------+
+| Pledge |                              | Domain     |                 | Operator   |
+|        |                              | Registrar  |                 | RA/CA      |
+|        |                              |  (JRC)     |                 | (PKI)      |
++--------+                              +------------+                 +------------+
+     |                                         |                               |
+     |  [OPTIONAL request of CA certificates]  |                               |
+     |--------- CA Certs Request (1) --------->|                               |
+     |                                         |  [OPTIONAL forwarding]        |
+     |                                         |----- CA Certs Request ------->|
+     |                                         |<---- CA Certs Response -------|
+     |<-------- CA Certs Response (2) ---------|                               |
+     |                                         |                               |
+     |  [OPTIONAL request of attributes        |                               |
+     |   to include in Certification Request]  |                               |
+     |--------- Attribute Request (3) -------->|                               |
+     |                                         |  [OPTIONAL forwarding]        |
+     |                                         |----- Attribute Request ------>|
+     |                                         |<---- Attribute Response ------|
+     |<-------- Attribute Response (4) --------|                               |
+     |                                         |                               |
+     |  [REQUIRED certification request]       |                               |
+     |--------- Certification Request (5) ---->|                               |
+     |                                         |  [OPTIONAL forwarding]        |
+     |                                         |---- Certification Request --->|
+     |                                         |<--- Certification Response ---|
+     |<-------- Certification Response (6) ----|                               |
+     |                                         |                               |
+     |  [OPTIONAL certificate confirmation]    |                               |
+     |--------- Certificate Confirm (7) ------>|                               |
+     |                                         |  [OPTIONAL forwarding]        |
+     |                                         |----- Certificate Confirm ---->|
+     |                                         |<---- PKI Confirm -------------|
+     |<-------- PKI/Registrar Confirm (8) -----|                               |
 ~~~~
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
@@ -836,16 +840,16 @@ contents of the request.
 
 Note:
 There are several options for how the registrar could be able to directly answer
-requests for CA certificates or for certificate request attributes.
+requests for CA certificates or for certification request attributes.
 It could cache responses obtained from the domain PKI and
 later use their contents for responding to requests asking for the same data.
 The contents could also be explicitly provisioned at the registrar.
 
 Note:
-Certificate requests typically need to be handled by the backend PKI,
+Certification requests typically need to be handled by the backend PKI,
 but the registrar can answer them directly with an error response
 in case it determines that such a request should be rejected,
-for instance, because is not properly authenticated or not authorized.<br>
+for instance, because is not properly authenticated or not authorized.<!--br-->
 Also, certificate confirmation messages
 will usually be forwarded to the backend PKI,
 but if the registrar knows that they are not needed or wanted there
@@ -867,22 +871,22 @@ depicted in {{enrollfigure}}.
 * Attribute Request (3): Typically, the automated bootstrapping occurs
   without local administrative configuration of the pledge.
   Nevertheless, there are cases in which the pledge may also
-  include in the certification request additional attributes that are
+  include in the Certification Request (5) additional attributes that are
   specific to the target domain. To get these attributes in
   advance, the attribute request may be used.
+
+* Attribute Response (4): This MUST contain the attributes requested in (3)
+  to be included in the subsequent Certification Request (5).
 
   For example, {{RFC8994, Section 6.11.7.2}} specifies
   how the attribute request is used to signal to the pledge
   the acp-node-name field required for enrollment into an ACP domain.
 
-* Attribute Response (4): This MUST contain the attributes to be included
-  in the subsequent certification request.
-
-* Certificate Request (5): This MUST contain the
+* Certification Request (5): This MUST contain the
   authenticated self-contained object ensuring both the proof of possession of
   the corresponding private key and the proof of identity of the requester.
 
-* Certificate Response (6): This MUST contain on success
+* Certification Response (6): This MUST contain on success
   the requested certificate and MAY include further information,
   like certificates of intermediate CAs and any additional trust anchors.
 
@@ -896,7 +900,7 @@ depicted in {{enrollfigure}}.
 
 The generic messages described above may be implemented using any certificate
 enrollment protocol that supports authenticated self-contained objects for the
-certificate request as described in {{req-sol}}.
+certification request as described in {{req-sol}}.
 Examples are available in {{exist_prot}}.
 
 Note that the optional certificate confirmation by the pledge to the PKI
@@ -962,8 +966,8 @@ to perform is understood and supported by the domain registrar
 by sending a request to its preferred enrollment endpoint according to the above
 addressing scheme and evaluating the HTTP status code in the response.
 If the pledge uses endpoints that are not standardized,
-it risks that the registrar does not recognize and accept them
-even if supporting the intended protocol and operation.
+it risks that the registrar does not recognize a request and thus rejects it,
+even if the registrar supports the intended protocol and operation.
 
 The following list of endpoints provides an illustrative example of
 a domain registrar supporting several options for EST as well as for
@@ -1007,12 +1011,12 @@ the LCMPP {{RFC9483}} is REQUIRED.
 In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
 * CA Certs Request (1) and Response (2):<br>
-  Requesting CA certificates over CMP is OPTIONAL.<br>
+  Requesting CA certificates is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
   {{RFC9483, Section 4.3.1}}.
 
 * Attribute Request (3) and Response (4):<br>
-  Requesting certificate request attributes over CMP is OPTIONAL.<br>
+  Requesting certification request attributes is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
   {{RFC9483, Section 4.3.3}}.
 
@@ -1020,7 +1024,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   the contents of the requested certificate contents
   as specified in {{RFC9483, Section 5.2.3.2}}.
 
-* Certificate Request (5) and Response (6):<br>
+* Certification Request (5) and Response (6):<br>
   Certificates SHALL be requested and provided
   as specified in the LCMPP
   {{RFC9483, Section 4.1.1}} (based on CRMF) or
@@ -1042,7 +1046,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
   In case additional trust anchors (besides the pinned-domain-cert)
   need to be conveyed to the pledge,
-  this SHOULD be done in the `caPubs` field of the certificate response message
+  this SHOULD be done in the `caPubs` field of the certification response
   rather than in a CA Certs Response.
 
 * Certificate Confirm (7) and PKI/Registrar Confirm (8):<br>
@@ -1054,18 +1058,18 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   enrollment status telemetry with the registrar will be performed
   as described in BRSKI {{RFC8995, Section 5.9.4}}.
 
-* If delayed delivery of responses
-  (for instance, to support asynchronous enrollment) is needed at the CMP level,
+* If delayed delivery of responses is needed at the CMP level
+  (for instance, to support enrollment over an asynchronous channel),
   it SHALL be performed as specified in
   {{RFC9483, Section 4.4 and Section 5.1.2}}.
 
 Note:
 How messages are exchanged between the registrar and backend PKI
-components (i.e., RA or CA) is out of scope of this document.
-Due to the general independence of CMP of message transfer, it can be freely
-chosen according to the needs of the application scenario (e.g., using HTTP),
-while security considerations apply, see {{sec-consider}}, and
-guidance can be found in {{RFC9483, Section 6}}.
+components (i.e., RA and/or CA) is out of scope of this document.
+Since CMP is independent of message transfer, the transfer mechanism, such as
+HTTP, can be freely chosen according to the needs of the application scenario.
+For th applicable security considerations, see {{sec-consider}}.
+Further guidance can be found in {{RFC9483, Section 6}}.
 
 <!--
 CMP Updates {{RFC9480}} and
@@ -1363,6 +1367,9 @@ List of reviewers:
 IETF draft ae-10 -> ae-11:
 
 * In response to AD review by Mahesh Jethanandani,
+  - move 2nd paragraph of abstract to the introduction
+  - fix several ambiguities and hard-to-read sentences
+  - make wording more consistent, in particular: 'certification request'
   - fix a number of (mostly grammar) nits
 
 IETF draft ae-09 -> ae-10:
@@ -1416,7 +1423,7 @@ IETF draft ae-03 -> ae-04:
   - replace 'end-to-end security' by the more clear 'end-to-end authentication'
   - restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'
   - replace 'MAY' by 'may' in requirement on delegated registrar actions
-  - re-phrase requirement on certificate request exchange, avoiding MANDATORY
+  - re-phrase requirement on certification request exchange, avoiding MANDATORY
   - mention that further protocol names need be put in Well-Known URIs registry
   - explain consequence of using non-standard endpoints, not following SHOULD
   - remove requirement that 'caPubs' field in CMP responses SHOULD NOT be used
@@ -1492,7 +1499,7 @@ IETF draft ae-01 -> ae-02:
 
 From IETF draft 05 -> IETF draft ae-01:
 
-* Renamed the repo and files from anima-brski-async-enroll to anima-brski-ae
+* Renamed the repo and files from 'anima-brski-async-enroll' to 'anima-brski-ae'
 
 * Added graphics for abstract protocol overview as suggested by Toerless Eckert
 
