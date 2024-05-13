@@ -95,6 +95,7 @@ informative:
   RFC5272:
   RFC5652:
   RFC5929:
+  RFC6955:
   RFC7030:
   RFC8366:
   RFC8894:
@@ -249,10 +250,13 @@ BRSKI-AE is intended to be used in situations like the following.
   - The RA or certification authority (CA) operator requires
   auditable proof of origin for Certificate Signing Requests (CSRs). This is not
   possible with TLS because it provides only transient source authentication.
-  - Certificates are requested for types of keys that do not support signing,
-  such as Key Encapsulation Mechanism (KEM) and key agreement keys.
-  This is not supported by EST because it uses CSR in PKCS #10 {{RFC2986}}
-  format expecting proof-of-possession via a self-signature.
+  - Certificates are requested for types of keys, such as Key Encapsulation
+  Mechanism (KEM) keys, that do not support signing (nor alternative forms
+  of single-shot proof of possession like those described in {{RFC6955}}).
+  This is not supported by EST because it uses CSRs in PKCS #10 {{RFC2986}}
+  format, which can only use proof-of-possession methods that
+  need just a single message, while proof of possession for KEM keys,
+  for instance, requires receiving a fresh challenge value beforehand.
   - The Pledge implementation uses security libraries not providing EST support
   or uses a TLS library that does not support providing
   the so-called tls-unique value {{RFC5929}},
@@ -1371,6 +1375,7 @@ IETF draft ae-10 -> ae-11:
   - fix several ambiguities and hard-to-read sentences
   - make wording more consistent, in particular: 'certification request'
   - fix a number of (mostly grammar) nits
+*  Improve item on limitations of PKCS#10 regarding keys that cannot sign
 
 IETF draft ae-09 -> ae-10:
 
