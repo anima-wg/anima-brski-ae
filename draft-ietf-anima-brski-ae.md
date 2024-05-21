@@ -205,7 +205,7 @@ LDevID certificate enrollment using, alternatively to EST, a protocol that
 * enables secure message exchange over any kind of transfer,
   including asynchronous delivery.
 
-Note: The BRSKI voucher exchange of the pledge with the registrar and MASA
+Note that the BRSKI voucher exchange of the pledge with the registrar and MASA
 uses authenticated self-contained objects,
 so the voucher exchange already has these properties.
 
@@ -220,8 +220,8 @@ Based on the definition of the overall approach and specific endpoints,
 this specification enables the registrar to offer multiple enrollment protocols,
 from which pledges and their developers can then pick the most suitable one.
 
-Note: BRSKI (RFC 8995) specifies how to use HTTP over TLS, but further variants
-are known, such as
+It may be noted that BRSKI (RFC 8995) specifies how to use HTTP over TLS,
+but further variants are known, such as
 Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}} using CoAP over DTLS.
 In the sequel, 'HTTP' and 'TLS' are just references to the most common case,
 where variants such as using CoAP and/or DTLS are meant to be subsumed -
@@ -456,7 +456,7 @@ based on existing technology described in IETF documents.
     CRMF also supports further proof-of-possession methods for types of keys
     that do not have signing capability. For details see {{RFC4211, Section 4}}.
 
-  Note: The integrity protection of CSRs includes the public key
+  It should be noted that the integrity protection of CSRs includes the public key
   because it is part of the data signed by the corresponding private key.
   Yet this signature does not provide data origin authentication, i.e.,
   proof of identity of the requester because the key pair involved is new
@@ -654,7 +654,6 @@ of the pledge shown in {{uc1figure}}.
      On the way back, the registrar forwards responses by the PKI
      to the pledge on the same channel.
 
-     Note:
      To support end-to-end authentication of the pledge across the
      registrar to the backend RA, the certification request signed by
      the pledge needs to be upheld and forwarded by the registrar.
@@ -847,7 +846,7 @@ is not supported by EST, but by CMP and other enrollment protocols.
 ~~~~
 {: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
 
-Note: Connections between the registrar and the PKI components
+It may be noted that connections between the registrar and the PKI components
 of the operator (RA, CA, etc.) may be intermittent or off-line.
 Messages should be sent as soon as sufficient transfer capacity is available.
 
@@ -859,22 +858,21 @@ as used for authenticating itself at the TLS level for the voucher exchange.
 Otherwise, the registrar MUST forward the request to the RA
 and forward any resulting response back to the pledge.
 
-Note:
 The decision of whether to forward a request or to answer it directly can depend
 on various static and dynamic factors. They include the application scenario,
 the capabilities of the registrar and of the local RA possibly co-located
 with the registrar, the enrollment protocol being used, and the specific
 contents of the request.
 
-Note:
-There are several options for how the registrar could be able to directly answer
+Note that
+there are several options for how the registrar could be able to directly answer
 requests for CA certificates or for certification request attributes.
 It could cache responses obtained from the domain PKI and
 later use their contents for responding to requests asking for the same data.
 The contents could also be explicitly provisioned at the registrar.
 
-Note:
-Certification requests typically need to be handled by the backend PKI,
+Further note that
+certification requests typically need to be handled by the backend PKI,
 but the registrar can answer them directly with an error response
 in case it determines that such a request should be rejected,
 for instance, because is not properly authenticated or not authorized.<!--br-->
@@ -1064,9 +1062,15 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   as outlined in {{RFC9483, Section 3.2}}
   using the IDevID secret.
 
+<<<<<<< HEAD
   When the registrar forwards a certification request by the pledge to
   a backend RA, the registrar is RECOMMENDED to wrap the original
   certification request in a nested message signed with its own credentials
+=======
+  While the way in which the registrar forwards a certification request to the
+  backend PKI is out of scope of this document, the registrar is recommended
+  to wrap the original certification request in a nested message signed with its own credentials
+>>>>>>> 447741c (Handle the rest of the COMMENT section of AD review by Mahesh, replacing most 'Note:')
   as described in {{RFC9483, Section 5.2.2.1}}.
   This explicitly conveys the consent by the registrar to the RA
   while retaining the certification request
@@ -1082,7 +1086,11 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   MAY be used as specified in
   {{RFC9483, Section 4.1.1}}.
 
+<<<<<<< HEAD
   Note: Independently of certificate confirmation,
+=======
+  Note that independently of certificate confirmation within CMP,
+>>>>>>> 447741c (Handle the rest of the COMMENT section of AD review by Mahesh, replacing most 'Note:')
   enrollment status telemetry with the registrar will be performed
   as described in BRSKI {{RFC8995, Section 5.9.4}}.
 
@@ -1091,10 +1099,19 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   it SHALL be performed as specified in
   {{RFC9483, Section 4.4 and Section 5.1.2}}.
 
+<<<<<<< HEAD
 Note:
 Since CMP is independent of message transfer, the transfer mechanism
 can be freely chosen according to the needs of the application scenario.
 
+=======
+How messages are exchanged between the registrar and backend PKI
+components (i.e., RA and/or CA) is out of scope of this document.
+Since CMP is independent of message transfer, the transfer mechanism, such as
+HTTP, can be freely chosen according to the needs of the application scenario.
+For th applicable security considerations, see {{sec-consider}}.
+Further guidance can be found in {{RFC9483, Section 6}}.
+>>>>>>> 447741c (Handle the rest of the COMMENT section of AD review by Mahesh, replacing most 'Note:')
 
 <!--
 CMP Updates {{RFC9480}} and
@@ -1392,6 +1409,7 @@ List of reviewers:
 IETF draft ae-10 -> ae-11:
 
 * In response to AD review by Mahesh Jethanandani,
+  - replace most occurrences of 'Note:' by 'Note that' or the like
   - move 2nd paragraph of abstract to the introduction
   - fix several ambiguities and hard-to-read sentences
   - make wording more consistent, in particular: 'certification request'
