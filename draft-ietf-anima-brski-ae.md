@@ -272,27 +272,11 @@ BRSKI-AE is intended to be used in situations like the following.
   for instance regarding the local storage of private keys.
   <!-- Final authorization then is done by a RA residing in the backend. -->
 
-
-## List of Application Examples {#list-examples}
-
 Bootstrapping can be handled in various ways,
 depending on the application domains.
 The informative {{app-examples}} provides illustrative examples from
-various industrial control system environments and operational setups.
-They motivate the support of alternative enrollment protocols,
-based on the following examples of operational environments:
-
-* rolling stock
-
-* building automation
-
-* electrical substation automation
-
-* electric vehicle charging infrastructures
-
-* infrastructure isolation policy
-
-* sites with insufficient level of operational security
+various industrial control system environments and operational setups
+motivating the support of alternative enrollment protocols.
 
 
 # Terminology and abbreviations {#terminology}
@@ -420,7 +404,7 @@ the application examples described in {{app-examples}}, the following
 requirements are derived to support authenticated self-contained objects
 as containers carrying certification requests.
 
-The following cryptographic properties are required for a certification request:
+The following properties are required for a certification request:
 
 * Proof of possession: demonstrates access to the private
   key corresponding to the public key contained in a certification request.
@@ -657,19 +641,25 @@ of the pledge shown in {{uc1figure}}.
      To support end-to-end authentication of the pledge across the
      registrar to the backend RA, the certification request signed by
      the pledge needs to be upheld and forwarded by the registrar.
+<<<<<<< HEAD
 	 Therefore, the registrar can not use an enrollment protocol, which is 
 	 different from the enrollment protocol used between the pledge and the 
 	 registrar, for its communication with the backend PKI.
 
+=======
+     Therefore, the registrar can not use for its communication with the PKI
+     an enrollment protocol that is different from the enrollment protocol
+     used between the pledge and the registrar.
+>>>>>>> 53b0740 (further improvements suggested by Hendrik in response to AD comments)
 
   3. The use of a certificate enrollment protocol with
      authenticated self-contained objects gives freedom how to transfer
      enrollment messages between the pledge and an RA.
      BRSKI demands that the RA accept  certification requests for LDevIDs
-     only with the consent of the registrar. Also with BRSKI-AE this MUST be
-     guaranteed also in case that the RA is not part of the registrar,
-     regardless of whether the message transfer is protected or not,
-     and how messages are routed.
+     only with the consent of the registrar.
+     BRSKI-AE guarantees this also in case that the RA is not part of
+     the registrar, even if the further message transfer is unprotected
+     and involves further transport hops.
      See {{sec-consider}} for details on how this can be achieved.
 
 <!-- is already covered by paragraph a little further below:
@@ -986,11 +976,11 @@ already defined as part of the base BRSKI specification or indirectly by EST.
 In addition, alternative enrollment endpoints MAY be supported by the registrar.
 
 A pledge SHOULD use the endpoints defined for the enrollment protocol(s)
-that it is capable of and is willing to use.
-It will recognize whether its preferred protocol or the request that it tries
+that it can use.
+It will recognize whether the protocol it uses and the specific request it wants
 to perform is understood and supported by the domain registrar
-by sending a request to its preferred enrollment endpoint according to the above
-addressing scheme and evaluating the HTTP status code in the response.
+by sending the request to the respective endpoint according to the above
+addressing scheme and then evaluating the HTTP status code of the response.
 If the pledge uses endpoints that are not standardized,
 it risks that the registrar does not recognize a request and thus may reject it,
 even if the registrar supports the intended protocol and operation.
@@ -1411,7 +1401,9 @@ IETF draft ae-10 -> ae-11:
 * In response to AD review by Mahesh Jethanandani,
   - replace most occurrences of 'Note:' by 'Note that' or the like
   - move 2nd paragraph of abstract to the introduction
-  - fix several ambiguities and hard-to-read sentences
+  - remove section 1.2 and merge its first paragraph with the preceding section
+  - reconsider normative language, replacing one 'may' by 'MAY' in section 4.1
+  - fix several ambiguities and hard-to-read sentences by re-phrasing them
   - make wording more consistent, in particular: 'certification request'
   - fix a number of (mostly grammar) nits
 *  Improve item on limitations of PKCS#10 regarding keys that cannot sign
