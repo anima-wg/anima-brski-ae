@@ -162,7 +162,7 @@ BRSKI {{RFC8995}} is typically used with Enrollment over Secure Transport
 (EST, {{RFC7030}}) as the enrollment protocol
 for device certificates employing HTTP over TLS for its message transfer.
 BRSKI-AE is a variant using alternative enrollment protocols with
-authenticated self-contained objects for device certificate enrollment.
+authenticated self-contained objects for the device certificate enrollment.
 <!--
 This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 **A**lternative **E**nrollment.
@@ -387,6 +387,32 @@ synchronous communication:
 target domain:
 : the domain that a pledge is going to be bootstrapped into
 
+Note that this document utilizes a more generic terminology regarding PKI management operations to be independent of a specific enrollment protocol terminology
+certification request:
+: describes the request of a certificate with proof of identity
+
+certification response:
+:describes the answer to the certification request
+
+attribute request:
+: describes the request of content to be included in the certification request
+
+attribute response:
+: describes the describes the answer to the attribute request
+
+CA Certs request:
+: describes the request of CA certificates.
+
+CA Certs response:
+: describes the describes the answer to the CA Certs request
+
+certificate confirm:
+: describes a confirmation message to be used if a backend PKI requires a confirmation of the certificate acceptance by a pledge.
+
+PKI/registrar confirm:
+: describes an acknowledgement of the PKI to the certificate confirm
+
+
 # Basic Requirements and Mapping to Solutions {#req-sol}
 
 Based on the intended target scenarios described in {{sup-env}} and
@@ -408,8 +434,8 @@ The following cryptographic properties are required for a certification request:
   of the pledge, such as the device serial number
   typically included in the subject of the IDevID certificate.
 
-The remainder of this section gives an non-exhaustive list of solution examples,
-based on existing technology described in IETF documents:
+The remainder of this section gives a non-exhaustive list of solution examples,
+based on existing technology described in IETF documents.
 
 ## Solution Options for Proof of Possession {#solutions-PoP}
 
@@ -533,7 +559,7 @@ This way, authenticated self-contained objects such as those described in
 and RA functionality can be deployed freely in the target domain.
 Parts of the RA functionality can even be distributed over several nodes.
 
-The enhancements have been kept to the minimum needed, in order to ensure
+The enhancements needed are kept to a minimum to ensure
 the reuse of already defined architecture elements and interactions.
 In general, the communication follows the BRSKI model and utilizes the existing
 BRSKI architecture elements.
@@ -547,7 +573,7 @@ The key element of BRSKI-AE is that the authorization of a certification request
 MUST be performed based on an authenticated self-contained object.
 The certification request is bound in a self-contained way
 to a proof of origin based on the IDevID credentials.
-Consequently, the certification request may be transferred using any mechanism
+Consequently, the certification request MAY be transferred using any mechanism
 or protocol. Authentication and authorization of the certification request
 can be done by the domain registrar and/or by backend domain components.
 As mentioned in {{sup-env}}, these components may be offline or off-site.
@@ -609,7 +635,7 @@ of the pledge shown in {{uc1figure}}.
 * Domain Registrar including LRA or RA functionality: in BRSKI-AE,
   the domain registrar has mostly the same functionality as in BRSKI, namely
   to act as the gatekeeper of the domain for onboarding new devices and
-  to facilitate the communication of pledges with their MASA and the domain PKI.
+  facilitating the communication of pledges with their MASA and the domain PKI.
   Yet there are some generalizations and specific requirements:
 
   1. The registrar MUST support at least one certificate enrollment protocol
@@ -630,11 +656,12 @@ of the pledge shown in {{uc1figure}}.
 
      Note:
      To support end-to-end authentication of the pledge across the
-     registrar to the backend RA, the certification request structure signed by
+     registrar to the backend RA, the certification request signed by
      the pledge needs to be upheld and forwarded by the registrar.
-     Moreover, the registrar can not use for its communication with the PKI
-     an enrollment protocol that is different from the enrollment protocol
-     used between the pledge and the registrar.
+	 Therefore, the registrar can not use an enrollment protocol, which is 
+	 different from the enrollment protocol used between the pledge and the 
+	 registrar, for its communication with the backend PKI.
+
 
   3. The use of a certificate enrollment protocol with
      authenticated self-contained objects gives freedom how to transfer
@@ -679,7 +706,7 @@ the vendor or manufacturer outside the target domain.
 * Ownership tracker: as defined in BRSKI.
 
 The following list describes backend target domain components,
-which may be located on-site or off-site in the target domain.
+which maybe located on-site or off-site in the target domain.
 
 * RA: performs centralized certificate management functions
   as a public-key infrastructure for the domain operator.
@@ -707,13 +734,10 @@ showing commonalities and differences to the original approach as follows.
   to employing a certificate enrollment protocol that uses
   an authenticated self-contained object for requesting the LDevID certificate.
 
-  For transporting the certificate enrollment request and response messages, the
-  (D)TLS channel established between the pledge and the registrar is RECOMMENDED to use.
-  To this end, the enrollment protocol, the pledge, and the registrar
-  need to support the usage of the existing channel for certificate enrollment.
-  Due to this recommended architecture, typically the pledge does not need
-  to establish additional connections for certificate enrollment and
-  the registrar retains full control over the certificate enrollment traffic.
+For transporting the certificate enrollment request and response messages, the (D)TLS channel established between pledge and registrar is MANDATORY to use.
+To this end, the enrollment protocol, the pledge, and the registrar MUST support the usage of the existing channel for certificate enrollment.
+Due to this architecture, the pledge SHOULD NOT establish additional connections for certificate enrollment and the registrar MUST retain full control over the certificate enrollment traffic.
+
 
 * Enrollment status telemetry: the final exchange of BRSKI step (5).
 
@@ -970,7 +994,7 @@ to perform is understood and supported by the domain registrar
 by sending a request to its preferred enrollment endpoint according to the above
 addressing scheme and evaluating the HTTP status code in the response.
 If the pledge uses endpoints that are not standardized,
-it risks that the registrar does not recognize a request and thus rejects it,
+it risks that the registrar does not recognize a request and thus may reject it,
 even if the registrar supports the intended protocol and operation.
 
 The following list of endpoints provides an illustrative example of
@@ -1040,8 +1064,8 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   as outlined in {{RFC9483, Section 3.2}}
   using the IDevID secret.
 
-  Note: When the registrar forwards a certification request by the pledge to
-  a backend RA, the registrar is recommended to wrap the original
+  When the registrar forwards a certification request by the pledge to
+  a backend RA, the registrar is RECOMMENDED to wrap the original
   certification request in a nested message signed with its own credentials
   as described in {{RFC9483, Section 5.2.2.1}}.
   This explicitly conveys the consent by the registrar to the RA
@@ -1058,22 +1082,19 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   MAY be used as specified in
   {{RFC9483, Section 4.1.1}}.
 
-  Note: Independently of certificate confirmation within CMP,
+  Note: Independently of certificate confirmation,
   enrollment status telemetry with the registrar will be performed
   as described in BRSKI {{RFC8995, Section 5.9.4}}.
 
-* If delayed delivery of responses is needed at the CMP level
+* If delayed delivery of responses is needed
   (for instance, to support enrollment over an asynchronous channel),
   it SHALL be performed as specified in
   {{RFC9483, Section 4.4 and Section 5.1.2}}.
 
 Note:
-How messages are exchanged between the registrar and backend PKI
-components (i.e., RA and/or CA) is out of scope of this document.
-Since CMP is independent of message transfer, the transfer mechanism, such as
-HTTP, can be freely chosen according to the needs of the application scenario.
-For th applicable security considerations, see {{sec-consider}}.
-Further guidance can be found in {{RFC9483, Section 6}}.
+Since CMP is independent of message transfer, the transfer mechanism
+can be freely chosen according to the needs of the application scenario.
+
 
 <!--
 CMP Updates {{RFC9480}} and
@@ -1212,8 +1233,8 @@ domain, and this in turn might also be used to selectively block the enrollment
 of certain devices.
 To prevent this, the underlying message transport channel can be encrypted,
 for instance by employing TLS.
-On the link between the pledge and the registrar, this is easily achieved by
-reusing the existing TLS channel between them.
+For the communication between the pledge and the registrar, the use of TLS is already provided 
+but needs to be obeyed for the further transport from the registrar to a backend RA.
 
 # Acknowledgments
 
@@ -1489,7 +1510,7 @@ IETF draft ae-02 -> ae-03:
   - convert output of ASCII-art figures to SVG format
   - various small other text improvements as suggested/provided
 * Remove the tentative informative application to EST-fullCMC
-* Move Eliot Lear from co-author to contributor, add him to the acknowledgments
+* Move Eliot Lear from co-author to contributor, add Eliot to the acknowledgments
 * Add explanations for terms such as 'target domain' and 'caPubs'
 * Fix minor editorial issues and update some external references
 
