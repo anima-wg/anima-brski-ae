@@ -641,16 +641,9 @@ of the pledge shown in {{uc1figure}}.
      To support end-to-end authentication of the pledge across the
      registrar to the backend RA, the certification request signed by
      the pledge needs to be upheld and forwarded by the registrar.
-<<<<<<< HEAD
 	 Therefore, the registrar can not use an enrollment protocol, which is 
 	 different from the enrollment protocol used between the pledge and the 
 	 registrar, for its communication with the backend PKI.
-
-=======
-     Therefore, the registrar can not use for its communication with the PKI
-     an enrollment protocol that is different from the enrollment protocol
-     used between the pledge and the registrar.
->>>>>>> 53b0740 (further improvements suggested by Hendrik in response to AD comments)
 
   3. The use of a certificate enrollment protocol with
      authenticated self-contained objects gives freedom how to transfer
@@ -1052,15 +1045,9 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   as outlined in {{RFC9483, Section 3.2}}
   using the IDevID secret.
 
-<<<<<<< HEAD
   When the registrar forwards a certification request by the pledge to
   a backend RA, the registrar is RECOMMENDED to wrap the original
   certification request in a nested message signed with its own credentials
-=======
-  While the way in which the registrar forwards a certification request to the
-  backend PKI is out of scope of this document, the registrar is recommended
-  to wrap the original certification request in a nested message signed with its own credentials
->>>>>>> 447741c (Handle the rest of the COMMENT section of AD review by Mahesh, replacing most 'Note:')
   as described in {{RFC9483, Section 5.2.2.1}}.
   This explicitly conveys the consent by the registrar to the RA
   while retaining the certification request
@@ -1076,11 +1063,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   MAY be used as specified in
   {{RFC9483, Section 4.1.1}}.
 
-<<<<<<< HEAD
-  Note: Independently of certificate confirmation,
-=======
-  Note that independently of certificate confirmation within CMP,
->>>>>>> 447741c (Handle the rest of the COMMENT section of AD review by Mahesh, replacing most 'Note:')
+  Note that independently of certificate confirmation 
   enrollment status telemetry with the registrar will be performed
   as described in BRSKI {{RFC8995, Section 5.9.4}}.
 
@@ -1089,19 +1072,8 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   it SHALL be performed as specified in
   {{RFC9483, Section 4.4 and Section 5.1.2}}.
 
-<<<<<<< HEAD
-Note:
 Since CMP is independent of message transfer, the transfer mechanism
 can be freely chosen according to the needs of the application scenario.
-
-=======
-How messages are exchanged between the registrar and backend PKI
-components (i.e., RA and/or CA) is out of scope of this document.
-Since CMP is independent of message transfer, the transfer mechanism, such as
-HTTP, can be freely chosen according to the needs of the application scenario.
-For th applicable security considerations, see {{sec-consider}}.
-Further guidance can be found in {{RFC9483, Section 6}}.
->>>>>>> 447741c (Handle the rest of the COMMENT section of AD review by Mahesh, replacing most 'Note:')
 
 <!--
 CMP Updates {{RFC9480}} and
