@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-10
+docname: draft-ietf-anima-brski-ae-11
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
