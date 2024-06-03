@@ -472,7 +472,7 @@ based on existing technology described in IETF documents.
   * EST {{RFC7030}}, also its variant EST-coaps {{RFC9148}},
     utilizes PKCS #10 to encode Certificate Signing Requests (CSRs).
     While such a CSR has not been designed
-    to include a proof of origin, there is a limited, indirect way of
+    to include proof of origin, there is a limited, indirect way of
     binding it to the source authentication of the underlying TLS session.
     This is achieved by including in the CSR the tls-unique value {{RFC5929}}
     resulting from the TLS handshake.  As this is optionally supported
@@ -641,8 +641,8 @@ of the pledge shown in {{uc1figure}}.
      To support end-to-end authentication of the pledge across the
      registrar to the backend RA, the certification request signed by
      the pledge needs to be upheld and forwarded by the registrar.
-	 Therefore, the registrar can not use an enrollment protocol, which is 
-	 different from the enrollment protocol used between the pledge and the 
+	 Therefore, the registrar can not use an enrollment protocol, which is
+	 different from the enrollment protocol used between the pledge and the
 	 registrar, for its communication with the backend PKI.
 
   3. The use of a certificate enrollment protocol with
@@ -1063,7 +1063,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   MAY be used as specified in
   {{RFC9483, Section 4.1.1}}.
 
-  Note that independently of certificate confirmation 
+  Note that independently of certificate confirmation
   enrollment status telemetry with the registrar will be performed
   as described in BRSKI {{RFC8995, Section 5.9.4}}.
 
@@ -1212,7 +1212,7 @@ domain, and this in turn might also be used to selectively block the enrollment
 of certain devices.
 To prevent this, the underlying message transport channel can be encrypted,
 for instance by employing TLS.
-For the communication between the pledge and the registrar, the use of TLS is already provided 
+For the communication between the pledge and the registrar, the use of TLS is already provided
 but needs to be obeyed for the further transport from the registrar to a backend RA.
 
 # Acknowledgments
@@ -1236,8 +1236,7 @@ for their reviews with suggestions for improvements.
 
 # Application Examples {#app-examples}
 
-This informative annex provides some detail about
-the application examples listed in {{list-examples}}.
+This informative annex provides some detail about application examples.
 
 ## Rolling Stock
 
