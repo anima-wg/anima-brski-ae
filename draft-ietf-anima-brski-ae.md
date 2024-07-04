@@ -373,28 +373,29 @@ target domain:
 
 Note that this document utilizes a more generic terminology regarding PKI management operations to be independent of a specific enrollment protocol terminology
 certification request:
-: describes the request of a certificate with proof of identity
+: message requesting a certificate with proof of identity
 
 certification response:
-:describes the answer to the certification request
+: message providing the answer to a certification request
 
 attribute request:
-: describes the request of content to be included in the certification request
+: message requesting content to be included in the certification request
 
 attribute response:
-: describes the describes the answer to the attribute request
+: message providing the answer to the attribute request
 
 CA Certs request:
-: describes the request of CA certificates.
+: message requesting CA certificates
 
 CA Certs response:
-: describes the describes the answer to the CA Certs request
+: message providing the answer to a CA Certs request
 
 certificate confirm:
-: describes a confirmation message to be used if a backend PKI requires a confirmation of the certificate acceptance by a pledge.
+: message stating to the backend PKI that the requester of a certificate
+received the new certificate and accepted it
 
 PKI/registrar confirm:
-: describes an acknowledgement of the PKI to the certificate confirm
+: acknowledgment of the PKI on the certificate confirm
 
 
 # Basic Requirements and Mapping to Solutions {#req-sol}
@@ -1227,6 +1228,7 @@ Moreover,
 we thank Toerless Eckert (document shepherd),
 Barry Leiba (SECdir review),
 Mahesh Jethanandani  (IETF area director),
+Meral Shirazipour (Gen-ART reviewer),
 Michael Richardson (ANIMA design team member),
 as well as Rajeev Ranjan, Rufus Buschart,
 Andreas Reiter, and Szofia Fazekas-Zisch (Siemens colleagues)
@@ -1358,6 +1360,8 @@ List of reviewers:
 
 * Mahesh Jethanandani  (IETF area director)
 
+* Meral Shirazipour (Gen-ART reviewer)
+
 * Michael Richardson (ANIMA design team)
 
 * Rajeev Ranjan, Rufus Buschart, Szofia Fazekas-Zisch, etc. (Siemens)
@@ -1366,6 +1370,10 @@ List of reviewers:
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
+
+IETF draft ae-11 -> ae-12:
+* Fix minor issues introduced during authors' response to the AD review,\
+  including nits spotted in the Gen-ART review by Meral Shirazipour
 
 IETF draft ae-10 -> ae-11:
 
@@ -1721,5 +1729,6 @@ LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
 LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI abbrev
 LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp passphrase
 LocalWords: ietf cmp lcmpp submissionType kw std org uri cmpv app sol est Certs
-LocalWords: github eckert lternative nrollment sec Mahesh Jethanandani
+LocalWords: github eckert lternative nrollment sec Mahesh Jethanandani Gen ART
+LocalWords: Meral Shirazipour
 -->
