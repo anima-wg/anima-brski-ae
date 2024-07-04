@@ -160,9 +160,9 @@ use authenticated self-contained signed objects for certification messages.
 
 BRSKI {{RFC8995}} is typically used with Enrollment over Secure Transport
 (EST, {{RFC7030}}) as the enrollment protocol
-for device certificates employing HTTP over TLS for its message transfer.
-BRSKI-AE is a variant using alternative enrollment protocols with
-authenticated self-contained objects for the device certificate enrollment.
+for operator-specific device certificates, employing HTTP over TLS for secure message transfer.
+BRSKI-AE is a variant using alternative protocols with
+authenticated self-contained objects for enrolling such device certificates.
 <!--
 This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 **A**lternative **E**nrollment.
@@ -371,7 +371,8 @@ synchronous communication:
 target domain:
 : the domain that a pledge is going to be bootstrapped into
 
-Note that this document utilizes a more generic terminology regarding PKI management operations to be independent of a specific enrollment protocol terminology
+This document utilizes generic terminology regarding PKI management operations to be independent of the terminology of a specific enrollment protocol.
+
 certification request:
 : message requesting a certificate with proof of identity
 
@@ -544,7 +545,7 @@ This way, authenticated self-contained objects such as those described in
 and RA functionality can be deployed freely in the target domain.
 Parts of the RA functionality can even be distributed over several nodes.
 
-The enhancements needed are kept to a minimum to ensure
+The enhancements are kept to a minimum to ensure
 the reuse of already defined architecture elements and interactions.
 In general, the communication follows the BRSKI model and utilizes the existing
 BRSKI architecture elements.
@@ -588,7 +589,7 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
 |        |     .  |.......|          | LRA or RA    |  .
 | IDevID |     .  +-------+          +--------------+  .
 |        |   BRSKI-AE over TLS                ^        .
-+--------+   using, e.g., LCMPP             |        .
++--------+   using, e.g., LCMPP               |        .
                .                              |        .
                ...............................|.........
             on-site (local) domain components |
@@ -620,7 +621,7 @@ of the pledge shown in {{uc1figure}}.
 * Domain Registrar including LRA or RA functionality: in BRSKI-AE,
   the domain registrar has mostly the same functionality as in BRSKI, namely
   to act as the gatekeeper of the domain for onboarding new devices and
-  facilitating the communication of pledges with their MASA and the domain PKI.
+  to facilitate the communication of pledges with their MASA and the domain PKI.
   Yet there are some generalizations and specific requirements:
 
   1. The registrar MUST support at least one certificate enrollment protocol
@@ -642,9 +643,9 @@ of the pledge shown in {{uc1figure}}.
      To support end-to-end authentication of the pledge across the
      registrar to the backend RA, the certification request signed by
      the pledge needs to be upheld and forwarded by the registrar.
-	 Therefore, the registrar can not use an enrollment protocol, which is
-	 different from the enrollment protocol used between the pledge and the
-	 registrar, for its communication with the backend PKI.
+     Therefore, the registrar cannot use for its communication with the PKI
+     an enrollment protocol that is different from
+     the enrollment protocol used between the pledge and the registrar.
 
   3. The use of a certificate enrollment protocol with
      authenticated self-contained objects gives freedom how to transfer
@@ -652,7 +653,7 @@ of the pledge shown in {{uc1figure}}.
      BRSKI demands that the RA accept  certification requests for LDevIDs
      only with the consent of the registrar.
      BRSKI-AE guarantees this also in case that the RA is not part of
-     the registrar, even if the further message transfer is unprotected
+     the registrar, even if the message exchange with backend systems is unprotected
      and involves further transport hops.
      See {{sec-consider}} for details on how this can be achieved.
 
@@ -689,7 +690,7 @@ the vendor or manufacturer outside the target domain.
 * Ownership tracker: as defined in BRSKI.
 
 The following list describes backend target domain components,
-which maybe located on-site or off-site in the target domain.
+which may be located on-site or off-site in the target domain.
 
 * RA: performs centralized certificate management functions
   as a public-key infrastructure for the domain operator.
@@ -717,10 +718,9 @@ showing commonalities and differences to the original approach as follows.
   to employing a certificate enrollment protocol that uses
   an authenticated self-contained object for requesting the LDevID certificate.
 
-For transporting the certificate enrollment request and response messages, the (D)TLS channel established between pledge and registrar is MANDATORY to use.
-To this end, the enrollment protocol, the pledge, and the registrar MUST support the usage of the existing channel for certificate enrollment.
-Due to this architecture, the pledge SHOULD NOT establish additional connections for certificate enrollment and the registrar MUST retain full control over the certificate enrollment traffic.
-
+  For transporting the certificate enrollment request and response messages, the   (D)TLS channel established between pledge and registrar is MANDATORY to use.
+  To this end, the enrollment protocol, the pledge, and the registrar need to support the use of this existing channel for certificate enrollment.
+  Due to this architecture, the pledge does not need to establish additional connections for certificate enrollment and the registrar retains full control over the certificate enrollment traffic.
 
 * Enrollment status telemetry: the final exchange of BRSKI step (5).
 
@@ -972,11 +972,11 @@ In addition, alternative enrollment endpoints MAY be supported by the registrar.
 A pledge SHOULD use the endpoints defined for the enrollment protocol(s)
 that it can use.
 It will recognize whether the protocol it uses and the specific request it wants
-to perform is understood and supported by the domain registrar
+to perform are understood and supported by the domain registrar
 by sending the request to the respective endpoint according to the above
 addressing scheme and then evaluating the HTTP status code of the response.
 If the pledge uses endpoints that are not standardized,
-it risks that the registrar does not recognize a request and thus may reject it,
+it risks that the registrar does not recognize a request and therefore does not accept it
 even if the registrar supports the intended protocol and operation.
 
 The following list of endpoints provides an illustrative example of
@@ -1047,11 +1047,11 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   using the IDevID secret.
 
   When the registrar forwards a certification request by the pledge to
-  a backend RA, the registrar is RECOMMENDED to wrap the original
+  a backend RA/CA, the registrar is RECOMMENDED to wrap the original
   certification request in a nested message signed with its own credentials
   as described in {{RFC9483, Section 5.2.2.1}}.
   This explicitly conveys the consent by the registrar to the RA
-  while retaining the certification request
+  while retaining the original certification request
   with its proof of origin provided by the pledge signature.
 
   In case additional trust anchors (besides the pinned-domain-cert)
@@ -1064,17 +1064,21 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   MAY be used as specified in
   {{RFC9483, Section 4.1.1}}.
 
-  Note that independently of certificate confirmation
-  enrollment status telemetry with the registrar will be performed
-  as described in BRSKI {{RFC8995, Section 5.9.4}}.
+  Note that independently of the certificate confirmation within CMP,
+  enrollment status telemetry with the registrar at BRSKI level will be performed
+  as described in {{RFC8995, Section 5.9.4}}.
 
-* If delayed delivery of responses is needed
+* If delayed delivery of CMP messages is needed
   (for instance, to support enrollment over an asynchronous channel),
   it SHALL be performed as specified in
   {{RFC9483, Section 4.4 and Section 5.1.2}}.
 
-Since CMP is independent of message transfer, the transfer mechanism
+How messages are exchanged between the registrar and backend PKI
+components (i.e., RA and/or CA) is out of scope of this document.
+Since CMP is independent of message transfer, the mechanism for this exchange
 can be freely chosen according to the needs of the application scenario.
+For the applicable security considerations, see {{sec-consider}}.
+Further guidance can be found in {{RFC9483, Section 6}}.
 
 <!--
 CMP Updates {{RFC9480}} and
@@ -1211,10 +1215,9 @@ Note that CMP messages are not encrypted.
 This may give eavesdroppers insight into which devices are bootstrapped into the
 domain, and this in turn might also be used to selectively block the enrollment
 of certain devices.
-To prevent this, the underlying message transport channel can be encrypted,
-for instance by employing TLS.
-For the communication between the pledge and the registrar, the use of TLS is already provided
-but needs to be obeyed for the further transport from the registrar to a backend RA.
+To prevent this, the underlying message transport channel can be encrypted.
+This is already provided by TLS between the pledge and the registrar, and
+for the onward exchange with backend systems, encryption may need to be added.
 
 # Acknowledgments
 
@@ -1227,7 +1230,7 @@ for their input and discussion on use cases and call flows.
 Moreover,
 we thank Toerless Eckert (document shepherd),
 Barry Leiba (SECdir review),
-Mahesh Jethanandani  (IETF area director),
+Mahesh Jethanandani (IETF area director),
 Meral Shirazipour (Gen-ART reviewer),
 Michael Richardson (ANIMA design team member),
 as well as Rajeev Ranjan, Rufus Buschart,
@@ -1238,7 +1241,7 @@ for their reviews with suggestions for improvements.
 
 # Application Examples {#app-examples}
 
-This informative annex provides some detail about application examples.
+This informative annex provides some detail on application examples.
 
 ## Rolling Stock
 
@@ -1358,7 +1361,7 @@ List of reviewers:
 
 * Barry Leiba (SECdir)
 
-* Mahesh Jethanandani  (IETF area director)
+* Mahesh Jethanandani (IETF area director)
 
 * Meral Shirazipour (Gen-ART reviewer)
 
