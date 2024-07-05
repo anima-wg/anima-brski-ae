@@ -1375,7 +1375,8 @@ List of reviewers:
   applicable here.
 
 IETF draft ae-11 -> ae-12:
-* Fix minor issues introduced during authors' response to the AD review,\
+
+* Fix minor issues introduced during authors' response to the AD review,<br>
   including nits spotted in the Gen-ART review by Meral Shirazipour
 
 IETF draft ae-10 -> ae-11:
