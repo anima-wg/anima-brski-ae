@@ -71,6 +71,7 @@ log:
 	git log -p ${DRAFT}.md
 
 commit: generate
+	git add ${LATEST_TXT}
 	git commit ${DRAFT}{.{xml,txt,html,pdf},-${VERSION}.txt} \
 	   -m "CI - ietf-draft-files (xml, txt, html, pdf) updated" \
 	   || echo "No changes to commit"
