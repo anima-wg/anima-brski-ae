@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-11
+docname: draft-ietf-anima-brski-ae-12
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -257,7 +257,7 @@ BRSKI-AE is intended to be used in situations like the following.
   format, which can only use proof-of-possession methods that
   need just a single message, while proof of possession for KEM keys,
   for instance, requires receiving a fresh challenge value beforehand.
-  - The Pledge implementation uses security libraries not providing EST support
+  - The pledge implementation uses security libraries not providing EST support
   or uses a TLS library that does not support providing
   the so-called tls-unique value {{RFC5929}},
   which is needed by EST for strong binding of the source authentication.
@@ -385,11 +385,11 @@ attribute request:
 attribute response:
 : message providing the answer to the attribute request
 
-CA Certs request:
+CA certs request:
 : message requesting CA certificates
 
-CA Certs response:
-: message providing the answer to a CA Certs request
+CA certs response:
+: message providing the answer to a CA certs request
 
 certificate confirm:
 : message stating to the backend PKI that the requester of a certificate
