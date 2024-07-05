@@ -161,8 +161,8 @@ use authenticated self-contained signed objects for certification messages.
 BRSKI {{RFC8995}} is typically used with Enrollment over Secure Transport
 (EST, {{RFC7030}}) as the enrollment protocol
 for operator-specific device certificates, employing HTTP over TLS for secure message transfer.
-BRSKI-AE is a variant using alternative protocols with
-authenticated self-contained objects for enrolling such device certificates.
+BRSKI-AE is a variant using alternative enrollment protocols with
+authenticated self-contained objects for the device certificate enrollment.
 <!--
 This enhancement of BRSKI is named BRSKI-AE, where AE stands for
 **A**lternative **E**nrollment.
@@ -976,7 +976,7 @@ to perform are understood and supported by the domain registrar
 by sending the request to the respective endpoint according to the above
 addressing scheme and then evaluating the HTTP status code of the response.
 If the pledge uses endpoints that are not standardized,
-it risks that the registrar does not recognize a request and therefore does not accept it
+it risks that the registrar does not recognize a request and thus may reject it,
 even if the registrar supports the intended protocol and operation.
 
 The following list of endpoints provides an illustrative example of
@@ -1241,7 +1241,7 @@ for their reviews with suggestions for improvements.
 
 # Application Examples {#app-examples}
 
-This informative annex provides some detail on application examples.
+This informative annex provides some detail about application examples.
 
 ## Rolling Stock
 
