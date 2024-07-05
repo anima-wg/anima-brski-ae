@@ -1051,7 +1051,7 @@ In particular, the following specific requirements apply (cf. {{enrollfigure}}).
   certification request in a nested message signed with its own credentials
   as described in {{RFC9483, Section 5.2.2.1}}.
   This explicitly conveys the consent by the registrar to the RA
-  while retaining the original certification request
+  while retaining the original certification request message
   with its proof of origin provided by the pledge signature.
 
   In case additional trust anchors (besides the pinned-domain-cert)
