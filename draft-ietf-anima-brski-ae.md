@@ -2,7 +2,7 @@
 
 title: 'BRSKI-AE: Alternative Enrollment Protocols in BRSKI'
 abbrev: BRSKI-AE
-docname: draft-ietf-anima-brski-ae-12
+docname: draft-ietf-anima-brski-ae-13
 stand_alone: true
 ipr: trust200902
 submissionType: IETF
@@ -1373,6 +1373,8 @@ List of reviewers:
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
+
+IETF draft ae-12 -> ae-13:
 
 IETF draft ae-11 -> ae-12:
 
