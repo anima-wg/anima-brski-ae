@@ -143,8 +143,17 @@ informative:
     author:
     - org: Open Charge Alliance
     date: 2019-12
-  I-D.eckert-anima-brski-discovery:
-
+  draft-ietf-anima-brski-discovery:
+    title: Discovery for BRSKI variations
+    author:
+    - name: Toerless Eckert
+    - name: Esko Dijk
+    seriesinfo:
+      Work in Progress,
+      Internet-Draft,
+      draft-ietf-anima-brski-discovery-04
+    date: 25 July 2024
+    target: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04
 
 --- abstract
 
@@ -752,7 +761,7 @@ support the certificate enrollment protocol it expects, such as CMP.
 
 As a more general solution, the BRSKI discovery mechanism can be extended
 to provide up-front information on the capabilities of registrars.
-Future work such as {{I-D.eckert-anima-brski-discovery}} may provide this.
+Future work such as {{draft-ietf-anima-brski-discovery}} may provide this.
 
 In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
@@ -1375,6 +1384,8 @@ List of reviewers:
   applicable here.
 
 IETF draft ae-12 -> ae-13:
+
+* update referene: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
 
 IETF draft ae-11 -> ae-12:
 
