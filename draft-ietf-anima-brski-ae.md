@@ -1241,6 +1241,8 @@ we thank Toerless Eckert (document shepherd),
 Barry Leiba (SECdir review),
 Mahesh Jethanandani (IETF area director),
 Meral Shirazipour (Gen-ART reviewer),
+Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
+(IESG reviewers),
 Michael Richardson (ANIMA design team member),
 as well as Rajeev Ranjan, Rufus Buschart,
 Andreas Reiter, and Szofia Fazekas-Zisch (Siemens colleagues)
@@ -1373,6 +1375,9 @@ List of reviewers:
 * Mahesh Jethanandani (IETF area director)
 
 * Meral Shirazipour (Gen-ART reviewer)
+
+* Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
+  (IESG reviewers)
 
 * Michael Richardson (ANIMA design team)
 
