@@ -1106,7 +1106,7 @@ For BRSKI-AE scenarios where a general solution (cf. {{discovery}})
 for discovering registrars with CMP support is not available,
 the following minimalist approach MAY be used.
 Perform discovery as defined in BRSKI {{RFC8995, Appendix B}} but using
-the service name `"brski-registrar-cmp"` (defined in {{iana-consider}})
+the service name `"brski-reg-cmp"` (defined in {{iana-consider}})
 instead of `"brski-registrar"` (defined in {{RFC8995, Section 8.6}}).
 Note that this approach does not support join proxies.
 
@@ -1173,7 +1173,7 @@ This document requires one IANA action: register in the
 https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml)
 the following service name.
 
-**Service Name:** brski-registrar-cmp<br>
+**Service Name:** brski-reg-cmp<br>
 **Transport Protocol(s):** tcp<br>
 **Assignee:** IESG <iesg@ietf.org><br>
 **Contact:** IESG <iesg@ietf.org><br>
@@ -1385,7 +1385,9 @@ List of reviewers:
 
 IETF draft ae-12 -> ae-13:
 
+* due to IANA requirement, shorten service name `"brski-registrar-cmp"` to `"brski-reg-cmp"`
 * update referene: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
+
 
 IETF draft ae-11 -> ae-12:
 
