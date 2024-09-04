@@ -62,7 +62,7 @@ contributor:
   email: lear@cisco.com
 venue:
   group: anima
-  anima mail: {anima@ietf.org}
+  mail: anima@ietf.org
   github: anima-wg/anima-brski-ae
 normative:
   RFC5280:
