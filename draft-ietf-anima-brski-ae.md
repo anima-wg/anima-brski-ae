@@ -1176,7 +1176,7 @@ the following service name.
 **Service Name:** brski-reg-cmp<br>
 **Transport Protocol(s):** tcp<br>
 **Assignee:** IESG <iesg@ietf.org><br>
-**Contact:** IESG <iesg@ietf.org><br>
+**Contact:** IETF <chair@ietf.org><br>
 **Description:** Bootstrapping Remote Secure Key Infrastructure registrar with
 CMP capabilities according to the Lightweight CMP Profile (LCMPP, {{RFC9483}})<br>
 **Reference:** [THISRFC]
@@ -1391,6 +1391,7 @@ List of reviewers:
 IETF draft ae-12 -> ae-13:
 
 * due to IANA requirement, shorten service name `"brski-registrar-cmp"` to `"brski-reg-cmp"`
+* due to IANA requirement, changed contact for service name registration from IESG to IETF
 * update referene: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
 
 
