@@ -818,42 +818,42 @@ The last OPTIONAL one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.
 
 ~~~~ aasvg
-+--------+                              +------------+                 +------------+
-| Pledge |                              | Domain     |                 | Operator   |
-|        |                              | Registrar  |                 | RA/CA      |
-|        |                              |  (JRC)     |                 | (PKI)      |
-+--------+                              +------------+                 +------------+
-     |                                         |                               |
-     |  [OPTIONAL request of CA certificates]  |                               |
-     |--------- CA Certs Request (1) --------->|                               |
-     |                                         |  [OPTIONAL forwarding]        |
-     |                                         |----- CA Certs Request ------->|
-     |                                         |<---- CA Certs Response -------|
-     |<-------- CA Certs Response (2) ---------|                               |
-     |                                         |                               |
-     |  [OPTIONAL request of attributes        |                               |
-     |   to include in Certification Request]  |                               |
-     |--------- Attribute Request (3) -------->|                               |
-     |                                         |  [OPTIONAL forwarding]        |
-     |                                         |----- Attribute Request ------>|
-     |                                         |<---- Attribute Response ------|
-     |<-------- Attribute Response (4) --------|                               |
-     |                                         |                               |
-     |  [REQUIRED certification request]       |                               |
-     |--------- Certification Request (5) ---->|                               |
-     |                                         |  [OPTIONAL forwarding]        |
-     |                                         |---- Certification Request --->|
-     |                                         |<--- Certification Response ---|
-     |<-------- Certification Response (6) ----|                               |
-     |                                         |                               |
-     |  [OPTIONAL certificate confirmation]    |                               |
-     |--------- Certificate Confirm (7) ------>|                               |
-     |                                         |  [OPTIONAL forwarding]        |
-     |                                         |----- Certificate Confirm ---->|
-     |                                         |<---- PKI Confirm -------------|
-     |<-------- PKI/Registrar Confirm (8) -----|                               |
++------+                          +---------+              +--------+
+|Pledge|                          |Domain   |              |Operator|
+|      |                          |Registrar|              |RA/CA   |
+|      |                          |(JRC)    |              |(PKI)   |
++------+                          +---------+              +--------+
+ |                                     |                           |
+ |[OPTIONAL request of CA certificates]|                           |
+ |------- CA Certs Request (1) ------->|                           |
+ |                                     | [OPTIONAL forwarding]     |
+ |                                     |--- CA Certs Request ----->|
+ |                                     |<-- CA Certs Response -----|
+ |<------ CA Certs Response (2) -------|                           |
+ |                                     |                           |
+ |[OPTIONAL request of attributes      |                           |
+ | to include in Certification Request]|                           |
+ |------- Attribute Request (3) ------>|                           |
+ |                                     | [OPTIONAL forwarding]     |
+ |                                     |--- Attribute Request ---->|
+ |                                     |<-- Attribute Response ----|
+ |<------ Attribute Response (4) ------|                           |
+ |                                     |                           |
+ |[REQUIRED certification request]     |                           |
+ |------- Certification Request (5) -->|                           |
+ |                                     | [OPTIONAL forwarding]     |
+ |                                     |---Certification Request-->|
+ |                                     |<--Certification Resp.  ---|
+ |<----- Certification Response (6) ---|                           |
+ |                                     |                           |
+ |[OPTIONAL certificate confirmation]  |                           |
+ |------- Certificate Confirm (7) ---->|                           |
+ |                                     | [OPTIONAL forwarding]     |
+ |                                     |--- Certificate Confirm--->|
+ |                                     |<-- PKI Confirm -----------|
+ |<------ PKI/Registrar Confirm (8) ---|                           |
 ~~~~
-{: #enrollfigure title='Certificate Enrollment' artwork-align="left"}
+{: #enrollfigure title='Certificate Enrollment Message Flow' artwork-align="left"}
 
 It may be noted that connections between the registrar and the PKI components
 of the operator (RA, CA, etc.) may be intermittent or off-line.
