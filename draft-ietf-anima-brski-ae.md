@@ -761,7 +761,7 @@ support the certificate enrollment protocol it expects, such as CMP.
 
 As a more general solution, the BRSKI discovery mechanism can be extended
 to provide up-front information on the capabilities of registrars.
-Future work such as {{draft-ietf-anima-brski-discovery}} may provide this.
+For further discussion, see {{I-D.ietf-anima-brski-discovery}}.
 
 In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
@@ -1094,7 +1094,7 @@ How messages are exchanged between the registrar and backend PKI
 components (i.e., RA and/or CA) is out of scope of this document.
 Since CMP is independent of message transfer, the mechanism for this exchange
 can be freely chosen according to the needs of the application scenario.
-For the applicable security considerations, see {{sec-consider}}.
+For the applicable security and privacy considerations, see {{sec-consider}} and {{priv-consider}}.
 Further guidance can be found in {{RFC9483, Section 6}}.
 
 <!--
@@ -1196,7 +1196,7 @@ BRSKI-AE, which implies adherence to LCMPP is necessary and sufficient.
 
 # Security Considerations {#sec-consider}
 
-The security considerations  laid out in BRSKI {{RFC8995}} apply to the
+The security considerations laid out in BRSKI {{RFC8995, Section 11}} apply to the
 discovery and voucher exchange as well as for the status exchange information.
 
 In particular,
@@ -1228,11 +1228,17 @@ connection authenticated with a certificate containing an id-kp-cmcRA extension.
 When CMP is used, the security considerations laid out in the
 LCMPP {{RFC9483}} apply.
 
-Note that CMP messages are not encrypted.
+# Privacy Considerations {#priv-consider}
+
+The privacy considerations laid out in BRSKI {{RFC8995, Section 10}} apply as well.
+
+Note that CMP messages themselves are not encrypted.
 This may give eavesdroppers insight into which devices are bootstrapped into the
-domain, and this in turn might also be used to selectively block the enrollment
+domain.
+This in turn might also be used to selectively block the enrollment
 of certain devices.
-To prevent this, the underlying message transport channel can be encrypted.
+
+To prevent such issues, the underlying message transport channel can be encrypted.
 This is already provided by TLS between the pledge and the registrar, and
 for the onward exchange with backend systems, encryption may need to be added.
 
@@ -1411,7 +1417,9 @@ IETF draft ae-12 -> ae-13:
 * Address Murray Kucherawy's comment
   by adapting terminology entries, leaving out 'communication'
   from 'asynchronous communication' and 'synchronous communication'
-* Update reference: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
+* Address Roman Danyliw's comments by updating reference<br>
+  I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery<br> and
+  adding {{priv-consider}}, which refers to the BRSKI privacy considerations.
 
 IETF draft ae-11 -> ae-12:
 
@@ -1773,5 +1781,6 @@ LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI abbrev
 LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp passphrase
 LocalWords: ietf cmp lcmpp submissionType kw std org uri cmpv app sol est Certs
 LocalWords: github eckert lternative nrollment sec Mahesh Jethanandani Gen ART
-LocalWords: Meral Shirazipour certs reg Deb
+LocalWords: Meral Shirazipour certs reg priv
+LocalWords: Deb Cooley's Scudder's Kucherawy's
 -->
