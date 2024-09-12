@@ -299,9 +299,9 @@ Also several further terms are described here.
 To be independent of the terminology of a specific enrollment protocol, this
 document utilizes generic terminology regarding PKI management operations.
 
-asynchronous communication:
-: time-wise interrupted delivery of messages,
-  here between a pledge and the registrar or an RA
+asynchronous:
+: time-wise interrupted delivery of messages,<br>
+  here between a pledge and some backend system (e.g., an RA)
 
 attribute request:
 : message requesting content to be included in the certification request
@@ -369,7 +369,7 @@ local RA (LRA):
   and in this case, the LRA is co-located with the registrar.
 
 MASA:
-: Manufacturer Authorized Signing Authority
+: Manufacturer Authorized Signing Authority, provides vouchers
 
 off-site:
 : locality of component or service or functionality, such as RA or CA,
@@ -401,9 +401,9 @@ site:
 : the locality where an entity, such as a pledge, registrar, or PKI component
   is deployed.  The target domain may have multiple sites.
 
-synchronous communication:
+synchronous:
 : time-wise uninterrupted delivery of messages,
-  here between a pledge and a registrar or PKI component
+  here between a pledge and a registrar or backend system (e.g., the MASA)
 
 target domain:
 : the domain that a pledge is going to be bootstrapped into
@@ -1402,12 +1402,15 @@ IETF draft ae-12 -> ae-13:
 
 * Due to IANA requirement, shorten service name `"brski-registrar-cmp"` to `"brski-reg-cmp"`<br>
   and change contact for service name registration from IESG to IETF
-* Address DISCUSS by Deb Cooley by adding an item to the requirements list
+* Address Deb Cooley's DISCUSS by adding an item to the requirements list
   {{brski-cmp-instance}} making the source of the initial trust anchor explicit.
   <br>
   Including the vouchers in {{enrollfigure}} would not fit because the figure
   has a different scope (namely, certificate enrollment) and would get overloaded.
-* Address comments by John Scudder by tweaking {{terminology}}, fully alphabetizing terms
+* Address John Scudder's comments by tweaking {{terminology}}, fully alphabetizing terms
+* Address Murray Kucherawy's comment
+  by adapting terminology entries, leaving out 'communication'
+  from 'asynchronous communication' and 'synchronous communication'
 * Update reference: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
 
 IETF draft ae-11 -> ae-12:
