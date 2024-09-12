@@ -1390,10 +1390,9 @@ List of reviewers:
 
 IETF draft ae-12 -> ae-13:
 
-* due to IANA requirement, shorten service name `"brski-registrar-cmp"` to `"brski-reg-cmp"`
-* due to IANA requirement, changed contact for service name registration from IESG to IETF
-* update referene: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
-
+* Due to IANA requirement, shorten service name `"brski-registrar-cmp"` to `"brski-reg-cmp"`<br>
+  and change contact for service name registration from IESG to IETF
+* Update reference: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
 
 IETF draft ae-11 -> ae-12:
 
@@ -1755,5 +1754,5 @@ LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI abbrev
 LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp passphrase
 LocalWords: ietf cmp lcmpp submissionType kw std org uri cmpv app sol est Certs
 LocalWords: github eckert lternative nrollment sec Mahesh Jethanandani Gen ART
-LocalWords: Meral Shirazipour
+LocalWords: Meral Shirazipour certs reg Deb
 -->
