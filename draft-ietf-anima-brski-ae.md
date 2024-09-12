@@ -727,7 +727,7 @@ showing commonalities and differences to the original approach as follows.
   to employing a certificate enrollment protocol that uses
   an authenticated self-contained object for requesting the LDevID certificate.
 
-  For transporting the certificate enrollment request and response messages, the   (D)TLS channel established between pledge and registrar is MANDATORY to use.
+  For transporting the certificate enrollment request and response messages, the   (D)TLS channel established between pledge and registrar is REQUIRED to use.
   To this end, the enrollment protocol, the pledge, and the registrar need to support the use of this existing channel for certificate enrollment.
   Due to this architecture, the pledge does not need to establish additional connections for certificate enrollment and the registrar retains full control over the certificate enrollment traffic.
 
