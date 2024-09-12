@@ -604,28 +604,29 @@ placement and enhancements of the logical elements as shown in {{uc1figure}}.
    |                                     +--------------+---------+
    |                                                      ^
    |                                                      |
-   V                                                      |
-+--------+     .........................................  |
-|        |     .                                       .  | BRSKI-
-|        |     .  +-------+          +--------------+  .  | MASA
+   V                                                      | BRSKI-
++--------+     .........................................  | MASA
+|        |     .                                       .  |
+|        |     .  +-------+          +--------------+  .  |
 | Pledge |     .  | Join  |          | Domain       |<----+
-|        |<------>| Proxy |<-------->| Registrar w/ |  .
-|        |     .  |.......|          | LRA or RA    |  .
+|        |<------>| Proxy |<-------->| Registrar    |  .
+|        |     .  |       |          | w/ LRA or RA |  .
 | IDevID |     .  +-------+          +--------------+  .
 |        |   BRSKI-AE over TLS                ^        .
 +--------+   using, e.g., LCMPP               |        .
                .                              |        .
                ...............................|.........
             on-site (local) domain components |
+                                              |
                                               | e.g., LCMPP
                                               |
- .............................................|..................
- . Public-Key Infrastructure                  v                 .
- . +---------+     +------------------------------------------+ .
- . |         |<----+   Registration Authority                 | .
- . |    CA   +---->|   RA (unless part of Domain Registrar)   | .
- . +---------+     +------------------------------------------+ .
- ................................................................
+ .............................................|...............
+ . Public-Key Infrastructure                  v              .
+ . +---------+     +---------------------------------------+ .
+ . |         |<----+   Registration Authority RA           | .
+ . |    CA   +---->|   (unless part of Domain Registrar)   | .
+ . +---------+     +---------------------------------------+ .
+ .............................................................
          backend (central or off-site) domain components
 ~~~~
 {: #uc1figure title='Architecture Overview Using Backend PKI Components'
