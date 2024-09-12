@@ -190,7 +190,7 @@ full-strength integrity and authenticity of certification requests.
 This specification carries over the main characteristics of BRSKI, namely:
 
 * The pledge is assumed to have received its Initial Device IDentifier
-(IDevID, {{IEEE_802.1AR-2018}}) credentials during its production.
+(IDevID, {{IEEE_802.1AR-2018}}) credentials during its manufacturing.
 It uses them to authenticate itself to the
 Manufacturer Authorized Signing Authority (MASA, {{RFC8995}}),
 and to the registrar, which is the access point of the target domain,
@@ -1420,6 +1420,7 @@ IETF draft ae-12 -> ae-13:
 * Address Roman Danyliw's comments by updating reference<br>
   I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery<br> and
   adding {{priv-consider}}, which refers to the BRSKI privacy considerations.
+* Address Éric Vyncke's comment by replacing 'production' by 'manufacturing'
 
 IETF draft ae-11 -> ae-12:
 
@@ -1780,7 +1781,7 @@ LocalWords: sortrefs iprnotified Instantiation caPubs raVerified repo reqs Conf
 LocalWords: IDentity IDentifier coaps aasvg acp cms json pkixcmp kp DOI abbrev
 LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp passphrase
 LocalWords: ietf cmp lcmpp submissionType kw std org uri cmpv app sol est Certs
-LocalWords: github eckert lternative nrollment sec Mahesh Jethanandani Gen ART
-LocalWords: Meral Shirazipour certs reg priv
-LocalWords: Deb Cooley's Scudder's Kucherawy's
+LocalWords: github eckert lternative nrollment sec certs reg priv
+LocalWords: Mahesh Jethanandani Gen ART Meral Shirazipour
+LocalWords: Deb Cooley's Scudder's Kucherawy's Éric Vyncke's
 -->
