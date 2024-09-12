@@ -9,14 +9,23 @@
 <meta content="Steffen Fries" name="author">
 <meta content="Hendrik Brockhaus" name="author">
 <meta content="
-       This document defines an enhancement of
-Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995).
-It supports alternative certificate enrollment protocols, such as CMP, that
-use authenticated self-contained signed objects for certification messages. 
+       This document defines enhancements to the Bootstrapping Remote Secure Key
+Infrastructure (BRSKI) protocol, known as BRSKI-AE (Alternative Enrollment). 
+BRSKI-AE extends BRSKI to support certificate enrollment mechanisms
+instead of the originally specified use of EST.
+It supports certificate enrollment protocols, such as CMP,
+that use authenticated self-contained signed objects for certification messages,
+allowing for flexibility in network device onboarding scenarios. 
+The enhancements address use cases where the existing enrollment mechanism
+may not be feasible or optimal, providing a framework
+for integrating suitable alternative enrollment protocols. 
+This document also updates the BRSKI reference architecture
+to accommodate these alternative methods,
+ensuring secure and scalable deployment across a range of network environments. 
     " name="description">
 <meta content="xml2rfc 3.18.2" name="generator">
 <meta content="Internet-Draft" name="keyword">
-<meta content="draft-ietf-anima-brski-ae-12" name="ietf.draft">
+<meta content="draft-ietf-anima-brski-ae-13" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.18.2
     Python 3.11.8
@@ -1211,11 +1220,11 @@ li > p:last-of-type:only-child {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">BRSKI-AE</td>
-<td class="right">July 2024</td>
+<td class="right">September 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">von Oheimb, et al.</td>
-<td class="center">Expires 6 January 2025</td>
+<td class="center">Expires 16 March 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1225,15 +1234,15 @@ li > p:last-of-type:only-child {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">ANIMA WG</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-ietf-anima-brski-ae-12</dd>
+<dd class="internet-draft">draft-ietf-anima-brski-ae-13</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-07-05" class="published">5 July 2024</time>
+<time datetime="2024-09-12" class="published">12 September 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-01-06">6 January 2025</time></dd>
+<dd class="expires"><time datetime="2025-03-16">16 March 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1255,10 +1264,19 @@ li > p:last-of-type:only-child {
 <h1 id="title">BRSKI-AE: Alternative Enrollment Protocols in BRSKI</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines an enhancement of
-Bootstrapping Remote Secure Key Infrastructure (BRSKI, RFC 8995).
-It supports alternative certificate enrollment protocols, such as CMP, that
-use authenticated self-contained signed objects for certification messages.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines enhancements to the Bootstrapping Remote Secure Key
+Infrastructure (BRSKI) protocol, known as BRSKI-AE (Alternative Enrollment).<br>
+BRSKI-AE extends BRSKI to support certificate enrollment mechanisms
+instead of the originally specified use of EST.
+It supports certificate enrollment protocols, such as CMP,
+that use authenticated self-contained signed objects for certification messages,
+allowing for flexibility in network device onboarding scenarios.<br>
+The enhancements address use cases where the existing enrollment mechanism
+may not be feasible or optimal, providing a framework
+for integrating suitable alternative enrollment protocols.<br>
+This document also updates the BRSKI reference architecture
+to accommodate these alternative methods,
+ensuring secure and scalable deployment across a range of network environments.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1267,8 +1285,13 @@ use authenticated self-contained signed objects for certification messages.<a hr
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-anima-brski-ae/">https://datatracker.ietf.org/doc/draft-ietf-anima-brski-ae/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/anima-wg/anima-brski-ae">https://github.com/anima-wg/anima-brski-ae</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        anima Working Group mailing list (<span><a href="mailto:anima@ietf.org">mailto:anima@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/anima/">https://mailarchive.ietf.org/arch/browse/anima/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/anima/">https://www.ietf.org/mailman/listinfo/anima/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/anima-wg/anima-brski-ae">https://github.com/anima-wg/anima-brski-ae</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1289,7 +1312,7 @@ use authenticated self-contained signed objects for certification messages.<a hr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 16 March 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1389,50 +1412,53 @@ use authenticated self-contained signed objects for certification messages.<a hr
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-application-examples" class="internal xref">Application Examples</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-rolling-stock" class="internal xref">Rolling Stock</a></p>
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-building-automation" class="internal xref">Building Automation</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-substation-automation" class="internal xref">Substation Automation</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4">
-                <p id="section-toc.1-1.10.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-electric-vehicle-charging-i" class="internal xref">Electric Vehicle Charging Infrastructure</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5">
-                <p id="section-toc.1-1.10.2.5.1"><a href="#appendix-A.5" class="auto internal xref">A.5</a>.  <a href="#name-infrastructure-isolation-po" class="internal xref">Infrastructure Isolation Policy</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.6">
-                <p id="section-toc.1-1.10.2.6.1"><a href="#appendix-A.6" class="auto internal xref">A.6</a>.  <a href="#name-sites-with-insufficient-lev" class="internal xref">Sites with Insufficient Level of Operational Security</a></p>
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-history-of-changes-tbd-rfc-" class="internal xref">History of Changes TBD RFC Editor: please delete</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-application-examples" class="internal xref">Application Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-rolling-stock" class="internal xref">Rolling Stock</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-building-automation" class="internal xref">Building Automation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-substation-automation" class="internal xref">Substation Automation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-electric-vehicle-charging-i" class="internal xref">Electric Vehicle Charging Infrastructure</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#appendix-A.5" class="auto internal xref">A.5</a>.  <a href="#name-infrastructure-isolation-po" class="internal xref">Infrastructure Isolation Policy</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.6">
+                <p id="section-toc.1-1.11.2.6.1"><a href="#appendix-A.6" class="auto internal xref">A.6</a>.  <a href="#name-sites-with-insufficient-lev" class="internal xref">Sites with Insufficient Level of Operational Security</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-history-of-changes-tbd-rfc-" class="internal xref">History of Changes TBD RFC Editor: please delete</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1448,19 +1474,21 @@ use authenticated self-contained signed objects for certification messages.<a hr
 for operator-specific device certificates, employing HTTP over TLS for secure message transfer.
 BRSKI-AE is a variant using alternative enrollment protocols with
 authenticated self-contained objects for the device certificate enrollment.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This approach provides the following advantages.
-The origin of requests and responses
-can be authenticated independent of message transfer.
-This supports end-to-end authentication (proof of origin) also over
-multiple hops, as well as asynchronous operation of certificate enrollment.
-This in turn provides architectural flexibility where and when to
-ultimately authenticate and authorize certification requests while retaining
-full-strength integrity and authenticity of certification requests.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">This approach offers several distinct advantages.
+It allows for the authentication of the origin of requests and responses
+independently of message transfer mechanisms.
+This capability facilitates end-to-end authentication
+(i.e., end-to-end proof of origin) across multiple hops
+and supports the asynchronous operation of certificate enrollment. Consequently,
+this provides architectural flexibility in determining the location and timing
+for the ultimate authentication and authorization of certification requests,
+while ensuring that the integrity and authenticity of the enrollment messages
+is maintained with full cryptographic strength.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This specification carries over the main characteristics of BRSKI, namely:<a href="#section-1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-4.1">
           <p id="section-1-4.1.1">The pledge is assumed to have received its Initial Device IDentifier
-(IDevID, <span>[<a href="#IEEE_802.1AR-2018" class="cite xref">IEEE_802.1AR-2018</a>]</span>) credentials during its production.
+(IDevID, <span>[<a href="#IEEE_802.1AR-2018" class="cite xref">IEEE_802.1AR-2018</a>]</span>) credentials during its manufacturing.
 It uses them to authenticate itself to the
 Manufacturer Authorized Signing Authority (MASA, <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span>),
 and to the registrar, which is the access point of the target domain,
@@ -1479,96 +1507,96 @@ a domain-specific device certificate, called LDevID certificate.
 On success, it receives the LDevID certificate along with its certificate chain.<a href="#section-1-4.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-5">The goals of BRSKI-AE are to provide an enhancement of BRSKI for
-LDevID certificate enrollment using, alternatively to EST, a protocol that<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5">The objectives of BRSKI-AE are to enhance BRSKI by enabling LDevID certificate
+enrollment through the use of an alternative protocol to EST that:<a href="#section-1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-6.1">
-          <p id="section-1-6.1.1">supports end-to-end authentication over multiple hops<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.1.1">Supports end-to-end authentication over multiple hops.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-6.2">
-          <p id="section-1-6.2.1">enables secure message exchange over any kind of transfer,
+          <p id="section-1-6.2.1">Facilitates secure message exchange over any type of transfer mechanism,
 including asynchronous delivery.<a href="#section-1-6.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-7">Note that the BRSKI voucher exchange of the pledge with the registrar and MASA
-uses authenticated self-contained objects,
-so the voucher exchange already has these properties.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">The well-known URI approach of BRSKI and EST messages is extended
-with an additional path element indicating the enrollment protocol being used.<a href="#section-1-8" class="pilcrow">¶</a></p>
-<p id="section-1-9">Based on the definition of the overall approach and specific endpoints,
-this specification enables the registrar to offer multiple enrollment protocols,
-from which pledges and their developers can then pick the most suitable one.<a href="#section-1-9" class="pilcrow">¶</a></p>
-<p id="section-1-10">It may be noted that BRSKI (RFC 8995) specifies how to use HTTP over TLS,
-but further variants are known, such as
-Constrained BRSKI <span>[<a href="#I-D.ietf-anima-constrained-voucher" class="cite xref">I-D.ietf-anima-constrained-voucher</a>]</span> using CoAP over DTLS.
-In the sequel, 'HTTP' and 'TLS' are just references to the most common case,
-where variants such as using CoAP and/or DTLS are meant to be subsumed -
-the differences are not relevant here.<a href="#section-1-10" class="pilcrow">¶</a></p>
-<p id="section-1-11">This specification is sufficient together with its references to
+<p id="section-1-7">It may be observed that the BRSKI voucher exchange between the pledge,
+registrar, and MASA involves the use of authenticated self-contained objects,
+which inherently possess these properties.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">The existing well-known URI structure used for BRSKI and EST messages
+is extended by introducing an additional path element
+that specifies the enrollment protocol being employed.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-9">This specification allows the registrar to offer multiple enrollment protocols,
+enabling pledges and their developers to select the most appropriate one
+based on the defined overall approach and specific endpoints.<a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-10">It may be important to note that BRSKI (RFC 8995) specifies the use of
+HTTP over TLS, but variations such as Constrained BRSKI
+<span>[<a href="#I-D.ietf-anima-constrained-voucher" class="cite xref">I-D.ietf-anima-constrained-voucher</a>]</span> which uses CoAP over DTLS,
+are possible as well. In this context,
+'HTTP' and 'TLS' are used as references to the most common implementation,
+though variants using CoAP and/or DTLS are implied where applicable,
+as the distinctions are not pertinent here.<a href="#section-1-10" class="pilcrow">¶</a></p>
+<p id="section-1-11">This specification, together with its referenced documents, is sufficient to
 support BRSKI with the Certificate Management Protocol (CMP, <span>[<a href="#RFC9480" class="cite xref">RFC9480</a>]</span>)
-profiled in the Lightweight CMP Profile (LCMPP, <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span>).
-Combining BRSKI with a protocol or profile other than LCMPP will require
-additional IANA registrations based on the rules specified in this document.
-It may also require additional specifications for details of the protocol or
-profile (similar to <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span>), which are outside the scope of this document.<a href="#section-1-11" class="pilcrow">¶</a></p>
+as profiled in the Lightweight CMP Profile (LCMPP, <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span>).
+Integrating BRSKI with an enrollment protocol or profile other than LCMPP
+will necessitate additional IANA registrations, as detailed in this document.
+Furthermore, additional specifications may be required for the details
+of the protocol or profile, which fall outside the scope of this document.<a href="#section-1-11" class="pilcrow">¶</a></p>
 <div id="sup-env">
 <section id="section-1.1">
         <h3 id="name-supported-scenarios">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-supported-scenarios" class="section-name selfRef">Supported Scenarios</a>
         </h3>
-<p id="section-1.1-1">BRSKI-AE is intended to be used in situations like the following.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-1">BRSKI-AE is designed for use in scenarios such as the following:<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.1-2.1">
-            <p id="section-1.1-2.1.1">Pledges and/or the target domain reuse an already established
-certificate enrollment protocol different from EST, such as CMP.<a href="#section-1.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-1.1-2.1.1">Pledges and/or the target domain leverage an existing
+certificate enrollment protocol other than EST, such as CMP.<a href="#section-1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-2.2">
-            <p id="section-1.1-2.2.1">The application scenario indirectly excludes the use of EST
-for certificate enrollment, for reasons like these:<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-1.1-2.2.1">The application context precludes the use of EST
+for certificate enrollment due to factors such as:<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.1-2.2.2.1">
                 <p id="section-1.1-2.2.2.1.1">The Registration Authority (RA) is not co-located with the registrar
-while it requires end-to-end authentication of requesters.
-Yet EST does not support end-to-end authentication over multiple hops.<a href="#section-1.1-2.2.2.1.1" class="pilcrow">¶</a></p>
+and requires end-to-end authentication of requesters,
+which EST does not support over multiple hops.<a href="#section-1.1-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-1.1-2.2.2.2">
-                <p id="section-1.1-2.2.2.2.1">The RA or certification authority (CA) operator requires
-auditable proof of origin for Certificate Signing Requests (CSRs). This is not
-possible with TLS because it provides only transient source authentication.<a href="#section-1.1-2.2.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-1.1-2.2.2.2.1">The RA or Certification Authority (CA) operator mandates
+auditable proof of origin for Certificate Signing Requests (CSRs), which
+cannot be provided by TLS as it only offers transient source authentication.<a href="#section-1.1-2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-1.1-2.2.2.3">
-                <p id="section-1.1-2.2.2.3.1">Certificates are requested for types of keys, such as Key Encapsulation
-Mechanism (KEM) keys, that do not support signing (nor alternative forms
-of single-shot proof of possession like those described in <span>[<a href="#RFC6955" class="cite xref">RFC6955</a>]</span>).
-This is not supported by EST because it uses CSRs in PKCS #10 <span>[<a href="#RFC2986" class="cite xref">RFC2986</a>]</span>
-format, which can only use proof-of-possession methods that
-need just a single message, while proof of possession for KEM keys,
-for instance, requires receiving a fresh challenge value beforehand.<a href="#section-1.1-2.2.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-1.1-2.2.2.3.1">Certificates are requested for key types, such as Key Encapsulation
+Mechanism (KEM) keys, that do not support signing or other
+single-shot proof-of-possession methods, as those described in <span>[<a href="#RFC6955" class="cite xref">RFC6955</a>]</span>.
+EST, which relies on CSRs in PKCS #10 <span>[<a href="#RFC2986" class="cite xref">RFC2986</a>]</span> format, does not accommodate
+these key types because it necessitates proof-of-possession methods
+that operate within a single message, whereas proof of possession
+for KEM keys requires prior receipt of a fresh challenge value.<a href="#section-1.1-2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-1.1-2.2.2.4">
-                <p id="section-1.1-2.2.2.4.1">The pledge implementation uses security libraries not providing EST support
-or uses a TLS library that does not support providing
-the so-called tls-unique value <span>[<a href="#RFC5929" class="cite xref">RFC5929</a>]</span>,
-which is needed by EST for strong binding of the source authentication.<a href="#section-1.1-2.2.2.4.1" class="pilcrow">¶</a></p>
+                <p id="section-1.1-2.2.2.4.1">The pledge implementation employs security libraries that do not support EST
+or uses a TLS library lacking support for the "tls-unique" value <span>[<a href="#RFC5929" class="cite xref">RFC5929</a>]</span>,
+which EST requires for the strong binding of source authentication.<a href="#section-1.1-2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
           <li class="normal" id="section-1.1-2.3">
-            <p id="section-1.1-2.3.1">No full RA functionality is available on-site in the target domain, while
-connectivity to an off-site RA may be intermittent or entirely offline.<a href="#section-1.1-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-1.1-2.3.1">Full RA functionality is not available on-site within the target domain,
+and connectivity to an off-site RA may be intermittent or entirely offline.<a href="#section-1.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-2.4">
-            <p id="section-1.1-2.4.1">Authoritative actions of a local RA at the registrar is not sufficient
-for fully and reliably authorizing pledge certification requests. This
-may be due to missing data access or due to an insufficient level of security,
-for instance regarding the local storage of private keys.<a href="#section-1.1-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-1.1-2.4.1">Authoritative actions by a local RA at the registrar are insufficient
+for fully and reliably authorizing pledge certification requests,
+potentially due to a lack of access to necessary data or
+inadequate security measures, such as the local storage of private keys.<a href="#section-1.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-1.1-3">Bootstrapping can be handled in various ways,
-depending on the application domains.
-The informative <a href="#app-examples" class="auto internal xref">Appendix A</a> provides illustrative examples from
-various industrial control system environments and operational setups
-motivating the support of alternative enrollment protocols.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Bootstrapping may be managed in various ways depending on the application domain.
+<a href="#app-examples" class="auto internal xref">Appendix A</a> provides illustrative examples
+from different industrial control system environments and operational contexts
+that motivate the support of alternative enrollment protocols.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1583,177 +1611,176 @@ motivating the support of alternative enrollment protocols.<a href="#section-1.1
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">This document relies on the terminology defined in <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span>, <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>,
-and <span>[<a href="#IEEE_802.1AR-2018" class="cite xref">IEEE_802.1AR-2018</a>]</span>.
-The following terms are described partly in addition.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2-3">
-        <dt id="section-2-3.1">asynchronous communication:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.2">
-          <p id="section-2-3.2.1">time-wise interrupted delivery of messages,
-here between a pledge and the registrar or an RA<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+and <span>[<a href="#IEEE_802.1AR-2018" class="cite xref">IEEE_802.1AR-2018</a>]</span>, partly repeated here.
+Also several further terms are described here.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">To be independent of the terminology of a specific enrollment protocol, this
+document utilizes generic terminology regarding PKI management operations.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-4">
+        <dt id="section-2-4.1">asynchronous:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.2">
+          <p id="section-2-4.2.1">time-wise interrupted delivery of messages,<br>
+here between a pledge and some backend system (e.g., an RA)<a href="#section-2-4.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.3">authenticated self-contained object:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.4">
-          <p id="section-2-3.4.1">a data structure that is cryptographically bound to the identity of
+<dt id="section-2-4.3">attribute request:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.4">
+          <p id="section-2-4.4.1">message requesting content to be included in the certification request<a href="#section-2-4.4.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.5">attribute response:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.6">
+          <p id="section-2-4.6.1">message providing the answer to the attribute request<a href="#section-2-4.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.7">authenticated self-contained object:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.8">
+          <p id="section-2-4.8.1">a data structure that is cryptographically bound to the identity of
 its originator by an attached digital signature on the actual object,
-using a private key of the originator such as the IDevID secret.<a href="#section-2-3.4.1" class="pilcrow">¶</a></p>
+using a private key of the originator such as the IDevID secret.<a href="#section-2-4.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.5">backend:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.6">
-          <p id="section-2-3.6.1">placement of a domain component separately from the domain registrar;
-may be on-site or off-site<a href="#section-2-3.6.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.9">backend:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.10">
+          <p id="section-2-4.10.1">placement of a domain component separately from the domain registrar;
+may be on-site or off-site<a href="#section-2-4.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.7">BRSKI:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.8">
-          <p id="section-2-3.8.1">Bootstrapping Remote Secure Key Infrastructure <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span><a href="#section-2-3.8.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.11">BRSKI:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.12">
+          <p id="section-2-4.12.1">Bootstrapping Remote Secure Key Infrastructure <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span><a href="#section-2-4.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.9">BRSKI-AE:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.10">
-          <p id="section-2-3.10.1">BRSKI with <strong>A</strong>lternative <strong>E</strong>nrollment, a variation of BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span>
+<dt id="section-2-4.13">BRSKI-AE:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.14">
+          <p id="section-2-4.14.1">BRSKI with <strong>A</strong>lternative <strong>E</strong>nrollment, a variation of BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span>
 in which BRSKI-EST, the enrollment protocol between pledge and the registrar,
 is replaced by enrollment protocols that support end-to-end authentication
-of the pledge to the RA, such as Lightweight CMP (see LCMPP).<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
+of the pledge to the RA, such as Lightweight CMP (see LCMPP).<a href="#section-2-4.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.11">CMP:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.12">
-          <p id="section-2-3.12.1">Certificate Management Protocol <span>[<a href="#RFC9480" class="cite xref">RFC9480</a>]</span><a href="#section-2-3.12.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.15">CA certs request:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.16">
+          <p id="section-2-4.16.1">message requesting CA certificates<a href="#section-2-4.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.13">CSR:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.14">
-          <p id="section-2-3.14.1">Certificate Signing Request<a href="#section-2-3.14.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.17">CA certs response:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.18">
+          <p id="section-2-4.18.1">message providing the answer to a CA certs request<a href="#section-2-4.18.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.15">EST:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.16">
-          <p id="section-2-3.16.1">Enrollment over Secure Transport <span>[<a href="#RFC7030" class="cite xref">RFC7030</a>]</span><a href="#section-2-3.16.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.19">certificate confirm:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.20">
+          <p id="section-2-4.20.1">message stating to the backend PKI that the requester of a certificate
+received the new certificate and accepted it<a href="#section-2-4.20.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.17">IDevID:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.18">
-          <p id="section-2-3.18.1">Initial Device IDentifier of a pledge, provided by the manufacturer
-and comprising a private key and the related X.509 certificate with its chain<a href="#section-2-3.18.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.21">certification request:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.22">
+          <p id="section-2-4.22.1">message requesting a certificate with proof of identity<a href="#section-2-4.22.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.19">LDevID:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.20">
-          <p id="section-2-3.20.1">Locally significant Device IDentifier of a pledge, provided by its target domain
-and comprising a private key and the related X.509 certificate with its chain<a href="#section-2-3.20.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.23">certification response:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.24">
+          <p id="section-2-4.24.1">message providing the answer to a certification request<a href="#section-2-4.24.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.21">local RA (LRA):</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.22">
-          <p id="section-2-3.22.1">a subordinate RA that is close to entities being enrolled and separate from
+<dt id="section-2-4.25">CMP:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.26">
+          <p id="section-2-4.26.1">Certificate Management Protocol <span>[<a href="#RFC9480" class="cite xref">RFC9480</a>]</span><a href="#section-2-4.26.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.27">CSR:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.28">
+          <p id="section-2-4.28.1">Certificate Signing Request<a href="#section-2-4.28.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.29">EST:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.30">
+          <p id="section-2-4.30.1">Enrollment over Secure Transport <span>[<a href="#RFC7030" class="cite xref">RFC7030</a>]</span><a href="#section-2-4.30.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.31">IDevID:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.32">
+          <p id="section-2-4.32.1">Initial Device IDentifier of a pledge, provided by the manufacturer
+and comprising a private key and the related X.509 certificate with its chain<a href="#section-2-4.32.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.33">LCMPP:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.34">
+          <p id="section-2-4.34.1">Lightweight CMP Profile <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span><a href="#section-2-4.34.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.35">LDevID:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.36">
+          <p id="section-2-4.36.1">Locally significant Device IDentifier of a pledge, provided by its target domain
+and comprising a private key and the related X.509 certificate with its chain<a href="#section-2-4.36.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.37">local RA (LRA):</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.38">
+          <p id="section-2-4.38.1">a subordinate RA that is close to entities being enrolled and separate from
 a subsequent RA.  In BRSKI-AE it is needed if a backend RA is used,
-and in this case, the LRA is co-located with the registrar.<a href="#section-2-3.22.1" class="pilcrow">¶</a></p>
+and in this case, the LRA is co-located with the registrar.<a href="#section-2-4.38.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.23">LCMPP:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.24">
-          <p id="section-2-3.24.1">Lightweight CMP Profile <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span><a href="#section-2-3.24.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.39">MASA:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.40">
+          <p id="section-2-4.40.1">Manufacturer Authorized Signing Authority, provides vouchers<a href="#section-2-4.40.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.25">MASA:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.26">
-          <p id="section-2-3.26.1">Manufacturer Authorized Signing Authority<a href="#section-2-3.26.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-3.27">on-site:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.28">
-          <p id="section-2-3.28.1">locality of a component or service or functionality
-at the site of the registrar<a href="#section-2-3.28.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-3.29">off-site:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.30">
-          <p id="section-2-3.30.1">locality of component or service or functionality, such as RA or CA,
+<dt id="section-2-4.41">off-site:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.42">
+          <p id="section-2-4.42.1">locality of component or service or functionality, such as RA or CA,
 not at the site of the registrar.
 This may be a central site or a cloud service,
-to which connection may be intermittent.<a href="#section-2-3.30.1" class="pilcrow">¶</a></p>
+to which connection may be intermittent.<a href="#section-2-4.42.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.31">pledge:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.32">
-          <p id="section-2-3.32.1">device that is to be bootstrapped into a target domain.
-It requests an LDevID using IDevID credentials installed by its manufacturer.<a href="#section-2-3.32.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.43">on-site:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.44">
+          <p id="section-2-4.44.1">locality of a component or service or functionality
+at the site of the registrar<a href="#section-2-4.44.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.33">RA:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.34">
-          <p id="section-2-3.34.1">Registration Authority, the PKI component to which
+<dt id="section-2-4.45">PKI/registrar confirm:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.46">
+          <p id="section-2-4.46.1">acknowledgment of the PKI on the certificate confirm<a href="#section-2-4.46.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.47">pledge:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.48">
+          <p id="section-2-4.48.1">device that is to be bootstrapped into a target domain.
+It requests an LDevID using IDevID credentials installed by its manufacturer.<a href="#section-2-4.48.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-4.49">RA:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.50">
+          <p id="section-2-4.50.1">Registration Authority, the PKI component to which
 a CA typically delegates certificate management functions
 such as authenticating pledges and performing authorization checks
-on certification requests<a href="#section-2-3.34.1" class="pilcrow">¶</a></p>
+on certification requests<a href="#section-2-4.50.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.35">registrar:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.36">
-          <p id="section-2-3.36.1">short for domain registrar<a href="#section-2-3.36.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.51">registrar:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.52">
+          <p id="section-2-4.52.1">short for domain registrar<a href="#section-2-4.52.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.37">site:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.38">
-          <p id="section-2-3.38.1">the locality where an entity, such as a pledge, registrar, or PKI component
-is deployed.  The target domain may have multiple sites.<a href="#section-2-3.38.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.53">site:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.54">
+          <p id="section-2-4.54.1">the locality where an entity, such as a pledge, registrar, or PKI component
+is deployed.  The target domain may have multiple sites.<a href="#section-2-4.54.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.39">synchronous communication:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.40">
-          <p id="section-2-3.40.1">time-wise uninterrupted delivery of messages,
-here between a pledge and a registrar or PKI component<a href="#section-2-3.40.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.55">synchronous:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.56">
+          <p id="section-2-4.56.1">time-wise uninterrupted delivery of messages,<br>
+here between a pledge and a registrar or backend system (e.g., the MASA)<a href="#section-2-4.56.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.41">target domain:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.42">
-          <p id="section-2-3.42.1">the domain that a pledge is going to be bootstrapped into<a href="#section-2-3.42.1" class="pilcrow">¶</a></p>
-</dd>
-      <dd class="break"></dd>
-</dl>
-<p id="section-2-4">This document utilizes generic terminology regarding PKI management operations to be independent of the terminology of a specific enrollment protocol.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2-5">
-        <dt id="section-2-5.1">certification request:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.2">
-          <p id="section-2-5.2.1">message requesting a certificate with proof of identity<a href="#section-2-5.2.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-5.3">certification response:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.4">
-          <p id="section-2-5.4.1">message providing the answer to a certification request<a href="#section-2-5.4.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-5.5">attribute request:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.6">
-          <p id="section-2-5.6.1">message requesting content to be included in the certification request<a href="#section-2-5.6.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-5.7">attribute response:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.8">
-          <p id="section-2-5.8.1">message providing the answer to the attribute request<a href="#section-2-5.8.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-5.9">CA certs request:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.10">
-          <p id="section-2-5.10.1">message requesting CA certificates<a href="#section-2-5.10.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-5.11">CA certs response:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.12">
-          <p id="section-2-5.12.1">message providing the answer to a CA certs request<a href="#section-2-5.12.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-5.13">certificate confirm:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.14">
-          <p id="section-2-5.14.1">message stating to the backend PKI that the requester of a certificate
-received the new certificate and accepted it<a href="#section-2-5.14.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-5.15">PKI/registrar confirm:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-5.16">
-          <p id="section-2-5.16.1">acknowledgment of the PKI on the certificate confirm<a href="#section-2-5.16.1" class="pilcrow">¶</a></p>
+<dt id="section-2-4.57">target domain:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-4.58">
+          <p id="section-2-4.58.1">the domain that a pledge is going to be bootstrapped into<a href="#section-2-4.58.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -1941,22 +1968,22 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
 <figure id="figure-1">
           <div id="section-4.1-3.1">
             <div class="alignLeft art-svg artwork" id="section-4.1-3.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="560" width="544" viewBox="0 0 544 560" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="576" width="544" viewBox="0 0 544 576" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                 <path d="M 8,208 L 8,336" fill="none" stroke="black"></path>
                 <path d="M 32,48 L 32,200" fill="none" stroke="black"></path>
-                <path d="M 32,464 L 32,512" fill="none" stroke="black"></path>
+                <path d="M 32,480 L 32,528" fill="none" stroke="black"></path>
                 <path d="M 80,208 L 80,336" fill="none" stroke="black"></path>
-                <path d="M 112,464 L 112,512" fill="none" stroke="black"></path>
+                <path d="M 112,480 L 112,528" fill="none" stroke="black"></path>
                 <path d="M 152,240 L 152,304" fill="none" stroke="black"></path>
-                <path d="M 160,464 L 160,512" fill="none" stroke="black"></path>
+                <path d="M 160,480 L 160,528" fill="none" stroke="black"></path>
                 <path d="M 216,240 L 216,304" fill="none" stroke="black"></path>
                 <path d="M 304,240 L 304,304" fill="none" stroke="black"></path>
                 <path d="M 336,32 L 336,144" fill="none" stroke="black"></path>
-                <path d="M 376,312 L 376,456" fill="none" stroke="black"></path>
+                <path d="M 376,312 L 376,472" fill="none" stroke="black"></path>
                 <path d="M 424,240 L 424,304" fill="none" stroke="black"></path>
                 <path d="M 456,72 L 456,144" fill="none" stroke="black"></path>
                 <path d="M 472,152 L 472,256" fill="none" stroke="black"></path>
-                <path d="M 504,464 L 504,512" fill="none" stroke="black"></path>
+                <path d="M 480,480 L 480,528" fill="none" stroke="black"></path>
                 <path d="M 536,32 L 536,144" fill="none" stroke="black"></path>
                 <path d="M 336,32 L 536,32" fill="none" stroke="black"></path>
                 <path d="M 32,48 L 144,48" fill="none" stroke="black"></path>
@@ -1972,21 +1999,21 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
                 <path d="M 152,304 L 216,304" fill="none" stroke="black"></path>
                 <path d="M 304,304 L 424,304" fill="none" stroke="black"></path>
                 <path d="M 8,336 L 80,336" fill="none" stroke="black"></path>
-                <path d="M 32,464 L 112,464" fill="none" stroke="black"></path>
-                <path d="M 160,464 L 504,464" fill="none" stroke="black"></path>
-                <path d="M 120,480 L 160,480" fill="none" stroke="black"></path>
-                <path d="M 112,496 L 152,496" fill="none" stroke="black"></path>
-                <path d="M 32,512 L 112,512" fill="none" stroke="black"></path>
-                <path d="M 160,512 L 504,512" fill="none" stroke="black"></path>
+                <path d="M 32,480 L 112,480" fill="none" stroke="black"></path>
+                <path d="M 160,480 L 480,480" fill="none" stroke="black"></path>
+                <path d="M 120,496 L 160,496" fill="none" stroke="black"></path>
+                <path d="M 112,512 L 152,512" fill="none" stroke="black"></path>
+                <path d="M 32,528 L 112,528" fill="none" stroke="black"></path>
+                <path d="M 160,528 L 480,528" fill="none" stroke="black"></path>
                 <polygon class="arrowhead" points="480,152 468,146.4 468,157.6" fill="black" transform="rotate(270,472,152)"></polygon>
                 <polygon class="arrowhead" points="440,256 428,250.4 428,261.6" fill="black" transform="rotate(180,432,256)"></polygon>
-                <polygon class="arrowhead" points="384,456 372,450.4 372,461.6" fill="black" transform="rotate(90,376,456)"></polygon>
+                <polygon class="arrowhead" points="384,472 372,466.4 372,477.6" fill="black" transform="rotate(90,376,472)"></polygon>
                 <polygon class="arrowhead" points="384,312 372,306.4 372,317.6" fill="black" transform="rotate(270,376,312)"></polygon>
                 <polygon class="arrowhead" points="304,272 292,266.4 292,277.6" fill="black" transform="rotate(0,296,272)"></polygon>
                 <polygon class="arrowhead" points="232,272 220,266.4 220,277.6" fill="black" transform="rotate(180,224,272)"></polygon>
-                <polygon class="arrowhead" points="160,496 148,490.4 148,501.6" fill="black" transform="rotate(0,152,496)"></polygon>
+                <polygon class="arrowhead" points="160,512 148,506.4 148,517.6" fill="black" transform="rotate(0,152,512)"></polygon>
                 <polygon class="arrowhead" points="152,272 140,266.4 140,277.6" fill="black" transform="rotate(0,144,272)"></polygon>
-                <polygon class="arrowhead" points="128,480 116,474.4 116,485.6" fill="black" transform="rotate(180,120,480)"></polygon>
+                <polygon class="arrowhead" points="128,496 116,490.4 116,501.6" fill="black" transform="rotate(180,120,496)"></polygon>
                 <polygon class="arrowhead" points="96,272 84,266.4 84,277.6" fill="black" transform="rotate(180,88,272)"></polygon>
                 <polygon class="arrowhead" points="40,200 28,194.4 28,205.6" fill="black" transform="rotate(90,32,200)"></polygon>
                 <g class="text">
@@ -2003,26 +2030,25 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
                   <text x="488" y="116">Tracker</text>
                   <text x="352" y="132">A</text>
                   <text x="396" y="132">uthority</text>
+                  <text x="508" y="196">BRSKI-</text>
                   <text x="288" y="212">.........................................</text>
+                  <text x="500" y="212">MASA</text>
                   <text x="128" y="228">.</text>
                   <text x="448" y="228">.</text>
-                  <text x="508" y="228">BRSKI-</text>
                   <text x="128" y="244">.</text>
                   <text x="448" y="244">.</text>
-                  <text x="500" y="244">MASA</text>
                   <text x="44" y="260">Pledge</text>
                   <text x="128" y="260">.</text>
                   <text x="180" y="260">Join</text>
                   <text x="340" y="260">Domain</text>
                   <text x="184" y="276">Proxy</text>
                   <text x="352" y="276">Registrar</text>
-                  <text x="404" y="276">w/</text>
                   <text x="448" y="276">.</text>
                   <text x="128" y="292">.</text>
-                  <text x="184" y="292">.......</text>
-                  <text x="328" y="292">LRA</text>
-                  <text x="356" y="292">or</text>
-                  <text x="380" y="292">RA</text>
+                  <text x="324" y="292">w/</text>
+                  <text x="352" y="292">LRA</text>
+                  <text x="380" y="292">or</text>
+                  <text x="404" y="292">RA</text>
                   <text x="448" y="292">.</text>
                   <text x="44" y="308">IDevID</text>
                   <text x="128" y="308">.</text>
@@ -2043,38 +2069,38 @@ placement and enhancements of the logical elements as shown in <a href="#uc1figu
                   <text x="192" y="388">(local)</text>
                   <text x="252" y="388">domain</text>
                   <text x="324" y="388">components</text>
-                  <text x="408" y="404">e.g.,</text>
-                  <text x="456" y="404">LCMPP</text>
-                  <text x="192" y="436">.............................................</text>
-                  <text x="452" y="436">..................</text>
-                  <text x="16" y="452">.</text>
-                  <text x="68" y="452">Public-Key</text>
-                  <text x="172" y="452">Infrastructure</text>
-                  <text x="520" y="452">.</text>
+                  <text x="408" y="420">e.g.,</text>
+                  <text x="456" y="420">LCMPP</text>
+                  <text x="192" y="452">.............................................</text>
+                  <text x="440" y="452">...............</text>
                   <text x="16" y="468">.</text>
-                  <text x="520" y="468">.</text>
+                  <text x="68" y="468">Public-Key</text>
+                  <text x="172" y="468">Infrastructure</text>
+                  <text x="496" y="468">.</text>
                   <text x="16" y="484">.</text>
-                  <text x="236" y="484">Registration</text>
-                  <text x="328" y="484">Authority</text>
-                  <text x="520" y="484">.</text>
+                  <text x="496" y="484">.</text>
                   <text x="16" y="500">.</text>
-                  <text x="76" y="500">CA</text>
-                  <text x="196" y="500">RA</text>
-                  <text x="240" y="500">(unless</text>
-                  <text x="292" y="500">part</text>
-                  <text x="324" y="500">of</text>
-                  <text x="364" y="500">Domain</text>
-                  <text x="436" y="500">Registrar)</text>
-                  <text x="520" y="500">.</text>
+                  <text x="236" y="500">Registration</text>
+                  <text x="328" y="500">Authority</text>
+                  <text x="380" y="500">RA</text>
+                  <text x="496" y="500">.</text>
                   <text x="16" y="516">.</text>
-                  <text x="520" y="516">.</text>
-                  <text x="268" y="532">................................................................</text>
-                  <text x="104" y="548">backend</text>
-                  <text x="172" y="548">(central</text>
-                  <text x="220" y="548">or</text>
-                  <text x="272" y="548">off-site)</text>
-                  <text x="340" y="548">domain</text>
-                  <text x="412" y="548">components</text>
+                  <text x="76" y="516">CA</text>
+                  <text x="216" y="516">(unless</text>
+                  <text x="268" y="516">part</text>
+                  <text x="300" y="516">of</text>
+                  <text x="340" y="516">Domain</text>
+                  <text x="412" y="516">Registrar)</text>
+                  <text x="496" y="516">.</text>
+                  <text x="16" y="532">.</text>
+                  <text x="496" y="532">.</text>
+                  <text x="256" y="548">.............................................................</text>
+                  <text x="104" y="564">backend</text>
+                  <text x="172" y="564">(central</text>
+                  <text x="220" y="564">or</text>
+                  <text x="272" y="564">off-site)</text>
+                  <text x="340" y="564">domain</text>
+                  <text x="412" y="564">components</text>
                 </g>
               </svg><a href="#section-4.1-3.1.1" class="pilcrow">¶</a>
 </div>
@@ -2195,7 +2221,7 @@ showing commonalities and differences to the original approach as follows.<a hre
 to employing a certificate enrollment protocol that uses
 an authenticated self-contained object for requesting the LDevID certificate.<a href="#section-4.1-13.5.1" class="pilcrow">¶</a></p>
 <p id="section-4.1-13.5.2">
-For transporting the certificate enrollment request and response messages, the   (D)TLS channel established between pledge and registrar is MANDATORY to use.
+For transporting the certificate enrollment request and response messages, the   (D)TLS channel established between pledge and registrar is <span class="bcp14">REQUIRED</span> to use.
 To this end, the enrollment protocol, the pledge, and the registrar need to support the use of this existing channel for certificate enrollment.
 Due to this architecture, the pledge does not need to establish additional connections for certificate enrollment and the registrar retains full control over the certificate enrollment traffic.<a href="#section-4.1-13.5.2" class="pilcrow">¶</a></p>
 </li>
@@ -2230,7 +2256,7 @@ A pledge can not find out in this way whether discovered registrars
 support the certificate enrollment protocol it expects, such as CMP.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-2">As a more general solution, the BRSKI discovery mechanism can be extended
 to provide up-front information on the capabilities of registrars.
-Future work such as <span>[<a href="#I-D.eckert-anima-brski-discovery" class="cite xref">I-D.eckert-anima-brski-discovery</a>]</span> may provide this.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
+Future work such as <span>[<a href="#draft-ietf-anima-brski-discovery" class="cite xref">draft-ietf-anima-brski-discovery</a>]</span> may provide this.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-3">In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
 <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a> defines a minimalist approach that <span class="bcp14">MAY</span> be used for CMP.<a href="#section-4.2.1-3" class="pilcrow">¶</a></p>
@@ -2272,160 +2298,160 @@ The message exchanges marked <span class="bcp14">OPTIONAL</span> in the below <a
 cover all those supported by the use of EST in BRSKI.
 The last <span class="bcp14">OPTIONAL</span> one, namely certificate confirmation,
 is not supported by EST, but by CMP and other enrollment protocols.<a href="#section-4.2.4-4" class="pilcrow">¶</a></p>
-<span id="name-certificate-enrollment"></span><div id="enrollfigure">
+<span id="name-certificate-enrollment-mess"></span><div id="enrollfigure">
 <figure id="figure-2">
             <div id="section-4.2.4-5.1">
               <div class="alignLeft art-svg artwork" id="section-4.2.4-5.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="576" width="688" viewBox="0 0 688 576" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="576" width="560" viewBox="0 0 560 576" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                   <path d="M 8,32 L 8,96" fill="none" stroke="black"></path>
-                  <path d="M 48,104 L 48,560" fill="none" stroke="black"></path>
-                  <path d="M 80,32 L 80,96" fill="none" stroke="black"></path>
-                  <path d="M 328,32 L 328,96" fill="none" stroke="black"></path>
-                  <path d="M 384,104 L 384,560" fill="none" stroke="black"></path>
-                  <path d="M 432,32 L 432,96" fill="none" stroke="black"></path>
-                  <path d="M 576,32 L 576,96" fill="none" stroke="black"></path>
-                  <path d="M 640,104 L 640,560" fill="none" stroke="black"></path>
-                  <path d="M 680,32 L 680,96" fill="none" stroke="black"></path>
-                  <path d="M 8,32 L 80,32" fill="none" stroke="black"></path>
-                  <path d="M 328,32 L 432,32" fill="none" stroke="black"></path>
-                  <path d="M 576,32 L 680,32" fill="none" stroke="black"></path>
-                  <path d="M 8,96 L 80,96" fill="none" stroke="black"></path>
-                  <path d="M 328,96 L 432,96" fill="none" stroke="black"></path>
-                  <path d="M 576,96 L 680,96" fill="none" stroke="black"></path>
-                  <path d="M 56,144 L 120,144" fill="none" stroke="black"></path>
-                  <path d="M 304,144 L 376,144" fill="none" stroke="black"></path>
-                  <path d="M 392,176 L 424,176" fill="none" stroke="black"></path>
-                  <path d="M 576,176 L 632,176" fill="none" stroke="black"></path>
-                  <path d="M 392,192 L 424,192" fill="none" stroke="black"></path>
-                  <path d="M 584,192 L 632,192" fill="none" stroke="black"></path>
-                  <path d="M 56,208 L 120,208" fill="none" stroke="black"></path>
-                  <path d="M 312,208 L 376,208" fill="none" stroke="black"></path>
-                  <path d="M 56,272 L 120,272" fill="none" stroke="black"></path>
-                  <path d="M 312,272 L 376,272" fill="none" stroke="black"></path>
-                  <path d="M 392,304 L 424,304" fill="none" stroke="black"></path>
-                  <path d="M 584,304 L 632,304" fill="none" stroke="black"></path>
-                  <path d="M 392,320 L 424,320" fill="none" stroke="black"></path>
-                  <path d="M 592,320 L 632,320" fill="none" stroke="black"></path>
-                  <path d="M 56,336 L 120,336" fill="none" stroke="black"></path>
-                  <path d="M 320,336 L 376,336" fill="none" stroke="black"></path>
-                  <path d="M 56,384 L 120,384" fill="none" stroke="black"></path>
-                  <path d="M 344,384 L 376,384" fill="none" stroke="black"></path>
-                  <path d="M 392,416 L 416,416" fill="none" stroke="black"></path>
-                  <path d="M 608,416 L 632,416" fill="none" stroke="black"></path>
-                  <path d="M 392,432 L 416,432" fill="none" stroke="black"></path>
-                  <path d="M 616,432 L 632,432" fill="none" stroke="black"></path>
-                  <path d="M 56,448 L 120,448" fill="none" stroke="black"></path>
-                  <path d="M 352,448 L 376,448" fill="none" stroke="black"></path>
-                  <path d="M 56,496 L 120,496" fill="none" stroke="black"></path>
-                  <path d="M 328,496 L 376,496" fill="none" stroke="black"></path>
-                  <path d="M 392,528 L 424,528" fill="none" stroke="black"></path>
-                  <path d="M 600,528 L 632,528" fill="none" stroke="black"></path>
-                  <path d="M 392,544 L 424,544" fill="none" stroke="black"></path>
-                  <path d="M 536,544 L 632,544" fill="none" stroke="black"></path>
-                  <path d="M 56,560 L 120,560" fill="none" stroke="black"></path>
-                  <path d="M 344,560 L 376,560" fill="none" stroke="black"></path>
-                  <polygon class="arrowhead" points="640,528 628,522.4 628,533.6" fill="black" transform="rotate(0,632,528)"></polygon>
-                  <polygon class="arrowhead" points="640,416 628,410.4 628,421.6" fill="black" transform="rotate(0,632,416)"></polygon>
-                  <polygon class="arrowhead" points="640,304 628,298.4 628,309.6" fill="black" transform="rotate(0,632,304)"></polygon>
-                  <polygon class="arrowhead" points="640,176 628,170.4 628,181.6" fill="black" transform="rotate(0,632,176)"></polygon>
-                  <polygon class="arrowhead" points="400,544 388,538.4 388,549.6" fill="black" transform="rotate(180,392,544)"></polygon>
-                  <polygon class="arrowhead" points="400,432 388,426.4 388,437.6" fill="black" transform="rotate(180,392,432)"></polygon>
-                  <polygon class="arrowhead" points="400,320 388,314.4 388,325.6" fill="black" transform="rotate(180,392,320)"></polygon>
-                  <polygon class="arrowhead" points="400,192 388,186.4 388,197.6" fill="black" transform="rotate(180,392,192)"></polygon>
-                  <polygon class="arrowhead" points="384,496 372,490.4 372,501.6" fill="black" transform="rotate(0,376,496)"></polygon>
-                  <polygon class="arrowhead" points="384,384 372,378.4 372,389.6" fill="black" transform="rotate(0,376,384)"></polygon>
-                  <polygon class="arrowhead" points="384,272 372,266.4 372,277.6" fill="black" transform="rotate(0,376,272)"></polygon>
-                  <polygon class="arrowhead" points="384,144 372,138.4 372,149.6" fill="black" transform="rotate(0,376,144)"></polygon>
-                  <polygon class="arrowhead" points="64,560 52,554.4 52,565.6" fill="black" transform="rotate(180,56,560)"></polygon>
-                  <polygon class="arrowhead" points="64,448 52,442.4 52,453.6" fill="black" transform="rotate(180,56,448)"></polygon>
-                  <polygon class="arrowhead" points="64,336 52,330.4 52,341.6" fill="black" transform="rotate(180,56,336)"></polygon>
-                  <polygon class="arrowhead" points="64,208 52,202.4 52,213.6" fill="black" transform="rotate(180,56,208)"></polygon>
+                  <path d="M 16,104 L 16,560" fill="none" stroke="black"></path>
+                  <path d="M 64,32 L 64,96" fill="none" stroke="black"></path>
+                  <path d="M 280,32 L 280,96" fill="none" stroke="black"></path>
+                  <path d="M 320,104 L 320,560" fill="none" stroke="black"></path>
+                  <path d="M 360,32 L 360,96" fill="none" stroke="black"></path>
+                  <path d="M 480,32 L 480,96" fill="none" stroke="black"></path>
+                  <path d="M 544,104 L 544,560" fill="none" stroke="black"></path>
+                  <path d="M 552,32 L 552,96" fill="none" stroke="black"></path>
+                  <path d="M 8,32 L 64,32" fill="none" stroke="black"></path>
+                  <path d="M 280,32 L 360,32" fill="none" stroke="black"></path>
+                  <path d="M 480,32 L 552,32" fill="none" stroke="black"></path>
+                  <path d="M 8,96 L 64,96" fill="none" stroke="black"></path>
+                  <path d="M 280,96 L 360,96" fill="none" stroke="black"></path>
+                  <path d="M 480,96 L 552,96" fill="none" stroke="black"></path>
+                  <path d="M 24,144 L 72,144" fill="none" stroke="black"></path>
+                  <path d="M 256,144 L 312,144" fill="none" stroke="black"></path>
+                  <path d="M 328,176 L 344,176" fill="none" stroke="black"></path>
+                  <path d="M 496,176 L 536,176" fill="none" stroke="black"></path>
+                  <path d="M 328,192 L 344,192" fill="none" stroke="black"></path>
+                  <path d="M 504,192 L 536,192" fill="none" stroke="black"></path>
+                  <path d="M 24,208 L 72,208" fill="none" stroke="black"></path>
+                  <path d="M 264,208 L 312,208" fill="none" stroke="black"></path>
+                  <path d="M 24,272 L 72,272" fill="none" stroke="black"></path>
+                  <path d="M 264,272 L 312,272" fill="none" stroke="black"></path>
+                  <path d="M 328,304 L 344,304" fill="none" stroke="black"></path>
+                  <path d="M 504,304 L 536,304" fill="none" stroke="black"></path>
+                  <path d="M 328,320 L 344,320" fill="none" stroke="black"></path>
+                  <path d="M 512,320 L 536,320" fill="none" stroke="black"></path>
+                  <path d="M 24,336 L 72,336" fill="none" stroke="black"></path>
+                  <path d="M 272,336 L 312,336" fill="none" stroke="black"></path>
+                  <path d="M 24,384 L 72,384" fill="none" stroke="black"></path>
+                  <path d="M 296,384 L 312,384" fill="none" stroke="black"></path>
+                  <path d="M 328,416 L 344,416" fill="none" stroke="black"></path>
+                  <path d="M 520,416 L 536,416" fill="none" stroke="black"></path>
+                  <path d="M 328,432 L 344,432" fill="none" stroke="black"></path>
+                  <path d="M 520,432 L 536,432" fill="none" stroke="black"></path>
+                  <path d="M 24,448 L 64,448" fill="none" stroke="black"></path>
+                  <path d="M 296,448 L 312,448" fill="none" stroke="black"></path>
+                  <path d="M 24,496 L 72,496" fill="none" stroke="black"></path>
+                  <path d="M 280,496 L 312,496" fill="none" stroke="black"></path>
+                  <path d="M 328,528 L 344,528" fill="none" stroke="black"></path>
+                  <path d="M 512,528 L 536,528" fill="none" stroke="black"></path>
+                  <path d="M 328,544 L 344,544" fill="none" stroke="black"></path>
+                  <path d="M 456,544 L 536,544" fill="none" stroke="black"></path>
+                  <path d="M 24,560 L 72,560" fill="none" stroke="black"></path>
+                  <path d="M 296,560 L 312,560" fill="none" stroke="black"></path>
+                  <polygon class="arrowhead" points="544,528 532,522.4 532,533.6" fill="black" transform="rotate(0,536,528)"></polygon>
+                  <polygon class="arrowhead" points="544,416 532,410.4 532,421.6" fill="black" transform="rotate(0,536,416)"></polygon>
+                  <polygon class="arrowhead" points="544,304 532,298.4 532,309.6" fill="black" transform="rotate(0,536,304)"></polygon>
+                  <polygon class="arrowhead" points="544,176 532,170.4 532,181.6" fill="black" transform="rotate(0,536,176)"></polygon>
+                  <polygon class="arrowhead" points="336,544 324,538.4 324,549.6" fill="black" transform="rotate(180,328,544)"></polygon>
+                  <polygon class="arrowhead" points="336,432 324,426.4 324,437.6" fill="black" transform="rotate(180,328,432)"></polygon>
+                  <polygon class="arrowhead" points="336,320 324,314.4 324,325.6" fill="black" transform="rotate(180,328,320)"></polygon>
+                  <polygon class="arrowhead" points="336,192 324,186.4 324,197.6" fill="black" transform="rotate(180,328,192)"></polygon>
+                  <polygon class="arrowhead" points="320,496 308,490.4 308,501.6" fill="black" transform="rotate(0,312,496)"></polygon>
+                  <polygon class="arrowhead" points="320,384 308,378.4 308,389.6" fill="black" transform="rotate(0,312,384)"></polygon>
+                  <polygon class="arrowhead" points="320,272 308,266.4 308,277.6" fill="black" transform="rotate(0,312,272)"></polygon>
+                  <polygon class="arrowhead" points="320,144 308,138.4 308,149.6" fill="black" transform="rotate(0,312,144)"></polygon>
+                  <polygon class="arrowhead" points="32,560 20,554.4 20,565.6" fill="black" transform="rotate(180,24,560)"></polygon>
+                  <polygon class="arrowhead" points="32,448 20,442.4 20,453.6" fill="black" transform="rotate(180,24,448)"></polygon>
+                  <polygon class="arrowhead" points="32,336 20,330.4 20,341.6" fill="black" transform="rotate(180,24,336)"></polygon>
+                  <polygon class="arrowhead" points="32,208 20,202.4 20,213.6" fill="black" transform="rotate(180,24,208)"></polygon>
                   <g class="text">
-                    <text x="44" y="52">Pledge</text>
-                    <text x="364" y="52">Domain</text>
-                    <text x="620" y="52">Operator</text>
-                    <text x="376" y="68">Registrar</text>
-                    <text x="608" y="68">RA/CA</text>
-                    <text x="368" y="84">(JRC)</text>
-                    <text x="608" y="84">(PKI)</text>
-                    <text x="104" y="132">[OPTIONAL</text>
-                    <text x="176" y="132">request</text>
-                    <text x="220" y="132">of</text>
-                    <text x="244" y="132">CA</text>
-                    <text x="312" y="132">certificates]</text>
-                    <text x="140" y="148">CA</text>
-                    <text x="176" y="148">Certs</text>
-                    <text x="232" y="148">Request</text>
-                    <text x="280" y="148">(1)</text>
-                    <text x="440" y="164">[OPTIONAL</text>
-                    <text x="528" y="164">forwarding]</text>
-                    <text x="444" y="180">CA</text>
-                    <text x="480" y="180">Certs</text>
-                    <text x="536" y="180">Request</text>
-                    <text x="444" y="196">CA</text>
-                    <text x="480" y="196">Certs</text>
-                    <text x="540" y="196">Response</text>
-                    <text x="140" y="212">CA</text>
-                    <text x="176" y="212">Certs</text>
-                    <text x="236" y="212">Response</text>
-                    <text x="288" y="212">(2)</text>
-                    <text x="104" y="244">[OPTIONAL</text>
-                    <text x="176" y="244">request</text>
-                    <text x="220" y="244">of</text>
-                    <text x="276" y="244">attributes</text>
-                    <text x="84" y="260">to</text>
-                    <text x="128" y="260">include</text>
-                    <text x="172" y="260">in</text>
-                    <text x="240" y="260">Certification</text>
-                    <text x="332" y="260">Request]</text>
-                    <text x="168" y="276">Attribute</text>
-                    <text x="240" y="276">Request</text>
-                    <text x="288" y="276">(3)</text>
-                    <text x="440" y="292">[OPTIONAL</text>
-                    <text x="528" y="292">forwarding]</text>
-                    <text x="472" y="308">Attribute</text>
-                    <text x="544" y="308">Request</text>
-                    <text x="472" y="324">Attribute</text>
-                    <text x="548" y="324">Response</text>
-                    <text x="168" y="340">Attribute</text>
-                    <text x="244" y="340">Response</text>
-                    <text x="296" y="340">(4)</text>
-                    <text x="104" y="372">[REQUIRED</text>
-                    <text x="200" y="372">certification</text>
-                    <text x="292" y="372">request]</text>
-                    <text x="184" y="388">Certification</text>
-                    <text x="272" y="388">Request</text>
-                    <text x="320" y="388">(5)</text>
-                    <text x="440" y="404">[OPTIONAL</text>
-                    <text x="528" y="404">forwarding]</text>
-                    <text x="480" y="420">Certification</text>
-                    <text x="568" y="420">Request</text>
-                    <text x="480" y="436">Certification</text>
-                    <text x="572" y="436">Response</text>
-                    <text x="184" y="452">Certification</text>
-                    <text x="276" y="452">Response</text>
-                    <text x="328" y="452">(6)</text>
-                    <text x="104" y="484">[OPTIONAL</text>
-                    <text x="192" y="484">certificate</text>
-                    <text x="296" y="484">confirmation]</text>
-                    <text x="176" y="500">Certificate</text>
-                    <text x="256" y="500">Confirm</text>
-                    <text x="304" y="500">(7)</text>
-                    <text x="440" y="516">[OPTIONAL</text>
-                    <text x="528" y="516">forwarding]</text>
-                    <text x="480" y="532">Certificate</text>
-                    <text x="560" y="532">Confirm</text>
-                    <text x="448" y="548">PKI</text>
-                    <text x="496" y="548">Confirm</text>
-                    <text x="184" y="564">PKI/Registrar</text>
-                    <text x="272" y="564">Confirm</text>
-                    <text x="320" y="564">(8)</text>
+                    <text x="36" y="52">Pledge</text>
+                    <text x="308" y="52">Domain</text>
+                    <text x="516" y="52">Operator</text>
+                    <text x="320" y="68">Registrar</text>
+                    <text x="504" y="68">RA/CA</text>
+                    <text x="304" y="84">(JRC)</text>
+                    <text x="504" y="84">(PKI)</text>
+                    <text x="56" y="132">[OPTIONAL</text>
+                    <text x="128" y="132">request</text>
+                    <text x="172" y="132">of</text>
+                    <text x="196" y="132">CA</text>
+                    <text x="264" y="132">certificates]</text>
+                    <text x="92" y="148">CA</text>
+                    <text x="128" y="148">Certs</text>
+                    <text x="184" y="148">Request</text>
+                    <text x="232" y="148">(1)</text>
+                    <text x="368" y="164">[OPTIONAL</text>
+                    <text x="456" y="164">forwarding]</text>
+                    <text x="364" y="180">CA</text>
+                    <text x="400" y="180">Certs</text>
+                    <text x="456" y="180">Request</text>
+                    <text x="364" y="196">CA</text>
+                    <text x="400" y="196">Certs</text>
+                    <text x="460" y="196">Response</text>
+                    <text x="92" y="212">CA</text>
+                    <text x="128" y="212">Certs</text>
+                    <text x="188" y="212">Response</text>
+                    <text x="240" y="212">(2)</text>
+                    <text x="56" y="244">[OPTIONAL</text>
+                    <text x="128" y="244">request</text>
+                    <text x="172" y="244">of</text>
+                    <text x="228" y="244">attributes</text>
+                    <text x="36" y="260">to</text>
+                    <text x="80" y="260">include</text>
+                    <text x="124" y="260">in</text>
+                    <text x="192" y="260">Certification</text>
+                    <text x="284" y="260">Request]</text>
+                    <text x="120" y="276">Attribute</text>
+                    <text x="192" y="276">Request</text>
+                    <text x="240" y="276">(3)</text>
+                    <text x="368" y="292">[OPTIONAL</text>
+                    <text x="456" y="292">forwarding]</text>
+                    <text x="392" y="308">Attribute</text>
+                    <text x="464" y="308">Request</text>
+                    <text x="392" y="324">Attribute</text>
+                    <text x="468" y="324">Response</text>
+                    <text x="120" y="340">Attribute</text>
+                    <text x="196" y="340">Response</text>
+                    <text x="248" y="340">(4)</text>
+                    <text x="56" y="372">[REQUIRED</text>
+                    <text x="152" y="372">certification</text>
+                    <text x="244" y="372">request]</text>
+                    <text x="136" y="388">Certification</text>
+                    <text x="224" y="388">Request</text>
+                    <text x="272" y="388">(5)</text>
+                    <text x="368" y="404">[OPTIONAL</text>
+                    <text x="456" y="404">forwarding]</text>
+                    <text x="400" y="420">Certification</text>
+                    <text x="488" y="420">Request</text>
+                    <text x="400" y="436">Certification</text>
+                    <text x="480" y="436">Resp.</text>
+                    <text x="128" y="452">Certification</text>
+                    <text x="220" y="452">Response</text>
+                    <text x="272" y="452">(6)</text>
+                    <text x="56" y="484">[OPTIONAL</text>
+                    <text x="144" y="484">certificate</text>
+                    <text x="248" y="484">confirmation]</text>
+                    <text x="128" y="500">Certificate</text>
+                    <text x="208" y="500">Confirm</text>
+                    <text x="256" y="500">(7)</text>
+                    <text x="368" y="516">[OPTIONAL</text>
+                    <text x="456" y="516">forwarding]</text>
+                    <text x="400" y="532">Certificate</text>
+                    <text x="480" y="532">Confirm</text>
+                    <text x="368" y="548">PKI</text>
+                    <text x="416" y="548">Confirm</text>
+                    <text x="136" y="564">PKI/Registrar</text>
+                    <text x="224" y="564">Confirm</text>
+                    <text x="272" y="564">(8)</text>
                   </g>
                 </svg><a href="#section-4.2.4-5.1.1" class="pilcrow">¶</a>
 </div>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-certificate-enrollment" class="selfRef">Certificate Enrollment</a>
+<a href="#name-certificate-enrollment-mess" class="selfRef">Certificate Enrollment Message Flow</a>
             </figcaption></figure>
 </div>
 <p id="section-4.2.4-6">It may be noted that connections between the registrar and the PKI components
@@ -2539,11 +2565,12 @@ it is regarded as a separate phase here.<a href="#section-4.2.5-2" class="pilcro
         <h3 id="name-enhancements-to-the-endpoin">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-enhancements-to-the-endpoin" class="section-name selfRef">Enhancements to the Endpoint Addressing Scheme of BRSKI</a>
         </h3>
-<p id="section-4.3-1">BRSKI-AE provides generalizations to the addressing scheme defined in
-BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-5" class="relref">Section 5</a></span> to accommodate alternative enrollment protocols
-that use authenticated self-contained objects for certification requests.
-In existing RAs/CAs supporting such an enrollment protocol (see also
-<a href="#exist_prot" class="auto internal xref">Section 5</a>), these generalizations can be employed without modifications.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">BRSKI-AE extends the addressing scheme outlined in <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-5" class="relref">Section 5</a></span>,
+to support alternative enrollment protocols that utilize authenticated,
+self-contained objects for certification requests -- see also <a href="#exist_prot" class="auto internal xref">Section 5</a>).
+These extensions are designed to be compatible with existing Registration
+Authorities (RAs) and Certification Authorities (CAs) that already support such
+enrollment protocols, enabling their use without requiring any modifications.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2">The addressing scheme in BRSKI for certification requests and
 the related CA certificates and CSR attributes retrieval functions
 uses the definition from EST <span>[<a href="#RFC7030" class="cite xref">RFC7030</a>]</span>.
@@ -2622,92 +2649,97 @@ and specifies further aspects of using such enrollment protocols in BRSKI-AE.<a 
         <h3 id="name-brski-cmp-brski-ae-instanti">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-brski-cmp-brski-ae-instanti" class="section-name selfRef">BRSKI-CMP: BRSKI-AE instantiated with CMP</a>
         </h3>
-<p id="section-5.1-1">Instead of referring to CMP
-as specified in <span>[<a href="#RFC4210" class="cite xref">RFC4210</a>]</span> and <span>[<a href="#RFC9480" class="cite xref">RFC9480</a>]</span>,
-this document refers to the Lightweight CMP Profile (LCMPP)
-<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span> because
-the subset of CMP defined there is sufficient for the functionality needed here.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">When using CMP, adherence to
-the LCMPP <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span> is <span class="bcp14">REQUIRED</span>.
-In particular, the following specific requirements apply (cf. <a href="#enrollfigure" class="auto internal xref">Figure 2</a>).<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">In this document, references to CMP follow the Lightweight CMP Profile (LCMPP)
+<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span> rather than <span>[<a href="#RFC4210" class="cite xref">RFC4210</a>]</span> and <span>[<a href="#RFC9480" class="cite xref">RFC9480</a>]</span>, as the subset of CMP
+defined in LCMPP sufficiently meets the required functionality.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">Adherence to the LCMPP <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span> is <span class="bcp14">REQUIRED</span> when using CMP.
+The following specific requirements apply (refer to <a href="#enrollfigure" class="auto internal xref">Figure 2</a>):<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-3.1">
-            <p id="section-5.1-3.1.1">CA Certs Request (1) and Response (2):<br>
-Requesting CA certificates is <span class="bcp14">OPTIONAL</span>.<br>
-If supported, it <span class="bcp14">SHALL</span> be implemented as specified in
-<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.3.1" class="relref">Section 4.3.1</a></span>.<a href="#section-5.1-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.1.1">The validation of server response messages performed by the CMP client
+within the pledge <span class="bcp14">MUST</span> be based on the trust anchor established beforehand
+via the BRSKI voucher, i.e., on the pinned-domain-cert.<a href="#section-5.1-3.1.1" class="pilcrow">¶</a></p>
+<p id="section-5.1-3.1.2">
+Note that the integrity and authenticity checks on the RA/CA
+by the CMP client can be stronger than for EST because
+they do not need to be performed hop-by-hop, but are usually end-to-end.<a href="#section-5.1-3.1.2" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.2">
-            <p id="section-5.1-3.2.1">Attribute Request (3) and Response (4):<br>
-Requesting certification request attributes is <span class="bcp14">OPTIONAL</span>.<br>
+            <p id="section-5.1-3.2.1">CA Certs Request (1) and Response (2):<br>
+Requesting CA certificates is <span class="bcp14">OPTIONAL</span>.<br>
 If supported, it <span class="bcp14">SHALL</span> be implemented as specified in
-<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.3.3" class="relref">Section 4.3.3</a></span>.<a href="#section-5.1-3.2.1" class="pilcrow">¶</a></p>
-<p id="section-5.1-3.2.2">
-Alternatively, the registrar <span class="bcp14">MAY</span> modify
-the contents of the requested certificate contents
-as specified in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-5.2.3.2" class="relref">Section 5.2.3.2</a></span>.<a href="#section-5.1-3.2.2" class="pilcrow">¶</a></p>
+<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.3.1" class="relref">Section 4.3.1</a></span>.<a href="#section-5.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.3">
-            <p id="section-5.1-3.3.1">Certification Request (5) and Response (6):<br>
-Certificates <span class="bcp14">SHALL</span> be requested and provided
-as specified in the LCMPP
-<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.1.1" class="relref">Section 4.1.1</a></span> (based on CRMF) or
-<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.1.4" class="relref">Section 4.1.4</a></span> (based on PKCS #10).<a href="#section-5.1-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.3.1">Attribute Request (3) and Response (4):<br>
+Requesting certification request attributes is <span class="bcp14">OPTIONAL</span>.<br>
+If supported, it <span class="bcp14">SHALL</span> be implemented as specified in
+<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.3.3" class="relref">Section 4.3.3</a></span>.<a href="#section-5.1-3.3.1" class="pilcrow">¶</a></p>
 <p id="section-5.1-3.3.2">
-Proof of possession <span class="bcp14">SHALL</span> be provided in a way suitable for the key type.
-Proof of identity <span class="bcp14">SHALL</span> be provided by signature-based
-protection of the certification request message
-as outlined in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-3.2" class="relref">Section 3.2</a></span>
-using the IDevID secret.<a href="#section-5.1-3.3.2" class="pilcrow">¶</a></p>
-<p id="section-5.1-3.3.3">
-When the registrar forwards a certification request by the pledge to
-a backend RA/CA, the registrar is <span class="bcp14">RECOMMENDED</span> to wrap the original
-certification request in a nested message signed with its own credentials
-as described in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-5.2.2.1" class="relref">Section 5.2.2.1</a></span>.
-This explicitly conveys the consent by the registrar to the RA
-while retaining the original certification request message
-with its proof of origin provided by the pledge signature.<a href="#section-5.1-3.3.3" class="pilcrow">¶</a></p>
-<p id="section-5.1-3.3.4">
-In case additional trust anchors (besides the pinned-domain-cert)
-need to be conveyed to the pledge,
-this <span class="bcp14">SHOULD</span> be done in the <code>caPubs</code> field of the certification response
-rather than in a CA Certs Response.<a href="#section-5.1-3.3.4" class="pilcrow">¶</a></p>
+Alternatively, the registrar <span class="bcp14">MAY</span> modify
+the requested certificate contents
+as specified in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-5.2.3.2" class="relref">Section 5.2.3.2</a></span>.<a href="#section-5.1-3.3.2" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.4">
-            <p id="section-5.1-3.4.1">Certificate Confirm (7) and PKI/Registrar Confirm (8):<br>
-Explicit confirmation of new certificates to the RA/CA
-<span class="bcp14">MAY</span> be used as specified in
-<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.1.1" class="relref">Section 4.1.1</a></span>.<a href="#section-5.1-3.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.4.1">Certification Request (5) and Response (6):<br>
+Certificates <span class="bcp14">SHALL</span> be requested and provided
+as specified in LCMPP
+<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.1.1" class="relref">Section 4.1.1</a></span> (based on CRMF) or
+<span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.1.4" class="relref">Section 4.1.4</a></span> (based on PKCS #10).<a href="#section-5.1-3.4.1" class="pilcrow">¶</a></p>
 <p id="section-5.1-3.4.2">
-Note that independently of the certificate confirmation within CMP,
-enrollment status telemetry with the registrar at BRSKI level will be performed
-as described in <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-5.9.4" class="relref">Section 5.9.4</a></span>.<a href="#section-5.1-3.4.2" class="pilcrow">¶</a></p>
+Proof of possession <span class="bcp14">SHALL</span> be provided in a manner suitable for the key type.
+Proof of identity <span class="bcp14">SHALL</span> be provided by signature-based
+protection of the certification request message
+as outlined in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-3.2" class="relref">Section 3.2</a></span>, using the IDevID secret.<a href="#section-5.1-3.4.2" class="pilcrow">¶</a></p>
+<p id="section-5.1-3.4.3">
+When the registrar forwards a certification request from the pledge to
+a backend RA/CA, it is <span class="bcp14">RECOMMENDED</span> that the registrar wraps the original
+certification request in a nested message signed with its own credentials,
+as described in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-5.2.2.1" class="relref">Section 5.2.2.1</a></span>.
+This approach explicitly conveys the registrar's consent to the RA
+while retaining the original certification request
+with the proof of origin provided by the pledge's signature.<a href="#section-5.1-3.4.3" class="pilcrow">¶</a></p>
+<p id="section-5.1-3.4.4">
+If additional trust anchors, beyond the pinned-domain-cert,
+need to be conveyed to the pledge,
+this <span class="bcp14">SHOULD</span> be done in the <code>caPubs</code> field of the certification response
+rather than through a CA Certs Response.<a href="#section-5.1-3.4.4" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.5">
-            <p id="section-5.1-3.5.1">If delayed delivery of CMP messages is needed
-(for instance, to support enrollment over an asynchronous channel),
+            <p id="section-5.1-3.5.1">Certificate Confirm (7) and PKI/Registrar Confirm (8):<br>
+Explicit confirmation of new certificates to the RA/CA
+<span class="bcp14">MAY</span> be used as specified in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-4.1.1" class="relref">Section 4.1.1</a></span>.<a href="#section-5.1-3.5.1" class="pilcrow">¶</a></p>
+<p id="section-5.1-3.5.2">
+Note that independent of the certificate confirmation within CMP,
+enrollment status telemetry with the registrar at the BRSKI level
+will be performed as described in <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-5.9.4" class="relref">Section 5.9.4</a></span>.<a href="#section-5.1-3.5.2" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.1-3.6">
+            <p id="section-5.1-3.6.1">If delayed delivery of CMP messages is needed
+(e.g., to support enrollment over an asynchronous channel),
 it <span class="bcp14">SHALL</span> be performed as specified in
-Section <a href="https://rfc-editor.org/rfc/rfc9483#section-4.4" class="relref">4.4</a> and Section <a href="https://rfc-editor.org/rfc/rfc9483#section-5.1.2" class="relref">5.1.2</a> of <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span>.<a href="#section-5.1-3.5.1" class="pilcrow">¶</a></p>
+Section <a href="https://rfc-editor.org/rfc/rfc9483#section-4.4" class="relref">4.4</a> and Section <a href="https://rfc-editor.org/rfc/rfc9483#section-5.1.2" class="relref">5.1.2</a> of <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span>.<a href="#section-5.1-3.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-4">How messages are exchanged between the registrar and backend PKI
-components (i.e., RA and/or CA) is out of scope of this document.
-Since CMP is independent of message transfer, the mechanism for this exchange
-can be freely chosen according to the needs of the application scenario.
-For the applicable security considerations, see <a href="#sec-consider" class="auto internal xref">Section 7</a>.
+<p id="section-5.1-4">The mechanisms for exchanging messages between the registrar and backend PKI
+components (i.e., RA and/or CA) are outside the scope of this document.
+CMP's independence from the message transfer mechanism allows for flexibility
+in choosing the appropriate exchange method based on the application scenario.
+For the applicable security and privacy considerations,
+refer to <a href="#sec-consider" class="auto internal xref">Section 7</a> and <a href="#priv-consider" class="auto internal xref">Section 8</a>.
 Further guidance can be found in <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>], <a href="https://rfc-editor.org/rfc/rfc9483#section-6" class="relref">Section 6</a></span>.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.1-5">BRSKI-AE with CMP can also be combined with
 Constrained BRSKI <span>[<a href="#I-D.ietf-anima-constrained-voucher" class="cite xref">I-D.ietf-anima-constrained-voucher</a>]</span>,
 using CoAP for enrollment message transport as described by
 CoAP Transport for CMP <span>[<a href="#RFC9482" class="cite xref">RFC9482</a>]</span>.
-In this scenario, the EST-specific parts
+In such scenarios, the EST-specific parts
 of <span>[<a href="#I-D.ietf-anima-constrained-voucher" class="cite xref">I-D.ietf-anima-constrained-voucher</a>]</span> do not apply.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
-<p id="section-5.1-6">For BRSKI-AE scenarios where a general solution (cf. <a href="#discovery" class="auto internal xref">Section 4.2.1</a>)
-for discovering registrars with CMP support is not available,
-the following minimalist approach <span class="bcp14">MAY</span> be used.
-Perform discovery as defined in BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#appendix-B" class="relref">Appendix B</a></span> but using
-the service name <code>"brski-registrar-cmp"</code> (defined in <a href="#iana-consider" class="auto internal xref">Section 6</a>)
-instead of <code>"brski-registrar"</code> (defined in <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-8.6" class="relref">Section 8.6</a></span>).
+<p id="section-5.1-6">For BRSKI-AE scenarios where a general solution for discovering registrars
+with CMP support is not available (cf. <a href="#discovery" class="auto internal xref">Section 4.2.1</a>),
+the following minimalist approach <span class="bcp14">MAY</span> be used:
+perform discovery as defined in BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#appendix-B" class="relref">Appendix B</a></span>, but use
+the service name <code>"brski-reg-cmp"</code> (as defined in <a href="#iana-consider" class="auto internal xref">Section 6</a>)
+instead of <code>"brski-registrar"</code> (as defined in <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-8.6" class="relref">Section 8.6</a></span>).
 Note that this approach does not support join proxies.<a href="#section-5.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2733,10 +2765,10 @@ might also be used here. For EST-fullCMC further specification is necessary.<a h
 <p id="section-6-1">This document requires one IANA action: register in the
 <a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml">Service Name and Transport Protocol Port Number Registry</a>
 the following service name.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2"><strong>Service Name:</strong> brski-registrar-cmp<br>
+<p id="section-6-2"><strong>Service Name:</strong> brski-reg-cmp<br>
         <strong>Transport Protocol(s):</strong> tcp<br>
         <strong>Assignee:</strong> IESG <a href="mailto:iesg@ietf.org">iesg@ietf.org</a><br>
-        <strong>Contact:</strong> IESG <a href="mailto:iesg@ietf.org">iesg@ietf.org</a><br>
+        <strong>Contact:</strong> IETF <a href="mailto:chair@ietf.org">chair@ietf.org</a><br>
         <strong>Description:</strong> Bootstrapping Remote Secure Key Infrastructure registrar with
 CMP capabilities according to the Lightweight CMP Profile (LCMPP, <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span>)<br>
         <strong>Reference:</strong> [THISRFC]<a href="#section-6-2" class="pilcrow">¶</a></p>
@@ -2751,7 +2783,7 @@ BRSKI-AE, which implies adherence to LCMPP is necessary and sufficient.<a href="
       <h2 id="name-security-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-7-1">The security considerations  laid out in BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span> apply to the
+<p id="section-7-1">The security considerations laid out in BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-11" class="relref">Section 11</a></span> apply to the
 discovery and voucher exchange as well as for the status exchange information.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">In particular,
 even if the registrar delegates part or all of its RA role
@@ -2785,43 +2817,55 @@ certification request by forwarding the request to a PKI entity using a
 connection authenticated with a certificate containing an id-kp-cmcRA extension.<a href="#section-7-4" class="pilcrow">¶</a></p>
 <p id="section-7-5">When CMP is used, the security considerations laid out in the
 LCMPP <span>[<a href="#RFC9483" class="cite xref">RFC9483</a>]</span> apply.<a href="#section-7-5" class="pilcrow">¶</a></p>
-<p id="section-7-6">Note that CMP messages are not encrypted.
+</section>
+</div>
+<div id="priv-consider">
+<section id="section-8">
+      <h2 id="name-privacy-considerations">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+      </h2>
+<p id="section-8-1">The privacy considerations laid out in BRSKI <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-10" class="relref">Section 10</a></span> apply as well.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">Note that CMP messages themselves are not encrypted.
 This may give eavesdroppers insight into which devices are bootstrapped into the
-domain, and this in turn might also be used to selectively block the enrollment
-of certain devices.
-To prevent this, the underlying message transport channel can be encrypted.
+domain.
+This in turn might also be used to selectively block the enrollment
+of certain devices.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-3">To prevent such issues, the underlying message transport channel can be encrypted.
 This is already provided by TLS between the pledge and the registrar, and
-for the onward exchange with backend systems, encryption may need to be added.<a href="#section-7-6" class="pilcrow">¶</a></p>
+for the onward exchange with backend systems, encryption may need to be added.<a href="#section-8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
-<section id="section-8">
+<section id="section-9">
       <h2 id="name-acknowledgments">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="section-8-1">We thank Eliot Lear
-for his contributions as a co-author at an earlier draft stage.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
-for their input and discussion on use cases and call flows.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">Moreover,
+<p id="section-9-1">We thank Eliot Lear
+for his contributions as a co-author at an earlier draft stage.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">We thank Brian E. Carpenter, Michael Richardson, and Giorgio Romanenghi
+for their input and discussion on use cases and call flows.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-3">Moreover,
 we thank Toerless Eckert (document shepherd),
 Barry Leiba (SECdir review),
 Mahesh Jethanandani (IETF area director),
 Meral Shirazipour (Gen-ART reviewer),
+Reshad Rahman (YANGDOCTORS reviewer),
+Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
+(IESG reviewers),
 Michael Richardson (ANIMA design team member),
 as well as Rajeev Ranjan, Rufus Buschart,
 Andreas Reiter, and Szofia Fazekas-Zisch (Siemens colleagues)
-for their reviews with suggestions for improvements.<a href="#section-8-3" class="pilcrow">¶</a></p>
+for their reviews with suggestions for improvements.<a href="#section-9-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-9">
+<section id="section-10">
       <h2 id="name-references">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <div id="sec-normative-references">
-<section id="section-9.1">
+<section id="section-10.1">
         <h3 id="name-normative-references">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="IEEE_802.1AR-2018">[IEEE_802.1AR-2018]</dt>
@@ -2852,9 +2896,9 @@ for their reviews with suggestions for improvements.<a href="#section-8-3" class
 </section>
 </div>
 <div id="sec-informative-references">
-<section id="section-9.2">
+<section id="section-10.2">
         <h3 id="name-informative-references">
-<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="BRSKI-AE-overview">[BRSKI-AE-overview]</dt>
@@ -2862,13 +2906,13 @@ for their reviews with suggestions for improvements.<a href="#section-8-3" class
 <span class="refAuthor">S. Fries</span> and <span class="refAuthor">D. von Oheimb</span>, <span class="refTitle">"BRSKI-AE Protocol Overview"</span>, <time datetime="2023-03" class="refDate">March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/meeting/116/materials/slides-116-anima-update-on-brski-ae-alternative-enrollment-protocols-in-brski-00">https://datatracker.ietf.org/meeting/116/materials/slides-116-anima-update-on-brski-ae-alternative-enrollment-protocols-in-brski-00</a>&gt;</span>. <span class="annotation">Graphics on slide 4 of the status update on the BRSKI-AE draft 04 at IETF 116.</span>
         </dd>
 <dd class="break"></dd>
-<dt id="I-D.eckert-anima-brski-discovery">[I-D.eckert-anima-brski-discovery]</dt>
+<dt id="draft-ietf-anima-brski-discovery">[draft-ietf-anima-brski-discovery]</dt>
         <dd>
-<span class="refAuthor">Eckert, T. T.</span>, <span class="refAuthor">von Oheimb, D.</span>, and <span class="refAuthor">E. Dijk</span>, <span class="refTitle">"Discovery for BRSKI variations"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-eckert-anima-brski-discovery-01</span>, <time datetime="2023-10-23" class="refDate">23 October 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-eckert-anima-brski-discovery-01">https://datatracker.ietf.org/doc/html/draft-eckert-anima-brski-discovery-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Eckert, T.</span> and <span class="refAuthor">E. Dijk</span>, <span class="refTitle">"Discovery for BRSKI variations"</span>, <span class="seriesInfo">Work in Progress, Internet-Draft, draft-ietf-anima-brski-discovery-04 </span>, <time datetime="2024-07" class="refDate">July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04">https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-anima-constrained-voucher">[I-D.ietf-anima-constrained-voucher]</dt>
         <dd>
-<span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Van der Stok, P.</span>, <span class="refAuthor">Kampanakis, P.</span>, and <span class="refAuthor">E. Dijk</span>, <span class="refTitle">"Constrained Bootstrapping Remote Secure Key Infrastructure (cBRSKI)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-anima-constrained-voucher-24</span>, <time datetime="2024-03-03" class="refDate">3 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-anima-constrained-voucher-24">https://datatracker.ietf.org/doc/html/draft-ietf-anima-constrained-voucher-24</a>&gt;</span>. </dd>
+<span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Van der Stok, P.</span>, <span class="refAuthor">Kampanakis, P.</span>, and <span class="refAuthor">E. Dijk</span>, <span class="refTitle">"Constrained Bootstrapping Remote Secure Key Infrastructure (cBRSKI)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-anima-constrained-voucher-25</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-anima-constrained-voucher-25">https://datatracker.ietf.org/doc/html/draft-ietf-anima-constrained-voucher-25</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IEC-62351-9">[IEC-62351-9]</dt>
         <dd>
@@ -3109,575 +3153,615 @@ an off-site backend component that has a sufficient level of security.<a href="#
           <p id="appendix-B-2.4.1">Meral Shirazipour (Gen-ART reviewer)<a href="#appendix-B-2.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.5">
-          <p id="appendix-B-2.5.1">Michael Richardson (ANIMA design team)<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.5.1">Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
+(IESG reviewers)<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.6">
-          <p id="appendix-B-2.6.1">Rajeev Ranjan, Rufus Buschart, Szofia Fazekas-Zisch, etc. (Siemens)<a href="#appendix-B-2.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.6.1">Michael Richardson (ANIMA design team)<a href="#appendix-B-2.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.7">
-          <p id="appendix-B-2.7.1"><a href="https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-enroll-03-yangdoctors-early-rahman-2021-08-15/">YANGDOCTORS Early review of 2021-08-15</a>
+          <p id="appendix-B-2.7.1">Rajeev Ranjan, Rufus Buschart, Szofia Fazekas-Zisch, etc. (Siemens)<a href="#appendix-B-2.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.8">
+          <p id="appendix-B-2.8.1">Reshad Rahman (YANGDOCTORS reviewer). Note that
+<a href="https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-enroll-03-yangdoctors-early-rahman-2021-08-15/">YANGDOCTORS Early review of 2021-08-15</a>
 referred to the PRM aspect of <a href="https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/">draft-ietf-anima-brski-async-enroll-03</a>.
 This has been carved out of the draft to a different one and thus is no more
-applicable here.<a href="#appendix-B-2.7.1" class="pilcrow">¶</a></p>
+applicable here.<a href="#appendix-B-2.8.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-3">IETF draft ae-11 -&gt; ae-12:<a href="#appendix-B-3" class="pilcrow">¶</a></p>
+<p id="appendix-B-3">IETF draft ae-12 -&gt; ae-13:<a href="#appendix-B-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-4.1">
-          <p id="appendix-B-4.1.1">Fix minor issues introduced during authors' response to the AD review,<br>
-including nits spotted in the Gen-ART review by Meral Shirazipour<a href="#appendix-B-4.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-4.1.1">Due to IANA requirement, shorten service name <code>"brski-registrar-cmp"</code> to <code>"brski-reg-cmp"</code><br>
+and change contact for service name registration from IESG to IETF<a href="#appendix-B-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-4.2">
+          <p id="appendix-B-4.2.1">Address Deb Cooley's DISCUSS by adding an item to the requirements list
+<a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a> making the source of the initial trust anchor explicit.
+<br>
+Including the vouchers in <a href="#enrollfigure" class="auto internal xref">Figure 2</a> would not fit because the figure
+has a different scope (namely, certificate enrollment) and would get overloaded.<a href="#appendix-B-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-4.3">
+          <p id="appendix-B-4.3.1">Address Gunter Van de Velde's comments by taking over essentially all his
+rewrites of text to help the structure and simplify reading the content,
+while keeping the original message, as it helps improve document quality<a href="#appendix-B-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-4.4">
+          <p id="appendix-B-4.4.1">Address John Scudder's comments by tweaking <a href="#terminology" class="auto internal xref">Section 2</a>, fully alphabetizing terms<a href="#appendix-B-4.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-4.5">
+          <p id="appendix-B-4.5.1">Address Murray Kucherawy's comment
+by adapting terminology entries, leaving out 'communication'
+from 'asynchronous communication' and 'synchronous communication'<a href="#appendix-B-4.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-4.6">
+          <p id="appendix-B-4.6.1">Address Roman Danyliw's comments by updating reference<br>
+I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery<br> and
+adding <a href="#priv-consider" class="auto internal xref">Section 8</a>, which refers to the BRSKI privacy considerations.<a href="#appendix-B-4.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-4.7">
+          <p id="appendix-B-4.7.1">Address Éric Vyncke's comment by replacing 'production' by 'manufacturing'<a href="#appendix-B-4.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-5">IETF draft ae-10 -&gt; ae-11:<a href="#appendix-B-5" class="pilcrow">¶</a></p>
+<p id="appendix-B-5">IETF draft ae-11 -&gt; ae-12:<a href="#appendix-B-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-6.1">
-          <p id="appendix-B-6.1.1">In response to AD review by Mahesh Jethanandani,<a href="#appendix-B-6.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-B-6.1.2.1">
-              <p id="appendix-B-6.1.2.1.1">replace most occurrences of 'Note:' by 'Note that' or the like<a href="#appendix-B-6.1.2.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-6.1.2.2">
-              <p id="appendix-B-6.1.2.2.1">move 2nd paragraph of abstract to the introduction<a href="#appendix-B-6.1.2.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-6.1.2.3">
-              <p id="appendix-B-6.1.2.3.1">remove section 1.2 and merge its first paragraph with the preceding section<a href="#appendix-B-6.1.2.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-6.1.2.4">
-              <p id="appendix-B-6.1.2.4.1">reconsider normative language, replacing one 'may' by '<span class="bcp14">MAY</span>' in section 4.1<a href="#appendix-B-6.1.2.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-6.1.2.5">
-              <p id="appendix-B-6.1.2.5.1">fix several ambiguities and hard-to-read sentences by re-phrasing them<a href="#appendix-B-6.1.2.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-6.1.2.6">
-              <p id="appendix-B-6.1.2.6.1">make wording more consistent, in particular: 'certification request'<a href="#appendix-B-6.1.2.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-6.1.2.7">
-              <p id="appendix-B-6.1.2.7.1">fix a number of (mostly grammar) nits<a href="#appendix-B-6.1.2.7.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</li>
-        <li class="normal" id="appendix-B-6.2">
-          <p id="appendix-B-6.2.1">Improve item on limitations of PKCS#10 regarding keys that cannot sign<a href="#appendix-B-6.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-6.1.1">Fix minor issues introduced during authors' response to the AD review,<br>
+including nits spotted in the Gen-ART review by Meral Shirazipour<a href="#appendix-B-6.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-7">IETF draft ae-09 -&gt; ae-10:<a href="#appendix-B-7" class="pilcrow">¶</a></p>
+<p id="appendix-B-7">IETF draft ae-10 -&gt; ae-11:<a href="#appendix-B-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-8.1">
-          <p id="appendix-B-8.1.1">Add reference to RFC 8633 at first occurrence of 'voucher' (fixes #37)<a href="#appendix-B-8.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-8.1.1">In response to AD review by Mahesh Jethanandani,<a href="#appendix-B-8.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-8.1.2.1">
+              <p id="appendix-B-8.1.2.1.1">replace most occurrences of 'Note:' by 'Note that' or the like<a href="#appendix-B-8.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-8.1.2.2">
+              <p id="appendix-B-8.1.2.2.1">move 2nd paragraph of abstract to the introduction<a href="#appendix-B-8.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-8.1.2.3">
+              <p id="appendix-B-8.1.2.3.1">remove section 1.2 and merge its first paragraph with the preceding section<a href="#appendix-B-8.1.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-8.1.2.4">
+              <p id="appendix-B-8.1.2.4.1">reconsider normative language, replacing one 'may' by '<span class="bcp14">MAY</span>' in section 4.1<a href="#appendix-B-8.1.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-8.1.2.5">
+              <p id="appendix-B-8.1.2.5.1">fix several ambiguities and hard-to-read sentences by re-phrasing them<a href="#appendix-B-8.1.2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-8.1.2.6">
+              <p id="appendix-B-8.1.2.6.1">make wording more consistent, in particular: 'certification request'<a href="#appendix-B-8.1.2.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-8.1.2.7">
+              <p id="appendix-B-8.1.2.7.1">fix a number of (mostly grammar) nits<a href="#appendix-B-8.1.2.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </li>
         <li class="normal" id="appendix-B-8.2">
-          <p id="appendix-B-8.2.1">Update reference of CoAP Transfer for CMP from I-D to RFC 9482<a href="#appendix-B-8.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-8.3">
-          <p id="appendix-B-8.3.1">Move RFC 4210 and RFC 9480 references from normative to informative<a href="#appendix-B-8.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-8.4">
-          <p id="appendix-B-8.4.1">Fix <code>p10</code> vs. <code>pkcs10</code> entry in list of example endpoints in <a href="#addressing" class="auto internal xref">Section 4.3</a><a href="#appendix-B-8.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-8.5">
-          <p id="appendix-B-8.5.1">Minor fix in <a href="#uc1figure" class="auto internal xref">Figure 1</a> and few text tweaks due to Siemens-internal review<a href="#appendix-B-8.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-8.6">
-          <p id="appendix-B-8.6.1">Extend the list of reviewers and acknowledgments by two Siemens colleagues<a href="#appendix-B-8.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-8.2.1">Improve item on limitations of PKCS#10 regarding keys that cannot sign<a href="#appendix-B-8.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-9">IETF draft ae-08 -&gt; ae-09:<a href="#appendix-B-9" class="pilcrow">¶</a></p>
+<p id="appendix-B-9">IETF draft ae-09 -&gt; ae-10:<a href="#appendix-B-9" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-10.1">
-          <p id="appendix-B-10.1.1">In response to review by Toerless,<a href="#appendix-B-10.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-B-10.1.2.1">
-              <p id="appendix-B-10.1.2.1.1">tweak abstract to make meaning of 'alternative enrollment' more clear<a href="#appendix-B-10.1.2.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-10.1.2.2">
-              <p id="appendix-B-10.1.2.2.1">expand on first use not "well-known" abbreviations, such as 'EST',<br>
-adding also a references on their first use<a href="#appendix-B-10.1.2.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-10.1.2.3">
-              <p id="appendix-B-10.1.2.3.1">add summary and reason for choosing CMP at end of <a href="#solutions-PoI" class="auto internal xref">Section 3.2</a><a href="#appendix-B-10.1.2.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-10.1.2.4">
-              <p id="appendix-B-10.1.2.4.1">remove paragraph on optimistic discovery in controlled environments<a href="#appendix-B-10.1.2.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-10.1.2.5">
-              <p id="appendix-B-10.1.2.5.1">mention role of reviewers also in acknowledgments section<a href="#appendix-B-10.1.2.5.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
+          <p id="appendix-B-10.1.1">Add reference to RFC 8633 at first occurrence of 'voucher' (fixes #37)<a href="#appendix-B-10.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-10.2">
-          <p id="appendix-B-10.2.1">A couple of grammar and spelling fixes<a href="#appendix-B-10.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-10.2.1">Update reference of CoAP Transfer for CMP from I-D to RFC 9482<a href="#appendix-B-10.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-10.3">
+          <p id="appendix-B-10.3.1">Move RFC 4210 and RFC 9480 references from normative to informative<a href="#appendix-B-10.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-10.4">
+          <p id="appendix-B-10.4.1">Fix <code>p10</code> vs. <code>pkcs10</code> entry in list of example endpoints in <a href="#addressing" class="auto internal xref">Section 4.3</a><a href="#appendix-B-10.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-10.5">
+          <p id="appendix-B-10.5.1">Minor fix in <a href="#uc1figure" class="auto internal xref">Figure 1</a> and few text tweaks due to Siemens-internal review<a href="#appendix-B-10.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-10.6">
+          <p id="appendix-B-10.6.1">Extend the list of reviewers and acknowledgments by two Siemens colleagues<a href="#appendix-B-10.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-11">IETF draft ae-07 -&gt; ae-08:<a href="#appendix-B-11" class="pilcrow">¶</a></p>
+<p id="appendix-B-11">IETF draft ae-08 -&gt; ae-09:<a href="#appendix-B-11" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-12.1">
-          <p id="appendix-B-12.1.1">Update references to service names in <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a><a href="#appendix-B-12.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-12.1.1">In response to review by Toerless,<a href="#appendix-B-12.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-12.1.2.1">
+              <p id="appendix-B-12.1.2.1.1">tweak abstract to make meaning of 'alternative enrollment' more clear<a href="#appendix-B-12.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-12.1.2.2">
+              <p id="appendix-B-12.1.2.2.1">expand on first use not "well-known" abbreviations, such as 'EST',<br>
+adding also a references on their first use<a href="#appendix-B-12.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-12.1.2.3">
+              <p id="appendix-B-12.1.2.3.1">add summary and reason for choosing CMP at end of <a href="#solutions-PoI" class="auto internal xref">Section 3.2</a><a href="#appendix-B-12.1.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-12.1.2.4">
+              <p id="appendix-B-12.1.2.4.1">remove paragraph on optimistic discovery in controlled environments<a href="#appendix-B-12.1.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-12.1.2.5">
+              <p id="appendix-B-12.1.2.5.1">mention role of reviewers also in acknowledgments section<a href="#appendix-B-12.1.2.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="appendix-B-12.2">
+          <p id="appendix-B-12.2.1">A couple of grammar and spelling fixes<a href="#appendix-B-12.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-13">IETF draft ae-06 -&gt; ae-07:<a href="#appendix-B-13" class="pilcrow">¶</a></p>
+<p id="appendix-B-13">IETF draft ae-07 -&gt; ae-08:<a href="#appendix-B-13" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-14.1">
-          <p id="appendix-B-14.1.1">Update subsections on discovery according to discussion in the design team<a href="#appendix-B-14.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-14.2">
-          <p id="appendix-B-14.2.1">In <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a>,
-replace 'mandatory' by '<span class="bcp14">REQUIRED</span>' regarding adherence to LCMPP,<br>
-in response to SECDIR Last Call Review of ae-06 by Barry Leiba<a href="#appendix-B-14.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-14.1.1">Update references to service names in <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a><a href="#appendix-B-14.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-15">IETF draft ae-05 -&gt; ae-06:<a href="#appendix-B-15" class="pilcrow">¶</a></p>
+<p id="appendix-B-15">IETF draft ae-06 -&gt; ae-07:<a href="#appendix-B-15" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-16.1">
-          <p id="appendix-B-16.1.1">Extend section on discovery according to discussion in the design team<a href="#appendix-B-16.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-16.1.1">Update subsections on discovery according to discussion in the design team<a href="#appendix-B-16.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-16.2">
-          <p id="appendix-B-16.2.1">Make explicit that MASA voucher status telemetry is as in BRSKI<a href="#appendix-B-16.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-16.3">
-          <p id="appendix-B-16.3.1">Add note that on delegation, RA may need info on pledge authorization<a href="#appendix-B-16.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-16.2.1">In <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a>,
+replace 'mandatory' by '<span class="bcp14">REQUIRED</span>' regarding adherence to LCMPP,<br>
+in response to SECDIR Last Call Review of ae-06 by Barry Leiba<a href="#appendix-B-16.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-17">IETF draft ae-04 -&gt; ae-05:<a href="#appendix-B-17" class="pilcrow">¶</a></p>
+<p id="appendix-B-17">IETF draft ae-05 -&gt; ae-06:<a href="#appendix-B-17" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-18.1">
-          <p id="appendix-B-18.1.1">Remove entries from the terminology section that should be clear from BRSKI<a href="#appendix-B-18.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-18.1.1">Extend section on discovery according to discussion in the design team<a href="#appendix-B-18.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-18.2">
-          <p id="appendix-B-18.2.1">Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by RA/CA<a href="#appendix-B-18.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-18.2.1">Make explicit that MASA voucher status telemetry is as in BRSKI<a href="#appendix-B-18.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-18.3">
-          <p id="appendix-B-18.3.1">Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the terminology section<a href="#appendix-B-18.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-18.4">
-          <p id="appendix-B-18.4.1">State clearly in <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a> that LCMPP is mandatory when using CMP<a href="#appendix-B-18.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-18.5">
-          <p id="appendix-B-18.5.1">Change URL of BRSKI-AE-overview graphics to slide on IETF 116 meeting material<a href="#appendix-B-18.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-18.3.1">Add note that on delegation, RA may need info on pledge authorization<a href="#appendix-B-18.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-19">IETF draft ae-03 -&gt; ae-04:<a href="#appendix-B-19" class="pilcrow">¶</a></p>
+<p id="appendix-B-19">IETF draft ae-04 -&gt; ae-05:<a href="#appendix-B-19" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-20.1">
-          <p id="appendix-B-20.1.1">In response to SECDIR Early Review of ae-03 by Barry Leiba,<a href="#appendix-B-20.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-B-20.1.2.1">
-              <p id="appendix-B-20.1.2.1.1">replace 'end-to-end security' by the more clear 'end-to-end authentication'<a href="#appendix-B-20.1.2.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.1.2.2">
-              <p id="appendix-B-20.1.2.2.1">restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'<a href="#appendix-B-20.1.2.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.1.2.3">
-              <p id="appendix-B-20.1.2.3.1">replace '<span class="bcp14">MAY</span>' by 'may' in requirement on delegated registrar actions<a href="#appendix-B-20.1.2.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.1.2.4">
-              <p id="appendix-B-20.1.2.4.1">re-phrase requirement on certification request exchange, avoiding MANDATORY<a href="#appendix-B-20.1.2.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.1.2.5">
-              <p id="appendix-B-20.1.2.5.1">mention that further protocol names need be put in Well-Known URIs registry<a href="#appendix-B-20.1.2.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.1.2.6">
-              <p id="appendix-B-20.1.2.6.1">explain consequence of using non-standard endpoints, not following <span class="bcp14">SHOULD</span><a href="#appendix-B-20.1.2.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.1.2.7">
-              <p id="appendix-B-20.1.2.7.1">remove requirement that 'caPubs' field in CMP responses <span class="bcp14">SHOULD NOT</span> be used<a href="#appendix-B-20.1.2.7.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.1.2.8">
-              <p id="appendix-B-20.1.2.8.1">add paragraph in security considerations on additional use of TLS for CMP<a href="#appendix-B-20.1.2.8.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
+          <p id="appendix-B-20.1.1">Remove entries from the terminology section that should be clear from BRSKI<a href="#appendix-B-20.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-20.2">
-          <p id="appendix-B-20.2.1">In response to further internal reviews and suggestions for generalization,<a href="#appendix-B-20.2.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-B-20.2.2.1">
-              <p id="appendix-B-20.2.2.1.1">significantly cut down the introduction because the original motivations and
-most explanations are no more needed and would just make it lengthy to read<a href="#appendix-B-20.2.2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-20.2.1">Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by RA/CA<a href="#appendix-B-20.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-20.2.2.2">
-              <p id="appendix-B-20.2.2.2.1">sort out asynchronous vs. offline transfer, off-site vs. backend components<a href="#appendix-B-20.2.2.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-20.3">
+          <p id="appendix-B-20.3.1">Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the terminology section<a href="#appendix-B-20.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-20.2.2.3">
-              <p id="appendix-B-20.2.2.3.1">improve description of CSRs and proof of possession vs. proof of origin<a href="#appendix-B-20.2.2.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-20.4">
+          <p id="appendix-B-20.4.1">State clearly in <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a> that LCMPP is mandatory when using CMP<a href="#appendix-B-20.4.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-20.2.2.4">
-              <p id="appendix-B-20.2.2.4.1">clarify that the channel between pledge and registrar is not restricted
-to TLS, but in connection with constrained BRSKI may also be DTLS.
-Also move the references to Constrained BRSKI and CoAPS to better contexts.<a href="#appendix-B-20.2.2.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.5">
-              <p id="appendix-B-20.2.2.5.1">clarify that the registrar must not be circumvented in the decision to grant
-and LDevID, and give hints and recommendations how to make sure this<a href="#appendix-B-20.2.2.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.6">
-              <p id="appendix-B-20.2.2.6.1">clarify that the cert enrollment phase may involve additional messages
-and that BRSKI-AE replaces <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-5.9" class="relref">Section 5.9</a></span> (except Section 5.9.4)<a href="#appendix-B-20.2.2.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.7">
-              <p id="appendix-B-20.2.2.7.1">the certificate enrollment protocol needs to support transport over (D)TLS
-only as far as its messages are transported between pledge and registrar.<a href="#appendix-B-20.2.2.7.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.8">
-              <p id="appendix-B-20.2.2.8.1">the certificate enrollment protocol chosen between pledge and registrar
-needs to be used also for the upstream enrollment exchange with the PKI only
-if end-to-end authentication shall be achieved across the registrar to the PKI.<a href="#appendix-B-20.2.2.8.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.9">
-              <p id="appendix-B-20.2.2.9.1">add that with CMP, further trust anchors <span class="bcp14">SHOULD</span> be transported via <code>caPubs</code><a href="#appendix-B-20.2.2.9.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.10">
-              <p id="appendix-B-20.2.2.10.1">remove the former Appendix A: "Using EST for Certificate Enrollment",
-moving relevant points to the list of scenarios in
-<a href="#sup-env" class="auto internal xref">Section 1.1</a>: "Supported Scenarios",<a href="#appendix-B-20.2.2.10.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.11">
-              <p id="appendix-B-20.2.2.11.1">streamline the item on EST in
-<a href="#solutions-PoI" class="auto internal xref">Section 3.2</a>: "Solution Options for Proof of Identity",<a href="#appendix-B-20.2.2.11.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="appendix-B-20.2.2.12">
-              <p id="appendix-B-20.2.2.12.1">various minor editorial improvements like making the wording more consistent<a href="#appendix-B-20.2.2.12.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
+        <li class="normal" id="appendix-B-20.5">
+          <p id="appendix-B-20.5.1">Change URL of BRSKI-AE-overview graphics to slide on IETF 116 meeting material<a href="#appendix-B-20.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-21">IETF draft ae-02 -&gt; ae-03:<a href="#appendix-B-21" class="pilcrow">¶</a></p>
+<p id="appendix-B-21">IETF draft ae-03 -&gt; ae-04:<a href="#appendix-B-21" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-22.1">
-          <p id="appendix-B-22.1.1">In response to review by Toerless Eckert,<a href="#appendix-B-22.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-22.1.1">In response to SECDIR Early Review of ae-03 by Barry Leiba,<a href="#appendix-B-22.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-22.1.2.1">
-              <p id="appendix-B-22.1.2.1.1">many editorial improvements and clarifications as suggested, such as
-the comparison to plain BRSKI, the description of offline vs. synchronous
-message transfer and enrollment, and better differentiation of RA flavors.<a href="#appendix-B-22.1.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-B-22.1.2.1.1">replace 'end-to-end security' by the more clear 'end-to-end authentication'<a href="#appendix-B-22.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-B-22.1.2.2">
-              <p id="appendix-B-22.1.2.2.1">clarify that for transporting certificate enrollment messages between
-pledge and registrar, the TLS channel established between these two
-(via the join proxy) is used and the enrollment protocol <span class="bcp14">MUST</span> support this.<a href="#appendix-B-22.1.2.2.1" class="pilcrow">¶</a></p>
+              <p id="appendix-B-22.1.2.2.1">restrict the meaning of the abbreviation 'AE' to 'Alternative Enrollment'<a href="#appendix-B-22.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-B-22.1.2.3">
-              <p id="appendix-B-22.1.2.3.1">clarify that the enrollment protocol chosen between pledge and registrar
-<span class="bcp14">MUST</span> also be used for the upstream enrollment exchange with the PKI.<a href="#appendix-B-22.1.2.3.1" class="pilcrow">¶</a></p>
+              <p id="appendix-B-22.1.2.3.1">replace '<span class="bcp14">MAY</span>' by 'may' in requirement on delegated registrar actions<a href="#appendix-B-22.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-B-22.1.2.4">
-              <p id="appendix-B-22.1.2.4.1">extend the description and requirements on how during the certificate
-enrollment phase the registrar <span class="bcp14">MAY</span> handle requests by the pledge itself and
-otherwise <span class="bcp14">MUST</span> forward them to the PKI and forward responses to the pledge.<a href="#appendix-B-22.1.2.4.1" class="pilcrow">¶</a></p>
+              <p id="appendix-B-22.1.2.4.1">re-phrase requirement on certification request exchange, avoiding MANDATORY<a href="#appendix-B-22.1.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.1.2.5">
+              <p id="appendix-B-22.1.2.5.1">mention that further protocol names need be put in Well-Known URIs registry<a href="#appendix-B-22.1.2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.1.2.6">
+              <p id="appendix-B-22.1.2.6.1">explain consequence of using non-standard endpoints, not following <span class="bcp14">SHOULD</span><a href="#appendix-B-22.1.2.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.1.2.7">
+              <p id="appendix-B-22.1.2.7.1">remove requirement that 'caPubs' field in CMP responses <span class="bcp14">SHOULD NOT</span> be used<a href="#appendix-B-22.1.2.7.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.1.2.8">
+              <p id="appendix-B-22.1.2.8.1">add paragraph in security considerations on additional use of TLS for CMP<a href="#appendix-B-22.1.2.8.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-B-22.2">
-          <p id="appendix-B-22.2.1">Change "The registrar <span class="bcp14">MAY</span> offer different enrollment protocols" to
-"The registrar <span class="bcp14">MUST</span> support at least one certificate enrollment protocol ..."<a href="#appendix-B-22.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-22.3">
-          <p id="appendix-B-22.3.1">In response to review by Michael Richardson,<a href="#appendix-B-22.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-22.2.1">In response to further internal reviews and suggestions for generalization,<a href="#appendix-B-22.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-22.3.2.1">
-              <p id="appendix-B-22.3.2.1.1">slightly improve the structuring of the Message Exchange <a href="#message_ex" class="auto internal xref">Section 4.2</a> and
-add some detail on the request/response exchanges for the enrollment phase<a href="#appendix-B-22.3.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B-22.2.2.1">
+              <p id="appendix-B-22.2.2.1.1">significantly cut down the introduction because the original motivations and
+most explanations are no more needed and would just make it lengthy to read<a href="#appendix-B-22.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-22.3.2.2">
-              <p id="appendix-B-22.3.2.2.1">merge the 'Enhancements to the Addressing Scheme' <a href="#addressing" class="auto internal xref">Section 4.3</a>
-with the subsequent one:
-'Domain Registrar Support of Alternative Enrollment Protocols'<a href="#appendix-B-22.3.2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-22.2.2.2">
+              <p id="appendix-B-22.2.2.2.1">sort out asynchronous vs. offline transfer, off-site vs. backend components<a href="#appendix-B-22.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-22.3.2.3">
-              <p id="appendix-B-22.3.2.3.1">add reference to SZTP (RFC 8572)<a href="#appendix-B-22.3.2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-22.2.2.3">
+              <p id="appendix-B-22.2.2.3.1">improve description of CSRs and proof of possession vs. proof of origin<a href="#appendix-B-22.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-22.3.2.4">
-              <p id="appendix-B-22.3.2.4.1">extend venue information<a href="#appendix-B-22.3.2.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-22.2.2.4">
+              <p id="appendix-B-22.2.2.4.1">clarify that the channel between pledge and registrar is not restricted
+to TLS, but in connection with constrained BRSKI may also be DTLS.
+Also move the references to Constrained BRSKI and CoAPS to better contexts.<a href="#appendix-B-22.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-22.3.2.5">
-              <p id="appendix-B-22.3.2.5.1">convert output of ASCII-art figures to SVG format<a href="#appendix-B-22.3.2.5.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-22.2.2.5">
+              <p id="appendix-B-22.2.2.5.1">clarify that the registrar must not be circumvented in the decision to grant
+and LDevID, and give hints and recommendations how to make sure this<a href="#appendix-B-22.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-22.3.2.6">
-              <p id="appendix-B-22.3.2.6.1">various small other text improvements as suggested/provided<a href="#appendix-B-22.3.2.6.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-22.2.2.6">
+              <p id="appendix-B-22.2.2.6.1">clarify that the cert enrollment phase may involve additional messages
+and that BRSKI-AE replaces <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>], <a href="https://rfc-editor.org/rfc/rfc8995#section-5.9" class="relref">Section 5.9</a></span> (except Section 5.9.4)<a href="#appendix-B-22.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.2.2.7">
+              <p id="appendix-B-22.2.2.7.1">the certificate enrollment protocol needs to support transport over (D)TLS
+only as far as its messages are transported between pledge and registrar.<a href="#appendix-B-22.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.2.2.8">
+              <p id="appendix-B-22.2.2.8.1">the certificate enrollment protocol chosen between pledge and registrar
+needs to be used also for the upstream enrollment exchange with the PKI only
+if end-to-end authentication shall be achieved across the registrar to the PKI.<a href="#appendix-B-22.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.2.2.9">
+              <p id="appendix-B-22.2.2.9.1">add that with CMP, further trust anchors <span class="bcp14">SHOULD</span> be transported via <code>caPubs</code><a href="#appendix-B-22.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.2.2.10">
+              <p id="appendix-B-22.2.2.10.1">remove the former Appendix A: "Using EST for Certificate Enrollment",
+moving relevant points to the list of scenarios in
+<a href="#sup-env" class="auto internal xref">Section 1.1</a>: "Supported Scenarios",<a href="#appendix-B-22.2.2.10.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.2.2.11">
+              <p id="appendix-B-22.2.2.11.1">streamline the item on EST in
+<a href="#solutions-PoI" class="auto internal xref">Section 3.2</a>: "Solution Options for Proof of Identity",<a href="#appendix-B-22.2.2.11.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-22.2.2.12">
+              <p id="appendix-B-22.2.2.12.1">various minor editorial improvements like making the wording more consistent<a href="#appendix-B-22.2.2.12.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="appendix-B-22.4">
-          <p id="appendix-B-22.4.1">Remove the tentative informative application to EST-fullCMC<a href="#appendix-B-22.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-22.5">
-          <p id="appendix-B-22.5.1">Move Eliot Lear from co-author to contributor, add Eliot to the acknowledgments<a href="#appendix-B-22.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-22.6">
-          <p id="appendix-B-22.6.1">Add explanations for terms such as 'target domain' and 'caPubs'<a href="#appendix-B-22.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-22.7">
-          <p id="appendix-B-22.7.1">Fix minor editorial issues and update some external references<a href="#appendix-B-22.7.1" class="pilcrow">¶</a></p>
-</li>
       </ul>
-<p id="appendix-B-23">IETF draft ae-01 -&gt; ae-02:<a href="#appendix-B-23" class="pilcrow">¶</a></p>
+<p id="appendix-B-23">IETF draft ae-02 -&gt; ae-03:<a href="#appendix-B-23" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-24.1">
-          <p id="appendix-B-24.1.1">Architecture: clarify registrar role including RA/LRA/enrollment proxy<a href="#appendix-B-24.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-24.1.1">In response to review by Toerless Eckert,<a href="#appendix-B-24.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-24.1.2.1">
+              <p id="appendix-B-24.1.2.1.1">many editorial improvements and clarifications as suggested, such as
+the comparison to plain BRSKI, the description of offline vs. synchronous
+message transfer and enrollment, and better differentiation of RA flavors.<a href="#appendix-B-24.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.1.2.2">
+              <p id="appendix-B-24.1.2.2.1">clarify that for transporting certificate enrollment messages between
+pledge and registrar, the TLS channel established between these two
+(via the join proxy) is used and the enrollment protocol <span class="bcp14">MUST</span> support this.<a href="#appendix-B-24.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.1.2.3">
+              <p id="appendix-B-24.1.2.3.1">clarify that the enrollment protocol chosen between pledge and registrar
+<span class="bcp14">MUST</span> also be used for the upstream enrollment exchange with the PKI.<a href="#appendix-B-24.1.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.1.2.4">
+              <p id="appendix-B-24.1.2.4.1">extend the description and requirements on how during the certificate
+enrollment phase the registrar <span class="bcp14">MAY</span> handle requests by the pledge itself and
+otherwise <span class="bcp14">MUST</span> forward them to the PKI and forward responses to the pledge.<a href="#appendix-B-24.1.2.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </li>
         <li class="normal" id="appendix-B-24.2">
-          <p id="appendix-B-24.2.1">CMP: add reference to CoAP Transport for CMPV2 and Constrained BRSKI<a href="#appendix-B-24.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-24.2.1">Change "The registrar <span class="bcp14">MAY</span> offer different enrollment protocols" to
+"The registrar <span class="bcp14">MUST</span> support at least one certificate enrollment protocol ..."<a href="#appendix-B-24.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-24.3">
-          <p id="appendix-B-24.3.1">Include venue information<a href="#appendix-B-24.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-24.3.1">In response to review by Michael Richardson,<a href="#appendix-B-24.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-24.3.2.1">
+              <p id="appendix-B-24.3.2.1.1">slightly improve the structuring of the Message Exchange <a href="#message_ex" class="auto internal xref">Section 4.2</a> and
+add some detail on the request/response exchanges for the enrollment phase<a href="#appendix-B-24.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.3.2.2">
+              <p id="appendix-B-24.3.2.2.1">merge the 'Enhancements to the Addressing Scheme' <a href="#addressing" class="auto internal xref">Section 4.3</a>
+with the subsequent one:
+'Domain Registrar Support of Alternative Enrollment Protocols'<a href="#appendix-B-24.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.3.2.3">
+              <p id="appendix-B-24.3.2.3.1">add reference to SZTP (RFC 8572)<a href="#appendix-B-24.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.3.2.4">
+              <p id="appendix-B-24.3.2.4.1">extend venue information<a href="#appendix-B-24.3.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.3.2.5">
+              <p id="appendix-B-24.3.2.5.1">convert output of ASCII-art figures to SVG format<a href="#appendix-B-24.3.2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-24.3.2.6">
+              <p id="appendix-B-24.3.2.6.1">various small other text improvements as suggested/provided<a href="#appendix-B-24.3.2.6.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="appendix-B-24.4">
+          <p id="appendix-B-24.4.1">Remove the tentative informative application to EST-fullCMC<a href="#appendix-B-24.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-24.5">
+          <p id="appendix-B-24.5.1">Move Eliot Lear from co-author to contributor, add Eliot to the acknowledgments<a href="#appendix-B-24.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-24.6">
+          <p id="appendix-B-24.6.1">Add explanations for terms such as 'target domain' and 'caPubs'<a href="#appendix-B-24.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-24.7">
+          <p id="appendix-B-24.7.1">Fix minor editorial issues and update some external references<a href="#appendix-B-24.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-25">From IETF draft 05 -&gt; IETF draft ae-01:<a href="#appendix-B-25" class="pilcrow">¶</a></p>
+<p id="appendix-B-25">IETF draft ae-01 -&gt; ae-02:<a href="#appendix-B-25" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-26.1">
-          <p id="appendix-B-26.1.1">Renamed the repo and files from 'anima-brski-async-enroll' to 'anima-brski-ae'<a href="#appendix-B-26.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-26.1.1">Architecture: clarify registrar role including RA/LRA/enrollment proxy<a href="#appendix-B-26.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-26.2">
-          <p id="appendix-B-26.2.1">Added graphics for abstract protocol overview as suggested by Toerless Eckert<a href="#appendix-B-26.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-26.2.1">CMP: add reference to CoAP Transport for CMPV2 and Constrained BRSKI<a href="#appendix-B-26.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-26.3">
-          <p id="appendix-B-26.3.1">Balanced (sub-)sections and their headers<a href="#appendix-B-26.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-26.4">
-          <p id="appendix-B-26.4.1">Added details on CMP instance, now called BRSKI-CMP<a href="#appendix-B-26.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-26.3.1">Include venue information<a href="#appendix-B-26.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-27">From IETF draft 04 -&gt; IETF draft 05:<a href="#appendix-B-27" class="pilcrow">¶</a></p>
+<p id="appendix-B-27">From IETF draft 05 -&gt; IETF draft ae-01:<a href="#appendix-B-27" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-28.1">
-          <p id="appendix-B-28.1.1">David von Oheimb became the editor.<a href="#appendix-B-28.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-28.1.1">Renamed the repo and files from 'anima-brski-async-enroll' to 'anima-brski-ae'<a href="#appendix-B-28.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-28.2">
-          <p id="appendix-B-28.2.1">Streamline wording, consolidate terminology, improve grammar, etc.<a href="#appendix-B-28.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-28.2.1">Added graphics for abstract protocol overview as suggested by Toerless Eckert<a href="#appendix-B-28.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-28.3">
-          <p id="appendix-B-28.3.1">Shift the emphasis towards supporting alternative enrollment protocols.<a href="#appendix-B-28.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-28.3.1">Balanced (sub-)sections and their headers<a href="#appendix-B-28.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-28.4">
-          <p id="appendix-B-28.4.1">Update the title accordingly - preliminary change to be approved.<a href="#appendix-B-28.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-28.5">
-          <p id="appendix-B-28.5.1">Move comments on EST and detailed application examples to informative annex.<a href="#appendix-B-28.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-28.6">
-          <p id="appendix-B-28.6.1">Move the remaining text of section 3 as two new sub-sections of section 1.<a href="#appendix-B-28.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-28.4.1">Added details on CMP instance, now called BRSKI-CMP<a href="#appendix-B-28.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-29">From IETF draft 03 -&gt; IETF draft 04:<a href="#appendix-B-29" class="pilcrow">¶</a></p>
+<p id="appendix-B-29">From IETF draft 04 -&gt; IETF draft 05:<a href="#appendix-B-29" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-30.1">
-          <p id="appendix-B-30.1.1">Moved UC2-related parts defining the pledge in responder mode to a
+          <p id="appendix-B-30.1.1">David von Oheimb became the editor.<a href="#appendix-B-30.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-30.2">
+          <p id="appendix-B-30.2.1">Streamline wording, consolidate terminology, improve grammar, etc.<a href="#appendix-B-30.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-30.3">
+          <p id="appendix-B-30.3.1">Shift the emphasis towards supporting alternative enrollment protocols.<a href="#appendix-B-30.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-30.4">
+          <p id="appendix-B-30.4.1">Update the title accordingly - preliminary change to be approved.<a href="#appendix-B-30.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-30.5">
+          <p id="appendix-B-30.5.1">Move comments on EST and detailed application examples to informative annex.<a href="#appendix-B-30.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-30.6">
+          <p id="appendix-B-30.6.1">Move the remaining text of section 3 as two new sub-sections of section 1.<a href="#appendix-B-30.6.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-31">From IETF draft 03 -&gt; IETF draft 04:<a href="#appendix-B-31" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-32.1">
+          <p id="appendix-B-32.1.1">Moved UC2-related parts defining the pledge in responder mode to a
 separate document. This required changes and adaptations in several
 sections. Main changes concerned the removal of the subsection for UC2
 as well as the removal of the YANG model related text as it is not
-applicable in UC1.<a href="#appendix-B-30.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-30.2">
-          <p id="appendix-B-30.2.1">Updated references to the Lightweight CMP Profile (LCMPP).<a href="#appendix-B-30.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-30.3">
-          <p id="appendix-B-30.3.1">Added David von Oheimb as co-author.<a href="#appendix-B-30.3.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="appendix-B-31">From IETF draft 02 -&gt; IETF draft 03:<a href="#appendix-B-31" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-B-32.1">
-          <p id="appendix-B-32.1.1">Housekeeping, deleted open issue regarding YANG voucher-request
-in UC2 as voucher-request was enhanced with additional leaf.<a href="#appendix-B-32.1.1" class="pilcrow">¶</a></p>
+applicable in UC1.<a href="#appendix-B-32.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-32.2">
-          <p id="appendix-B-32.2.1">Included open issues in YANG model in UC2 regarding assertion
-value agent-proximity and CSR encapsulation using SZTP sub module).<a href="#appendix-B-32.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-32.2.1">Updated references to the Lightweight CMP Profile (LCMPP).<a href="#appendix-B-32.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-32.3">
+          <p id="appendix-B-32.3.1">Added David von Oheimb as co-author.<a href="#appendix-B-32.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-33">From IETF draft 01 -&gt; IETF draft 02:<a href="#appendix-B-33" class="pilcrow">¶</a></p>
+<p id="appendix-B-33">From IETF draft 02 -&gt; IETF draft 03:<a href="#appendix-B-33" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-34.1">
-          <p id="appendix-B-34.1.1">Defined call flow and objects for interactions in UC2. Object format
-based on draft for JOSE signed voucher artifacts and aligned the
-remaining objects with this approach in UC2 .<a href="#appendix-B-34.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-34.1.1">Housekeeping, deleted open issue regarding YANG voucher-request
+in UC2 as voucher-request was enhanced with additional leaf.<a href="#appendix-B-34.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-34.2">
-          <p id="appendix-B-34.2.1">Terminology change: issue #2 pledge-agent -&gt; registrar-agent to
-better underline agent relation.<a href="#appendix-B-34.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-34.2.1">Included open issues in YANG model in UC2 regarding assertion
+value agent-proximity and CSR encapsulation using SZTP sub module).<a href="#appendix-B-34.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.3">
-          <p id="appendix-B-34.3.1">Terminology change: issue #3 PULL/PUSH -&gt; pledge-initiator-mode
-and pledge-responder-mode to better address the pledge operation.<a href="#appendix-B-34.3.1" class="pilcrow">¶</a></p>
+      </ul>
+<p id="appendix-B-35">From IETF draft 01 -&gt; IETF draft 02:<a href="#appendix-B-35" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-36.1">
+          <p id="appendix-B-36.1.1">Defined call flow and objects for interactions in UC2. Object format
+based on draft for JOSE signed voucher artifacts and aligned the
+remaining objects with this approach in UC2 .<a href="#appendix-B-36.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.4">
-          <p id="appendix-B-34.4.1">Communication approach between pledge and registrar-agent
+        <li class="normal" id="appendix-B-36.2">
+          <p id="appendix-B-36.2.1">Terminology change: issue #2 pledge-agent -&gt; registrar-agent to
+better underline agent relation.<a href="#appendix-B-36.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-36.3">
+          <p id="appendix-B-36.3.1">Terminology change: issue #3 PULL/PUSH -&gt; pledge-initiator-mode
+and pledge-responder-mode to better address the pledge operation.<a href="#appendix-B-36.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-36.4">
+          <p id="appendix-B-36.4.1">Communication approach between pledge and registrar-agent
 changed by removing TLS-PSK (former section TLS establishment)
 and associated references to other drafts in favor of relying on
 higher layer exchange of signed data objects. These data objects
 are included also in the pledge-voucher-request and lead to an
-extension of the YANG module for the voucher-request (issue #12).<a href="#appendix-B-34.4.1" class="pilcrow">¶</a></p>
+extension of the YANG module for the voucher-request (issue #12).<a href="#appendix-B-36.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.5">
-          <p id="appendix-B-34.5.1">Details on trust relationship between registrar-agent and
-registrar (issue #4, #5, #9) included in UC2.<a href="#appendix-B-34.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-36.5">
+          <p id="appendix-B-36.5.1">Details on trust relationship between registrar-agent and
+registrar (issue #4, #5, #9) included in UC2.<a href="#appendix-B-36.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.6">
-          <p id="appendix-B-34.6.1">Recommendation regarding short-lived certificates for
+        <li class="normal" id="appendix-B-36.6">
+          <p id="appendix-B-36.6.1">Recommendation regarding short-lived certificates for
 registrar-agent authentication towards registrar (issue #7) in
-the security considerations.<a href="#appendix-B-34.6.1" class="pilcrow">¶</a></p>
+the security considerations.<a href="#appendix-B-36.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.7">
-          <p id="appendix-B-34.7.1">Introduction of reference to agent signing certificate using SKID
-in agent signed data (issue #11).<a href="#appendix-B-34.7.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-36.7">
+          <p id="appendix-B-36.7.1">Introduction of reference to agent signing certificate using SKID
+in agent signed data (issue #11).<a href="#appendix-B-36.7.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.8">
-          <p id="appendix-B-34.8.1">Enhanced objects in exchanges between pledge and registrar-agent
+        <li class="normal" id="appendix-B-36.8">
+          <p id="appendix-B-36.8.1">Enhanced objects in exchanges between pledge and registrar-agent
 to allow the registrar to verify agent-proximity to the pledge
-(issue #1) in UC2.<a href="#appendix-B-34.8.1" class="pilcrow">¶</a></p>
+(issue #1) in UC2.<a href="#appendix-B-36.8.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.9">
-          <p id="appendix-B-34.9.1">Details on trust relationship between registrar-agent and
-pledge (issue #5) included in UC2.<a href="#appendix-B-34.9.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-36.9">
+          <p id="appendix-B-36.9.1">Details on trust relationship between registrar-agent and
+pledge (issue #5) included in UC2.<a href="#appendix-B-36.9.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-34.10">
-          <p id="appendix-B-34.10.1">Split of use case 2 call flow into sub sections in UC2.<a href="#appendix-B-34.10.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-36.10">
+          <p id="appendix-B-36.10.1">Split of use case 2 call flow into sub sections in UC2.<a href="#appendix-B-36.10.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-35">From IETF draft 00 -&gt; IETF draft 01:<a href="#appendix-B-35" class="pilcrow">¶</a></p>
+<p id="appendix-B-37">From IETF draft 00 -&gt; IETF draft 01:<a href="#appendix-B-37" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-36.1">
-          <p id="appendix-B-36.1.1">Update of scope in <a href="#sup-env" class="auto internal xref">Section 1.1</a> to include in
+<li class="normal" id="appendix-B-38.1">
+          <p id="appendix-B-38.1.1">Update of scope in <a href="#sup-env" class="auto internal xref">Section 1.1</a> to include in
 which the pledge acts as a server. This is one main motivation
-for use case 2.<a href="#appendix-B-36.1.1" class="pilcrow">¶</a></p>
+for use case 2.<a href="#appendix-B-38.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-36.2">
-          <p id="appendix-B-36.2.1">Rework of use case 2 to consider the
+        <li class="normal" id="appendix-B-38.2">
+          <p id="appendix-B-38.2.1">Rework of use case 2 to consider the
 transport between the pledge and the pledge-agent. Addressed is
 the TLS channel establishment between the pledge-agent and the
-pledge as well as the endpoint definition on the pledge.<a href="#appendix-B-36.2.1" class="pilcrow">¶</a></p>
+pledge as well as the endpoint definition on the pledge.<a href="#appendix-B-38.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-36.3">
-          <p id="appendix-B-36.3.1">First description of exchanged object types (needs more work)<a href="#appendix-B-36.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-38.3">
+          <p id="appendix-B-38.3.1">First description of exchanged object types (needs more work)<a href="#appendix-B-38.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-36.4">
-          <p id="appendix-B-36.4.1">Clarification in discovery options for enrollment endpoints at
+        <li class="normal" id="appendix-B-38.4">
+          <p id="appendix-B-38.4.1">Clarification in discovery options for enrollment endpoints at
 the domain registrar based on well-known endpoints in <a href="#addressing" class="auto internal xref">Section 4.3</a>
 do not result in additional /.well-known URIs.
 Update of the illustrative example.
 Note that the change to /brski for the voucher-related endpoints
-has been taken over in the BRSKI main document.<a href="#appendix-B-36.4.1" class="pilcrow">¶</a></p>
+has been taken over in the BRSKI main document.<a href="#appendix-B-38.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-36.5">
-          <p id="appendix-B-36.5.1">Updated references.<a href="#appendix-B-36.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-38.5">
+          <p id="appendix-B-38.5.1">Updated references.<a href="#appendix-B-38.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-36.6">
-          <p id="appendix-B-36.6.1">Included Thomas Werner as additional author for the document.<a href="#appendix-B-36.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-38.6">
+          <p id="appendix-B-38.6.1">Included Thomas Werner as additional author for the document.<a href="#appendix-B-38.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-37">From individual version 03 -&gt; IETF draft 00:<a href="#appendix-B-37" class="pilcrow">¶</a></p>
+<p id="appendix-B-39">From individual version 03 -&gt; IETF draft 00:<a href="#appendix-B-39" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-38.1">
-          <p id="appendix-B-38.1.1">Inclusion of discovery options of enrollment endpoints at
+<li class="normal" id="appendix-B-40.1">
+          <p id="appendix-B-40.1.1">Inclusion of discovery options of enrollment endpoints at
 the domain registrar based on well-known endpoints in
 <a href="#addressing" class="auto internal xref">Section 4.3</a> as replacement of section 5.1.3
 in the individual draft. This is intended to support both use
-cases in the document. An illustrative example is provided.<a href="#appendix-B-38.1.1" class="pilcrow">¶</a></p>
+cases in the document. An illustrative example is provided.<a href="#appendix-B-40.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-38.2">
-          <p id="appendix-B-38.2.1">Missing details provided for the description and call flow in
+        <li class="normal" id="appendix-B-40.2">
+          <p id="appendix-B-40.2.1">Missing details provided for the description and call flow in
 pledge-agent use case UC2, e.g. to
-accommodate distribution of CA certificates.<a href="#appendix-B-38.2.1" class="pilcrow">¶</a></p>
+accommodate distribution of CA certificates.<a href="#appendix-B-40.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-38.3">
-          <p id="appendix-B-38.3.1">Updated CMP example in <a href="#exist_prot" class="auto internal xref">Section 5</a> to use
+        <li class="normal" id="appendix-B-40.3">
+          <p id="appendix-B-40.3.1">Updated CMP example in <a href="#exist_prot" class="auto internal xref">Section 5</a> to use
 Lightweight CMP instead of CMP, as the draft already provides
-the necessary /.well-known endpoints.<a href="#appendix-B-38.3.1" class="pilcrow">¶</a></p>
+the necessary /.well-known endpoints.<a href="#appendix-B-40.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-38.4">
-          <p id="appendix-B-38.4.1">Requirements discussion moved to separate section in
+        <li class="normal" id="appendix-B-40.4">
+          <p id="appendix-B-40.4.1">Requirements discussion moved to separate section in
 <a href="#req-sol" class="auto internal xref">Section 3</a>. Shortened description of proof-of-identity binding
-and mapping to existing protocols.<a href="#appendix-B-38.4.1" class="pilcrow">¶</a></p>
+and mapping to existing protocols.<a href="#appendix-B-40.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-38.5">
-          <p id="appendix-B-38.5.1">Removal of copied call flows for voucher exchange and registrar
+        <li class="normal" id="appendix-B-40.5">
+          <p id="appendix-B-40.5.1">Removal of copied call flows for voucher exchange and registrar
 discovery flow from <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span> in <a href="#uc1" class="auto internal xref">Section 4</a> to avoid doubling or text or
-inconsistencies.<a href="#appendix-B-38.5.1" class="pilcrow">¶</a></p>
+inconsistencies.<a href="#appendix-B-40.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-38.6">
-          <p id="appendix-B-38.6.1">Reworked abstract and introduction to be more crisp regarding
+        <li class="normal" id="appendix-B-40.6">
+          <p id="appendix-B-40.6.1">Reworked abstract and introduction to be more crisp regarding
 the targeted solution. Several structural changes in the document
 to have a better distinction between requirements, use case
 description, and solution description as separate sections.
-History moved to appendix.<a href="#appendix-B-38.6.1" class="pilcrow">¶</a></p>
+History moved to appendix.<a href="#appendix-B-40.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-39">From individual version 02 -&gt; 03:<a href="#appendix-B-39" class="pilcrow">¶</a></p>
+<p id="appendix-B-41">From individual version 02 -&gt; 03:<a href="#appendix-B-41" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-40.1">
-          <p id="appendix-B-40.1.1">Update of terminology from self-contained to authenticated
+<li class="normal" id="appendix-B-42.1">
+          <p id="appendix-B-42.1.1">Update of terminology from self-contained to authenticated
 self-contained object to be consistent in the wording and to
 underline the protection of the object with an existing
 credential. Note that the naming of this object may be discussed.
-An alternative name may be attestation object.<a href="#appendix-B-40.1.1" class="pilcrow">¶</a></p>
+An alternative name may be attestation object.<a href="#appendix-B-42.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-40.2">
-          <p id="appendix-B-40.2.1">Simplification of the architecture approach for the initial use
-case having an off-site PKI.<a href="#appendix-B-40.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-42.2">
+          <p id="appendix-B-42.2.1">Simplification of the architecture approach for the initial use
+case having an off-site PKI.<a href="#appendix-B-42.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-40.3">
-          <p id="appendix-B-40.3.1">Introduction of a new use case utilizing authenticated
+        <li class="normal" id="appendix-B-42.3">
+          <p id="appendix-B-42.3.1">Introduction of a new use case utilizing authenticated
 self-contain objects to onboard a pledge using a commissioning
 tool containing a pledge-agent. This requires additional changes
 in the BRSKI call flow sequence and led to changes in the
 introduction, the application example,and also in the
-related BRSKI-AE call flow.<a href="#appendix-B-40.3.1" class="pilcrow">¶</a></p>
+related BRSKI-AE call flow.<a href="#appendix-B-42.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-40.4">
-          <p id="appendix-B-40.4.1">Update of provided examples of the addressing approach used in
+        <li class="normal" id="appendix-B-42.4">
+          <p id="appendix-B-42.4.1">Update of provided examples of the addressing approach used in
 BRSKI to allow for support of multiple enrollment protocols in
-<a href="#addressing" class="auto internal xref">Section 4.3</a>.<a href="#appendix-B-40.4.1" class="pilcrow">¶</a></p>
+<a href="#addressing" class="auto internal xref">Section 4.3</a>.<a href="#appendix-B-42.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-41">From individual version 01 -&gt; 02:<a href="#appendix-B-41" class="pilcrow">¶</a></p>
+<p id="appendix-B-43">From individual version 01 -&gt; 02:<a href="#appendix-B-43" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-42.1">
-          <p id="appendix-B-42.1.1">Update of introduction text to clearly relate to the usage of
-IDevID and LDevID.<a href="#appendix-B-42.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B-44.1">
+          <p id="appendix-B-44.1.1">Update of introduction text to clearly relate to the usage of
+IDevID and LDevID.<a href="#appendix-B-44.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-42.2">
-          <p id="appendix-B-42.2.1">Definition of the addressing approach used in BRSKI to allow for
+        <li class="normal" id="appendix-B-44.2">
+          <p id="appendix-B-44.2.1">Definition of the addressing approach used in BRSKI to allow for
 support of multiple enrollment protocols in <a href="#addressing" class="auto internal xref">Section 4.3</a>.  This
 section also contains a first
 discussion of an optional discovery mechanism to address
 situations in which the registrar supports more than one enrollment
 approach. Discovery should avoid that the pledge performs a trial
-and error of enrollment protocols.<a href="#appendix-B-42.2.1" class="pilcrow">¶</a></p>
+and error of enrollment protocols.<a href="#appendix-B-44.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-42.3">
-          <p id="appendix-B-42.3.1">Update of description of architecture elements and
-changes to BRSKI in <a href="#architecture" class="auto internal xref">Section 4.1</a>.<a href="#appendix-B-42.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-44.3">
+          <p id="appendix-B-44.3.1">Update of description of architecture elements and
+changes to BRSKI in <a href="#architecture" class="auto internal xref">Section 4.1</a>.<a href="#appendix-B-44.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-42.4">
-          <p id="appendix-B-42.4.1">Enhanced consideration of existing enrollment protocols in the
+        <li class="normal" id="appendix-B-44.4">
+          <p id="appendix-B-44.4.1">Enhanced consideration of existing enrollment protocols in the
 context of mapping the requirements to existing solutions in
-<a href="#req-sol" class="auto internal xref">Section 3</a> and in <a href="#exist_prot" class="auto internal xref">Section 5</a>.<a href="#appendix-B-42.4.1" class="pilcrow">¶</a></p>
+<a href="#req-sol" class="auto internal xref">Section 3</a> and in <a href="#exist_prot" class="auto internal xref">Section 5</a>.<a href="#appendix-B-44.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-43">From individual version 00 -&gt; 01:<a href="#appendix-B-43" class="pilcrow">¶</a></p>
+<p id="appendix-B-45">From individual version 00 -&gt; 01:<a href="#appendix-B-45" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-44.1">
-          <p id="appendix-B-44.1.1">Update of examples, specifically for building automation as
-well as two new application use cases in <a href="#app-examples" class="auto internal xref">Appendix A</a>.<a href="#appendix-B-44.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B-46.1">
+          <p id="appendix-B-46.1.1">Update of examples, specifically for building automation as
+well as two new application use cases in <a href="#app-examples" class="auto internal xref">Appendix A</a>.<a href="#appendix-B-46.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-44.2">
-          <p id="appendix-B-44.2.1">Deletion of asynchronous interaction with MASA to not
+        <li class="normal" id="appendix-B-46.2">
+          <p id="appendix-B-46.2.1">Deletion of asynchronous interaction with MASA to not
 complicate the use case. Note that the voucher exchange can
 already be handled in an asynchronous manner and is therefore
 not considered further. This resulted in removal of the
 alternative path the MASA in Figure 1 and the associated
-description in <a href="#architecture" class="auto internal xref">Section 4.1</a>.<a href="#appendix-B-44.2.1" class="pilcrow">¶</a></p>
+description in <a href="#architecture" class="auto internal xref">Section 4.1</a>.<a href="#appendix-B-46.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-44.3">
-          <p id="appendix-B-44.3.1">Enhancement of description of architecture elements and
-changes to BRSKI in <a href="#architecture" class="auto internal xref">Section 4.1</a>.<a href="#appendix-B-44.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-46.3">
+          <p id="appendix-B-46.3.1">Enhancement of description of architecture elements and
+changes to BRSKI in <a href="#architecture" class="auto internal xref">Section 4.1</a>.<a href="#appendix-B-46.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-44.4">
-          <p id="appendix-B-44.4.1">Consideration of existing enrollment protocols in the context
-of mapping the requirements to existing solutions in <a href="#req-sol" class="auto internal xref">Section 3</a>.<a href="#appendix-B-44.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-46.4">
+          <p id="appendix-B-46.4.1">Consideration of existing enrollment protocols in the context
+of mapping the requirements to existing solutions in <a href="#req-sol" class="auto internal xref">Section 3</a>.<a href="#appendix-B-46.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-44.5">
-          <p id="appendix-B-44.5.1">New section starting <a href="#exist_prot" class="auto internal xref">Section 5</a> with the
+        <li class="normal" id="appendix-B-46.5">
+          <p id="appendix-B-46.5.1">New section starting <a href="#exist_prot" class="auto internal xref">Section 5</a> with the
 mapping to existing enrollment protocols by collecting
-boundary conditions.<a href="#appendix-B-44.5.1" class="pilcrow">¶</a></p>
+boundary conditions.<a href="#appendix-B-46.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
