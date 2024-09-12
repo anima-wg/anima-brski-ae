@@ -293,12 +293,21 @@ motivating the support of alternative enrollment protocols.
 {::boilerplate bcp14-tagged}
 
 This document relies on the terminology defined in {{RFC8995}}, {{RFC5280}},
-and {{IEEE_802.1AR-2018}}.
-The following terms are described partly in addition.
+and {{IEEE_802.1AR-2018}}, partly repeated here.
+Also several further terms are described here.
+
+To be independent of the terminology of a specific enrollment protocol, this
+document utilizes generic terminology regarding PKI management operations.
 
 asynchronous communication:
 : time-wise interrupted delivery of messages,
   here between a pledge and the registrar or an RA
+
+attribute request:
+: message requesting content to be included in the certification request
+
+attribute response:
+: message providing the answer to the attribute request
 
 authenticated self-contained object:
 : a data structure that is cryptographically bound to the identity of
@@ -318,6 +327,22 @@ BRSKI-AE:
   is replaced by enrollment protocols that support end-to-end authentication
   of the pledge to the RA, such as Lightweight CMP (see LCMPP).
 
+CA certs request:
+: message requesting CA certificates
+
+CA certs response:
+: message providing the answer to a CA certs request
+
+certificate confirm:
+: message stating to the backend PKI that the requester of a certificate
+received the new certificate and accepted it
+
+certification request:
+: message requesting a certificate with proof of identity
+
+certification response:
+: message providing the answer to a certification request
+
 CMP:
 : Certificate Management Protocol {{RFC9480}}
 
@@ -331,6 +356,9 @@ IDevID:
 : Initial Device IDentifier of a pledge, provided by the manufacturer
   and comprising a private key and the related X.509 certificate with its chain
 
+LCMPP:
+: Lightweight CMP Profile {{RFC9483}}
+
 LDevID:
 : Locally significant Device IDentifier of a pledge, provided by its target domain
   and comprising a private key and the related X.509 certificate with its chain
@@ -340,21 +368,21 @@ local RA (LRA):
   a subsequent RA.  In BRSKI-AE it is needed if a backend RA is used,
   and in this case, the LRA is co-located with the registrar.
 
-LCMPP:
-: Lightweight CMP Profile {{RFC9483}}
-
 MASA:
 : Manufacturer Authorized Signing Authority
-
-on-site:
-: locality of a component or service or functionality
-  at the site of the registrar
 
 off-site:
 : locality of component or service or functionality, such as RA or CA,
   not at the site of the registrar.
   This may be a central site or a cloud service,
   to which connection may be intermittent.
+
+on-site:
+: locality of a component or service or functionality
+  at the site of the registrar
+
+PKI/registrar confirm:
+: acknowledgment of the PKI on the certificate confirm
 
 pledge:
 : device that is to be bootstrapped into a target domain.
@@ -379,34 +407,6 @@ synchronous communication:
 
 target domain:
 : the domain that a pledge is going to be bootstrapped into
-
-This document utilizes generic terminology regarding PKI management operations to be independent of the terminology of a specific enrollment protocol.
-
-certification request:
-: message requesting a certificate with proof of identity
-
-certification response:
-: message providing the answer to a certification request
-
-attribute request:
-: message requesting content to be included in the certification request
-
-attribute response:
-: message providing the answer to the attribute request
-
-CA certs request:
-: message requesting CA certificates
-
-CA certs response:
-: message providing the answer to a CA certs request
-
-certificate confirm:
-: message stating to the backend PKI that the requester of a certificate
-received the new certificate and accepted it
-
-PKI/registrar confirm:
-: acknowledgment of the PKI on the certificate confirm
-
 
 # Basic Requirements and Mapping to Solutions {#req-sol}
 
@@ -1407,6 +1407,7 @@ IETF draft ae-12 -> ae-13:
   <br>
   Including the vouchers in {{enrollfigure}} would not fit because the figure
   has a different scope (namely, certificate enrollment) and would get overloaded.
+* Address comments by John Scudder by tweaking {{terminology}}, fully alphabetizing terms
 * Update reference: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
 
 IETF draft ae-11 -> ae-12:
