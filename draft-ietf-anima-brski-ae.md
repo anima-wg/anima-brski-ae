@@ -1029,6 +1029,14 @@ When using CMP, adherence to
 the LCMPP {{RFC9483}} is REQUIRED.
 In particular, the following specific requirements apply (cf. {{enrollfigure}}).
 
+* The validation of server response messages performed by the CMP client
+  within the pledge MUST be based on the trust anchor established beforehand
+  via the BRSKI voucher, i.e., on the pinned-domain-cert.
+
+  Note that the integrity and authenticity checks on the RA/CA
+  by the CMP client can be stronger than for EST because
+  they do not need to be performed hop-by-hop, but are usually end-to-end.
+
 * CA Certs Request (1) and Response (2):<br>
   Requesting CA certificates is OPTIONAL.<br>
   If supported, it SHALL be implemented as specified in
@@ -1394,6 +1402,11 @@ IETF draft ae-12 -> ae-13:
 
 * Due to IANA requirement, shorten service name `"brski-registrar-cmp"` to `"brski-reg-cmp"`<br>
   and change contact for service name registration from IESG to IETF
+* Address DISCUSS by Deb Cooley by adding an item to the requirements list
+  {{brski-cmp-instance}} making the source of the initial trust anchor explicit.
+  <br>
+  Including the vouchers in {{enrollfigure}} would not fit because the figure
+  has a different scope (namely, certificate enrollment) and would get overloaded.
 * Update reference: I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery
 
 IETF draft ae-11 -> ae-12:
