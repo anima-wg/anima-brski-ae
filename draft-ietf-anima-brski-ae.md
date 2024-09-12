@@ -1241,6 +1241,7 @@ we thank Toerless Eckert (document shepherd),
 Barry Leiba (SECdir review),
 Mahesh Jethanandani (IETF area director),
 Meral Shirazipour (Gen-ART reviewer),
+Reshad Rahman (YANGDOCTORS reviewer),
 Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
 (IESG reviewers),
 Michael Richardson (ANIMA design team member),
@@ -1383,7 +1384,8 @@ List of reviewers:
 
 * Rajeev Ranjan, Rufus Buschart, Szofia Fazekas-Zisch, etc. (Siemens)
 
-* [YANGDOCTORS Early review of 2021-08-15](https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-enroll-03-yangdoctors-early-rahman-2021-08-15/)
+* Reshad Rahman (YANGDOCTORS reviewer). Note that
+  [YANGDOCTORS Early review of 2021-08-15](https://datatracker.ietf.org/doc/review-ietf-anima-brski-async-enroll-03-yangdoctors-early-rahman-2021-08-15/)
   referred to the PRM aspect of [draft-ietf-anima-brski-async-enroll-03](https://datatracker.ietf.org/doc/draft-ietf-anima-brski-async-enroll/03/).
   This has been carved out of the draft to a different one and thus is no more
   applicable here.
