@@ -143,17 +143,7 @@ informative:
     author:
     - org: Open Charge Alliance
     date: 2019-12
-  draft-ietf-anima-brski-discovery:
-    title: Discovery for BRSKI variations
-    author:
-    - name: Toerless Eckert
-    - name: Esko Dijk
-    seriesinfo:
-      Work in Progress,
-      Internet-Draft,
-      draft-ietf-anima-brski-discovery-04
-    date: 25 July 2024
-    target: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04
+  I-D.ietf-anima-brski-discovery:
 
 --- abstract
 
@@ -777,7 +767,7 @@ support the certificate enrollment protocol it expects, such as CMP.
 
 As a more general solution, the BRSKI discovery mechanism can be extended
 to provide up-front information on the capabilities of registrars.
-Future work such as {{draft-ietf-anima-brski-discovery}} may provide this.
+Future work such as {{I-D.ietf-anima-brski-discovery}} may provide this.
 
 In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
@@ -1434,7 +1424,7 @@ IETF draft ae-12 -> ae-13:
   by adapting terminology entries, leaving out 'communication'
   from 'asynchronous communication' and 'synchronous communication'
 * Address Roman Danyliw's comments by updating reference<br>
-  I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery<br> and
+  I-D.eckert-anima-brski-discovery to I-D.ietf-anima-brski-discovery<br> and
   adding {{priv-consider}}, which refers to the BRSKI privacy considerations.
 * Address Éric Vyncke's comment by replacing 'production' by 'manufacturing'
 
