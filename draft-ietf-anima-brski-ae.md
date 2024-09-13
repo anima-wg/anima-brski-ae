@@ -143,17 +143,7 @@ informative:
     author:
     - org: Open Charge Alliance
     date: 2019-12
-  draft-ietf-anima-brski-discovery:
-    title: Discovery for BRSKI variations
-    author:
-    - name: Toerless Eckert
-    - name: Esko Dijk
-    seriesinfo:
-      Work in Progress,
-      Internet-Draft,
-      draft-ietf-anima-brski-discovery-04
-    date: 25 July 2024
-    target: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04
+  I-D.ietf-anima-brski-discovery:
 
 --- abstract
 
@@ -1434,7 +1424,7 @@ IETF draft ae-12 -> ae-13:
   by adapting terminology entries, leaving out 'communication'
   from 'asynchronous communication' and 'synchronous communication'
 * Address Roman Danyliw's comments by updating reference<br>
-  I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery<br> and
+  I-D.eckert-anima-brski-discovery to I-D.ietf-anima-brski-discovery<br> and
   adding {{priv-consider}}, which refers to the BRSKI privacy considerations.
 * Address Éric Vyncke's comment by replacing 'production' by 'manufacturing'
 
