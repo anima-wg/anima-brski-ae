@@ -349,7 +349,7 @@ certification response:
 : message providing the answer to a certification request
 
 CMP:
-: Certificate Management Protocol {{RFC9480}}
+: Certificate Management Protocol {{RFC4210}} {{RFC9480}}
 
 CSR:
 : Certificate Signing Request
