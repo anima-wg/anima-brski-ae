@@ -5,8 +5,8 @@
 ANIMA WG                                              D. von Oheimb, Ed.
 Internet-Draft                                                  S. Fries
 Intended status: Standards Track                            H. Brockhaus
-Expires: 16 March 2025                                           Siemens
-                                                       12 September 2024
+Expires: 20 March 2025                                           Siemens
+                                                       16 September 2024
 
 
           BRSKI-AE: Alternative Enrollment Protocols in BRSKI
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 1]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 1]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -68,7 +68,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 March 2025.
+   This Internet-Draft will expire on 20 March 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 2]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 2]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -144,7 +144,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
    authentication of the origin of requests and responses independently
    of message transfer mechanisms.  This capability facilitates end-to-
    end authentication (i.e., end-to-end proof of origin) across multiple
-   hops and supports the asynchronous operation of certificate
+   transport hops and supports the asynchronous operation of certificate
    enrollment.  Consequently, this provides architectural flexibility in
    determining the location and timing for the ultimate authentication
    and authorization of certification requests, while ensuring that the
@@ -165,7 +165,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 3]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 3]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -185,7 +185,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
    certificate enrollment through the use of an alternative protocol to
    EST that:
 
-   *  Supports end-to-end authentication over multiple hops.
+   *  Supports end-to-end authentication over multiple transport hops.
 
    *  Facilitates secure message exchange over any type of transfer
       mechanism, including asynchronous delivery.
@@ -221,7 +221,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 4]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 4]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -247,7 +247,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
       -  The Registration Authority (RA) is not co-located with the
          registrar and requires end-to-end authentication of requesters,
-         which EST does not support over multiple hops.
+         which EST does not support over multiple transport hops.
 
       -  The RA or Certification Authority (CA) operator mandates
          auditable proof of origin for Certificate Signing Requests
@@ -277,7 +277,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 5]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 5]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -333,7 +333,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 6]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 6]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -358,7 +358,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
    certification response:  message providing the answer to a
       certification request
 
-   CMP:  Certificate Management Protocol [RFC9480]
+   CMP:  Certificate Management Protocol [RFC4210] [RFC9480]
 
    CSR:  Certificate Signing Request
 
@@ -389,7 +389,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 7]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 7]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -414,8 +414,8 @@ Internet-Draft                  BRSKI-AE                  September 2024
       PKI component is deployed.  The target domain may have multiple
       sites.
 
-   synchronous:  time-wise uninterrupted delivery of messages,
-      here between a pledge and a registrar or backend system (e.g., the
+   synchronous:  time-wise uninterrupted delivery of messages, here
+      between a pledge and a registrar or backend system (e.g., the
       MASA)
 
    target domain:  the domain that a pledge is going to be bootstrapped
@@ -445,7 +445,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 8]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 8]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -501,7 +501,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                 [Page 9]
+von Oheimb, et al.        Expires 20 March 2025                 [Page 9]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -557,7 +557,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 10]
+von Oheimb, et al.        Expires 20 March 2025                [Page 10]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -613,7 +613,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 11]
+von Oheimb, et al.        Expires 20 March 2025                [Page 11]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -669,7 +669,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 12]
+von Oheimb, et al.        Expires 20 March 2025                [Page 12]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -725,7 +725,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 13]
+von Oheimb, et al.        Expires 20 March 2025                [Page 13]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -781,7 +781,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 14]
+von Oheimb, et al.        Expires 20 March 2025                [Page 14]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -818,8 +818,8 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
    As a more general solution, the BRSKI discovery mechanism can be
    extended to provide up-front information on the capabilities of
-   registrars.  Future work such as [draft-ietf-anima-brski-discovery]
-   may provide this.
+   registrars.  For further discussion, see
+   [I-D.ietf-anima-brski-discovery].
 
    In the absence of such a generally applicable solution, BRSKI-AE
    deployments may use their particular way of doing discovery.
@@ -837,7 +837,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 15]
+von Oheimb, et al.        Expires 20 March 2025                [Page 15]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -893,7 +893,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 16]
+von Oheimb, et al.        Expires 20 March 2025                [Page 16]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -949,7 +949,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 17]
+von Oheimb, et al.        Expires 20 March 2025                [Page 17]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 18]
+von Oheimb, et al.        Expires 20 March 2025                [Page 18]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 19]
+von Oheimb, et al.        Expires 20 March 2025                [Page 19]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 20]
+von Oheimb, et al.        Expires 20 March 2025                [Page 20]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 21]
+von Oheimb, et al.        Expires 20 March 2025                [Page 21]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 22]
+von Oheimb, et al.        Expires 20 March 2025                [Page 22]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 23]
+von Oheimb, et al.        Expires 20 March 2025                [Page 23]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 24]
+von Oheimb, et al.        Expires 20 March 2025                [Page 24]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 25]
+von Oheimb, et al.        Expires 20 March 2025                [Page 25]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1437,10 +1437,10 @@ Internet-Draft                  BRSKI-AE                  September 2024
               enrollment-protocols-in-brski-00>.  Graphics on slide 4 of
               the status update on the BRSKI-AE draft 04 at IETF 116.
 
-   [draft-ietf-anima-brski-discovery]
-              Eckert, T. and E. Dijk, "Discovery for BRSKI variations",
-              Work in Progress, Internet-Draft, draft-ietf-anima-brski-
-              discovery-04 , July 2024,
+   [I-D.ietf-anima-brski-discovery]
+              Eckert, T. T. and E. Dijk, "Discovery for BRSKI
+              variations", Work in Progress, Internet-Draft, draft-ietf-
+              anima-brski-discovery-04, 25 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-anima-
               brski-discovery-04>.
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 26]
+von Oheimb, et al.        Expires 20 March 2025                [Page 26]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 27]
+von Oheimb, et al.        Expires 20 March 2025                [Page 27]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 28]
+von Oheimb, et al.        Expires 20 March 2025                [Page 28]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1621,7 +1621,7 @@ A.2.  Building Automation
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 29]
+von Oheimb, et al.        Expires 20 March 2025                [Page 29]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1677,7 +1677,7 @@ A.4.  Electric Vehicle Charging Infrastructure
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 30]
+von Oheimb, et al.        Expires 20 March 2025                [Page 30]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1733,7 +1733,7 @@ Appendix B.  History of Changes TBD RFC Editor: please delete
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 31]
+von Oheimb, et al.        Expires 20 March 2025                [Page 31]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -1772,8 +1772,7 @@ Internet-Draft                  BRSKI-AE                  September 2024
       communication' and 'synchronous communication'
 
    *  Address Roman Danyliw's comments by updating reference
-      I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-
-      discovery
+      I-D.eckert-anima-brski-discovery to I-D.ietf-anima-brski-discovery
       and adding Section 8, which refers to the BRSKI privacy
       considerations.
 
@@ -1786,15 +1785,14 @@ Internet-Draft                  BRSKI-AE                  September 2024
       review,
       including nits spotted in the Gen-ART review by Meral Shirazipour
 
+   IETF draft ae-10 -> ae-11:
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 32]
+von Oheimb, et al.        Expires 20 March 2025                [Page 32]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
-
-   IETF draft ae-10 -> ae-11:
 
    *  In response to AD review by Mahesh Jethanandani,
 
@@ -1842,16 +1840,15 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
    *  In response to review by Toerless,
 
+      -  tweak abstract to make meaning of 'alternative enrollment' more
+         clear
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 33]
+von Oheimb, et al.        Expires 20 March 2025                [Page 33]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
-
-      -  tweak abstract to make meaning of 'alternative enrollment' more
-         clear
 
       -  expand on first use not "well-known" abbreviations, such as
          'EST',
@@ -1897,17 +1894,17 @@ Internet-Draft                  BRSKI-AE                  September 2024
    *  Tweak use of the terms IDevID and LDevID and replace PKI RA/CA by
       RA/CA
 
+   *  Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the
+      terminology section
 
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 34]
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 34]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
-
-   *  Add the abbreviation 'LCMPP' for Lightweight CMP Profile to the
-      terminology section
 
    *  State clearly in Section 5.1 that LCMPP is mandatory when using
       CMP
@@ -1953,17 +1950,17 @@ Internet-Draft                  BRSKI-AE                  September 2024
       -  sort out asynchronous vs. offline transfer, off-site vs.
          backend components
 
+      -  improve description of CSRs and proof of possession vs. proof
+         of origin
 
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 35]
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 35]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
-
-      -  improve description of CSRs and proof of possession vs. proof
-         of origin
 
       -  clarify that the channel between pledge and registrar is not
          restricted to TLS, but in connection with constrained BRSKI may
@@ -2009,19 +2006,17 @@ Internet-Draft                  BRSKI-AE                  September 2024
          offline vs. synchronous message transfer and enrollment, and
          better differentiation of RA flavors.
 
-
-
-
-
-von Oheimb, et al.        Expires 16 March 2025                [Page 36]
-
-Internet-Draft                  BRSKI-AE                  September 2024
-
-
       -  clarify that for transporting certificate enrollment messages
          between pledge and registrar, the TLS channel established
          between these two (via the join proxy) is used and the
          enrollment protocol MUST support this.
+
+
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 36]
+
+Internet-Draft                  BRSKI-AE                  September 2024
+
 
       -  clarify that the enrollment protocol chosen between pledge and
          registrar MUST also be used for the upstream enrollment
@@ -2065,20 +2060,19 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
    IETF draft ae-01 -> ae-02:
 
-
-
-
-
-von Oheimb, et al.        Expires 16 March 2025                [Page 37]
-
-Internet-Draft                  BRSKI-AE                  September 2024
-
-
    *  Architecture: clarify registrar role including RA/LRA/enrollment
       proxy
 
    *  CMP: add reference to CoAP Transport for CMPV2 and Constrained
       BRSKI
+
+
+
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 37]
+
+Internet-Draft                  BRSKI-AE                  September 2024
+
 
    *  Include venue information
 
@@ -2123,17 +2117,18 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
    *  Added David von Oheimb as co-author.
 
-
-
-von Oheimb, et al.        Expires 16 March 2025                [Page 38]
-
-Internet-Draft                  BRSKI-AE                  September 2024
-
-
    From IETF draft 02 -> IETF draft 03:
 
    *  Housekeeping, deleted open issue regarding YANG voucher-request in
       UC2 as voucher-request was enhanced with additional leaf.
+
+
+
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 38]
+
+Internet-Draft                  BRSKI-AE                  September 2024
+
 
    *  Included open issues in YANG model in UC2 regarding assertion
       value agent-proximity and CSR encapsulation using SZTP sub
@@ -2179,15 +2174,17 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
    From IETF draft 00 -> IETF draft 01:
 
+   *  Update of scope in Section 1.1 to include in which the pledge acts
+      as a server.  This is one main motivation for use case 2.
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 39]
+
+
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 39]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
-
-   *  Update of scope in Section 1.1 to include in which the pledge acts
-      as a server.  This is one main motivation for use case 2.
 
    *  Rework of use case 2 to consider the transport between the pledge
       and the pledge-agent.  Addressed is the TLS channel establishment
@@ -2231,22 +2228,19 @@ Internet-Draft                  BRSKI-AE                  September 2024
       discovery flow from [RFC8995] in Section 4 to avoid doubling or
       text or inconsistencies.
 
-
-
-
-
-
-
-von Oheimb, et al.        Expires 16 March 2025                [Page 40]
-
-Internet-Draft                  BRSKI-AE                  September 2024
-
-
    *  Reworked abstract and introduction to be more crisp regarding the
       targeted solution.  Several structural changes in the document to
       have a better distinction between requirements, use case
       description, and solution description as separate sections.
       History moved to appendix.
+
+
+
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 40]
+
+Internet-Draft                  BRSKI-AE                  September 2024
+
 
    From individual version 02 -> 03:
 
@@ -2291,15 +2285,18 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
    From individual version 00 -> 01:
 
+   *  Update of examples, specifically for building automation as well
+      as two new application use cases in Appendix A.
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 41]
+
+
+
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 41]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
-
-   *  Update of examples, specifically for building automation as well
-      as two new application use cases in Appendix A.
 
    *  Deletion of asynchronous interaction with MASA to not complicate
       the use case.  Note that the voucher exchange can already be
@@ -2349,7 +2346,10 @@ Authors' Addresses
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 42]
+
+
+
+von Oheimb, et al.        Expires 20 March 2025                [Page 42]
 
 Internet-Draft                  BRSKI-AE                  September 2024
 
@@ -2405,4 +2405,4 @@ Internet-Draft                  BRSKI-AE                  September 2024
 
 
 
-von Oheimb, et al.        Expires 16 March 2025                [Page 43]
+von Oheimb, et al.        Expires 20 March 2025                [Page 43]
