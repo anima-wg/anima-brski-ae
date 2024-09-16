@@ -767,7 +767,7 @@ support the certificate enrollment protocol it expects, such as CMP.
 
 As a more general solution, the BRSKI discovery mechanism can be extended
 to provide up-front information on the capabilities of registrars.
-Future work such as {{I-D.ietf-anima-brski-discovery}} may provide this.
+For further discussion, see  {{I-D.ietf-anima-brski-discovery}}.
 
 In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
