@@ -181,7 +181,7 @@ This approach offers several distinct advantages.
 It allows for the authentication of the origin of requests and responses
 independently of message transfer mechanisms.
 This capability facilitates end-to-end authentication
-(i.e., end-to-end proof of origin) across multiple hops
+(i.e., end-to-end proof of origin) across multiple transport hops
 and supports the asynchronous operation of certificate enrollment. Consequently,
 this provides architectural flexibility in determining the location and timing
 for the ultimate authentication and authorization of certification requests,
@@ -211,7 +211,7 @@ On success, it receives the LDevID certificate along with its certificate chain.
 The objectives of BRSKI-AE are to enhance BRSKI by enabling LDevID certificate
 enrollment through the use of an alternative protocol to EST that:
 
-* Supports end-to-end authentication over multiple hops.
+* Supports end-to-end authentication over multiple transport hops.
 
 * Facilitates secure message exchange over any type of transfer mechanism,
   including asynchronous delivery.
@@ -262,7 +262,7 @@ BRSKI-AE is designed for use in scenarios such as the following:
 
   - The Registration Authority (RA) is not co-located with the registrar
   and requires end-to-end authentication of requesters,
-  which EST does not support over multiple hops.
+  which EST does not support over multiple transport hops.
   - The RA or Certification Authority (CA) operator mandates
   auditable proof of origin for Certificate Signing Requests (CSRs), which
   cannot be provided by TLS as it only offers transient source authentication.
