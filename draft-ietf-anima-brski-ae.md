@@ -407,7 +407,7 @@ site:
   is deployed.  The target domain may have multiple sites.
 
 synchronous:
-: time-wise uninterrupted delivery of messages,<br>
+: time-wise uninterrupted delivery of messages,
   here between a pledge and a registrar or backend system (e.g., the MASA)
 
 target domain:
