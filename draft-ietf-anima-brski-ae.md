@@ -1259,8 +1259,8 @@ Barry Leiba (SECdir review),
 Mahesh Jethanandani (IETF area director),
 Meral Shirazipour (Gen-ART reviewer),
 Reshad Rahman (YANGDOCTORS reviewer),
-Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
-(IESG reviewers),
+Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw,
+and &Eacute;ric Vyncke (IESG reviewers),
 Michael Richardson (ANIMA design team member),
 as well as Rajeev Ranjan, Rufus Buschart,
 Andreas Reiter, and Szofia Fazekas-Zisch (Siemens colleagues)
@@ -1394,8 +1394,8 @@ List of reviewers:
 
 * Meral Shirazipour (Gen-ART reviewer)
 
-* Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
-  (IESG reviewers)
+* Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw,
+  and &Eacute;ric Vyncke (IESG reviewers)
 
 * Michael Richardson (ANIMA design team)
 
@@ -1426,7 +1426,7 @@ IETF draft ae-12 -> ae-13:
 * Address Roman Danyliw's comments by updating reference<br>
   I-D.eckert-anima-brski-discovery to I-D.ietf-anima-brski-discovery<br> and
   adding {{priv-consider}}, which refers to the BRSKI privacy considerations.
-* Address Éric Vyncke's comment by replacing 'production' by 'manufacturing'
+* Address &Eacute;ric Vyncke's comment by replacing 'production' by 'manufacturing'
 
 IETF draft ae-11 -> ae-12:
 
@@ -1789,5 +1789,5 @@ LocalWords: PoP PoI anufacturer uthorized igning uthority SECDIR nbsp passphrase
 LocalWords: ietf cmp lcmpp submissionType kw std org uri cmpv app sol est Certs
 LocalWords: github eckert lternative nrollment sec certs reg priv pledge's CMP's
 LocalWords: Mahesh Jethanandani Gen ART Meral Shirazipour Deb Cooley's
-LocalWords: Gunter Van de Velde's Scudder's Kucherawy's Danyliw's Éric Vyncke's
+LocalWords: Gunter Van de Velde's Scudder's Kucherawy's Danyliw's Eacute Vyncke's
 -->
