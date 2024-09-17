@@ -1224,7 +1224,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">von Oheimb, et al.</td>
-<td class="center">Expires 16 March 2025</td>
+<td class="center">Expires 21 March 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1237,12 +1237,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-ietf-anima-brski-ae-13</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-09-12" class="published">12 September 2024</time>
+<time datetime="2024-09-17" class="published">17 September 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-03-16">16 March 2025</time></dd>
+<dd class="expires"><time datetime="2025-03-21">21 March 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1312,7 +1312,7 @@ ensuring secure and scalable deployment across a range of network environments.<
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 March 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 21 March 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1478,7 +1478,7 @@ authenticated self-contained objects for the device certificate enrollment.<a hr
 It allows for the authentication of the origin of requests and responses
 independently of message transfer mechanisms.
 This capability facilitates end-to-end authentication
-(i.e., end-to-end proof of origin) across multiple hops
+(i.e., end-to-end proof of origin) across multiple transport hops
 and supports the asynchronous operation of certificate enrollment. Consequently,
 this provides architectural flexibility in determining the location and timing
 for the ultimate authentication and authorization of certification requests,
@@ -1511,7 +1511,7 @@ On success, it receives the LDevID certificate along with its certificate chain.
 enrollment through the use of an alternative protocol to EST that:<a href="#section-1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-6.1">
-          <p id="section-1-6.1.1">Supports end-to-end authentication over multiple hops.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.1.1">Supports end-to-end authentication over multiple transport hops.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-6.2">
           <p id="section-1-6.2.1">Facilitates secure message exchange over any type of transfer mechanism,
@@ -1559,7 +1559,7 @@ for certificate enrollment due to factors such as:<a href="#section-1.1-2.2.1" c
 <li class="normal" id="section-1.1-2.2.2.1">
                 <p id="section-1.1-2.2.2.1.1">The Registration Authority (RA) is not co-located with the registrar
 and requires end-to-end authentication of requesters,
-which EST does not support over multiple hops.<a href="#section-1.1-2.2.2.1.1" class="pilcrow">¶</a></p>
+which EST does not support over multiple transport hops.<a href="#section-1.1-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-1.1-2.2.2.2">
                 <p id="section-1.1-2.2.2.2.1">The RA or Certification Authority (CA) operator mandates
@@ -1686,7 +1686,7 @@ received the new certificate and accepted it<a href="#section-2-4.20.1" class="p
         <dd class="break"></dd>
 <dt id="section-2-4.25">CMP:</dt>
         <dd style="margin-left: 1.5em" id="section-2-4.26">
-          <p id="section-2-4.26.1">Certificate Management Protocol <span>[<a href="#RFC9480" class="cite xref">RFC9480</a>]</span><a href="#section-2-4.26.1" class="pilcrow">¶</a></p>
+          <p id="section-2-4.26.1">Certificate Management Protocol <span>[<a href="#RFC4210" class="cite xref">RFC4210</a>]</span> <span>[<a href="#RFC9480" class="cite xref">RFC9480</a>]</span><a href="#section-2-4.26.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-4.27">CSR:</dt>
@@ -1774,7 +1774,7 @@ is deployed.  The target domain may have multiple sites.<a href="#section-2-4.54
         <dd class="break"></dd>
 <dt id="section-2-4.55">synchronous:</dt>
         <dd style="margin-left: 1.5em" id="section-2-4.56">
-          <p id="section-2-4.56.1">time-wise uninterrupted delivery of messages,<br>
+          <p id="section-2-4.56.1">time-wise uninterrupted delivery of messages,
 here between a pledge and a registrar or backend system (e.g., the MASA)<a href="#section-2-4.56.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
@@ -2256,7 +2256,7 @@ A pledge can not find out in this way whether discovered registrars
 support the certificate enrollment protocol it expects, such as CMP.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-2">As a more general solution, the BRSKI discovery mechanism can be extended
 to provide up-front information on the capabilities of registrars.
-Future work such as <span>[<a href="#draft-ietf-anima-brski-discovery" class="cite xref">draft-ietf-anima-brski-discovery</a>]</span> may provide this.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
+For further discussion, see <span>[<a href="#I-D.ietf-anima-brski-discovery" class="cite xref">I-D.ietf-anima-brski-discovery</a>]</span>.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-3">In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
 <a href="#brski-cmp-instance" class="auto internal xref">Section 5.1</a> defines a minimalist approach that <span class="bcp14">MAY</span> be used for CMP.<a href="#section-4.2.1-3" class="pilcrow">¶</a></p>
@@ -2850,8 +2850,8 @@ Barry Leiba (SECdir review),
 Mahesh Jethanandani (IETF area director),
 Meral Shirazipour (Gen-ART reviewer),
 Reshad Rahman (YANGDOCTORS reviewer),
-Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
-(IESG reviewers),
+Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw,
+and Éric Vyncke (IESG reviewers),
 Michael Richardson (ANIMA design team member),
 as well as Rajeev Ranjan, Rufus Buschart,
 Andreas Reiter, and Szofia Fazekas-Zisch (Siemens colleagues)
@@ -2906,9 +2906,9 @@ for their reviews with suggestions for improvements.<a href="#section-9-3" class
 <span class="refAuthor">S. Fries</span> and <span class="refAuthor">D. von Oheimb</span>, <span class="refTitle">"BRSKI-AE Protocol Overview"</span>, <time datetime="2023-03" class="refDate">March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/meeting/116/materials/slides-116-anima-update-on-brski-ae-alternative-enrollment-protocols-in-brski-00">https://datatracker.ietf.org/meeting/116/materials/slides-116-anima-update-on-brski-ae-alternative-enrollment-protocols-in-brski-00</a>&gt;</span>. <span class="annotation">Graphics on slide 4 of the status update on the BRSKI-AE draft 04 at IETF 116.</span>
         </dd>
 <dd class="break"></dd>
-<dt id="draft-ietf-anima-brski-discovery">[draft-ietf-anima-brski-discovery]</dt>
+<dt id="I-D.ietf-anima-brski-discovery">[I-D.ietf-anima-brski-discovery]</dt>
         <dd>
-<span class="refAuthor">Eckert, T.</span> and <span class="refAuthor">E. Dijk</span>, <span class="refTitle">"Discovery for BRSKI variations"</span>, <span class="seriesInfo">Work in Progress, Internet-Draft, draft-ietf-anima-brski-discovery-04 </span>, <time datetime="2024-07" class="refDate">July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04">https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04</a>&gt;</span>. </dd>
+<span class="refAuthor">Eckert, T. T.</span> and <span class="refAuthor">E. Dijk</span>, <span class="refTitle">"Discovery for BRSKI variations"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-anima-brski-discovery-04</span>, <time datetime="2024-07-25" class="refDate">25 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04">https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-discovery-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-anima-constrained-voucher">[I-D.ietf-anima-constrained-voucher]</dt>
         <dd>
@@ -3153,8 +3153,8 @@ an off-site backend component that has a sufficient level of security.<a href="#
           <p id="appendix-B-2.4.1">Meral Shirazipour (Gen-ART reviewer)<a href="#appendix-B-2.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.5">
-          <p id="appendix-B-2.5.1">Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw, and Éric Vyncke
-(IESG reviewers)<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.5.1">Deb Cooley, Gunter Van de Velde, John Scudder, Murray Kucherawy, Roman Danyliw,
+and Éric Vyncke (IESG reviewers)<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.6">
           <p id="appendix-B-2.6.1">Michael Richardson (ANIMA design team)<a href="#appendix-B-2.6.1" class="pilcrow">¶</a></p>
@@ -3198,7 +3198,7 @@ from 'asynchronous communication' and 'synchronous communication'<a href="#appen
 </li>
         <li class="normal" id="appendix-B-4.6">
           <p id="appendix-B-4.6.1">Address Roman Danyliw's comments by updating reference<br>
-I-D.eckert-anima-brski-discovery to draft-ietf-anima-brski-discovery<br> and
+I-D.eckert-anima-brski-discovery to I-D.ietf-anima-brski-discovery<br> and
 adding <a href="#priv-consider" class="auto internal xref">Section 8</a>, which refers to the BRSKI privacy considerations.<a href="#appendix-B-4.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-4.7">
