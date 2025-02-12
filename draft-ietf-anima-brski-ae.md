@@ -104,40 +104,41 @@ informative:
   RFC9480:
   RFC9482:
   IEC-62351-9:
-    title: 'IEC 62351 -
-      Power systems management and associated information exchange -
+    title: 'Power systems management and associated information exchange -
       Data and communications security -
       Part 9: Cyber security key management for power system equipment'
     author:
     - org: International Electrotechnical Commission
     date: 2017-05
     seriesinfo:
-      IEC: '62351-9 '
+      IEC: '62351-9:2017'
+    target: https://webstore.iec.ch/en/publication/30287
   NERC-CIP-005-5:
     title: Cyber Security - Electronic Security Perimeter
     author:
-    - org: North American Reliability Council
+    - org: North American Electric Reliability Council
     date: 2013-12
     seriesinfo:
       CIP: 005-5
   ISO-IEC-15118-2:
-    title: 'ISO/IEC 15118-2 Road vehicles
+    title: 'Road vehicles
       - Vehicle-to-Grid Communication Interface
       - Part 2: Network and application protocol requirements'
     author:
-    - org: 'International Standardization Organization /
-        International Electrotechnical Commission'
+    - org: 'International Organization for Standardization'
     date: 2014-04
     seriesinfo:
-      ISO/IEC: '15118-2 '
+      ISO: '15118-2:2014'
   UNISIG-Subset-137:
     author:
     - org: UNISIG
-    title: 'Subset-137; ERTMS/ETCS On-line Key Management FFFIS; V1.0.0'
+    title: 'ERTMS/ETCS On-line Key Management FFFIS'
+    seriesinfo:
+      Subset-137, Version: 1.0.0
     date: December 2015
     format:
       PDF: https://www.era.europa.eu/sites/default/files/filesystem/ertms/ccs_tsi_annex_a_-_mandatory_specifications/set_of_specifications_3_etcs_b3_r2_gsm-r_b1/index083_-_subset-137_v100.pdf
-    ann: http://www.kmc-subset137.eu/index.php/download/
+      <!-- ann : http://www.kmc-subset137.eu/index.php/download/ -->
   OCPP:
     title: Open Charge Point Protocol 2.0.1 (Draft)
     author:
