@@ -79,7 +79,7 @@ normative:
       DOI: 10.1109/IEEESTD.2018.8423794
     target: https://ieeexplore.ieee.org/document/8423794
 informative:
-  I-D.ietf-anima-constrained-voucher:
+  cBRSKI: I-D.ietf-anima-constrained-voucher
   BRSKI-AE-overview:
     title: 'BRSKI-AE Protocol Overview'
     author:
@@ -144,7 +144,7 @@ informative:
     author:
     - org: Open Charge Alliance
     date: 2019-12
-  I-D.ietf-anima-brski-discovery:
+  BRSKI-discovery: I-D.ietf-anima-brski-discovery
 
 --- abstract
 
@@ -236,7 +236,7 @@ based on the defined overall approach and specific endpoints.
 
 It may be important to note that BRSKI (RFC 8995) specifies the use of
 HTTP over TLS, but variations such as Constrained BRSKI
-{{I-D.ietf-anima-constrained-voucher}} which uses CoAP over DTLS,
+{{cBRSKI}} which uses CoAP over DTLS,
 are possible as well. In this context,
 'HTTP' and 'TLS' are used as references to the most common implementation,
 though variants using CoAP and/or DTLS are implied where applicable,
@@ -682,7 +682,7 @@ of the pledge shown in {{uc1figure}}.
      to be supported by the certificate enrollment protocol.
      By default, this channel is based on HTTP over TLS,
      but it may also be based on, for instance, CoAP over DTLS
-     in the context of Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}}.
+     in the context of Constrained BRSKI {{cBRSKI}}.
 -->
 <!--
      In the latter scenario,
@@ -768,7 +768,7 @@ support the certificate enrollment protocol it expects, such as CMP.
 
 As a more general solution, the BRSKI discovery mechanism can be extended
 to provide up-front information on the capabilities of registrars.
-For further discussion, see {{I-D.ietf-anima-brski-discovery}}.
+For further discussion, see {{BRSKI-discovery}}.
 
 In the absence of such a generally applicable solution,
 BRSKI-AE deployments may use their particular way of doing discovery.
@@ -1108,11 +1108,11 @@ provide requirements for interoperability.
 -->
 
 BRSKI-AE with CMP can also be combined with
-Constrained BRSKI {{I-D.ietf-anima-constrained-voucher}},
+Constrained BRSKI {{cBRSKI}},
 using CoAP for enrollment message transport as described by
 CoAP Transport for CMP {{RFC9482}}.
 In such scenarios, the EST-specific parts
-of {{I-D.ietf-anima-constrained-voucher}} do not apply.
+of {{cBRSKI}} do not apply.
 
 For BRSKI-AE scenarios where a general solution for discovering registrars
 with CMP support is not available (cf. {{discovery}}),
