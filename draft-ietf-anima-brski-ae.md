@@ -11,7 +11,7 @@ wg: ANIMA WG
 kw: Internet-Draft
 cat: std
 consensus: true
-date: 2024
+date: 2025
 pi:
   toc: 'yes'
   compact: 'yes'
