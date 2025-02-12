@@ -874,7 +874,7 @@ Further note that
 certification requests typically need to be handled by the backend PKI,
 but the registrar can answer them directly with an error response
 in case it determines that such a request should be rejected,
-for instance, because is not properly authenticated or not authorized.<!--br-->
+for instance, because is not properly authenticated or not authorized. <!--br-->
 Also, certificate confirmation messages
 will usually be forwarded to the backend PKI,
 but if the registrar knows that they are not needed or wanted there
