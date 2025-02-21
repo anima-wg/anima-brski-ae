@@ -27,7 +27,7 @@ LATEST_TXT=${DRAFT}-${VERSION}.txt
 
 default: ${LATEST_TXT}
 
-all: ${DRAFT}.txt ${DRAFT}.html ${DRAFT}.pdf
+all: ${DRAFT}.txt ${DRAFT}.html ${DRAFT}.pdf Figure1.svg
 
 .PRECIOUS: ${DRAFT}.{xml,txt,html,pdf}
 
@@ -39,6 +39,9 @@ update: clean
 
 generate:
 	kdrfc --v3 -t -h ${PDF} ${DRAFT}.md
+
+%.svg: %.txt
+	aasvg <$< >$@
 
 # produces also .xml and .html:
 %.txt: %.md

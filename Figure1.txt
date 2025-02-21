@@ -1,0 +1,33 @@
+                                         +------------------------+
+   +--------------Drop-Ship--------------| Vendor Service         |
+   |                                     +------------------------+
+   |                                     | M anufacturer|         |
+   |                                     | A uthorized  |Ownership|
+   |                                     | S igning     |Tracker  |
+   |                                     | A uthority   |         |
+   |                                     +--------------+---------+
+   |                                                      ^
+   |                                                      |
+   V                                                      |
++--------+     .........................................  |
+|        |     .                                       .  | BRSKI-
+|        |     .  +-------+          +--------------+  .  | MASA
+| Pledge |     .  | Join  |          | Domain       |<----+
+|        |<------>| Proxy |<-------->| Registrar w/ |  .
+|        |     .  |.......|          | LRA or RA    |  .
+| IDevID |     .  +-------+          +--------------+  .
+|        |   BRSKI-AE over TLS                ^        .
++--------+   using, e.g., LCMPP               |        .
+               .                              |        .
+               ...............................|.........
+            on-site (local) domain components |
+                                              | e.g., LCMPP
+                                              |
+ .............................................|..................
+ . Public-Key Infrastructure (PKI)            v                 .
+ . +---------+     +------------------------------------------+ .
+ . |         |<----+   Registration Authority                 | .
+ . |    CA   +---->|   RA (unless part of Domain Registrar)   | .
+ . +---------+     +------------------------------------------+ .
+ ................................................................
+         backend (central or off-site) domain components
