@@ -1,3 +1,4 @@
+
 # installation hints for needed software components:
 #
 # for Linux:
@@ -14,6 +15,11 @@
 # brew install node
 # npm install -g aasvg
 # pip install xml2rfc
+# or:
+#   python3 -m venv path/to/venv
+#   source path/to/venv/bin/activate
+#   python3 -m pip install xml2rfc
+# sudo gem install json_pure -v 2.7.6
 # sudo gem install kramdown-rfc
 # pip install 'weasyprint>=53.0,!=57.0,!=60.0'  # for PDF output
 
